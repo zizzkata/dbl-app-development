@@ -4,6 +4,7 @@ DBL project for an android application.
 ## House Rules
 ### Coding style
 Coding style must comply with the following document: [a relative link](files/Coding_standards.pdf)
+
 **IMPORTANT** Always format all the files before commit.
 
 ### Commits
@@ -15,7 +16,7 @@ All commits should have the following structure:
 <body>
 ```
 
-All commits need to be in the imperative: "Add file/s" or "Fix bug",  and not like "Fixed bug" or "Fixes bug".
+All commits need to be in the imperative form: "Add file/s" or "Fix bug", and not like "Fixed bug" or "Fixes bug".**IMPORTANT** Also they must only have the changes that are described in the message and nothing extra.
 
 * **Scope** is optional. This is used if you need (or want) to specify a module or a group to clarify the commit. It must be no more than 50 chars.
 * **Subject** is a clear summary of the commit. It is used to identify the main action/problem behind the commit.
