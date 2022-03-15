@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_blue"
+    tools:context=".RegisterPage">
+
+    <TextView
+        android:id="@+id/app_name"
+        android:layout_width="259dp"
+        android:layout_height="71dp"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textColor="@color/whitish"
+        android:textSize="45sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.528"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.049" />
+
+    <TextView
+        android:id="@+id/moto"
+        android:layout_width="301dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/moto"
+        android:textAlignment="center"
+        android:textColor="@color/whitish"
+        android:textSize="15sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_name" />
+
+    <ImageView
+        android:id="@+id/creamy_white_background"
+        android:layout_width="298dp"
+        android:layout_height="474dp"
+        android:contentDescription="@string/background_for_sign_up"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/moto"
+        app:layout_constraintVertical_bias="0.175"
+        app:srcCompat="@drawable/rectanglebg" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="120dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="-10dp"
+        android:layout_marginBottom="120dp"
+        android:text="@string/sign_up"
+        android:textAlignment="center"
+        android:textColor="@color/dark_blue"
+        android:textColorLink="@color/dark_blue"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/creamy_white_background"
+        app:layout_constraintEnd_toEndOf="@+id/creamy_white_background"
+        app:layout_constraintStart_toStartOf="@+id/creamy_white_background"
+        app:layout_constraintTop_toTopOf="@+id/creamy_white_background"
+        app:layout_constraintVertical_bias="0.079" />
+
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/e_mail"
+        android:textColor="@color/dark_blue"
+        app:layout_constraintEnd_toEndOf="@+id/creamy_white_background"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="@+id/creamy_white_background"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <EditText
+        android:id="@+id/editEmailBox"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:drawableStart="@drawable/ic_email"
+        android:drawablePadding="3dp"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="textEmailAddress"
+        android:labelFor="@id/editEmailBox"
+        app:layout_constraintEnd_toEndOf="@+id/creamy_white_background"
+        app:layout_constraintStart_toStartOf="@+id/creamy_white_background"
+        app:layout_constraintTop_toBottomOf="@+id/email"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/username"
+        android:textColor="@color/dark_blue"
+        app:layout_constraintEnd_toEndOf="@+id/creamy_white_background"
+        app:layout_constraintHorizontal_bias="0.115"
+        app:layout_constraintStart_toStartOf="@+id/creamy_white_background"
+        app:layout_constraintTop_toBottomOf="@+id/editEmailBox" />
+
+    <EditText
+        android:id="@+id/editUsernameBox"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:drawableStart="@drawable/ic_person"
+        android:drawablePadding="3dp"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:labelFor="@id/editUsernameBox"
+        app:layout_constraintEnd_toEndOf="@+id/creamy_white_background"
+        app:layout_constraintStart_toStartOf="@+id/creamy_white_background"
+        app:layout_constraintTop_toBottomOf="@+id/username"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/password"
+        android:textColor="@color/dark_blue"
+        app:layout_constraintEnd_toEndOf="@+id/creamy_white_background"
+        app:layout_constraintHorizontal_bias="0.114"
+        app:layout_constraintStart_toStartOf="@+id/creamy_white_background"
+        app:layout_constraintTop_toBottomOf="@+id/editUsernameBox" />
+
+    <EditText
+        android:id="@+id/editPasswordBox"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:drawableStart="@drawable/ic_security"
+        android:drawablePadding="3dp"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="textPassword"
+        android:labelFor="@id/editPasswordBox"
+        app:layout_constraintEnd_toEndOf="@+id/creamy_white_background"
+        app:layout_constraintStart_toStartOf="@+id/creamy_white_background"
+        app:layout_constraintTop_toBottomOf="@+id/password"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/repeatPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/repeat_password"
+        android:textColor="@color/dark_blue"
+        app:layout_constraintEnd_toEndOf="@+id/creamy_white_background"
+        app:layout_constraintHorizontal_bias="0.142"
+        app:layout_constraintStart_toStartOf="@+id/creamy_white_background"
+        app:layout_constraintTop_toBottomOf="@+id/editPasswordBox" />
+
+    <EditText
+        android:id="@+id/editRepeatPasswordBox"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:drawableStart="@drawable/ic_security"
+        android:drawablePadding="3dp"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="textPassword"
+        android:labelFor="@id/editRepeatPasswordBox"
+        app:layout_constraintEnd_toEndOf="@+id/creamy_white_background"
+        app:layout_constraintStart_toStartOf="@+id/creamy_white_background"
+        app:layout_constraintTop_toBottomOf="@+id/repeatPassword"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/haveAcountText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/already_have_an_account"
+        android:textColor="@color/whitish"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/signUpButton"
+        app:layout_constraintHorizontal_bias="0.969"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/creamy_white_background"
+        app:layout_constraintVertical_bias="0.235" />
+
+    <Button
+        android:id="@+id/logInButton"
+        android:layout_width="113dp"
+        android:layout_height="51dp"
+        android:text="@string/sign_up"
+        android:textColor="#212121"
+        app:backgroundTint="@color/teal"
+        app:layout_constraintBottom_toBottomOf="@+id/creamy_white_background"
+        app:layout_constraintEnd_toEndOf="@+id/creamy_white_background"
+        app:layout_constraintStart_toStartOf="@+id/creamy_white_background"
+        app:layout_constraintTop_toBottomOf="@+id/editRepeatPasswordBox"
+        tools:ignore="DuplicateSpeakableTextCheck" />
+
+    <Button
+        android:id="@+id/signUpButton"
+        android:layout_width="94dp"
+        android:layout_height="48dp"
+        android:text="@string/log_in"
+        android:textColor="@color/light_pink"
+        app:backgroundTint="@color/creamy_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.754"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/creamy_white_background"
+        app:layout_constraintVertical_bias="0.151" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
