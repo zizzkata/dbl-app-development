@@ -15,12 +15,12 @@ public class LoginPage extends AppCompatActivity {
         setContentView(R.layout.activity_login_page);
 
         //Sign Up button leading to RegisterPage
-        TextView btn=findViewById(R.id.signUpButton);
+        /*TextView btn=findViewById(R.id.signUpButton);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginPage.this,RegisterPage.class));
             }
-        });
+        });*/
     }
 }

@@ -22,7 +22,7 @@
             android:id="@+id/haveAcountText"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
-            android:text="@string/you_don_t_have_an_account_yet"
+            android:text="@string/don_t_have_an_account"
             android:textColor="@color/whitish"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/signUpButton"
@@ -89,7 +89,7 @@
             app:layout_constraintTop_toBottomOf="@+id/editPasswordBox" />
 
         <Button
-            android:id="@+id/logInButton"
+            android:id="@+id/login_btn"
             android:layout_width="113dp"
             android:layout_height="51dp"
             android:text="@string/log_in"
@@ -130,7 +130,7 @@
             android:inputType="textPassword"
             android:labelFor="@id/editPasswordBox"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/logInButton"
+            app:layout_constraintBottom_toTopOf="@+id/login_btn"
             app:layout_constraintEnd_toStartOf="@+id/loginRightGuideline"
             app:layout_constraintHeight_percent="0.15"
             app:layout_constraintHorizontal_bias="0.5"

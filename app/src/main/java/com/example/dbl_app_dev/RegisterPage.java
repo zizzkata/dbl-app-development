@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.dbl_app_dev.LoginPage;
-
 public class RegisterPage extends AppCompatActivity {
 
     @Override
@@ -17,7 +15,7 @@ public class RegisterPage extends AppCompatActivity {
         setContentView(R.layout.activity_register_page);
 
         //Log in button leading to LoginPage
-        TextView btn=findViewById(R.id.logInButton);
+        TextView btn=findViewById(R.id.login_btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
