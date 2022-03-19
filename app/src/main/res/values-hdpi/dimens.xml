@@ -7,5 +7,5 @@
     <dimen name="font_size_900">30sp</dimen>
     <dimen name="spacing_200">4dp</dimen>
     <dimen name="spacing_400">8dp</dimen>
-    <dimen name="spacing_600">12dp</dimen>
+    <dimen name="spacing_600">16dp</dimen>
 </resources>
