@@ -9,12 +9,14 @@
         <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/drawable/roundMiniStyle.xml" value="0.2745" />
         <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/drawable/roundstyle.xml" value="0.2515" />
         <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/drawable/roundstylemini.xml" value="0.2745" />
-        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout-hdpi/activity_login_page.xml" value="0.536" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout-hdpi/activity_login_page.xml" value="0.6" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout-hdpi/activity_register_page.xml" value="0.6" />
         <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout-mdpi/activity_logo_page.xml" value="0.25885416666666666" />
-        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout-xxxhdpi/activity_login_page.xml" value="0.1810996563573883" />
-        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout/activity_login_page.xml" value="0.27355072463768115" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout-xxxhdpi/activity_login_page.xml" value="0.264" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout-xxxhdpi/activity_register_page.xml" value="0.1829861111111111" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout/activity_login_page.xml" value="0.8" />
         <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout/activity_main.xml" value="0.27355072463768115" />
-        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout/activity_register_page.xml" value="0.27447916666666666" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout/activity_register_page.xml" value="0.72" />
       </map>
     </option>
   </component>
