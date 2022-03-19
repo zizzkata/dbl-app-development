@@ -1,3 +1,11 @@
 <?xml version ="1.0" encoding ="utf-8"?>
 <resources>
+    <dimen name="font_size_200">1sp</dimen>
+    <dimen name="font_size_300">1sp</dimen>
+    <dimen name="font_size_400">1sp</dimen>
+    <dimen name="font_size_700">1sp</dimen>
+    <dimen name="font_size_900">1sp</dimen>
+    <dimen name="spacing_200">1dp</dimen>
+    <dimen name="spacing_400">1dp</dimen>
+    <dimen name="spacing_600">1dp</dimen>
 </resources>

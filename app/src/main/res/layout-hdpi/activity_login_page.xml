@@ -97,7 +97,7 @@
         <CheckBox
             android:id="@+id/rememberMe"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="62px"
             android:layout_marginTop="@dimen/spacing_200"
             android:text="@string/remember_me"
             android:textSize="@dimen/font_size_200"
@@ -107,7 +107,7 @@
         <Button
             android:id="@+id/login_btn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="62px"
             android:layout_marginTop="@dimen/spacing_400"
             android:background="@drawable/roundstylemini"
             android:paddingHorizontal="@dimen/spacing_600"
