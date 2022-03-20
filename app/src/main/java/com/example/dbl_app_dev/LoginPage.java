@@ -22,5 +22,14 @@ public class LoginPage extends AppCompatActivity {
                 startActivity(new Intent(LoginPage.this,RegisterPage.class));
             }
         });*/
+
+        //Log In button leading to Discovery page
+        TextView btn=findViewById(R.id.logInButton);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginPage.this,RegisterPage.class));
+            }
+        });
     }
 }

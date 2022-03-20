@@ -19,7 +19,6 @@
         android:textColor="@color/whitish"
         android:textSize="@dimen/font_size_900"
         android:textStyle="normal"
-        app:layout_constraintBottom_toTopOf="@+id/moto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -185,7 +184,7 @@
             app:layout_constraintTop_toBottomOf="@+id/login_btn" />
 
         <TextView
-            android:id="@+id/signUpButton"
+            android:id="@+id/signup_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/log_in_dot"
