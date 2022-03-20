@@ -14,19 +14,14 @@ public class LoginPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
 
-        // Sign Up button leading to RegisterPage
-        findViewById(R.id.signUpButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginPage.this, RegisterPage.class));
-            }
-        });
-
         // Log In button leading to Discovery page
         findViewById(R.id.loginBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginPage.this, DiscoveryLandlordPage.class));
+            }
+        });
+        
         //Sign Up button leading to RegisterPage
         TextView signUpTxt = findViewById(R.id.signUpTxt);
         signUpTxt.setOnClickListener(new View.OnClickListener() {

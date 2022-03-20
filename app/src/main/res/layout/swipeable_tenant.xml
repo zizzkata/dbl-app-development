@@ -54,7 +54,7 @@
         android:layout_height="70dp"
         android:text="Neutral"
         android:textColor="#212121"
-        app:backgroundTint="@color/light_grey"
+        app:backgroundTint="@color/light_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/dislikeBtn"
         app:layout_constraintEnd_toEndOf="@+id/likeBtn"
