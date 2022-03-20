@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_blue"
+    tools:context=".LoginPage">
+
+    <TextView
+        android:id="@+id/appNameTxt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_600"
+        android:layout_marginTop="@dimen/spacing_600"
+        android:layout_marginEnd="@dimen/spacing_600"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textColor="@color/whitish"
+        android:textSize="@dimen/font_size_900"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toTopOf="@+id/sloganTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/sloganTxt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_400"
+        android:layout_marginTop="@dimen/spacing_400"
+        android:layout_marginEnd="@dimen/spacing_400"
+        android:text="@string/moto"
+        android:textAlignment="center"
+        android:textColor="@color/whitish"
+        android:textSize="@dimen/font_size_400"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appNameTxt" />
+
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/spacing_600"
+        android:layout_marginTop="@dimen/spacing_200"
+        android:layout_marginEnd="@dimen/spacing_600"
+        android:layout_marginBottom="@dimen/spacing_200"
+        app:layout_constraintBottom_toTopOf="@+id/loginContainer"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sloganTxt"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/ic_city_svg"
+        android:contentDescription="@string/logo_of_kamerdate" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/loginContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_600"
+        android:layout_marginEnd="@dimen/spacing_600"
+        android:layout_marginBottom="@dimen/spacing_600"
+        android:background="@drawable/roundstyle"
+        android:backgroundTint="@color/creamy_white"
+        android:padding="@dimen/spacing_600"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/editUsernameBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_600"
+            android:background="@drawable/roundstyle"
+            android:backgroundTint="@color/white"
+            android:drawableStart="@drawable/ic_person"
+            android:drawablePadding="@dimen/spacing_200"
+            android:ems="10"
+            android:hint="@string/username"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            android:paddingHorizontal="@dimen/spacing_200"
+            android:paddingVertical="@dimen/spacing_400"
+            android:textColorHint="#757575"
+            android:textSize="@dimen/font_size_300"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginTxt"
+            tools:ignore="SpeakableTextPresentCheck,TextContrastCheck" />
+
+        <CheckBox
+            android:id="@+id/rememberMe"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/spacing_200"
+            android:text="@string/remember_me"
+            android:textColor="#616161"
+            android:textSize="@dimen/font_size_200"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editPasswordBox"
+            tools:ignore="TextContrastCheck" />
+
+        <Button
+            android:id="@+id/loginBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_400"
+            android:paddingHorizontal="@dimen/spacing_600"
+            android:paddingVertical="@dimen/spacing_200"
+            android:text="@string/log_in"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_300"
+            app:backgroundTint="@color/teal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editPasswordBox"
+            tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
+
+        <TextView
+            android:id="@+id/loginTxt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/log_in"
+            android:textAlignment="center"
+            android:textSize="@dimen/font_size_700"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/editPasswordBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_400"
+            android:background="@drawable/roundstyle"
+            android:backgroundTint="@color/white"
+            android:drawableStart="@drawable/ic_security"
+            android:drawablePadding="@dimen/spacing_200"
+            android:ems="10"
+            android:hint="@string/password"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            android:paddingHorizontal="@dimen/spacing_200"
+            android:paddingVertical="@dimen/spacing_400"
+            android:textColorHint="#757575"
+            android:textSize="@dimen/font_size_300"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editUsernameBox"
+            tools:ignore="SpeakableTextPresentCheck,TextContrastCheck,TextContrastCheck" />
+
+        <TextView
+            android:id="@+id/haveAccountTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_200"
+            android:text="@string/don_t_have_an_account"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_200"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
+
+        <TextView
+            android:id="@+id/signUpTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up_dot"
+            android:textColor="#546E7A"
+            android:textSize="@dimen/font_size_200"
+            app:backgroundTint="@color/creamy_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/haveAccountTxt" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
