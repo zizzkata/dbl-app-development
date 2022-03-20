@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 public class LoginPage extends AppCompatActivity {
 
@@ -14,21 +13,19 @@ public class LoginPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
 
-        //Sign Up button leading to RegisterPage
-        /*TextView btn=findViewById(R.id.signUpButton);
-        btn.setOnClickListener(new View.OnClickListener() {
+        // Sign Up button leading to RegisterPage
+        findViewById(R.id.signUpButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginPage.this,RegisterPage.class));
+                startActivity(new Intent(LoginPage.this, RegisterPage.class));
             }
-        });*/
+        });
 
-        //Log In button leading to Discovery page
-        TextView btn=findViewById(R.id.logInButton);
-        btn.setOnClickListener(new View.OnClickListener() {
+        // Log In button leading to Discovery page
+        findViewById(R.id.loginBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginPage.this,RegisterPage.class));
+                startActivity(new Intent(LoginPage.this, DiscoveryLandlordPage.class));
             }
         });
     }
