@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/moto">
 
         <Button
-            android:id="@+id/login_btn"
+            android:id="@+id/loginBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_400"
@@ -180,10 +180,10 @@
             android:textColor="@color/black"
             android:textSize="@dimen/font_size_200"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_btn" />
+            app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
 
         <TextView
-            android:id="@+id/signup_btn"
+            android:id="@+id/signupBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/log_in_dot"

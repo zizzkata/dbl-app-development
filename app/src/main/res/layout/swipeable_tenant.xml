@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LoginContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/creamy_white"
+    app:layout_constraintHeight_percent="0.45"
+    app:layout_constraintHorizontal_bias="0.0">
+
+    <ImageView
+        android:id="@+id/tenantPicture"
+        android:cropToPadding="true"
+        android:layout_width="0dp"
+        android:src="@drawable/test_picture_tenant"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/tenantInfoScroller"
+        app:layout_constraintEnd_toStartOf="@+id/loginRightGuideline"
+        app:layout_constraintHeight_percent="0.4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/loginLeftGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/tenantName"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/likeBtn"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:text="Like"
+        android:textColor="#212121"
+        app:backgroundTint="@color/teal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/loginRightGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/tenantInfoScroller"
+        tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
+
+    <Button
+        android:id="@+id/dislikeBtn"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:text="Dislike"
+        android:textColor="#212121"
+        app:backgroundTint="@color/light_pink"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/loginLeftGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/tenantInfoScroller"
+        tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
+
+    <Button
+        android:id="@+id/neutralBtn"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:text="Neutral"
+        android:textColor="#212121"
+        app:backgroundTint="@color/light_grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/dislikeBtn"
+        app:layout_constraintEnd_toEndOf="@+id/likeBtn"
+        app:layout_constraintTop_toBottomOf="@+id/tenantInfoScroller"
+        tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
+
+    <TextView
+        android:id="@+id/tenantName"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="Default Tenant Name"
+        android:textAlignment="center"
+        android:textColorLink="@color/dark_blue"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tenantPicture"
+        app:layout_constraintEnd_toStartOf="@+id/loginRightGuideline"
+        app:layout_constraintHeight_percent="0.15"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/loginLeftGuideline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <ScrollView
+        android:id="@+id/tenantInfoScroller"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scrollbars="vertical"
+        android:background="@color/white"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHeight_percent="0.15"
+        app:layout_constraintBottom_toTopOf="@+id/likeBtn"
+        app:layout_constraintEnd_toStartOf="@+id/loginRightGuideline"
+        app:layout_constraintStart_toStartOf="@+id/loginLeftGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/tenantPicture"
+        >
+
+        <TextView
+            android:id="@+id/tenantInfoText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sample_tenant_info"
+            />
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/loginLeftGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/loginRightGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

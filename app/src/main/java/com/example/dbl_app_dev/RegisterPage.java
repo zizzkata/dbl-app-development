@@ -15,7 +15,7 @@ public class RegisterPage extends AppCompatActivity {
         setContentView(R.layout.activity_register_page);
 
         //Log in button leading to LoginPage
-        TextView btn=findViewById(R.id.login_btn);
+        TextView btn=findViewById(R.id.loginBtn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
