@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 public class LoginPage extends AppCompatActivity {
 
@@ -26,6 +27,13 @@ public class LoginPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginPage.this, DiscoveryLandlordPage.class));
+        //Sign Up button leading to RegisterPage
+        TextView signUpTxt = findViewById(R.id.signUpTxt);
+        signUpTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginPage.this, RegisterPage.class));
+                overridePendingTransition(0, 0);
             }
         });
     }
