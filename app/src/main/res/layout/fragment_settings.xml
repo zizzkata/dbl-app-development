@@ -11,28 +11,27 @@
         android:layout_height="match_parent"
         android:background="@color/dark_blue">
 
-        <Switch
-            android:id="@+id/switch1"
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/modeSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:minHeight="48dp"
-            android:text="@string/switch"
+            android:layout_margin="@dimen/spacing_400"
+            android:text="@string/tenant"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.891"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/white"/>
 
         <ScrollView
             android:layout_width="343dp"
-            android:layout_height="708dp"
+            android:layout_height="0dp"
             android:background="@drawable/roundstyle"
             android:backgroundTint="@color/creamy_white"
             android:padding="@dimen/spacing_400"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/switch1"
+            app:layout_constraintTop_toBottomOf="@+id/modeSwitch"
             app:layout_constraintVertical_bias="0.35">
 
             <LinearLayout

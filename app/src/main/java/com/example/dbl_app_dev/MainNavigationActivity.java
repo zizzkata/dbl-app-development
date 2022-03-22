@@ -20,8 +20,6 @@ public class MainNavigationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_navigation);
 
         linkNavControllerToNavBar();
-
-        modeSwitchLogic();
     }
 
     /**
@@ -39,9 +37,9 @@ public class MainNavigationActivity extends AppCompatActivity {
      * Encompasses the logic for changing the current mode (Tenant/Landlord) and
      * showing the correct icons on the nav bar
      */
-    private void modeSwitchLogic() {
+    public void modeSwitchLogic(SwitchCompat modeSwitch) {
         // Switch view
-        SwitchCompat modeSwitch = findViewById(R.id.modeSwitch);
+        //SwitchCompat modeSwitch = findViewById(R.id.modeSwitch);
 
         // Getting the menu view
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);

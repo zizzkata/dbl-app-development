@@ -20,15 +20,6 @@
         app:layout_constraintVertical_bias="0.0"
         app:navGraph="@navigation/bottom_nav_bar" />
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/modeSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tenant"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="0dp"

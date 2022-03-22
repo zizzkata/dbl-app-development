@@ -3,20 +3,33 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/drawable/buildings_selector.xml" value="0.1825" />
-        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/drawable/compass_selector.xml" value="0.1825" />
-        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/drawable/heart_selector.xml" value="0.1825" />
-        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/drawable/settings_selector.xml" value="0.1825" />
-        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout-hdpi/activity_login_page.xml" value="0.4697265625" />
-        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout-xxhdpi/activity_login_page.xml" value="0.16458333333333333" />
-        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout/activity_main_navigation.xml" value="0.264" />
-        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout/fragment_first.xml" value="0.27447916666666666" />
-        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout/fragment_landlord_accommodation_management.xml" value="0.24166666666666667" />
-        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout/fragment_landlord_discover.xml" value="0.24166666666666667" />
-        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout/fragment_second.xml" value="0.27447916666666666" />
-        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout/fragment_settings.xml" value="0.24166666666666667" />
-        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout/fragment_third.xml" value="0.27447916666666666" />
-        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/menu/bottom_nav_menu.xml" value="0.264" />
+        <entry key="..\:/MyFiles/App_Development/appdev/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.235" />
+        <entry key="..\:/MyFiles/App_Development/appdev/app/src/main/res/layout-hdpi/activity_login_page.xml" value="0.16120218579234974" />
+        <entry key="..\:/MyFiles/App_Development/appdev/app/src/main/res/layout-hdpi/activity_register_page.xml" value="0.16700819672131148" />
+        <entry key="..\:/MyFiles/App_Development/appdev/app/src/main/res/layout-xxhdpi/activity_login_page.xml" value="0.264" />
+        <entry key="..\:/MyFiles/App_Development/appdev/app/src/main/res/layout-xxhdpi/activity_register_page.xml" value="0.18432971014492755" />
+        <entry key="..\:/MyFiles/App_Development/appdev/app/src/main/res/layout-xxxhdpi/activity_login_page.xml" value="0.213768115942029" />
+        <entry key="..\:/MyFiles/App_Development/appdev/app/src/main/res/layout-xxxhdpi/activity_register_page.xml" value="0.22146739130434784" />
+        <entry key="..\:/MyFiles/App_Development/appdev/app/src/main/res/layout/activity_login_page.xml" value="0.213768115942029" />
+        <entry key="..\:/MyFiles/App_Development/appdev/app/src/main/res/layout/activity_main_navigation.xml" value="0.18432971014492755" />
+        <entry key="..\:/MyFiles/App_Development/appdev/app/src/main/res/layout/activity_register_page.xml" value="0.6" />
+        <entry key="..\:/MyFiles/App_Development/appdev/app/src/main/res/layout/fragment_landlord_accommodation_management.xml" value="0.1" />
+        <entry key="..\:/MyFiles/App_Development/appdev/app/src/main/res/layout/fragment_settings.xml" value="0.2" />
+        <entry key="..\:/MyFiles/App_Development/appdev/app/src/main/res/layout/fragment_tenant_discover.xml" value="0.18432971014492755" />
+        <entry key="..\:/MyFiles/App_Development/appdev/app/src/main/res/layout/fragment_third.xml" value="0.18432971014492755" />
+        <entry key="..\:/MyFiles/App_Development/appdev/app/src/main/res/layout/settings_activity.xml" value="0.18432971014492755" />
+        <entry key="..\:/MyFiles/App_Development/appdev/app/src/main/res/menu/bottom_nav_menu.xml" value="0.21666666666666667" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/drawable/roundMiniStyle.xml" value="0.2745" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/drawable/roundstyle.xml" value="0.2515" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/drawable/roundstylemini.xml" value="0.2745" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout-hdpi/activity_login_page.xml" value="0.4" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout-hdpi/activity_register_page.xml" value="0.6" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout-mdpi/activity_logo_page.xml" value="0.25885416666666666" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout-xxxhdpi/activity_login_page.xml" value="0.23422222222222222" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout-xxxhdpi/activity_register_page.xml" value="0.2" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout/activity_login_page.xml" value="0.8" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout/activity_main.xml" value="0.27355072463768115" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout/activity_register_page.xml" value="0.72" />
       </map>
     </option>
   </component>
