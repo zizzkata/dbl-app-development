@@ -20,9 +20,9 @@
     <string name="don_t_have_an_account">Don\'t have an account?&#160;</string>
     <string name="remember_me">Remember me</string>
     <string name="logo_of_kamerdate">logo of Kamerdate</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="liked">Liked</string>
     <string name="discover">Discover</string>
     <string name="settings">Settings</string>
+    <string name="accommodations">Listings</string>
 </resources>

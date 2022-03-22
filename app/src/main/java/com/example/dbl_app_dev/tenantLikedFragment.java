@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link thirdFragment#newInstance} factory method to
+ * Use the {@link tenantLikedFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class thirdFragment extends Fragment {
+public class tenantLikedFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +24,7 @@ public class thirdFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public thirdFragment() {
+    public tenantLikedFragment() {
         // Required empty public constructor
     }
 
@@ -34,11 +34,11 @@ public class thirdFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment thirdFragment.
+     * @return A new instance of fragment firstFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static thirdFragment newInstance(String param1, String param2) {
-        thirdFragment fragment = new thirdFragment();
+    public static tenantLikedFragment newInstance(String param1, String param2) {
+        tenantLikedFragment fragment = new tenantLikedFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +59,6 @@ public class thirdFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_third, container, false);
+        return inflater.inflate(R.layout.fragment_tenant_liked, container, false);
     }
 }
