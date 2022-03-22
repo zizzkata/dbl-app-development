@@ -3,9 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/drawable/buildings_selector.xml" value="0.1825" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/drawable/compass_selector.xml" value="0.1825" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/drawable/heart_selector.xml" value="0.1825" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/drawable/settings_selector.xml" value="0.1825" />
         <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout-hdpi/activity_login_page.xml" value="0.4697265625" />
         <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout-xxhdpi/activity_login_page.xml" value="0.16458333333333333" />
-        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout/activity_main_navigation.xml" value="0.17335526315789473" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout/activity_main_navigation.xml" value="0.1" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout/fragment_first.xml" value="0.27447916666666666" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout/fragment_second.xml" value="0.27447916666666666" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/layout/fragment_third.xml" value="0.27447916666666666" />
+        <entry key="..\:/NOTonOneDrive/dbl-app-development/app/src/main/res/menu/bottom_nav_menu.xml" value="0.264" />
       </map>
     </option>
   </component>
