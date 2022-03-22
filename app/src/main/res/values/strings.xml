@@ -37,4 +37,6 @@
     <string name="profile_photo">Profile Photo</string>
     <string name="confirm_new_password">Confirm New Password</string>
     <string name="ivan">Ivan</string>
+    <string name="tenant">Tenant</string>
+    <string name="landlord">Landlord</string>
 </resources>
