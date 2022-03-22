@@ -1,12 +1,11 @@
 package com.example.dbl_app_dev;
 
 import android.annotation.SuppressLint;
-import android.media.Image;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.widget.FrameLayout;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,6 +46,22 @@ public class DiscoveryLandlordPage extends AppCompatActivity implements RatingHa
             }
             return true;
         });
+
+        Button likeBtn = findViewById(R.id.likeBtnTenant);
+        Button dislikeBtn = findViewById(R.id.dislikeBtnTenant);
+        Button neutralBtn = findViewById(R.id.neutralBtnTenant);
+        likeBtn.setOnClickListener(view -> {
+            positiveRating();
+            nextCard(nameTxt, imageView, descriptionTxt);
+        });
+        dislikeBtn.setOnClickListener(view -> {
+            negativeRating();
+            nextCard(nameTxt, imageView, descriptionTxt);
+        });
+        neutralBtn.setOnClickListener(view -> {
+            neutralRating();
+            nextCard(nameTxt, imageView, descriptionTxt);
+        });
     }
 
     private void nextCard(TextView cardTitle, ImageView cardImage, TextView cardDescription) {
@@ -78,7 +93,9 @@ public class DiscoveryLandlordPage extends AppCompatActivity implements RatingHa
      */
     @Override
     public void positiveRating() {
-        Log.i("extra_debug", "Positive Rating");
+        if (tenantInfo.size() > 0) {
+            Log.i("extra_debug", "Positive Rating");
+        }
     }
 
     /**
@@ -86,7 +103,9 @@ public class DiscoveryLandlordPage extends AppCompatActivity implements RatingHa
      */
     @Override
     public void negativeRating() {
-        Log.i("extra_debug", "Negative Rating");
+        if (tenantInfo.size() > 0) {
+            Log.i("extra_debug", "Negative Rating");
+        }
     }
 
     /**
@@ -94,6 +113,8 @@ public class DiscoveryLandlordPage extends AppCompatActivity implements RatingHa
      */
     @Override
     public void neutralRating() {
-        Log.i("extra_debug", "Neutral Rating");
+        if (tenantInfo.size() > 0) {
+            Log.i("extra_debug", "Neutral Rating");
+        }
     }
 }

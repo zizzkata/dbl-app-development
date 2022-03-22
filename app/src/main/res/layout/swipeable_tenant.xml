@@ -25,7 +25,7 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
-        android:id="@+id/likeBtn"
+        android:id="@+id/likeBtnTenant"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:text="Like"
@@ -37,7 +37,7 @@
         tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
 
     <Button
-        android:id="@+id/dislikeBtn"
+        android:id="@+id/dislikeBtnTenant"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:text="Dislike"
@@ -49,15 +49,15 @@
         tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
 
     <Button
-        android:id="@+id/neutralBtn"
+        android:id="@+id/neutralBtnTenant"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:text="Neutral"
         android:textColor="#212121"
         app:backgroundTint="@color/light_gray"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/dislikeBtn"
-        app:layout_constraintEnd_toEndOf="@+id/likeBtn"
+        app:layout_constraintStart_toStartOf="@+id/dislikeBtnTenant"
+        app:layout_constraintEnd_toEndOf="@+id/likeBtnTenant"
         app:layout_constraintTop_toBottomOf="@+id/tenantInfoScroller"
         tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
 
@@ -86,7 +86,7 @@
         android:background="@color/white"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHeight_percent="0.15"
-        app:layout_constraintBottom_toTopOf="@+id/likeBtn"
+        app:layout_constraintBottom_toTopOf="@+id/likeBtnTenant"
         app:layout_constraintEnd_toStartOf="@+id/loginRightGuideline"
         app:layout_constraintStart_toStartOf="@+id/loginLeftGuideline"
         app:layout_constraintTop_toBottomOf="@+id/tenantPicture"
