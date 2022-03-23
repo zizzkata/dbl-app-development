@@ -21,13 +21,23 @@ public class LoginPage extends AppCompatActivity {
                 startActivity(new Intent(LoginPage.this, DiscoveryLandlordPage.class));
             }
         });
-        
-        //Sign Up button leading to RegisterPage
+
+        // Sign Up button leading to RegisterPage
         TextView signUpTxt = findViewById(R.id.signUpTxt);
         signUpTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginPage.this, RegisterPage.class));
+                overridePendingTransition(0, 0);
+            }
+        });
+
+        // Log in button leading to MainNavigationPage
+        TextView loginBtn = findViewById(R.id.loginBtn);
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginPage.this, MainNavigationActivity.class));
                 overridePendingTransition(0, 0);
             }
         });

@@ -10,7 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Kamerdate">
         <activity
+            android:name=".MainNavigationActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterPage"
+            android:exported="true" />
+        <activity
+            android:name=".LoginPage"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +32,7 @@
             android:exported="true"></activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>
