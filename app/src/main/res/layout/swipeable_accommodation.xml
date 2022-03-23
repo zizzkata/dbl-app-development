@@ -19,7 +19,7 @@
         app:layout_constraintBottom_toTopOf="@+id/accommodationName"
         app:layout_constraintEnd_toStartOf="@+id/accommodationCardRightGuideLine"
         app:layout_constraintHeight_percent="0.55"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/accommodationCardLeftGuideLine"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
@@ -34,6 +34,36 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/accommodationCardRightGuideLine"
         app:layout_constraintTop_toBottomOf="@+id/accommodationInfoScroller"
+        tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
+
+    <Button
+        android:id="@+id/accommodationARBtn"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:text="AR"
+        android:textColor="#212121"
+        app:backgroundTint="@color/light_gray"
+        app:layout_constraintBottom_toBottomOf="@+id/accommodationPicture"
+        app:layout_constraintEnd_toStartOf="@+id/accommodationCardRightGuideLine"
+        app:layout_constraintHorizontal_bias="0.93"
+        app:layout_constraintStart_toStartOf="@+id/accommodationCardLeftGuideLine"
+        app:layout_constraintTop_toTopOf="@+id/accommodationPicture"
+        app:layout_constraintVertical_bias="0.05"
+        tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
+
+    <Button
+        android:id="@+id/accommodationSettingsBtn"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:text="Filters"
+        android:textColor="#212121"
+        app:backgroundTint="@color/light_gray"
+        app:layout_constraintBottom_toBottomOf="@+id/accommodationPicture"
+        app:layout_constraintEnd_toStartOf="@+id/accommodationCardRightGuideLine"
+        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintStart_toStartOf="@+id/accommodationCardLeftGuideLine"
+        app:layout_constraintTop_toTopOf="@+id/accommodationPicture"
+        app:layout_constraintVertical_bias="0.05"
         tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
 
     <Button
