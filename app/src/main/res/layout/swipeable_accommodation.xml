@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/accommodationCard"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/creamy_white"
+    app:layout_constraintHeight_percent="0.45"
+    app:layout_constraintHorizontal_bias="0.0">
+
+    <ImageView
+        android:id="@+id/accommodationPicture"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_accommodation_picture"
+        app:layout_constraintBottom_toTopOf="@+id/accommodationName"
+        app:layout_constraintEnd_toStartOf="@+id/accommodationCardRightGuideLine"
+        app:layout_constraintHeight_percent="0.55"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/accommodationCardLeftGuideLine"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/accommodationLikeBtn"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:text="Like"
+        android:textColor="#212121"
+        app:backgroundTint="@color/teal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/accommodationCardRightGuideLine"
+        app:layout_constraintTop_toBottomOf="@+id/accommodationInfoScroller"
+        tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
+
+    <Button
+        android:id="@+id/accommodationDislikeBtn"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:text="Dislike"
+        android:textColor="#212121"
+        app:backgroundTint="@color/light_pink"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/accommodationCardLeftGuideLine"
+        app:layout_constraintTop_toBottomOf="@+id/accommodationInfoScroller"
+        tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
+
+    <TextView
+        android:id="@+id/accommodationName"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="Default Accomodation Name\nPrice: 700 eur/pm, excl."
+        android:textColorLink="@color/dark_blue"
+        android:textSize="20sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toTopOf="@+id/accommodationInfoScroller"
+        app:layout_constraintEnd_toStartOf="@+id/accommodationCardRightGuideLine"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintStart_toStartOf="@+id/accommodationCardLeftGuideLine"
+        app:layout_constraintTop_toBottomOf="@+id/accommodationPicture"
+        app:layout_constraintWidth_percent="0.8" />
+
+    <ScrollView
+        android:id="@+id/accommodationInfoScroller"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/accommodationLikeBtn"
+        app:layout_constraintEnd_toStartOf="@+id/accommodationCardRightGuideLine"
+        app:layout_constraintHeight_percent="0.15"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/accommodationCardLeftGuideLine"
+        app:layout_constraintTop_toBottomOf="@+id/accommodationName">
+
+        <TextView
+            android:id="@+id/accommodationDescription"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sample_accommodation_info" />
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/accommodationCardLeftGuideLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/accommodationCardRightGuideLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

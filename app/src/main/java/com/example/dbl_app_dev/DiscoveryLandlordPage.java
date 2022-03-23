@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -47,9 +46,9 @@ public class DiscoveryLandlordPage extends AppCompatActivity implements RatingHa
             return true;
         });
 
-        Button likeBtn = findViewById(R.id.likeBtnTenant);
-        Button dislikeBtn = findViewById(R.id.dislikeBtnTenant);
-        Button neutralBtn = findViewById(R.id.neutralBtnTenant);
+        Button likeBtn = findViewById(R.id.tenantLikeBtn);
+        Button dislikeBtn = findViewById(R.id.tenantDislikeBtn);
+        Button neutralBtn = findViewById(R.id.tenantNeutralBtn);
         likeBtn.setOnClickListener(view -> {
             positiveRating();
             nextCard(nameTxt, imageView, descriptionTxt);

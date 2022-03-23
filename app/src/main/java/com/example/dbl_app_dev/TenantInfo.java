@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class that holds the information of a Tenant card
+ * Contains the information displayed in a tenant card
  */
 public class TenantInfo {
     private String description;

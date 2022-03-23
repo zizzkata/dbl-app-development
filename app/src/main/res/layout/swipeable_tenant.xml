@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/LoginContainer"
+    android:id="@+id/tenantCard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/creamy_white"
@@ -11,53 +11,53 @@
 
     <ImageView
         android:id="@+id/tenantPicture"
-        android:cropToPadding="true"
         android:layout_width="0dp"
-        android:src="@drawable/test_picture_tenant"
         android:layout_height="0dp"
         android:background="@color/white"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_tenant_picture"
         app:layout_constraintBottom_toTopOf="@+id/tenantInfoScroller"
-        app:layout_constraintEnd_toStartOf="@+id/loginRightGuideline"
-        app:layout_constraintHeight_percent="0.4"
+        app:layout_constraintEnd_toStartOf="@+id/tenantRightGuideline"
+        app:layout_constraintHeight_percent="0.45"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/loginLeftGuideline"
+        app:layout_constraintStart_toStartOf="@+id/tenantLeftGuideline"
         app:layout_constraintTop_toBottomOf="@+id/tenantName"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
-        android:id="@+id/likeBtnTenant"
+        android:id="@+id/tenantLikeBtn"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:text="Like"
         android:textColor="#212121"
         app:backgroundTint="@color/teal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/loginRightGuideline"
+        app:layout_constraintEnd_toStartOf="@+id/tenantRightGuideline"
         app:layout_constraintTop_toBottomOf="@+id/tenantInfoScroller"
         tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
 
     <Button
-        android:id="@+id/dislikeBtnTenant"
+        android:id="@+id/tenantDislikeBtn"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:text="Dislike"
         android:textColor="#212121"
         app:backgroundTint="@color/light_pink"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/loginLeftGuideline"
+        app:layout_constraintStart_toStartOf="@+id/tenantLeftGuideline"
         app:layout_constraintTop_toBottomOf="@+id/tenantInfoScroller"
         tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
 
     <Button
-        android:id="@+id/neutralBtnTenant"
+        android:id="@+id/tenantNeutralBtn"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:text="Neutral"
         android:textColor="#212121"
         app:backgroundTint="@color/light_gray"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/dislikeBtnTenant"
-        app:layout_constraintEnd_toEndOf="@+id/likeBtnTenant"
+        app:layout_constraintEnd_toEndOf="@+id/tenantLikeBtn"
+        app:layout_constraintStart_toStartOf="@+id/tenantDislikeBtn"
         app:layout_constraintTop_toBottomOf="@+id/tenantInfoScroller"
         tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
 
@@ -71,37 +71,34 @@
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tenantPicture"
-        app:layout_constraintEnd_toStartOf="@+id/loginRightGuideline"
-        app:layout_constraintHeight_percent="0.15"
+        app:layout_constraintEnd_toStartOf="@+id/tenantRightGuideline"
+        app:layout_constraintHeight_percent="0.05"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/loginLeftGuideline"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.6" />
+        app:layout_constraintStart_toStartOf="@+id/tenantLeftGuideline"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:id="@+id/tenantInfoScroller"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scrollbars="vertical"
         android:background="@color/white"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/tenantLikeBtn"
+        app:layout_constraintEnd_toStartOf="@+id/tenantRightGuideline"
         app:layout_constraintHeight_percent="0.15"
-        app:layout_constraintBottom_toTopOf="@+id/likeBtnTenant"
-        app:layout_constraintEnd_toStartOf="@+id/loginRightGuideline"
-        app:layout_constraintStart_toStartOf="@+id/loginLeftGuideline"
-        app:layout_constraintTop_toBottomOf="@+id/tenantPicture"
-        >
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/tenantLeftGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/tenantPicture">
 
         <TextView
             android:id="@+id/tenantDescription"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/sample_tenant_info"
-            />
+            android:text="@string/sample_tenant_info" />
     </ScrollView>
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/loginLeftGuideline"
+        android:id="@+id/tenantLeftGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -109,7 +106,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/loginRightGuideline"
+        android:id="@+id/tenantRightGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
