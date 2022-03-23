@@ -39,7 +39,7 @@ public class MainNavigationActivity extends AppCompatActivity {
      */
     public void modeSwitchLogic(SwitchCompat modeSwitch) {
         // Switch view
-        //SwitchCompat modeSwitch = findViewById(R.id.modeSwitch);
+        // SwitchCompat modeSwitch = findViewById(R.id.modeSwitch);
 
         // Getting the menu view
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
