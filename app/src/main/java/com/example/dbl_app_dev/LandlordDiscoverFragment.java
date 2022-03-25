@@ -18,20 +18,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * Discovery page for the user, if they are in "Landlord" mode
+ * Discovery page fragment, if the user is in "Landlord" mode
  *
  * Use the {@link LandlordDiscoverFragment #newInstance} factory method to
  * create an instance of this fragment.
  */
 public class LandlordDiscoverFragment extends Fragment implements RatingHandler {
 
-    private Queue<TenantInfo> tenantInfo = new LinkedList<>();
+    private Deque<TenantInfo> tenantInfo = new LinkedList<>();
     private GestureDetector gestureDetector;
-    private TenantInfo currentTenantInfo;    // currently viewed tenant
+    private TenantInfo currentTenantInfo = null;    // currently viewed tenant
 
     public LandlordDiscoverFragment() {
         // Required empty public constructor
@@ -70,7 +71,14 @@ public class LandlordDiscoverFragment extends Fragment implements RatingHandler 
         TextView nameTxt = view.findViewById(R.id.tenantName);
         TextView descriptionTxt = view.findViewById(R.id.tenantDescription);
         ImageView imageView = view.findViewById(R.id.tenantPicture);
-        nextCard(nameTxt, imageView, descriptionTxt);
+
+        // makes sure that the a card is not discarded if it is not rated
+        if (currentTenantInfo == null) {
+            nextCard(nameTxt, imageView, descriptionTxt);
+        } else {
+            tenantInfo.addFirst(currentTenantInfo);
+            nextCard(nameTxt, imageView, descriptionTxt);
+        }
 
         this.gestureDetector = new GestureDetector(getContext(), new CardSwipeListener(this));
         topCard.setOnTouchListener((v, event) -> {
