@@ -2,6 +2,7 @@ package com.example.dbl_app_dev;
 
 import android.graphics.Bitmap;
 import android.media.Image;
+import android.view.WindowManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
  * Contains the information displayed in an accommodation card
  */
 public class AccommodationInfo {
+    private int currentPhoto;
     private String description;
     private String name;
     private List<Bitmap> photos;
@@ -22,14 +24,25 @@ public class AccommodationInfo {
         this.rent = rent;
         this.name = name;
         this.photoPanoramic = photoPanoramic;
+        this.currentPhoto = 0;
     }
 
     public String getName() {
         return name;
     }
+
     public String getDescription() {
         return description;
     }
+
+    public Bitmap getCurrentPhoto() {
+        assert photos != null;
+        return photos.get(currentPhoto);
+    }
+
+    public void incrementPhotoIndex() { currentPhoto++; }
+
+    public void decrementPhotoIndex() { currentPhoto--; }
 
     public List<Bitmap> getPhotos() {
         return photos;

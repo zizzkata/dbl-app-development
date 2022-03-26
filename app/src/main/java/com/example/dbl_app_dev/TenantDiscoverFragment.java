@@ -1,6 +1,7 @@
 package com.example.dbl_app_dev;
 
 import android.annotation.SuppressLint;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,19 +21,20 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * Discovery page fragment, if the user is in "Tenant" mode
- * <p>
+ *
  * Use the {@link TenantDiscoverFragment #newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TenantDiscoverFragment extends Fragment implements RatingHandler {
+public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
 
     private Deque<AccommodationInfo> accommodationInfo = new LinkedList<>();
-    private GestureDetector gestureDetector;
+    private GestureDetector horizontalSwipeDetector;
+    private GestureDetector verticalSwipeDetector;
     private AccommodationInfo currentAccommodationInfo = null;    // currently viewed accommodation
+    private ImageView cardImageView;
 
     public TenantDiscoverFragment() {
         // Required empty public constructor
@@ -69,20 +71,13 @@ public class TenantDiscoverFragment extends Fragment implements RatingHandler {
         ConstraintLayout topCard = view.findViewById(R.id.topCard);
         TextView nameTxt = view.findViewById(R.id.accommodationName);
         TextView descriptionTxt = view.findViewById(R.id.accommodationDescription);
-        ImageView imageView = view.findViewById(R.id.accommodationPicture);
+        cardImageView = view.findViewById(R.id.accommodationPicture);
 
-        // makes sure that the a card is not discarded if it is not rated
-        if (currentAccommodationInfo == null) {
-            nextCard(nameTxt, imageView, descriptionTxt);
-        } else {
-            accommodationInfo.addFirst(currentAccommodationInfo);
-            nextCard(nameTxt, imageView, descriptionTxt);
-        }
-
-        this.gestureDetector = new GestureDetector(getContext(), new CardSwipeListener(this));
+        this.horizontalSwipeDetector = new GestureDetector(getContext(), new CardSwipeListener(this, true, false));
         topCard.setOnTouchListener((v, event) -> {
-            if (gestureDetector.onTouchEvent(event)) {
-                nextCard(nameTxt, imageView, descriptionTxt);
+            if (horizontalSwipeDetector.onTouchEvent(event)) {
+                nextCard(nameTxt, cardImageView, descriptionTxt);
+                return false;
             }
             return true;
         });
@@ -90,25 +85,52 @@ public class TenantDiscoverFragment extends Fragment implements RatingHandler {
         Button likeBtn = view.findViewById(R.id.accommodationLikeBtn);
         Button dislikeBtn = view.findViewById(R.id.accommodationDislikeBtn);
         likeBtn.setOnClickListener(v -> {
-            positiveRating();
-            nextCard(nameTxt, imageView, descriptionTxt);
+            swipedRight();
+            nextCard(nameTxt, cardImageView, descriptionTxt);
         });
         dislikeBtn.setOnClickListener(v -> {
-            negativeRating();
-            nextCard(nameTxt, imageView, descriptionTxt);
+            swipedLeft();
+            nextCard(nameTxt, cardImageView, descriptionTxt);
         });
+
+        // makes sure that the a card is not discarded if it is not rated
+        if (currentAccommodationInfo == null) {
+            nextCard(nameTxt, cardImageView, descriptionTxt);
+        } else {
+            displayCard(nameTxt, cardImageView, descriptionTxt);
+        }
     }
 
+    private void nextImage(ImageView cardImage) {
+        currentAccommodationInfo.incrementPhotoIndex();
+        cardImage.setImageBitmap(currentAccommodationInfo.getCurrentPhoto());
+    }
+
+    private void prevImage(ImageView cardImage) {
+        currentAccommodationInfo.decrementPhotoIndex();
+        cardImage.setImageBitmap(currentAccommodationInfo.getCurrentPhoto());
+    }
+
+    /**
+     * Updates the information on currentAccommodationInfo and displays it
+     */
     private void nextCard(TextView cardTitle, ImageView cardImage, TextView cardDescription) {
         if (accommodationInfo.size() > 0) {
             currentAccommodationInfo = this.accommodationInfo.remove();
-            cardTitle.setText(currentAccommodationInfo.getFormattedName());
-            cardDescription.setText(currentAccommodationInfo.getDescription());
-//            cardImage.setImageBitmap(currentAccommodationInfo.getPhotos().get(0));
+            displayCard(cardTitle, cardImage, cardDescription);
         } else {
             cardDescription.setText("...");
             cardTitle.setText("No more swipes in your area");
         }
+    }
+
+    /**
+     * Displays the information stored in currentAccommodationInfo
+     */
+    private void displayCard(TextView cardTitle, ImageView cardImage, TextView cardDescription) {
+        cardTitle.setText(currentAccommodationInfo.getFormattedName());
+        cardDescription.setText(currentAccommodationInfo.getDescription());
+//        cardImage.setImageBitmap(currentAccommodationInfo.getPhotos().get(0));
     }
 
     /**
@@ -127,9 +149,9 @@ public class TenantDiscoverFragment extends Fragment implements RatingHandler {
      * POST's the positive rating given to the viewed accommodation to the backend
      */
     @Override
-    public void positiveRating() {
+    public void swipedRight() {
         if (accommodationInfo.size() > 0) {
-            Log.i("extra_debug", "Positive Rating");
+            Log.d("extra_debug", "Positive Rating");
         }
     }
 
@@ -137,16 +159,19 @@ public class TenantDiscoverFragment extends Fragment implements RatingHandler {
      * POST's the negative rating given to the viewed accommodation to the backend
      */
     @Override
-    public void negativeRating() {
+    public void swipedLeft() {
         if (accommodationInfo.size() > 0) {
-            Log.i("extra_debug", "Negative Rating");
+            Log.d("extra_debug", "Negative Rating");
         }
     }
 
-    /**
-     * Cannot neutrally rate an accommodation
-     */
-    @Override
-    public void neutralRating() {
+    public void swipedUp() {
+        Log.d("extra_debug", "Attempting to display previous card");
+        // TODO:        prevImage(cardImageView);
+    }
+
+    public void swipedDown() {
+        Log.d("extra_debug", "Attempting to display next card");
+        // TODO:        nextImage(cardImageView);
     }
 }
