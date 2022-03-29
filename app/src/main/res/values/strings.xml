@@ -84,4 +84,5 @@
     <string name="add_listing_surface_area">Add listing surface area</string>
     <string name="edit_listing_details">Edit Listing Details</string>
     <string name="save">Save</string>
+    <string name="sample_price_amount">€400</string>
 </resources>
