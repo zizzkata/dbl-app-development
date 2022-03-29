@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/accommodationPopupContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@drawable/roundstyle"
+    android:backgroundTint="@color/whitish"
+    android:paddingBottom="12dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/titleContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/popupTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_listing"
+            android:textColor="@color/dark_blue"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:id="@+id/listingScrollView"
+        android:layout_width="0dp"
+        android:layout_height="432dp"
+        android:contentDescription="@string/scrollable_container_holding_the_new_listing_properties"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleContainer">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp">
+
+            <TextView
+                android:id="@+id/imagesHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="@string/pictures"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/imagesSeparator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="2dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imagesHeader" />
+
+            <TextView
+                android:id="@+id/panoramaText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/panorama"
+                app:layout_constraintStart_toStartOf="@id/panoramaImage"
+                app:layout_constraintTop_toBottomOf="@id/imagesSeparator"
+                tools:ignore="TextContrastCheck" />
+
+            <ImageView
+                android:id="@+id/panoramaImage"
+                android:layout_width="125dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="4dp"
+                android:contentDescription="@string/image_to_show_the_selected_panorama_images_for_the_listing"
+                android:scaleType="centerCrop"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/normalImage"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/panoramaText"
+                app:srcCompat="@drawable/default_accommodation_picture"
+                tools:ignore="RedundantDescriptionCheck" />
+
+            <TextView
+                android:id="@+id/panoramaImageCountText"
+                android:layout_width="30dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="-15dp"
+                android:layout_marginEnd="-15dp"
+                android:background="@drawable/circlestyle"
+                android:backgroundTint="@color/dark_blue"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/sample_99"
+                android:textColor="@color/white"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="@+id/panoramaImage"
+                app:layout_constraintTop_toTopOf="@+id/panoramaImage" />
+
+            <TextView
+                android:id="@+id/panoramaText1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/normal"
+                app:layout_constraintBottom_toTopOf="@+id/normalImage"
+                app:layout_constraintStart_toStartOf="@+id/normalImage"
+                tools:ignore="TextContrastCheck" />
+
+            <ImageView
+                android:id="@+id/normalImage"
+                android:layout_width="125dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/image_to_show_the_selected_normal_images_for_the_listing"
+                android:scaleType="centerCrop"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/panoramaImage"
+                app:layout_constraintTop_toTopOf="@id/panoramaImage"
+                app:srcCompat="@drawable/default_accommodation_picture"
+                tools:ignore="RedundantDescriptionCheck" />
+
+            <TextView
+                android:id="@+id/normalImageCountText"
+                android:layout_width="30dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="-15dp"
+                android:layout_marginEnd="-15dp"
+                android:background="@drawable/circlestyle"
+                android:backgroundTint="@color/dark_blue"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/sample_99"
+                android:textColor="@color/white"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="@+id/normalImage"
+                app:layout_constraintTop_toTopOf="@+id/normalImage" />
+
+            <TextView
+                android:id="@+id/locationHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/location"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/panoramaImage" />
+
+            <View
+                android:id="@+id/locationSeparator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="2dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/locationHeader" />
+
+            <EditText
+                android:id="@+id/addressTxt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/roundstyle"
+                android:backgroundTint="@color/white"
+                android:hint="@string/street"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="16dp"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/locationSeparator"
+                tools:ignore="TextContrastCheck" />
+
+            <EditText
+                android:id="@+id/apartmentNameText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/roundstyle"
+                android:backgroundTint="@color/white"
+                android:hint="@string/house_number"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="16dp"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/addressTxt"
+                tools:ignore="TextContrastCheck" />
+
+            <EditText
+                android:id="@+id/cityTxt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/roundstyle"
+                android:backgroundTint="@color/white"
+                android:hint="@string/city"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="16dp"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/apartmentNameText"
+                tools:ignore="TextContrastCheck" />
+
+            <EditText
+                android:id="@+id/postcodeTxt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/roundstyle"
+                android:backgroundTint="@color/white"
+                android:hint="@string/postcode"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="16dp"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cityTxt"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/propertiesHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/properties"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/postcodeTxt" />
+
+            <View
+                android:id="@+id/propertiesSeparator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="2dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/propertiesHeader" />
+
+            <EditText
+                android:id="@+id/priceTxt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/roundstyle"
+                android:backgroundTint="@color/white"
+                android:hint="@string/monthly_rental_price"
+                android:importantForAutofill="no"
+                android:inputType="numberDecimal"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="16dp"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/propertiesSeparator"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/availabilityTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/availability"
+                android:textSize="18sp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/priceTxt"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/dateFormatTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="1dp"
+                android:text="@string/dd_mm_yyyy"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/availabilityTxt"
+                app:layout_constraintStart_toEndOf="@+id/availabilityTxt"
+                tools:ignore="TextContrastCheck" />
+
+            <EditText
+                android:id="@+id/startDateEditTxt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/roundstyle"
+                android:backgroundTint="@color/white"
+                android:hint="@string/start_date"
+                android:importantForAutofill="no"
+                android:inputType="datetime"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="16dp"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/endDateEditTxt"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/availabilityTxt"
+                tools:ignore="TextContrastCheck" />
+
+            <EditText
+                android:id="@+id/endDateEditTxt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:background="@drawable/roundstyle"
+                android:backgroundTint="@color/white"
+                android:hint="@string/end_date"
+                android:importantForAutofill="no"
+                android:inputType="datetime"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="16dp"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/startDateEditTxt"
+                app:layout_constraintTop_toTopOf="@+id/startDateEditTxt"
+                tools:ignore="TextContrastCheck" />
+
+            <EditText
+                android:id="@+id/surfaceAreaTxt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/roundstyle"
+                android:backgroundTint="@color/white"
+                android:hint="@string/surface_area"
+                android:importantForAutofill="no"
+                android:inputType="numberDecimal"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="16dp"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/startDateEditTxt"
+                tools:ignore="TextContrastCheck" />
+
+            <EditText
+                android:id="@+id/descriptionTxt"
+                android:layout_width="0dp"
+                android:layout_height="156dp"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/roundstyle"
+                android:backgroundTint="@color/white"
+                android:enabled="true"
+                android:focusable="true"
+                android:foregroundGravity="top"
+                android:gravity="start|top"
+                android:hint="@string/add_listing_description"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:isScrollContainer="true"
+                android:maxLines="6"
+                android:overScrollMode="always"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="16dp"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical"
+                android:scrollHorizontally="false"
+                android:selectAllOnFocus="true"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/surfaceAreaTxt"
+                tools:ignore="TextContrastCheck" />
+
+            <CheckBox
+                android:id="@+id/furnishedCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:importantForAutofill="no"
+                android:text="@string/is_the_listing_furnished"
+                android:textSize="16sp"
+                android:theme="@style/coloredCheckBox"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/descriptionTxt"
+                tools:ignore="TextContrastCheck" />
+
+            <CheckBox
+                android:id="@+id/smokerCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:importantForAutofill="no"
+                android:text="@string/are_smokers_allowed"
+                android:textSize="16sp"
+                android:theme="@style/coloredCheckBox"
+                app:layout_constraintStart_toStartOf="@+id/furnishedCheckBox"
+                app:layout_constraintTop_toBottomOf="@id/furnishedCheckBox"
+                tools:ignore="TextContrastCheck" />
+
+            <CheckBox
+                android:id="@+id/petsCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:importantForAutofill="no"
+                android:text="@string/are_pets_allowed"
+                android:textSize="16sp"
+                android:theme="@style/coloredCheckBox"
+                app:layout_constraintStart_toStartOf="@+id/furnishedCheckBox"
+                app:layout_constraintTop_toBottomOf="@id/smokerCheckBox"
+                tools:ignore="TextContrastCheck" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/buttonsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="18dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/listingScrollView">
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/roundstyle"
+            android:paddingVertical="@dimen/spacing_200"
+            android:text="@string/cancel"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_300"
+            app:backgroundTint="#a1a1a1"
+            app:layout_constraintEnd_toStartOf="@id/createButton"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TextContrastCheck" />
+
+        <Button
+            android:id="@+id/createButton"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/roundstyle"
+            android:paddingVertical="@dimen/spacing_200"
+            android:text="@string/create"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_300"
+            app:backgroundTint="@color/teal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TextContrastCheck" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

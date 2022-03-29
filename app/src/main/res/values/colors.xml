@@ -8,4 +8,6 @@
     <color name="teal">#4297a0</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="heart_red">#CF1F36</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>
