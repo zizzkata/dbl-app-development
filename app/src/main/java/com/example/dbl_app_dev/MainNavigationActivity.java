@@ -83,7 +83,7 @@ public class MainNavigationActivity extends AppCompatActivity {
      */
     public void editAccommodationDialog() {
         View myView = getLayoutInflater().inflate(R.layout.edit_accommodation_pop_up, null);
-        (new EditAccommDialogDisplayer(this, R.id.cancelButton, R.id.saveButton, myView))
+        (new EditAccommDialogDisplayer(this, R.id.cancelButton, R.id.saveBtn, myView))
                 .displayPopupDialog();
     }
 }

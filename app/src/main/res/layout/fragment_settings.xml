@@ -30,11 +30,11 @@
             android:layout_marginEnd="16dp"
             android:background="@drawable/roundstyle"
             android:backgroundTint="@color/creamy_white"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/modeSwitch"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintBottom_toTopOf="@id/test123">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -201,6 +201,7 @@
                         android:minHeight="48dp"
                         android:padding="10dp"
                         android:textColorHint="#757575" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -323,6 +324,57 @@
 
             </LinearLayout>
         </ScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/test123"
+            android:layout_width="561dp"
+            android:layout_height="85dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/logoutBtn"
+                android:layout_width="140dp"
+                android:layout_height="50dp"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginHorizontal="50dp"
+                android:layout_marginEnd="112dp"
+                android:layout_weight="1"
+                android:background="@drawable/roundstyle"
+                android:backgroundTint="@color/heart_red"
+                android:paddingVertical="@dimen/spacing_200"
+                android:text="Log out"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_size_300"
+                app:backgroundTint="@color/heart_red"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.485"
+                tools:ignore="TextContrastCheck" />
+
+            <Button
+                android:id="@+id/saveBtn"
+                android:layout_width="140dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="120dp"
+                android:background="@drawable/roundstyle"
+                android:paddingVertical="@dimen/spacing_200"
+                android:text="@string/save"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_size_300"
+                app:backgroundTint="@color/teal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/logoutBtn"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.457"
+                tools:ignore="TextContrastCheck" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
