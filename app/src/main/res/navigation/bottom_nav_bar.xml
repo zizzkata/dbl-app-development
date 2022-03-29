@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_nav_bar"
+    app:startDestination="@id/tenantDiscoverFragment">
+
+    <fragment
+        android:id="@+id/tenantLikedFragment"
+        android:name="com.example.dbl_app_dev.TenantLikedFragment"
+        android:label="fragment_first"
+        tools:layout="@layout/fragment_tenant_liked" />
+    <fragment
+        android:id="@+id/landlordAccommodationManagementFragment"
+        android:name="com.example.dbl_app_dev.LandlordAccommodationManagementFragment"
+        android:label="fragment_landlord_accommodation_management"
+        tools:layout="@layout/fragment_landlord_accommodation_management" />
+    <fragment
+        android:id="@+id/tenantDiscoverFragment"
+        android:name="com.example.dbl_app_dev.TenantDiscoverFragment"
+        android:label="fragment_second"
+        tools:layout="@layout/fragment_tenant_discover" />
+    <fragment
+        android:id="@+id/landlordDiscoverFragment"
+        android:name="com.example.dbl_app_dev.LandlordDiscoverFragment"
+        android:label="fragment_landlord_discover"
+        tools:layout="@layout/fragment_landlord_discover" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.dbl_app_dev.SettingsFragment"
+        android:label="fragment_third"
+        tools:layout="@layout/fragment_settings" />
+</navigation>

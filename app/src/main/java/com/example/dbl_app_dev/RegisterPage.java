@@ -14,7 +14,7 @@ public class RegisterPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_page);
 
-        //Log in button leading to LoginPage
+        // Log in button leading to LoginPage
         TextView loginTxt = findViewById(R.id.loginTxt);
         loginTxt.setOnClickListener(new View.OnClickListener() {
             @Override

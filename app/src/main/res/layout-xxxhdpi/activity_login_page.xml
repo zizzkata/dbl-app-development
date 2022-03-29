@@ -8,7 +8,7 @@
     tools:context=".LoginPage">
 
     <TextView
-        android:id="@+id/appNameTxt"
+        android:id="@+id/app_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_600"
@@ -19,13 +19,13 @@
         android:textColor="@color/whitish"
         android:textSize="@dimen/font_size_900"
         android:textStyle="normal"
-        app:layout_constraintBottom_toTopOf="@+id/sloganTxt"
+        app:layout_constraintBottom_toTopOf="@+id/moto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/sloganTxt"
+        android:id="@+id/moto"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_400"
@@ -38,28 +38,28 @@
         android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appNameTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/app_name" />
 
     <ImageView
-        android:id="@+id/logoImageView"
+        android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/spacing_600"
         android:layout_marginTop="@dimen/spacing_200"
         android:layout_marginEnd="@dimen/spacing_600"
         android:layout_marginBottom="@dimen/spacing_200"
-        app:layout_constraintBottom_toTopOf="@+id/loginContainer"
+        app:layout_constraintBottom_toTopOf="@+id/LoginContainer"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sloganTxt"
+        app:layout_constraintTop_toBottomOf="@+id/moto"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/ic_city_svg"
         android:contentDescription="@string/logo_of_kamerdate" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/loginContainer"
+        android:id="@+id/LoginContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_600"
@@ -82,7 +82,7 @@
             android:drawableStart="@drawable/ic_person"
             android:drawablePadding="@dimen/spacing_200"
             android:ems="10"
-            android:hint="@string/e_mail"
+            android:hint="@string/username"
             android:importantForAutofill="no"
             android:inputType="textPersonName"
             android:paddingHorizontal="@dimen/spacing_200"
@@ -91,7 +91,7 @@
             android:textSize="@dimen/font_size_300"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loginTxt"
+            app:layout_constraintTop_toBottomOf="@+id/textView5"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <CheckBox
@@ -121,7 +121,7 @@
             tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
 
         <TextView
-            android:id="@+id/loginTxt"
+            android:id="@+id/textView5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/log_in"
@@ -155,7 +155,7 @@
             tools:ignore="SpeakableTextPresentCheck,TextContrastCheck,TextContrastCheck" />
 
         <TextView
-            android:id="@+id/haveAccountTxt"
+            android:id="@+id/haveAccountText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_200"
@@ -166,15 +166,15 @@
             app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
 
         <TextView
-            android:id="@+id/signUpTxt"
+            android:id="@+id/signUpButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sign_up_dot"
-            android:textColor="#546E7A"
+            android:textColor="@color/teal"
             android:textSize="@dimen/font_size_200"
             app:backgroundTint="@color/creamy_white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/haveAccountTxt" />
+            app:layout_constraintStart_toEndOf="@+id/haveAccountText" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

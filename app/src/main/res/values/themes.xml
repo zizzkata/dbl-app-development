@@ -15,4 +15,16 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="coloredCheckBox" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Selected checkbox color -->
+        <item name="colorAccent">@color/teal</item>
+        <!-- Default/unselected checkbox style -->
+        <item name="android:textColorSecondary">@color/dark_blue</item>
+    </style>
+
+    <style name="PopupDialogAnimation">
+        <item name="android:windowEnterAnimation">@android:anim/slide_in_left</item>
+        <item name="android:windowExitAnimation">@android:anim/slide_out_right</item>
+    </style>
 </resources>
