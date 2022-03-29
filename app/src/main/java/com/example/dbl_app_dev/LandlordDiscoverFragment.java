@@ -2,6 +2,7 @@ package com.example.dbl_app_dev;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,7 +24,7 @@ import java.util.LinkedList;
 
 /**
  * Discovery page fragment, if the user is in "Landlord" mode
- *
+ * <p>
  * Use the {@link LandlordDiscoverFragment #newInstance} factory method to
  * create an instance of this fragment.
  */
@@ -50,6 +51,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        pullCardsInfo(10);
     }
 
     @Override
@@ -64,7 +66,6 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        pullCardsInfo(10);
         ConstraintLayout topCard = view.findViewById(R.id.topCard);
         TextView nameTxt = view.findViewById(R.id.tenantName);
         TextView descriptionTxt = view.findViewById(R.id.tenantDescription);
@@ -74,8 +75,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         if (currentTenantInfo == null) {
             nextCard(nameTxt, imageView, descriptionTxt);
         } else {
-            tenantInfo.addFirst(currentTenantInfo);
-            nextCard(nameTxt, imageView, descriptionTxt);
+            displayCard(nameTxt, imageView, descriptionTxt);
         }
 
         this.swipeListener = new GestureDetector(getContext(), new CardSwipeListener(this, true, true));
@@ -103,12 +103,19 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         });
     }
 
+    /**
+     * Displays the information stored in currentAccommodationInfo
+     */
+    private void displayCard(TextView cardTitle, ImageView cardImage, TextView cardDescription) {
+        cardTitle.setText(currentTenantInfo.getName());
+        cardDescription.setText(currentTenantInfo.getDescription());
+        cardImage.setImageBitmap(currentTenantInfo.getPhoto());
+    }
+
     private void nextCard(TextView cardTitle, ImageView cardImage, TextView cardDescription) {
         if (tenantInfo.size() > 0) {
             currentTenantInfo = this.tenantInfo.remove();
-            cardTitle.setText(currentTenantInfo.getName());
-            cardDescription.setText(currentTenantInfo.getDescription());
-//            cardImage.setImageBitmap(currentTenantInfo.getPhoto());
+            displayCard(cardTitle, cardImage, cardDescription);
         } else {
             cardDescription.setText("...");
             cardTitle.setText("No more swipes in your area");
@@ -121,10 +128,10 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
      * @param batchSize number of cards to add to the tenantInfo queue
      */
     private void pullCardsInfo(int batchSize) {
-        // TODO: remove placeholder code
+        // TODO: remove placeholder code, get data from server
         for (int i = 0; i < batchSize; i++) {
-            Bitmap photo = null;
-            tenantInfo.add(new TenantInfo(String.format("John Doe %d", i), String.format("Description %d", i), photo, 21));
+            Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.default_tenant_picture);
+            tenantInfo.add(new TenantInfo(String.format("John Doe %d", i), String.format("Description %d", i), image, 21 + i));
         }
     }
 
