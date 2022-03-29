@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/topCard"
-        layout="@layout/swipeable_tenant"
+        layout="@layout/fragment_swipeable_tenant"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="15dp"

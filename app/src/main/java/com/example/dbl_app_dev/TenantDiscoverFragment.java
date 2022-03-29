@@ -151,12 +151,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     private void pullCardsInfo(int batchSize) {
         // TODO: remove placeholder code, pull data from the server
         Bitmap image = null;
-        try {
-            URL url = new URL("http://www.amarketplaceofideas.com/wp-content/uploads/2018/07/59470e0977c9c028b8fc7f5d534f7b641.jpg");
-            image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-        } catch (IOException e) {
-            System.out.println(e);
-        }
+        image = BitmapFactory.decodeResource(getResources(), R.drawable.default_accommodation_picture);
         for (int i = 0; i < batchSize; i++) {
             ArrayList<Bitmap> images = new ArrayList<>();
             images.add(image);

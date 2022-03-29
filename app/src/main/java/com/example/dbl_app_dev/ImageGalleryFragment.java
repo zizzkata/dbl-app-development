@@ -7,14 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class ImageGalleryFragment extends Fragment {
-
 
 
     public ImageGalleryFragment() {
@@ -43,7 +41,7 @@ public class ImageGalleryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ImageView accommodationImageView = getView().findViewById(R.id.accommodationImageView);
+        ImageView accommodationImageView = requireView().findViewById(R.id.accommodationImageView);
         Log.d("extra_debug", "Image View Fragment Created");
 
         assert getArguments() != null;

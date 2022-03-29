@@ -3,13 +3,11 @@ package com.example.dbl_app_dev;
 import android.graphics.Bitmap;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Contains the information displayed in an accommodation card
  */
 public class AccommodationInfo {
-    private int currentPhoto;
     private final String description;
     private final String name;
     private final ArrayList<Bitmap> photos;
@@ -22,7 +20,6 @@ public class AccommodationInfo {
         this.rent = rent;
         this.name = name;
         this.photoPanoramic = photoPanoramic;
-        this.currentPhoto = 0;
     }
 
     public String getName() {

@@ -1,6 +1,7 @@
 package com.example.dbl_app_dev;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,7 +18,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 
@@ -29,7 +29,7 @@ import java.util.LinkedList;
  */
 public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
 
-    private Deque<TenantInfo> tenantInfo = new LinkedList<>();
+    private final Deque<TenantInfo> tenantInfo = new LinkedList<>();
     private GestureDetector swipeListener;
     private TenantInfo currentTenantInfo = null;    // currently viewed tenant
 
@@ -108,7 +108,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
             currentTenantInfo = this.tenantInfo.remove();
             cardTitle.setText(currentTenantInfo.getName());
             cardDescription.setText(currentTenantInfo.getDescription());
-//            cardImage.setImageBitmap(currentTenantInfo.getPhotos().get(0));
+//            cardImage.setImageBitmap(currentTenantInfo.getPhoto());
         } else {
             cardDescription.setText("...");
             cardTitle.setText("No more swipes in your area");
@@ -123,7 +123,8 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
     private void pullCardsInfo(int batchSize) {
         // TODO: remove placeholder code
         for (int i = 0; i < batchSize; i++) {
-            tenantInfo.add(new TenantInfo(String.format("John Doe %d", i), String.format("Description %d", i), new ArrayList<>(), 21));
+            Bitmap photo = null;
+            tenantInfo.add(new TenantInfo(String.format("John Doe %d", i), String.format("Description %d", i), photo, 21));
         }
     }
 
