@@ -3,13 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/dark_blue"
     tools:context=".LandlordDiscoverFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <include
+        android:id="@+id/topCard"
+        layout="@layout/fragment_swipeable_tenant"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFEB3B"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="15dp" />
 
 </FrameLayout>
