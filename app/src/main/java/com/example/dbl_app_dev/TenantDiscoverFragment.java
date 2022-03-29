@@ -97,6 +97,11 @@ public class TenantDiscoverFragment extends Fragment implements RatingHandler {
             negativeRating();
             nextCard(nameTxt, imageView, descriptionTxt);
         });
+
+        Button filtersBtn = view.findViewById(R.id.accommodationSettingsBtn);
+        filtersBtn.setOnClickListener(v -> {
+            ((MainNavigationActivity) getActivity()).openFilterDialog();
+        });
     }
 
     private void nextCard(TextView cardTitle, ImageView cardImage, TextView cardDescription) {

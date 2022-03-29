@@ -86,4 +86,13 @@ public class MainNavigationActivity extends AppCompatActivity {
         (new EditAccommDialogDisplayer(this, R.id.cancelButton, R.id.saveBtn, myView))
                 .displayPopupDialog();
     }
+
+    /**
+     * Method used to create the popup that shows when adding a new accommodation.
+     */
+    public void openFilterDialog() {
+        View myView = getLayoutInflater().inflate(R.layout.activity_filters, null);
+        (new CreateAccommDialogDisplayer(this, R.id.cancelButton, R.id.saveBtn, myView))
+                .displayPopupDialog();
+    }
 }
