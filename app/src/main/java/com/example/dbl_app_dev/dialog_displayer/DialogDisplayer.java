@@ -31,6 +31,7 @@ abstract class DialogDisplayer {
     public void displayPopupDialog() {
         // Set-up dialog
         createDialog();
+        setCancelable();
         setDialogProperties();
         dialog.show();
 
@@ -57,8 +58,11 @@ abstract class DialogDisplayer {
         dialog = dialogBuilder.create();
     }
 
-    protected void setDialogProperties() {
+    protected void setCancelable() {
         dialog.setCancelable(false);
+    }
+
+    protected void setDialogProperties() {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.PopupDialogAnimation;
     }

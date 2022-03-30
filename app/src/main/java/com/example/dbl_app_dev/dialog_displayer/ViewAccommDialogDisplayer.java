@@ -1,7 +1,11 @@
 package com.example.dbl_app_dev.dialog_displayer;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.View;
+
+import com.example.dbl_app_dev.R;
 
 /**
  * Concrete class of dialog_displayer
@@ -14,6 +18,11 @@ public class ViewAccommDialogDisplayer extends DialogDisplayer {
         super(context, cancelId, positiveId, myView);
 
         this.accommObject = accommObject;
+    }
+
+    @Override
+    protected void setCancelable() {
+        dialog.setCancelable(true);
     }
 
     @Override
