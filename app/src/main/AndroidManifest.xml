@@ -21,8 +21,7 @@
             android:exported="true" />
         <activity
             android:name=".LoginPage"
-            android:exported="true"
-            android:configChanges="orientation|screenSize|keyboardHidden">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
