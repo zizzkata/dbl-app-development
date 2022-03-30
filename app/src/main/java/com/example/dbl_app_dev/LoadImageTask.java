@@ -11,7 +11,7 @@ import java.net.URL;
 public class LoadImageTask extends AsyncTask {
     private ImageView imageView;
 
-    public LoadImageTask (ImageView imageView) {
+    public LoadImageTask(ImageView imageView) {
         this.imageView = imageView;
     }
 
@@ -19,12 +19,13 @@ public class LoadImageTask extends AsyncTask {
     protected Object doInBackground(Object[] objects) {
         Bitmap image = null;
         try {
-            URL url = new URL("https://media.istockphoto.com/photos/modern-apartment-buildings-on-a-sunny-day-with-a-blue-sky-picture-id1177797403");
+            URL url = new URL(
+                    "https://media.istockphoto.com/photos/modern-apartment-buildings-on-a-sunny-day-with-a-blue-sky-picture-id1177797403");
             image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
         } catch (IOException e) {
             System.out.println(e);
         }
         this.imageView.setImageBitmap(image);
-        return  null;
+        return null;
     }
 }

@@ -5,7 +5,9 @@ public interface SwipeHandler {
 
     void swipedLeft();
 
-    default void swipedDown() {};
+    default void swipedDown() {
+    };
 
-    default void swipedUp() {};
+    default void swipedUp() {
+    };
 }

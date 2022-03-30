@@ -1,10 +1,6 @@
 package com.example.dbl_app_dev;
 
 import android.graphics.Bitmap;
-import android.media.Image;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Contains the information displayed in a tenant card

@@ -40,7 +40,7 @@ public class VerticalViewPager extends ViewPager {
                 // Counteract the default slide transition
                 view.setTranslationX(view.getWidth() * -position);
 
-                //set Y position to swipe in from top
+                // set Y position to swipe in from top
                 float yPosition = position * view.getHeight();
                 view.setTranslationY(yPosition);
 
@@ -68,7 +68,7 @@ public class VerticalViewPager extends ViewPager {
     }
 
     @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev){
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
         boolean intercepted = super.onInterceptTouchEvent(swapXY(ev));
         swapXY(ev);
         return intercepted;

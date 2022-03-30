@@ -1,14 +1,14 @@
 package com.example.dbl_app_dev;
 
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
-
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -61,7 +61,7 @@ public class MainNavigationActivity extends AppCompatActivity {
             landlordDiscoverItem.setVisible(isChecked);
 
             // Set text on switch based on the mode
-            String switchText = isChecked ? "Landlord": "Tenant";
+            String switchText = isChecked ? "Landlord" : "Tenant";
             modeSwitch.setText(switchText);
         });
     }

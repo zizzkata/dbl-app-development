@@ -32,7 +32,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
 
     private final Deque<TenantInfo> tenantInfo = new LinkedList<>();
     private GestureDetector swipeListener;
-    private TenantInfo currentTenantInfo = null;    // currently viewed tenant
+    private TenantInfo currentTenantInfo = null; // currently viewed tenant
 
     public LandlordDiscoverFragment() {
         // Required empty public constructor
@@ -56,7 +56,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_landlord_discover, container, false);
     }
@@ -131,7 +131,8 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         // TODO: remove placeholder code, get data from server
         for (int i = 0; i < batchSize; i++) {
             Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.default_tenant_picture);
-            tenantInfo.add(new TenantInfo(String.format("John Doe %d", i), String.format("Description %d", i), image, 21 + i));
+            tenantInfo.add(
+                    new TenantInfo(String.format("John Doe %d", i), String.format("Description %d", i), image, 21 + i));
         }
     }
 

@@ -32,10 +32,11 @@ import java.util.LinkedList;
 public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     private LinkedList<AccommodationInfo> dataModels;
     private GestureDetector horizontalSwipeDetector;
-    private AccommodationInfo currentAccommodationInfo = null;    // currently viewed accommodation
+    private AccommodationInfo currentAccommodationInfo = null; // currently viewed accommodation
     VerticalViewPager imageGalleryViewPager;
 
-    public TenantDiscoverFragment() { /* Required empty public constructor */ }
+    public TenantDiscoverFragment() {
+        /* Required empty public constructor */ }
 
     /**
      * Use this factory method to create a new instance of
@@ -57,7 +58,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tenant_discover, container, false);
     }
@@ -140,7 +141,8 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     private void displayCard(TextView cardTitle, VerticalViewPager imageGalleryViewPager, TextView cardDescription) {
         cardTitle.setText(currentAccommodationInfo.getFormattedName());
         cardDescription.setText(currentAccommodationInfo.getDescription());
-        imageGalleryViewPager.setAdapter(new ImageViewPagerAdapter(getChildFragmentManager(), currentAccommodationInfo.getPhotos()));
+        imageGalleryViewPager
+                .setAdapter(new ImageViewPagerAdapter(getChildFragmentManager(), currentAccommodationInfo.getPhotos()));
     }
 
     /**
@@ -156,7 +158,8 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
             ArrayList<Bitmap> images = new ArrayList<>();
             images.add(image);
             images.add(image);
-            dataModels.add(new AccommodationInfo(String.format("Building %d", i), String.format("Description %d", i), images, null, 720));
+            dataModels.add(new AccommodationInfo(String.format("Building %d", i), String.format("Description %d", i),
+                    images, null, 720));
         }
     }
 
@@ -180,4 +183,3 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         }
     }
 }
-
