@@ -14,7 +14,8 @@ public class AccommodationInfo {
     private final Bitmap photoPanoramic;
     public int rent;
 
-    public AccommodationInfo(String name, String description, ArrayList<Bitmap> photos, Bitmap photoPanoramic, int rent) {
+    public AccommodationInfo(String name, String description, ArrayList<Bitmap> photos, Bitmap photoPanoramic,
+            int rent) {
         this.description = description;
         this.photos = new ArrayList<>(photos);
         this.rent = rent;

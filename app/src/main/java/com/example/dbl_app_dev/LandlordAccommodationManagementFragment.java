@@ -1,15 +1,21 @@
 package com.example.dbl_app_dev;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import androidx.fragment.app.Fragment;
+import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link LandlordAccommodationManagementFragment#newInstance} factory method to
+ * Use the {@link LandlordAccommodationManagementFragment#newInstance} factory
+ * method to
  * create an instance of this fragment.
  */
 public class LandlordAccommodationManagementFragment extends Fragment {
@@ -56,8 +62,32 @@ public class LandlordAccommodationManagementFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_landlord_accommodation_management, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Add functionality for add accommodation button
+        Button addListingBtn = getView().findViewById(R.id.addListingBtn);
+        addListingBtn.setOnClickListener(view1 -> {
+            ((MainNavigationActivity) getActivity()).createNewAccommodationDialog();
+        });
+
+        // Get the parent view of the accommodation objects
+        ConstraintLayout accommParent = getView()
+                .findViewById(R.id.scrollConstraintLayout);
+
+        // Add the accommodation settings button functionality
+        final int childCount = accommParent.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            View v = accommParent.getChildAt(i);
+            v.findViewById(R.id.settingsIcon).setOnClickListener(view1 -> {
+                ((MainNavigationActivity) getActivity()).editAccommodationDialog();
+            });
+        }
     }
 }

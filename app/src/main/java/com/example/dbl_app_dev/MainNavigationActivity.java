@@ -1,15 +1,18 @@
 package com.example.dbl_app_dev;
 
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+
+import com.example.dbl_app_dev.dialog_displayer.CreateAccommDialogDisplayer;
+import com.example.dbl_app_dev.dialog_displayer.EditAccommDialogDisplayer;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainNavigationActivity extends AppCompatActivity {
@@ -35,7 +38,7 @@ public class MainNavigationActivity extends AppCompatActivity {
 
     /**
      * Encompasses the logic for changing the current mode (Tenant/Landlord) and
-     * showing the correct icons on the nav bar
+     * showing the correct icons on the nav bar.
      */
     public void modeSwitchLogic(SwitchCompat modeSwitch) {
         // Switch view
@@ -51,7 +54,6 @@ public class MainNavigationActivity extends AppCompatActivity {
         MenuItem tenantDiscoverItem = navBarMenu.findItem(R.id.tenantDiscoverFragment);
         MenuItem landlordDiscoverItem = navBarMenu.findItem(R.id.landlordDiscoverFragment);
 
-
         modeSwitch.setOnCheckedChangeListener((compoundButton, isChecked) -> {
             // isChecked is true when in Landlord mode
             // Set correct items for nav bar based on the mode
@@ -64,5 +66,24 @@ public class MainNavigationActivity extends AppCompatActivity {
             String switchText = isChecked ? "Landlord" : "Tenant";
             modeSwitch.setText(switchText);
         });
+    }
+
+    /**
+     * Method used to create the popup that shows when adding a new accommodation.
+     */
+    public void createNewAccommodationDialog() {
+        View myView = getLayoutInflater().inflate(R.layout.new_accommodation_pop_up, null);
+        (new CreateAccommDialogDisplayer(this, R.id.cancelButton, R.id.createButton, myView))
+                .displayPopupDialog();
+    }
+
+    /**
+     * Method used to create the popup that shows when editing an existing
+     * accommodation.
+     */
+    public void editAccommodationDialog() {
+        View myView = getLayoutInflater().inflate(R.layout.edit_accommodation_pop_up, null);
+        (new EditAccommDialogDisplayer(this, R.id.cancelButton, R.id.saveButton, myView))
+                .displayPopupDialog();
     }
 }

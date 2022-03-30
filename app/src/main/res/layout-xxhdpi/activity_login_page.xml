@@ -82,7 +82,7 @@
             android:drawableStart="@drawable/ic_person"
             android:drawablePadding="@dimen/spacing_200"
             android:ems="10"
-            android:hint="@string/username"
+            android:hint="@string/e_mail"
             android:importantForAutofill="no"
             android:inputType="textPersonName"
             android:paddingHorizontal="@dimen/spacing_200"

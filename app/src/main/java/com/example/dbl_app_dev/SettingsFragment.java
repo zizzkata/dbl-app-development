@@ -1,11 +1,17 @@
 package com.example.dbl_app_dev;
 
 import android.os.Bundle;
+
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.fragment.app.Fragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,7 +62,7 @@ public class SettingsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_settings, container, false);
         ((MainNavigationActivity) getActivity()).modeSwitchLogic(root.findViewById(R.id.modeSwitch));
 

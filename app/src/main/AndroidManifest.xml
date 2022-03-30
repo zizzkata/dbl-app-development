@@ -11,7 +11,8 @@
         android:theme="@style/Theme.Kamerdate">
         <activity
             android:name=".MainNavigationActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".RegisterPage"
             android:exported="true" />
