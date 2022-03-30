@@ -26,9 +26,21 @@
             android:text="@string/view_property"
             android:textColor="@color/dark_blue"
             android:textSize="32sp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="42dp"
+            android:layout_height="0dp"
+            android:background="@drawable/ic_close_outline"
+            android:contentDescription="@string/cancel"
+            app:backgroundTint="@color/dark_blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
@@ -47,14 +59,108 @@
             android:layout_marginHorizontal="12dp">
 
             <TextView
+                android:id="@+id/landlordHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="@string/landlord_details"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/landlordSeparator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="2dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/landlordHeader" />
+
+            <TextView
+                android:id="@+id/landlordNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/name"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/landlordSeparator"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/landlordNameTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:text="@string/sample_name"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/landlordNameTextView"
+                app:layout_constraintTop_toTopOf="@+id/landlordNameTextView"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/landlordEmailTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/e_mail"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/landlordNameTxt"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/landlordEmailTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:text="@string/sample_email"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/landlordEmailTextView"
+                app:layout_constraintTop_toTopOf="@+id/landlordEmailTextView"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/phoneNumberTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/phone_number"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/landlordEmailTxt"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/phoneNumberTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:text="@string/sample_phone"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/phoneNumberTextView"
+                app:layout_constraintTop_toTopOf="@+id/phoneNumberTextView"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
                 android:id="@+id/imagesHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/pictures"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/phoneNumberTxt" />
 
             <View
                 android:id="@+id/imagesSeparator"
@@ -543,9 +649,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:textAllCaps="false"
                 android:background="@color/transparent"
                 android:text="@string/remove_listing_from_liked_page"
+                android:textAllCaps="false"
                 android:textColor="@color/heart_red"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -556,31 +662,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/buttonsContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="12dp"
-        android:layout_marginTop="18dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/listingScrollView">
-
-        <Button
-            android:id="@+id/cancelButton"
-            android:layout_width="115dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
-            android:background="@drawable/roundstyle"
-            android:paddingVertical="@dimen/spacing_200"
-            android:text="@string/cancel"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_size_300"
-            app:backgroundTint="#a1a1a1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:ignore="TextContrastCheck" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

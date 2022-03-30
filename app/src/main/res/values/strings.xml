@@ -102,4 +102,10 @@
     <string name="floor">Floor</string>
     <string name="add_floor">Add floor</string>
     <string name="ground_floor">Ground floor</string>
+    <string name="landlord_details">Landlord details</string>
+    <string name="phone_number">Phone number</string>
+    <string name="sample_phone">0123456789</string>
+    <string name="name">Name</string>
+    <string name="sample_name">Georgi Georgiev</string>
+    <string name="sample_email">georgi.georgiev@gmail.com</string>
 </resources>

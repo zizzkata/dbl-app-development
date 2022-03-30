@@ -1,11 +1,7 @@
 package com.example.dbl_app_dev.dialog_displayer;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.view.View;
-
-import com.example.dbl_app_dev.R;
 
 /**
  * Concrete class of dialog_displayer
@@ -14,8 +10,9 @@ import com.example.dbl_app_dev.R;
 public class ViewAccommDialogDisplayer extends DialogDisplayer {
     View accommObject;
 
-    public ViewAccommDialogDisplayer(Context context, int cancelId, int positiveId, View myView, View accommObject) {
-        super(context, cancelId, positiveId, myView);
+    public ViewAccommDialogDisplayer(Context context, int cancelId, int positiveId,
+                                     View myView, View accommObject) {
+        super(context, cancelId, positiveId, -1, myView);
 
         this.accommObject = accommObject;
     }

@@ -1,6 +1,5 @@
 package com.example.dbl_app_dev;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.navigation.NavController;
@@ -77,7 +76,8 @@ public class MainNavigationActivity extends AppCompatActivity {
      */
     public void createNewAccommodationDialog() {
         View myView = getLayoutInflater().inflate(R.layout.new_accommodation_pop_up, null);
-        (new CreateAccommDialogDisplayer(this, R.id.cancelButton, R.id.createButton, myView))
+        (new CreateAccommDialogDisplayer(this,
+                R.id.cancelButton, R.id.createButton, R.id.negativeButton, myView))
                 .displayPopupDialog();
     }
 
@@ -86,7 +86,8 @@ public class MainNavigationActivity extends AppCompatActivity {
      */
     public void editAccommodationDialog() {
         View myView = getLayoutInflater().inflate(R.layout.edit_accommodation_pop_up, null);
-        (new EditAccommDialogDisplayer(this, R.id.cancelButton, R.id.saveButton, myView))
+        (new EditAccommDialogDisplayer(this,
+                R.id.cancelButton, R.id.saveButton, R.id.negativeButton, myView))
                 .displayPopupDialog();
     }
 
@@ -95,7 +96,8 @@ public class MainNavigationActivity extends AppCompatActivity {
      */
     public void viewAccommodationDialog(View accommObject) {
         View myView = getLayoutInflater().inflate(R.layout.view_accommodation_pop_up, null);
-        (new ViewAccommDialogDisplayer(this, R.id.cancelButton, R.id.saveButton, myView, accommObject))
+        (new ViewAccommDialogDisplayer(this,
+                R.id.cancelButton, R.id.saveButton, myView, accommObject))
                 .displayPopupDialog();
     }
 

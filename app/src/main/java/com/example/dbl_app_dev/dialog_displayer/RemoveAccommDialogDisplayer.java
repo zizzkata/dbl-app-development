@@ -18,7 +18,7 @@ public class RemoveAccommDialogDisplayer extends DialogDisplayer {
     String message;
 
     public RemoveAccommDialogDisplayer(Context context, View removedView) {
-        super(context, -1, -1, null);
+        super(context, -1, -1, -1, null);
         this.removedView = removedView;
         this.title = context.getString(R.string.remove_listing_title);
         this.message = context.getString(R.string.remove_listing_message);
@@ -26,16 +26,11 @@ public class RemoveAccommDialogDisplayer extends DialogDisplayer {
     }
 
     public RemoveAccommDialogDisplayer(Context context, View removedView, AlertDialog otherDialog) {
-        super(context, -1, -1, null);
+        super(context, -1, -1, -1, null);
         this.removedView = removedView;
         this.title = context.getString(R.string.remove_listing_title);
         this.message = context.getString(R.string.remove_listing_message);
         this.otherDialog = otherDialog;
-    }
-
-    @Override
-    protected void positiveFunctionality() {
-        dialog.dismiss();
     }
 
     @Override
@@ -44,9 +39,11 @@ public class RemoveAccommDialogDisplayer extends DialogDisplayer {
         dialog.setIcon(R.drawable.ic_warning_filled);
         dialog.setTitle(title);
         dialog.setMessage(message);
-        dialog.setButton(dialog.BUTTON_NEGATIVE, "Cancel",
+        dialog.setButton(dialog.BUTTON_NEUTRAL, "Cancel",
                 (dialog, which) -> dialog.dismiss());
-        dialog.setButton(dialog.BUTTON_POSITIVE, "Remove",
+        dialog.setButton(dialog.BUTTON_NEGATIVE, "No",
+                (dialog, which) -> dialog.dismiss());
+        dialog.setButton(dialog.BUTTON_POSITIVE, "Yes",
                 (dialog, which) -> {
                     Toast.makeText(context, "Listing Removed", Toast.LENGTH_SHORT).show();
                     if (otherDialog != null) otherDialog.dismiss();
