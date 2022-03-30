@@ -56,7 +56,6 @@ public class MainNavigationActivity extends AppCompatActivity {
         MenuItem tenantDiscoverItem = navBarMenu.findItem(R.id.tenantDiscoverFragment);
         MenuItem landlordDiscoverItem = navBarMenu.findItem(R.id.landlordDiscoverFragment);
 
-
         modeSwitch.setOnCheckedChangeListener((compoundButton, isChecked) -> {
             // isChecked is true when in Landlord mode
             // Set correct items for nav bar based on the mode
@@ -82,7 +81,8 @@ public class MainNavigationActivity extends AppCompatActivity {
     }
 
     /**
-     * Method used to create the popup that shows when editing an existing accommodation.
+     * Method used to create the popup that shows when editing an existing
+     * accommodation.
      */
     public void editAccommodationDialog() {
         View myView = getLayoutInflater().inflate(R.layout.edit_accommodation_pop_up, null);
