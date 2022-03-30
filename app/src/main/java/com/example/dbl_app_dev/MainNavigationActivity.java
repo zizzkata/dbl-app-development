@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.example.dbl_app_dev.dialog_displayer.CreateAccommDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.EditAccommDialogDisplayer;
+import com.example.dbl_app_dev.dialog_displayer.RemoveAccommDialogDisplayer;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainNavigationActivity extends AppCompatActivity {
@@ -84,6 +85,14 @@ public class MainNavigationActivity extends AppCompatActivity {
     public void editAccommodationDialog() {
         View myView = getLayoutInflater().inflate(R.layout.edit_accommodation_pop_up, null);
         (new EditAccommDialogDisplayer(this, R.id.cancelButton, R.id.saveButton, myView))
+                .displayPopupDialog();
+    }
+
+    /**
+     * Method used to create the popup that shows when removing a liked accommodation.
+     */
+    public void removeAccommodationDialog(View removedView) {
+        (new RemoveAccommDialogDisplayer(this, removedView))
                 .displayPopupDialog();
     }
 }

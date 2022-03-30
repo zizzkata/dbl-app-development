@@ -85,4 +85,6 @@
     <string name="edit_listing_details">Edit Listing Details</string>
     <string name="save">Save</string>
     <string name="sample_price_amount">€400</string>
+    <string name="liked_listings">Liked Listings</string>
+    <string name="liked_listings_settings">liked listings settings</string>
 </resources>

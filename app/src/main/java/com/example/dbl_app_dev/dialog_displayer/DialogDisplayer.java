@@ -16,38 +16,44 @@ import com.example.dbl_app_dev.R;
 abstract class DialogDisplayer {
     public AlertDialog dialog;
     public Context context;
-    private final int cancelId;
-    private final int positiveId;
-    private final View myView;
+    private final int cancelId; // set to -1 if it is not needed
+    private final int positiveId; // set to -1 if it is not needed
+    private final View myView; // set to null if it is not needed
 
-    DialogDisplayer(Context context, int cancelId, int positiveId, View v) {
+    DialogDisplayer(Context context, int cancelId, int positiveId, View myView) {
         this.context = context;
         this.cancelId = cancelId;
         this.positiveId = positiveId;
-        this.myView = v;
+        this.myView = myView;
     }
 
     // Template method
     public void displayPopupDialog() {
         // Set-up dialog
-        createDialog(myView);
+        createDialog();
         setDialogProperties();
         dialog.show();
 
         // "Cancel" button functionality
-        Button cancelButton = myView.findViewById(cancelId);
-        cancelButton.setOnClickListener(view -> cancelFunctionality());
+        if (cancelId != -1) {
+            Button cancelButton = myView.findViewById(cancelId);
+            cancelButton.setOnClickListener(view -> cancelFunctionality());
+        }
 
-        // "Postive" button functionality
-        Button createButton = myView.findViewById(positiveId);
-        createButton.setOnClickListener(view -> positiveFunctionality());
+        // "Positive" button functionality
+        if (positiveId != -1) {
+            Button positiveButton = myView.findViewById(positiveId);
+            positiveButton.setOnClickListener(view -> positiveFunctionality());
+        }
     }
 
     protected abstract void positiveFunctionality();
 
-    protected void createDialog(View _myView) {
+    protected void createDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
-        dialogBuilder.setView(_myView);
+        if (myView != null) {
+            dialogBuilder.setView(myView);
+        }
         dialog = dialogBuilder.create();
     }
 

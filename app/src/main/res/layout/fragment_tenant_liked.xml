@@ -32,18 +32,18 @@
                     android:id="@+id/listingsTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="My Liked Properties"
+                    android:text="@string/liked_listings"
                     android:textColor="@color/dark_blue"
                     android:textSize="32sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/addListingBtn"
+                    android:id="@+id/settingsButton"
                     android:layout_width="48dp"
                     android:layout_height="0dp"
-                    android:background="@drawable/ic_add_outline"
-                    android:contentDescription="@string/add_new_accommodation"
+                    android:background="@drawable/ic_sliders_outline"
+                    android:contentDescription="@string/liked_listings_settings"
                     app:backgroundTint="@color/dark_blue"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/positiveAccommodationsContainer"
+                        android:id="@+id/positiveListingsContainer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toStartOf="parent"
@@ -96,11 +96,11 @@
 
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/negativeAccommodationsConrtainer"
+                        android:id="@+id/neutralListingsContainer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/positiveAccommodationsContainer">
+                        app:layout_constraintTop_toBottomOf="@+id/positiveListingsContainer">
 
                         <include
                             android:id="@+id/neutralListing1"
@@ -124,11 +124,11 @@
 
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/idk122"
+                        android:id="@+id/negativeListingsContainer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/negativeAccommodationsConrtainer">
+                        app:layout_constraintTop_toBottomOf="@+id/neutralListingsContainer">
 
                         <include
                             android:id="@+id/negativeListing1"
