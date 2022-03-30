@@ -1,26 +1,27 @@
 package com.example.dbl_app_dev;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * Discovery page fragment, if the user is in "Tenant" mode
@@ -28,15 +29,14 @@ import java.util.Queue;
  * Use the {@link TenantDiscoverFragment #newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TenantDiscoverFragment extends Fragment implements RatingHandler {
-
-    private Deque<AccommodationInfo> accommodationInfo = new LinkedList<>();
-    private GestureDetector gestureDetector;
-    private AccommodationInfo currentAccommodationInfo = null;    // currently viewed accommodation
+public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
+    private LinkedList<AccommodationInfo> dataModels;
+    private GestureDetector horizontalSwipeDetector;
+    private AccommodationInfo currentAccommodationInfo = null; // currently viewed accommodation
+    VerticalViewPager imageGalleryViewPager;
 
     public TenantDiscoverFragment() {
-        // Required empty public constructor
-    }
+        /* Required empty public constructor */ }
 
     /**
      * Use this factory method to create a new instance of
@@ -51,11 +51,14 @@ public class TenantDiscoverFragment extends Fragment implements RatingHandler {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Get information of accommodation cards
+        dataModels = new LinkedList<>();
+        pullCardsInfo(10);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tenant_discover, container, false);
     }
@@ -65,50 +68,81 @@ public class TenantDiscoverFragment extends Fragment implements RatingHandler {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        pullCardsInfo(10);
         ConstraintLayout topCard = view.findViewById(R.id.topCard);
         TextView nameTxt = view.findViewById(R.id.accommodationName);
         TextView descriptionTxt = view.findViewById(R.id.accommodationDescription);
-        ImageView imageView = view.findViewById(R.id.accommodationPicture);
 
-        // makes sure that the a card is not discarded if it is not rated
-        if (currentAccommodationInfo == null) {
-            nextCard(nameTxt, imageView, descriptionTxt);
-        } else {
-            accommodationInfo.addFirst(currentAccommodationInfo);
-            nextCard(nameTxt, imageView, descriptionTxt);
-        }
+        imageGalleryViewPager = view.findViewById(R.id.accommodationImageScroller);
+        imageGalleryViewPager = view.findViewById(R.id.accommodationImageScroller);
 
-        this.gestureDetector = new GestureDetector(getContext(), new CardSwipeListener(this));
+        this.horizontalSwipeDetector = new GestureDetector(getContext(), new CardSwipeListener(this, true, false));
         topCard.setOnTouchListener((v, event) -> {
-            if (gestureDetector.onTouchEvent(event)) {
-                nextCard(nameTxt, imageView, descriptionTxt);
+            if (horizontalSwipeDetector.onTouchEvent(event)) {
+                nextCard(nameTxt, imageGalleryViewPager, descriptionTxt);
+                return false;
             }
             return true;
         });
 
         Button likeBtn = view.findViewById(R.id.accommodationLikeBtn);
         Button dislikeBtn = view.findViewById(R.id.accommodationDislikeBtn);
+
         likeBtn.setOnClickListener(v -> {
-            positiveRating();
-            nextCard(nameTxt, imageView, descriptionTxt);
+            swipedRight();
+            nextCard(nameTxt, imageGalleryViewPager, descriptionTxt);
         });
         dislikeBtn.setOnClickListener(v -> {
-            negativeRating();
-            nextCard(nameTxt, imageView, descriptionTxt);
+            swipedLeft();
+            nextCard(nameTxt, imageGalleryViewPager, descriptionTxt);
         });
+
+        imageGalleryViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                // mandatory override
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.d("API123", "onPageSelected " + position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                // mandatory override
+            }
+        });
+
+        // makes sure that the a card is not discarded if it is not rated
+        if (currentAccommodationInfo == null) {
+            nextCard(nameTxt, imageGalleryViewPager, descriptionTxt);
+        } else {
+            displayCard(nameTxt, imageGalleryViewPager, descriptionTxt);
+        }
+
     }
 
-    private void nextCard(TextView cardTitle, ImageView cardImage, TextView cardDescription) {
-        if (accommodationInfo.size() > 0) {
-            currentAccommodationInfo = this.accommodationInfo.remove();
-            cardTitle.setText(currentAccommodationInfo.getFormattedName());
-            cardDescription.setText(currentAccommodationInfo.getDescription());
-//            cardImage.setImageBitmap(currentAccommodationInfo.getPhotos().get(0));
+    /**
+     * Updates the information on currentAccommodationInfo and displays it
+     */
+    private void nextCard(TextView cardTitle, VerticalViewPager imageGalleryViewPager, TextView cardDescription) {
+        if (dataModels.size() > 0) {
+            currentAccommodationInfo = this.dataModels.remove();
+            displayCard(cardTitle, imageGalleryViewPager, cardDescription);
         } else {
             cardDescription.setText("...");
             cardTitle.setText("No more swipes in your area");
         }
+    }
+
+    /**
+     * Displays the information stored in currentAccommodationInfo
+     */
+    private void displayCard(TextView cardTitle, VerticalViewPager imageGalleryViewPager, TextView cardDescription) {
+        cardTitle.setText(currentAccommodationInfo.getFormattedName());
+        cardDescription.setText(currentAccommodationInfo.getDescription());
+        imageGalleryViewPager
+                .setAdapter(new ImageViewPagerAdapter(getChildFragmentManager(), currentAccommodationInfo.getPhotos()));
     }
 
     /**
@@ -117,9 +151,15 @@ public class TenantDiscoverFragment extends Fragment implements RatingHandler {
      * @param batchSize number of cards to add to the accommodationInfo queue
      */
     private void pullCardsInfo(int batchSize) {
-        // TODO: remove placeholder code
+        // TODO: remove placeholder code, pull data from the server
+        Bitmap image = null;
+        image = BitmapFactory.decodeResource(getResources(), R.drawable.default_accommodation_picture);
         for (int i = 0; i < batchSize; i++) {
-            accommodationInfo.add(new AccommodationInfo(String.format("Building %d", i), String.format("Description %d", i), new ArrayList<>(), null, 720));
+            ArrayList<Bitmap> images = new ArrayList<>();
+            images.add(image);
+            images.add(image);
+            dataModels.add(new AccommodationInfo(String.format("Building %d", i), String.format("Description %d", i),
+                    images, null, 720));
         }
     }
 
@@ -127,9 +167,9 @@ public class TenantDiscoverFragment extends Fragment implements RatingHandler {
      * POST's the positive rating given to the viewed accommodation to the backend
      */
     @Override
-    public void positiveRating() {
-        if (accommodationInfo.size() > 0) {
-            Log.i("extra_debug", "Positive Rating");
+    public void swipedRight() {
+        if (dataModels.size() > 0) {
+            Log.d("extra_debug", "Positive Rating");
         }
     }
 
@@ -137,16 +177,9 @@ public class TenantDiscoverFragment extends Fragment implements RatingHandler {
      * POST's the negative rating given to the viewed accommodation to the backend
      */
     @Override
-    public void negativeRating() {
-        if (accommodationInfo.size() > 0) {
-            Log.i("extra_debug", "Negative Rating");
+    public void swipedLeft() {
+        if (dataModels.size() > 0) {
+            Log.d("extra_debug", "Negative Rating");
         }
-    }
-
-    /**
-     * Cannot neutrally rate an accommodation
-     */
-    @Override
-    public void neutralRating() {
     }
 }
