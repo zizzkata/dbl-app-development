@@ -89,4 +89,14 @@
     <string name="liked_listings_settings">liked listings settings</string>
     <string name="remove_listing_title">Remove listing</string>
     <string name="remove_listing_message">Are you sure you want to permanently remove listing from liked page?</string>
+    <string name="sample_20">20</string>
+    <string name="meters">m</string>
+    <string name="square_units">2</string>
+    <string name="loren_ipsum_30">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque felis odio, porttitor id tortor ut, faucibus tincidunt libero. Nulla vitae consequat tellus. Fusce leo erat, ultricies quis lacus ut, pretium.</string>
+    <string name="view_property">View Property</string>
+    <string name="sample_city">Eindhoven</string>
+    <string name="sample_postcode">1234 AB</string>
+    <string name="sample_date_1">29/11/2001</string>
+    <string name="sample_date_2">30/03/2022</string>
+    <string name="remove_listing_from_liked_page"><u>Remove listing from liked page</u></string>
 </resources>

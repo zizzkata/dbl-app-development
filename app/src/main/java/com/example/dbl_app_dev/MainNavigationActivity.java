@@ -14,6 +14,7 @@ import android.view.View;
 import com.example.dbl_app_dev.dialog_displayer.CreateAccommDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.EditAccommDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.RemoveAccommDialogDisplayer;
+import com.example.dbl_app_dev.dialog_displayer.ViewAccommDialogDisplayer;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainNavigationActivity extends AppCompatActivity {
@@ -85,6 +86,15 @@ public class MainNavigationActivity extends AppCompatActivity {
     public void editAccommodationDialog() {
         View myView = getLayoutInflater().inflate(R.layout.edit_accommodation_pop_up, null);
         (new EditAccommDialogDisplayer(this, R.id.cancelButton, R.id.saveButton, myView))
+                .displayPopupDialog();
+    }
+
+    /**
+     * Method used to create the popup that shows an existing accommodation.
+     */
+    public void viewAccommodationDialog() {
+        View myView = getLayoutInflater().inflate(R.layout.view_accommodation_pop_up, null);
+        (new ViewAccommDialogDisplayer(this, R.id.cancelButton, R.id.saveButton, myView))
                 .displayPopupDialog();
     }
 
