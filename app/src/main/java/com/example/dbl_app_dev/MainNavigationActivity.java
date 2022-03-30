@@ -1,5 +1,6 @@
 package com.example.dbl_app_dev;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.navigation.NavController;
@@ -92,9 +93,9 @@ public class MainNavigationActivity extends AppCompatActivity {
     /**
      * Method used to create the popup that shows an existing accommodation.
      */
-    public void viewAccommodationDialog() {
+    public void viewAccommodationDialog(View accommObject) {
         View myView = getLayoutInflater().inflate(R.layout.view_accommodation_pop_up, null);
-        (new ViewAccommDialogDisplayer(this, R.id.cancelButton, R.id.saveButton, myView))
+        (new ViewAccommDialogDisplayer(this, R.id.cancelButton, R.id.saveButton, myView, accommObject))
                 .displayPopupDialog();
     }
 

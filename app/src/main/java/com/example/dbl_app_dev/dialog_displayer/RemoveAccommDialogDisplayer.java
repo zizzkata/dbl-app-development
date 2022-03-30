@@ -1,9 +1,8 @@
 package com.example.dbl_app_dev.dialog_displayer;
 
+import android.app.AlertDialog;
 import android.content.Context;
-import android.media.MediaSession2Service;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.dbl_app_dev.R;
@@ -14,21 +13,24 @@ import com.example.dbl_app_dev.R;
  */
 public class RemoveAccommDialogDisplayer extends DialogDisplayer {
     View removedView;
-    String title = "";
-    String message = "";
+    AlertDialog otherDialog;
+    String title;
+    String message;
 
     public RemoveAccommDialogDisplayer(Context context, View removedView) {
         super(context, -1, -1, null);
         this.removedView = removedView;
         this.title = context.getString(R.string.remove_listing_title);
         this.message = context.getString(R.string.remove_listing_message);
+        this.otherDialog = null;
     }
 
-    public RemoveAccommDialogDisplayer(Context context, View removedView, String title, String message) {
+    public RemoveAccommDialogDisplayer(Context context, View removedView, AlertDialog otherDialog) {
         super(context, -1, -1, null);
         this.removedView = removedView;
-        this.title = title;
-        this.message = message;
+        this.title = context.getString(R.string.remove_listing_title);
+        this.message = context.getString(R.string.remove_listing_message);
+        this.otherDialog = otherDialog;
     }
 
     @Override
@@ -47,6 +49,7 @@ public class RemoveAccommDialogDisplayer extends DialogDisplayer {
         dialog.setButton(dialog.BUTTON_POSITIVE, "Remove",
                 (dialog, which) -> {
                     Toast.makeText(context, "Listing Removed", Toast.LENGTH_SHORT).show();
+                    if (otherDialog != null) otherDialog.dismiss();
                     removedView.setVisibility(View.GONE);
                     dialog.dismiss();
                 });

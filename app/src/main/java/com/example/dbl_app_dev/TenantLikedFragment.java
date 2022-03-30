@@ -88,7 +88,7 @@ public class TenantLikedFragment extends Fragment {
         for (int i = 0; i < positiveListingsParent.getChildCount(); i++) {
             View v = positiveListingsParent.getChildAt(i);
             v.findViewById(R.id.actionIcon).setOnClickListener(view1 -> {
-                ((MainNavigationActivity) getActivity()).viewAccommodationDialog();
+                ((MainNavigationActivity) getActivity()).viewAccommodationDialog(v);
             });
         }
 
@@ -96,7 +96,7 @@ public class TenantLikedFragment extends Fragment {
         for (int i = 0; i < neutralListingsParent.getChildCount(); i++) {
             View v = neutralListingsParent.getChildAt(i);
             v.findViewById(R.id.actionIcon).setOnClickListener(view1 -> {
-                ((MainNavigationActivity) getActivity()).viewAccommodationDialog();
+                ((MainNavigationActivity) getActivity()).viewAccommodationDialog(v);
             });
         }
 
