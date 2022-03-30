@@ -73,7 +73,7 @@ public class TenantLikedFragment extends Fragment {
         // Add functionality for liked listings settings button
         Button settingsBtn = getView().findViewById(R.id.settingsButton);
         settingsBtn.setOnClickListener(view1 -> {
-            ((MainNavigationActivity) getActivity()).createNewAccommodationDialog();
+            ((MainNavigationActivity) getActivity()).openLikedTenantSettingsDialog();
         });
 
         // Get the parent views of the different listing objects
