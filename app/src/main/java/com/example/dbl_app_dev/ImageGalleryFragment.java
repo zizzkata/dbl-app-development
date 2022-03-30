@@ -44,7 +44,6 @@ public class ImageGalleryFragment extends Fragment {
         ImageView accommodationImageView = requireView().findViewById(R.id.accommodationImageView);
         Log.d("extra_debug", "Image View Fragment Created");
 
-        assert getArguments() != null;
         Bitmap image = getArguments().getParcelable("image");
         accommodationImageView.setImageBitmap(image);
     }

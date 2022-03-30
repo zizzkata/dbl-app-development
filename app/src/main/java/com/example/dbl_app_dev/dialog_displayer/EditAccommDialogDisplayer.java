@@ -9,8 +9,9 @@ import android.widget.Toast;
  * used to open popup dialog for editing an existing accommodation.
  */
 public class EditAccommDialogDisplayer extends DialogDisplayer {
-    public EditAccommDialogDisplayer(Context context, int cancelId, int positiveId, View myView) {
-        super(context, cancelId, positiveId, myView);
+    public EditAccommDialogDisplayer(Context context,
+                                     int cancelId, int positiveId, int negativeId, View myView) {
+        super(context, cancelId, positiveId, negativeId, myView);
     }
 
     @Override

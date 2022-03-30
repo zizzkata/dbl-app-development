@@ -13,6 +13,8 @@ import android.view.View;
 
 import com.example.dbl_app_dev.dialog_displayer.CreateAccommDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.EditAccommDialogDisplayer;
+import com.example.dbl_app_dev.dialog_displayer.RemoveAccommDialogDisplayer;
+import com.example.dbl_app_dev.dialog_displayer.ViewAccommDialogDisplayer;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainNavigationActivity extends AppCompatActivity {
@@ -73,7 +75,8 @@ public class MainNavigationActivity extends AppCompatActivity {
      */
     public void createNewAccommodationDialog() {
         View myView = getLayoutInflater().inflate(R.layout.new_accommodation_pop_up, null);
-        (new CreateAccommDialogDisplayer(this, R.id.cancelButton, R.id.createButton, myView))
+        (new CreateAccommDialogDisplayer(this,
+                R.id.cancelButton, R.id.createButton, R.id.negativeButton, myView))
                 .displayPopupDialog();
     }
 
@@ -83,7 +86,26 @@ public class MainNavigationActivity extends AppCompatActivity {
      */
     public void editAccommodationDialog() {
         View myView = getLayoutInflater().inflate(R.layout.edit_accommodation_pop_up, null);
-        (new EditAccommDialogDisplayer(this, R.id.cancelButton, R.id.saveButton, myView))
+        (new EditAccommDialogDisplayer(this,
+                R.id.cancelButton, R.id.saveButton, R.id.negativeButton, myView))
+                .displayPopupDialog();
+    }
+
+    /**
+     * Method used to create the popup that shows an existing accommodation.
+     */
+    public void viewAccommodationDialog(View accommObject) {
+        View myView = getLayoutInflater().inflate(R.layout.view_accommodation_pop_up, null);
+        (new ViewAccommDialogDisplayer(this,
+                R.id.cancelButton, R.id.saveButton, myView, accommObject))
+                .displayPopupDialog();
+    }
+
+    /**
+     * Method used to create the popup that shows when removing a liked accommodation.
+     */
+    public void removeAccommodationDialog(View removedView) {
+        (new RemoveAccommDialogDisplayer(this, removedView))
                 .displayPopupDialog();
     }
 }
