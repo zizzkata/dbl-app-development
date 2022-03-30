@@ -6,9 +6,9 @@ import android.graphics.Bitmap;
  * Contains the information displayed in a tenant card
  */
 public class TenantInfo {
-    private String description;
-    private String name;
-    private Bitmap photo;
+    private final String description;
+    private final String name;
+    private final Bitmap photo;
     public int age;
 
     public TenantInfo(String name, String description, Bitmap photo, int age) {

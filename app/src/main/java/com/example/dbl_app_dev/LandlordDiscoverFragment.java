@@ -30,7 +30,7 @@ import java.util.LinkedList;
  */
 public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
 
-    private final Deque<TenantInfo> tenantInfo = new LinkedList<>();
+    private LinkedList<TenantInfo> tenantInfo;
     private GestureDetector swipeListener;
     private TenantInfo currentTenantInfo = null; // currently viewed tenant
 
@@ -51,7 +51,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pullCardsInfo(10);
+        pullCardsInfo(6);
     }
 
     @Override
@@ -129,8 +129,10 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
      */
     private void pullCardsInfo(int batchSize) {
         // TODO: remove placeholder code, get data from server
+        tenantInfo = new LinkedList<>();
+        Bitmap image = null;
+        image = BitmapFactory.decodeResource(getResources(), R.drawable.default_tenant_picture);
         for (int i = 0; i < batchSize; i++) {
-            Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.default_tenant_picture);
             tenantInfo.add(
                     new TenantInfo(String.format("John Doe %d", i), String.format("Description %d", i), image, 21 + i));
         }

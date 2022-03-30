@@ -53,7 +53,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         super.onCreate(savedInstanceState);
         // Get information of accommodation cards
         dataModels = new LinkedList<>();
-        pullCardsInfo(10);
+        pullCardsInfo(6);
     }
 
     @Override
@@ -156,6 +156,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         image = BitmapFactory.decodeResource(getResources(), R.drawable.default_accommodation_picture);
         for (int i = 0; i < batchSize; i++) {
             ArrayList<Bitmap> images = new ArrayList<>();
+            images.add(image);
             images.add(image);
             images.add(image);
             dataModels.add(new AccommodationInfo(String.format("Building %d", i), String.format("Description %d", i),
