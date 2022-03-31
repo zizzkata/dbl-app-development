@@ -47,7 +47,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/filtersButton"
                     android:layout_width="48dp"
                     android:layout_height="0dp"
@@ -75,11 +75,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/arButton"
                     android:layout_width="48dp"
                     android:layout_height="0dp"
-                    android:background="@drawable/ic_compass_outline"
+                    android:background="@drawable/ic_image_filled"
                     android:backgroundTint="@color/dark_blue"
                     android:contentDescription="Open filters dialog button"
                     android:paddingVertical="@dimen/spacing_200"
@@ -89,19 +89,20 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="TextContrastCheck" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
             android:id="@+id/listingScrollView"
-            android:layout_marginTop="8dp"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="8dp"
             android:contentDescription="@string/scrollable_container_holding_the_new_listing_properties"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/topSectionContainer">
 

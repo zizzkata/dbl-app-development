@@ -26,7 +26,9 @@
                 android:id="@+id/topCard"
                 layout="@layout/fragment_swipeable_accommodation"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -49,12 +51,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/positiveButton"
                     android:layout_width="40dp"
                     android:layout_height="0dp"
                     android:background="@drawable/ic_heart_filled"
-                    android:backgroundTint="@color/heart_red"
+                    android:backgroundTint="@color/green"
                     android:contentDescription="Like accommodation button"
                     android:paddingVertical="@dimen/spacing_200"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -77,7 +79,7 @@
                 app:layout_constraintStart_toEndOf="@+id/positiveButtonContainer"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/negativeButton"
                     android:layout_width="50dp"
                     android:layout_height="0dp"
