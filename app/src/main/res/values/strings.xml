@@ -108,4 +108,7 @@
     <string name="name">Name</string>
     <string name="sample_name">Georgi Georgiev</string>
     <string name="sample_email">georgi.georgiev@gmail.com</string>
+    <string name="minimum_rental_period">Minimum rental period</string>
+    <string name="_6_months">6 months</string>
+    <string name="add_minimum_rental_period">Add minimum rental period</string>
 </resources>
