@@ -61,6 +61,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         return inflater.inflate(R.layout.fragment_landlord_discover, container, false);
     }
 
+    /*
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -101,7 +102,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
             swipedDown();
             nextCard(nameTxt, imageView, descriptionTxt);
         });
-    }
+    }*/
 
     /**
      * Displays the information stored in currentAccommodationInfo
@@ -165,4 +166,5 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
             Log.i("extra_debug", "Neutral Rating");
         }
     }
+
 }

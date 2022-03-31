@@ -112,4 +112,25 @@
     <string name="_6_months">6 months</string>
     <string name="add_minimum_rental_period">Add minimum rental period</string>
     <string name="lorem_ipsum_100">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras non lectus iaculis, porttitor massa non, tempor neque. Nunc malesuada orci auctor, dictum neque ut, ultrices arcu. Sed rhoncus placerat diam, tempus feugiat nulla vestibulum non. Aliquam erat volutpat. Fusce egestas ligula nec lectus vehicula, non fermentum urna mollis. Ut pulvinar lectus eu nulla volutpat, vel malesuada elit tincidunt. Ut bibendum placerat nibh sit amet tincidunt. Nullam laoreet blandit venenatis. Suspendisse posuere quam at tellus sollicitudin, id eleifend augue lobortis. Ut tempus consequat lobortis. Proin convallis eros velit, sed vulputate neque tristique id. Ut at condimentum leo. Aliquam ac libero eu.</string>
+    <string name="profile_picture_of_tenant">profile picture of tenant</string>
+    <string name="does_not_have_pets">Does NOT have pets</string>
+    <string name="does_not_smoke">Does NOT smoke</string>
+    <string name="caderlaan_142w">Caderlaan 142W</string>
+    <string name="pets_allowed">Pets allowed</string>
+    <string name="furnished">Furnished</string>
+    <string name="including_utilities">Including utilities</string>
+    <string name="apartment">Apartment</string>
+    <string name="_400_per_month">€400 per month</string>
+    <string name="_1234_ab_eindhoven">1234 AB, Eindhoven</string>
+    <string name="open_filters_dialog_button">Open filters dialog button</string>
+    <string name="available_from_06_06_2022">Available from 06/06/2022</string>
+    <string name="_6_months_minimum">6 months minimum</string>
+    <string name="smokers_allowed">Smokers allowed</string>
+    <string name="until_03_03_2022">until 03/03/2022</string>
+    <string name="show_normal_or_ar_photos_button">Show normal or ar photos button</string>
+    <string name="like_tenant_button">Like tenant button</string>
+    <string name="neutral_landlord_button">Neutral landlord button</string>
+    <string name="dislike_tenant_button">Dislike tenant button</string>
+    <string name="like_accommodation_button">Like accommodation button</string>
+    <string name="dislike_accommodation_button">Dislike accommodation button</string>
 </resources>

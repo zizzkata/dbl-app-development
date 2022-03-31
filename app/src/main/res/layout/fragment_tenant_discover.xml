@@ -44,7 +44,7 @@
                 android:layout_width="60dp"
                 android:layout_height="0dp"
                 android:background="@drawable/circlestyle"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/creamy_white"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toStartOf="@+id/negativeButtonContainer"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -55,16 +55,16 @@
                     android:id="@+id/positiveButton"
                     android:layout_width="40dp"
                     android:layout_height="0dp"
-                    android:background="@drawable/ic_heart_filled"
+                    android:background="@drawable/ic_heart_outline"
                     android:backgroundTint="@color/green"
-                    android:contentDescription="Like accommodation button"
+                    android:contentDescription="@string/like_accommodation_button"
                     android:paddingVertical="@dimen/spacing_200"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
+                    tools:ignore="TextContrastCheck,TouchTargetSizeCheck,RedundantDescriptionCheck" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -72,7 +72,7 @@
                 android:layout_width="60dp"
                 android:layout_height="0dp"
                 android:background="@drawable/circlestyle"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/creamy_white"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -85,14 +85,14 @@
                     android:layout_height="0dp"
                     android:background="@drawable/ic_close_outline"
                     android:backgroundTint="@color/heart_red"
-                    android:contentDescription="Dislike accommodation button"
+                    android:contentDescription="@string/dislike_accommodation_button"
                     android:paddingVertical="@dimen/spacing_200"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="TextContrastCheck" />
+                    tools:ignore="TextContrastCheck,RedundantDescriptionCheck" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 

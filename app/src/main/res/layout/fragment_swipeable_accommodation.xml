@@ -53,7 +53,7 @@
                     android:layout_height="0dp"
                     android:background="@drawable/ic_sliders_outline"
                     android:backgroundTint="@color/dark_blue"
-                    android:contentDescription="Open filters dialog button"
+                    android:contentDescription="@string/open_filters_dialog_button"
                     android:paddingVertical="@dimen/spacing_200"
                     android:rotation="90"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -61,7 +61,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="TextContrastCheck" />
+                    tools:ignore="TextContrastCheck,RedundantDescriptionCheck" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -79,16 +79,16 @@
                     android:id="@+id/arButton"
                     android:layout_width="48dp"
                     android:layout_height="0dp"
-                    android:background="@drawable/ic_image_filled"
+                    android:background="@drawable/ic_360_outline"
                     android:backgroundTint="@color/dark_blue"
-                    android:contentDescription="Open filters dialog button"
+                    android:contentDescription="@string/show_normal_or_ar_photos_button"
                     android:paddingVertical="@dimen/spacing_200"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="TextContrastCheck" />
+                    tools:ignore="TextContrastCheck,RedundantDescriptionCheck" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -116,7 +116,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="Caderlaan 142W"
+                    android:text="@string/caderlaan_142w"
                     android:textSize="24sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -127,7 +127,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="0dp"
-                    android:text="Ground floor"
+                    android:text="@string/ground_floor"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="@+id/addressTxt"
                     app:layout_constraintTop_toBottomOf="@+id/addressTxt"
@@ -138,7 +138,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="0dp"
-                    android:text="1234 AB, Eindhoven"
+                    android:text="@string/_1234_ab_eindhoven"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="@+id/floorTxt"
                     app:layout_constraintTop_toBottomOf="@+id/floorTxt"
@@ -149,7 +149,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="€400 per month"
+                    android:text="@string/_400_per_month"
                     android:textSize="24sp"
                     app:layout_constraintStart_toStartOf="@+id/postcodeTxt"
                     app:layout_constraintTop_toBottomOf="@+id/postcodeTxt"
@@ -160,7 +160,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="0dp"
-                    android:text="Apartment"
+                    android:text="@string/apartment"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="@+id/priceTxt"
                     app:layout_constraintTop_toBottomOf="@+id/priceTxt"
@@ -171,7 +171,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="0dp"
-                    android:text="Including utilities"
+                    android:text="@string/including_utilities"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="@+id/accommTypeTxt"
                     app:layout_constraintTop_toBottomOf="@+id/accommTypeTxt"
@@ -183,7 +183,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="@string/sample_20"
-                    android:textSize="24dp"
+                    android:textSize="24sp"
                     app:layout_constraintStart_toStartOf="@+id/utilitiesTxt"
                     app:layout_constraintTop_toBottomOf="@+id/utilitiesTxt"
                     tools:ignore="TextContrastCheck" />
@@ -215,7 +215,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="0dp"
-                    android:text="Furnished"
+                    android:text="@string/furnished"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="@+id/areaTxt"
                     app:layout_constraintTop_toBottomOf="@+id/areaTxt"
@@ -226,7 +226,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="0dp"
-                    android:text="Pets allowed"
+                    android:text="@string/pets_allowed"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="@+id/furnishedTxt"
                     app:layout_constraintTop_toBottomOf="@+id/furnishedTxt"
@@ -238,7 +238,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="0dp"
-                    android:text="Smokers allowed"
+                    android:text="@string/smokers_allowed"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="@+id/petsTxt"
                     app:layout_constraintTop_toBottomOf="@+id/petsTxt"
@@ -249,7 +249,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="6 months minimum"
+                    android:text="@string/_6_months_minimum"
                     android:textSize="24sp"
                     app:layout_constraintStart_toStartOf="@+id/smokersTxt"
                     app:layout_constraintTop_toBottomOf="@+id/smokersTxt"
@@ -260,7 +260,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="0dp"
-                    android:text="Available from 06/06/2022"
+                    android:text="@string/available_from_06_06_2022"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="@+id/minimumPeriodTxt"
                     app:layout_constraintTop_toBottomOf="@+id/minimumPeriodTxt"
@@ -271,7 +271,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="0dp"
-                    android:text="until 03/03/2022"
+                    android:text="@string/until_03_03_2022"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="@+id/availableTxt"
                     app:layout_constraintTop_toBottomOf="@+id/availableTxt"
@@ -305,50 +305,6 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
-        <!--
-
-        <ScrollView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="#22000000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/topSectionContainer"
-            app:layout_constraintVertical_bias="1.0">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/mainInfoContainer"
-                android:background="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:padding="12dp">
-
-                <TextView
-                    android:id="@+id/addressTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Apartment Canderlaan 142W"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/priceTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="€400 per month (incl.)"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="@+id/addressTxt"
-                    app:layout_constraintTop_toBottomOf="@+id/addressTxt" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
-        -->
         <!--
             <Button
                 android:id="@+id/accommodationLikeBtn"
