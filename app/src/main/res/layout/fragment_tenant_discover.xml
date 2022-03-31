@@ -1,20 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_blue"
-    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <include
-        android:id="@+id/topCard"
-        layout="@layout/fragment_swipeable_accommodation"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="15dp" />
+        android:layout_margin="12dp">
 
-</RelativeLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@id/buttonsContainer"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <include
+                android:id="@+id/topCard"
+                layout="@layout/fragment_swipeable_accommodation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/buttonsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/positiveButtonContainer"
+                android:layout_width="60dp"
+                android:layout_height="0dp"
+                android:background="@drawable/circlestyle"
+                android:backgroundTint="@color/white"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/negativeButtonContainer"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Button
+                    android:id="@+id/positiveButton"
+                    android:layout_width="40dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/ic_heart_filled"
+                    android:backgroundTint="@color/heart_red"
+                    android:contentDescription="Like accommodation button"
+                    android:paddingVertical="@dimen/spacing_200"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/negativeButtonContainer"
+                android:layout_width="60dp"
+                android:layout_height="0dp"
+                android:background="@drawable/circlestyle"
+                android:backgroundTint="@color/white"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/positiveButtonContainer"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Button
+                    android:id="@+id/negativeButton"
+                    android:layout_width="50dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/ic_close_outline"
+                    android:backgroundTint="@color/heart_red"
+                    android:contentDescription="Dislike accommodation button"
+                    android:paddingVertical="@dimen/spacing_200"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TextContrastCheck" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
