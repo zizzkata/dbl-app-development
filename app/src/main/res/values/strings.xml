@@ -133,4 +133,9 @@
     <string name="dislike_tenant_button">Dislike tenant button</string>
     <string name="like_accommodation_button">Like accommodation button</string>
     <string name="dislike_accommodation_button">Dislike accommodation button</string>
+    <string name="listing_settings">Listing Settings</string>
+    <string name="show_neutral_listings">Show neutral listings</string>
+    <string name="show_negative_listings">Show negative listings</string>
+    <string name="show_positive_listings">Show positive listings</string>
+    <string name="delete_listing"><u>Delete Listing</u></string>
 </resources>

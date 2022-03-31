@@ -19,7 +19,7 @@ abstract class DialogDisplayer {
     private final int cancelId; // set to -1 if it is not needed
     private final int positiveId; // set to -1 if it is not needed
     private final int negativeId; // set to -1 if it is not needed
-    private final View myView; // set to null if it is not needed
+    public final View myView; // set to null if it is not needed
 
     DialogDisplayer(Context context, int cancelId, int positiveId, int negativeId, View myView) {
         this.context = context;
@@ -54,7 +54,11 @@ abstract class DialogDisplayer {
             Button positiveButton = myView.findViewById(negativeId);
             positiveButton.setOnClickListener(view -> negativeFunctionality());
         }
+
+        additionalFunctionality();
     }
+
+    protected void additionalFunctionality(){};
 
     protected void createDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
