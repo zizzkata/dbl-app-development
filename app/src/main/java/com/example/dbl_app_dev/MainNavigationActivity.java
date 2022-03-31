@@ -71,6 +71,16 @@ public class MainNavigationActivity extends AppCompatActivity {
     }
 
     /**
+     * Method used to create the popup that opens the tenant liked settings
+     */
+    public void openLikedTenantSettingsDialog() {
+        View myView = getLayoutInflater().inflate(R.layout.liked_tenant_settings_pop_up, null);
+        (new CreateAccommDialogDisplayer(this,
+                R.id.cancelButton, R.id.saveButton, R.id.negativeButton, myView))
+                .displayPopupDialog();
+    }
+
+    /**
      * Method used to create the popup that shows when adding a new accommodation.
      */
     public void createNewAccommodationDialog() {
@@ -84,10 +94,10 @@ public class MainNavigationActivity extends AppCompatActivity {
      * Method used to create the popup that shows when editing an existing
      * accommodation.
      */
-    public void editAccommodationDialog() {
+    public void editAccommodationDialog(View accommObject) {
         View myView = getLayoutInflater().inflate(R.layout.edit_accommodation_pop_up, null);
         (new EditAccommDialogDisplayer(this,
-                R.id.cancelButton, R.id.saveButton, R.id.negativeButton, myView))
+                R.id.cancelButton, R.id.saveButton, R.id.negativeButton, myView, accommObject))
                 .displayPopupDialog();
     }
 

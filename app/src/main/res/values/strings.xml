@@ -108,4 +108,9 @@
     <string name="name">Name</string>
     <string name="sample_name">Georgi Georgiev</string>
     <string name="sample_email">georgi.georgiev@gmail.com</string>
+    <string name="listing_settings">Listing Settings</string>
+    <string name="show_neutral_listings">Show neutral listings</string>
+    <string name="show_negative_listings">Show negative listings</string>
+    <string name="show_positive_listings">Show positive listings</string>
+    <string name="delete_listing"><u>Delete Listing</u></string>
 </resources>

@@ -77,6 +77,8 @@ public class LandlordAccommodationManagementFragment extends Fragment {
             ((MainNavigationActivity) getActivity()).createNewAccommodationDialog();
         });
 
+
+
         // Get the parent view of the accommodation objects
         ConstraintLayout accommParent = getView()
                 .findViewById(R.id.scrollConstraintLayout);
@@ -86,7 +88,7 @@ public class LandlordAccommodationManagementFragment extends Fragment {
         for (int i = 0; i < childCount; i++) {
             View v = accommParent.getChildAt(i);
             v.findViewById(R.id.settingsIcon).setOnClickListener(view1 -> {
-                ((MainNavigationActivity) getActivity()).editAccommodationDialog();
+                ((MainNavigationActivity) getActivity()).editAccommodationDialog(v);
             });
         }
     }
