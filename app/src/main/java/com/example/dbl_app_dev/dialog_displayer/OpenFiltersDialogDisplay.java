@@ -10,7 +10,7 @@ package com.example.dbl_app_dev.dialog_displayer;
  */
 public class OpenFiltersDialogDisplay extends DialogDisplayer {
     public OpenFiltersDialogDisplay(Context context, int cancelId, int positiveId, View myView) {
-        super(context, cancelId, positiveId, myView);
+        super(context, cancelId, positiveId, -1, myView);
     }
 
     @Override

@@ -113,7 +113,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
             }
         });
 
-        Button filtersBtn = view.findViewById(R.id.filtersButton);
+        Button filtersBtn = view.findViewById(R.id.accommodationSettingsBtn);
         filtersBtn.setOnClickListener(v -> {
             ((MainNavigationActivity) getActivity()).openFilterDialog();
         });
