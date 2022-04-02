@@ -11,26 +11,28 @@
         android:id="@+id/appNameTxt"
         android:layout_width="256dp"
         android:layout_height="42dp"
-        android:layout_marginStart="232dp"
+        android:layout_marginStart="136dp"
         android:layout_marginTop="16dp"
         android:text="@string/app_name"
         android:textAlignment="center"
         android:textColor="@color/whitish"
         android:textSize="@dimen/font_size_700"
         android:textStyle="normal"
+        app:layout_constraintBottom_toTopOf="@+id/loginContainer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/loginContainer"
-        android:layout_width="565dp"
-        android:layout_height="340dp"
+        android:layout_width="453dp"
+        android:layout_height="234dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/roundstyle"
         android:backgroundTint="@color/creamy_white"
         android:padding="@dimen/spacing_600"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appNameTxt">
 
@@ -60,6 +62,7 @@
             android:textSize="@dimen/font_size_400"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.531"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -137,7 +140,7 @@
             android:id="@+id/editRepeatPasswordBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/roundstyle"
             android:backgroundTint="@color/white"
             android:drawableStart="@drawable/ic_security"
@@ -160,7 +163,8 @@
             android:id="@+id/haveAccountTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_200"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:text="@string/already_have_an_account"
             android:textColor="@color/black"
             android:textSize="@dimen/font_size_200"
@@ -171,15 +175,14 @@
             android:id="@+id/loginTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:text="@string/log_in_dot"
             android:textColor="#546E7A"
             android:textSize="@dimen/font_size_200"
             app:backgroundTint="@color/creamy_white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/haveAccountTxt"
-            app:layout_constraintTop_toBottomOf="@+id/signupBtn"
-            app:layout_constraintVertical_bias="0.771"
+            app:layout_constraintTop_toTopOf="@+id/haveAccountTxt"
+            app:layout_constraintVertical_bias="0.0"
             tools:ignore="TextContrastCheck" />
 
 
