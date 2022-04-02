@@ -4,129 +4,452 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/accommodationCard"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/creamy_white"
-    app:layout_constraintHeight_percent="0.45"
-    app:layout_constraintHorizontal_bias="0.0">
+    android:layout_height="match_parent">
 
-    <com.example.dbl_app_dev.VerticalViewPager
-        android:id="@+id/accommodationImageScroller"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/whitish"
-        app:layout_constraintBottom_toTopOf="@+id/accommodationName"
-        app:layout_constraintEnd_toStartOf="@+id/accommodationCardRightGuideLine"
-        app:layout_constraintHeight_percent="0.5"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/accommodationCardLeftGuideLine"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <Button
-        android:id="@+id/accommodationLikeBtn"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:text="Like"
-        android:textColor="#212121"
-        app:backgroundTint="@color/teal"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/noSwipesContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/roundstyle"
+        android:backgroundTint="@color/creamy_white"
+        android:padding="12dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/accommodationCardRightGuideLine"
-        app:layout_constraintTop_toBottomOf="@+id/accommodationInfoScroller"
-        tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
-
-    <Button
-        android:id="@+id/accommodationARBtn"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:text="AR"
-        android:textColor="#212121"
-        app:backgroundTint="@color/light_gray"
-        app:layout_constraintBottom_toBottomOf="@+id/accommodationImageScroller"
-        app:layout_constraintEnd_toStartOf="@+id/accommodationCardRightGuideLine"
-        app:layout_constraintHorizontal_bias="0.93"
-        app:layout_constraintStart_toStartOf="@+id/accommodationCardLeftGuideLine"
-        app:layout_constraintTop_toTopOf="@+id/accommodationImageScroller"
-        app:layout_constraintVertical_bias="0.05"
-        tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
-
-    <Button
-        android:id="@+id/accommodationSettingsBtn"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:text="Filters"
-        android:textColor="#212121"
-        app:backgroundTint="@color/light_gray"
-        app:layout_constraintBottom_toBottomOf="@+id/accommodationImageScroller"
-        app:layout_constraintEnd_toStartOf="@+id/accommodationCardRightGuideLine"
-        app:layout_constraintHorizontal_bias="0.07"
-        app:layout_constraintStart_toStartOf="@+id/accommodationCardLeftGuideLine"
-        app:layout_constraintTop_toTopOf="@+id/accommodationImageScroller"
-        app:layout_constraintVertical_bias="0.05"
-        tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
-
-    <Button
-        android:id="@+id/accommodationDislikeBtn"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:text="Dislike"
-        android:textColor="#212121"
-        app:backgroundTint="@color/light_pink"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/accommodationCardLeftGuideLine"
-        app:layout_constraintTop_toBottomOf="@+id/accommodationInfoScroller"
-        tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
-
-    <TextView
-        android:id="@+id/accommodationName"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="Default Accomodation Name\nPrice: 700 eur/pm, excl."
-        android:textColorLink="@color/dark_blue"
-        android:textSize="20sp"
-        android:textStyle="normal"
-        app:layout_constraintBottom_toTopOf="@+id/accommodationInfoScroller"
-        app:layout_constraintEnd_toStartOf="@+id/accommodationCardRightGuideLine"
-        app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/accommodationCardLeftGuideLine"
-        app:layout_constraintTop_toBottomOf="@+id/accommodationImageScroller"
-        app:layout_constraintWidth_percent="0.8" />
-
-    <ScrollView
-        android:id="@+id/accommodationInfoScroller"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/white"
-        android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/accommodationLikeBtn"
-        app:layout_constraintEnd_toStartOf="@+id/accommodationCardRightGuideLine"
-        app:layout_constraintHeight_percent="0.15"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/accommodationCardLeftGuideLine"
-        app:layout_constraintTop_toBottomOf="@+id/accommodationName">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/accommodationDescription"
-            android:layout_width="fill_parent"
+            android:id="@+id/noSwipesTxt"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sample_accommodation_info" />
-    </ScrollView>
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@string/no_swipes_in_your_area"
+            android:textSize="26sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/accommodationCardLeftGuideLine"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.05"
-        app:layout_constraintStart_toStartOf="parent" />
+        <ImageView
+            android:id="@+id/noSwipesImage"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="26dp"
+            android:background="@drawable/ic_negative_face_filled"
+            android:backgroundTint="@color/dark_blue"
+            android:contentDescription="@string/sad_face_image"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/noSwipesTxt" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/accommodationCardRightGuideLine"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.95"
-        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/contentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/roundstyle"
+        android:backgroundTint="@color/creamy_white"
+        android:padding="12dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/topSectionContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.example.dbl_app_dev.VerticalViewPager
+                android:id="@+id/accommodationImageScroller"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/filtersButtonContainer"
+                android:layout_width="60dp"
+                android:layout_height="0dp"
+                android:layout_margin="12dp"
+                android:background="@drawable/circlestyle"
+                android:backgroundTint="@color/white"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/filtersButton"
+                    android:layout_width="48dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/ic_sliders_outline"
+                    android:backgroundTint="@color/dark_blue"
+                    android:contentDescription="@string/open_filters_dialog_button"
+                    android:paddingVertical="@dimen/spacing_200"
+                    android:rotation="90"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TextContrastCheck,RedundantDescriptionCheck" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/arButtonContainer"
+                android:layout_width="60dp"
+                android:layout_height="0dp"
+                android:layout_margin="12dp"
+                android:background="@drawable/circlestyle"
+                android:backgroundTint="@color/white"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/arButton"
+                    android:layout_width="48dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/ic_360_outline"
+                    android:backgroundTint="@color/dark_blue"
+                    android:contentDescription="@string/show_normal_or_ar_photos_button"
+                    android:paddingVertical="@dimen/spacing_200"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TextContrastCheck,RedundantDescriptionCheck" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ScrollView
+            android:id="@+id/listingScrollView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/scrollable_container_holding_the_new_listing_properties"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topSectionContainer">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp">
+
+                <TextView
+                    android:id="@+id/addressTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/caderlaan_142w"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TextContrastCheck" />
+
+                <TextView
+                    android:id="@+id/floorTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/ground_floor"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="@+id/addressTxt"
+                    app:layout_constraintTop_toBottomOf="@+id/addressTxt"
+                    tools:ignore="TextContrastCheck" />
+
+                <TextView
+                    android:id="@+id/postcodeTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/_1234_ab_eindhoven"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@+id/floorTxt"
+                    app:layout_constraintTop_toBottomOf="@+id/floorTxt"
+                    tools:ignore="TextContrastCheck" />
+
+                <TextView
+                    android:id="@+id/priceTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/_400_per_month"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="@+id/postcodeTxt"
+                    app:layout_constraintTop_toBottomOf="@+id/postcodeTxt"
+                    tools:ignore="TextContrastCheck" />
+
+                <TextView
+                    android:id="@+id/accommTypeTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/apartment"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="@+id/priceTxt"
+                    app:layout_constraintTop_toBottomOf="@+id/priceTxt"
+                    tools:ignore="TextContrastCheck" />
+
+                <TextView
+                    android:id="@+id/utilitiesTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/including_utilities"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@+id/accommTypeTxt"
+                    app:layout_constraintTop_toBottomOf="@+id/accommTypeTxt"
+                    tools:ignore="TextContrastCheck" />
+
+                <TextView
+                    android:id="@+id/areaTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/sample_20"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="@+id/utilitiesTxt"
+                    app:layout_constraintTop_toBottomOf="@+id/utilitiesTxt"
+                    tools:ignore="TextContrastCheck" />
+
+                <TextView
+                    android:id="@+id/surfaceAreaMeterTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/meters"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toEndOf="@+id/areaTxt"
+                    app:layout_constraintTop_toTopOf="@+id/areaTxt"
+                    tools:ignore="TextContrastCheck" />
+
+                <TextView
+                    android:id="@+id/surfaceAreaUnitsTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-4dp"
+                    android:text="@string/square_units"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toEndOf="@+id/surfaceAreaMeterTxt"
+                    app:layout_constraintTop_toTopOf="@+id/areaTxt"
+                    tools:ignore="TextContrastCheck" />
+
+                <TextView
+                    android:id="@+id/furnishedTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/furnished"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="@+id/areaTxt"
+                    app:layout_constraintTop_toBottomOf="@+id/areaTxt"
+                    tools:ignore="TextContrastCheck" />
+
+                <TextView
+                    android:id="@+id/petsTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/pets_allowed"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@+id/furnishedTxt"
+                    app:layout_constraintTop_toBottomOf="@+id/furnishedTxt"
+                    tools:ignore="TextContrastCheck" />
+
+
+                <TextView
+                    android:id="@+id/smokersTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/smokers_allowed"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@+id/petsTxt"
+                    app:layout_constraintTop_toBottomOf="@+id/petsTxt"
+                    tools:ignore="TextContrastCheck" />
+
+                <TextView
+                    android:id="@+id/minimumPeriodTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/_6_months_minimum"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="@+id/smokersTxt"
+                    app:layout_constraintTop_toBottomOf="@+id/smokersTxt"
+                    tools:ignore="TextContrastCheck" />
+
+                <TextView
+                    android:id="@+id/availableTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/available_from_06_06_2022"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@+id/minimumPeriodTxt"
+                    app:layout_constraintTop_toBottomOf="@+id/minimumPeriodTxt"
+                    tools:ignore="TextContrastCheck" />
+
+                <TextView
+                    android:id="@+id/untilTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/until_03_03_2022"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@+id/availableTxt"
+                    app:layout_constraintTop_toBottomOf="@+id/availableTxt"
+                    tools:ignore="TextContrastCheck" />
+
+                <TextView
+                    android:id="@+id/descriptionTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/description"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/untilTxt"
+                    tools:ignore="TextContrastCheck" />
+
+                <TextView
+                    android:id="@+id/descriptionTxt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/roundstyle"
+                    android:backgroundTint="@color/white"
+                    android:padding="8dp"
+                    android:text="@string/loren_ipsum_30"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/descriptionTextView"
+                    tools:ignore="TextContrastCheck" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+        <!--
+            <Button
+                android:id="@+id/accommodationLikeBtn"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="Like"
+                android:textColor="#212121"
+                app:backgroundTint="@color/teal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/accommodationCardRightGuideLine"
+                app:layout_constraintTop_toBottomOf="@+id/accommodationInfoScroller"
+                tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
+
+            <Button
+                android:id="@+id/accommodationARBtn"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="AR"
+                android:textColor="#212121"
+                app:backgroundTint="@color/light_gray"
+                app:layout_constraintBottom_toBottomOf="@+id/accommodationImageScroller"
+                app:layout_constraintEnd_toStartOf="@+id/accommodationCardRightGuideLine"
+                app:layout_constraintHorizontal_bias="0.93"
+                app:layout_constraintStart_toStartOf="@+id/accommodationCardLeftGuideLine"
+                app:layout_constraintTop_toTopOf="@+id/accommodationImageScroller"
+                app:layout_constraintVertical_bias="0.05"
+                tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
+
+            <Button
+                android:id="@+id/accommodationSettingsBtn"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="Filters"
+                android:textColor="#212121"
+                app:backgroundTint="@color/light_gray"
+                app:layout_constraintBottom_toBottomOf="@+id/accommodationImageScroller"
+                app:layout_constraintEnd_toStartOf="@+id/accommodationCardRightGuideLine"
+                app:layout_constraintHorizontal_bias="0.07"
+                app:layout_constraintStart_toStartOf="@+id/accommodationCardLeftGuideLine"
+                app:layout_constraintTop_toTopOf="@+id/accommodationImageScroller"
+                app:layout_constraintVertical_bias="0.05"
+                tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
+
+            <Button
+                android:id="@+id/accommodationDislikeBtn"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="Dislike"
+                android:textColor="#212121"
+                app:backgroundTint="@color/light_pink"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/accommodationCardLeftGuideLine"
+                app:layout_constraintTop_toBottomOf="@+id/accommodationInfoScroller"
+                tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
+
+            <TextView
+                android:id="@+id/accommodationName"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="Default Accomodation Name\nPrice: 700 eur/pm, excl."
+                android:textColorLink="@color/dark_blue"
+                android:textSize="20sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toTopOf="@+id/accommodationInfoScroller"
+                app:layout_constraintEnd_toStartOf="@+id/accommodationCardRightGuideLine"
+                app:layout_constraintHeight_percent="0.1"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/accommodationCardLeftGuideLine"
+                app:layout_constraintTop_toBottomOf="@+id/accommodationImageScroller"
+                app:layout_constraintWidth_percent="0.8" />
+
+            <ScrollView
+                android:id="@+id/accommodationInfoScroller"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/white"
+                android:scrollbars="vertical"
+                app:layout_constraintBottom_toTopOf="@+id/accommodationLikeBtn"
+                app:layout_constraintEnd_toStartOf="@+id/accommodationCardRightGuideLine"
+                app:layout_constraintHeight_percent="0.15"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/accommodationCardLeftGuideLine"
+                app:layout_constraintTop_toBottomOf="@+id/accommodationName">
+
+                <TextView
+                    android:id="@+id/accommodationDescription"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sample_accommodation_info" />
+            </ScrollView>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/accommodationCardLeftGuideLine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.05"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/accommodationCardRightGuideLine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.95"
+                app:layout_constraintStart_toStartOf="parent" />
+        -->
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

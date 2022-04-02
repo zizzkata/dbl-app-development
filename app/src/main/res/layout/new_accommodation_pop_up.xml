@@ -316,6 +316,25 @@
                 app:layout_constraintTop_toBottomOf="@+id/propertiesSeparator"
                 tools:ignore="TextContrastCheck" />
 
+            <EditText
+                android:id="@+id/minimumRentTxt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/roundstyle"
+                android:backgroundTint="@color/white"
+                android:hint="@string/minimum_rental_period"
+                android:importantForAutofill="no"
+                android:inputType="numberDecimal"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="16dp"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/maxPriceTxt"
+                tools:ignore="TextContrastCheck" />
+
             <TextView
                 android:id="@+id/availabilityTxt"
                 android:layout_width="wrap_content"
@@ -326,7 +345,7 @@
                 android:textSize="18sp"
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/maxPriceTxt"
+                app:layout_constraintTop_toBottomOf="@+id/minimumRentTxt"
                 tools:ignore="TextContrastCheck" />
 
             <TextView

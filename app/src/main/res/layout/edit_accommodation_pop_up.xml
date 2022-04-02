@@ -392,6 +392,38 @@
                 tools:ignore="TextContrastCheck" />
 
             <TextView
+                android:id="@+id/minimumRentTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/minimum_rental_period"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/maxPriceTxt"
+                tools:ignore="TextContrastCheck" />
+
+            <EditText
+                android:id="@+id/minimumRentTxt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/roundstyle"
+                android:backgroundTint="@color/white"
+                android:hint="@string/add_minimum_rental_period"
+                android:importantForAutofill="no"
+                android:inputType="numberDecimal"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="16dp"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.541"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/minimumRentTextView"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
                 android:id="@+id/availabilityTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -401,7 +433,7 @@
                 android:textSize="18sp"
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/maxPriceTxt"
+                app:layout_constraintTop_toBottomOf="@+id/minimumRentTxt"
                 tools:ignore="TextContrastCheck" />
 
             <TextView
