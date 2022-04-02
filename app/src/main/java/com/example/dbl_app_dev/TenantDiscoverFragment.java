@@ -111,23 +111,6 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
             nextCard(cardTextViews, imageGalleryViewPager);
         });
 
-//        imageGalleryViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                // mandatory override
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                Log.d("API123", "onPageSelected " + position);
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//                // mandatory override
-//            }
-//        });
-
         // makes sure that the a card is not discarded if it is not rated
         if (currentAccommodationInfo == null) {
             nextCard(cardTextViews, imageGalleryViewPager);
@@ -146,6 +129,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
             displayCard(cardTextViews, imageGalleryViewPager);
         } else {
             // no more swipes left
+
 //            cardDescription.setText("...");
 //            cardTitle.setText("No more swipes in your area");
         }
