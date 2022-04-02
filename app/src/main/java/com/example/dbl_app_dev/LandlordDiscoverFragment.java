@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 
@@ -61,48 +62,54 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         return inflater.inflate(R.layout.fragment_landlord_discover, container, false);
     }
 
-    /*
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         ConstraintLayout topCard = view.findViewById(R.id.topCard);
-        TextView nameTxt = view.findViewById(R.id.tenantName);
-        TextView descriptionTxt = view.findViewById(R.id.tenantDescription);
+
         ImageView imageView = view.findViewById(R.id.tenantPicture);
+
+        ArrayList<TextView> cardTextViews = new ArrayList<>();
+        cardTextViews.add(view.findViewById(R.id.nameTxt));
+        cardTextViews.add(view.findViewById(R.id.emailTxt));
+        cardTextViews.add(view.findViewById(R.id.phoneNumberTxt));
+        cardTextViews.add(view.findViewById(R.id.petsTxt));
+        cardTextViews.add(view.findViewById(R.id.smokerTxt));
+        cardTextViews.add(view.findViewById(R.id.descriptionTxt));
 
         // makes sure that the a card is not discarded if it is not rated
         if (currentTenantInfo == null) {
-            nextCard(nameTxt, imageView, descriptionTxt);
+            nextCard(cardTextViews, imageView);
         } else {
-            displayCard(nameTxt, imageView, descriptionTxt);
+            displayCard(cardTextViews, imageView);
         }
 
         this.swipeListener = new GestureDetector(getContext(), new CardSwipeListener(this, true, true));
         topCard.setOnTouchListener((v, event) -> {
             if (swipeListener.onTouchEvent(event)) {
-                nextCard(nameTxt, imageView, descriptionTxt);
+                nextCard(cardTextViews, imageView);
             }
             return true;
         });
 
-        Button likeBtn = view.findViewById(R.id.tenantLikeBtn);
-        Button dislikeBtn = view.findViewById(R.id.tenantDislikeBtn);
-        Button neutralBtn = view.findViewById(R.id.tenantNeutralBtn);
+        Button likeBtn = view.findViewById(R.id.positiveButton);
+        Button dislikeBtn = view.findViewById(R.id.negativeButton);
+        Button neutralBtn = view.findViewById(R.id.neutralButton);
         likeBtn.setOnClickListener(v -> {
             swipedRight();
-            nextCard(nameTxt, imageView, descriptionTxt);
+            nextCard(cardTextViews, imageView);
         });
         dislikeBtn.setOnClickListener(v -> {
             swipedLeft();
-            nextCard(nameTxt, imageView, descriptionTxt);
+            nextCard(cardTextViews, imageView);
         });
         neutralBtn.setOnClickListener(v -> {
             swipedDown();
-            nextCard(nameTxt, imageView, descriptionTxt);
+            nextCard(cardTextViews, imageView);
         });
-    }*/
+    }
 
     /**
      * Displays the information stored in currentAccommodationInfo
