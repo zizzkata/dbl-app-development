@@ -13,10 +13,12 @@ import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -35,6 +37,8 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
     private final Deque<TenantInfo> tenantInfo = new LinkedList<>();
     private GestureDetector swipeListener;
     private TenantInfo currentTenantInfo = null; // currently viewed tenant
+    ConstraintLayout noSwipesContainer;
+    ConstraintLayout contentContainer;
 
     public LandlordDiscoverFragment() {
         // Required empty public constructor
@@ -79,7 +83,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         cardTextViews.add(view.findViewById(R.id.petsTxt));
         cardTextViews.add(view.findViewById(R.id.smokerTxt));
         cardTextViews.add(view.findViewById(R.id.descriptionTxt));
-
+        
         // makes sure that the a card is not discarded if it is not rated
         if (currentTenantInfo == null) {
             nextCard(cardTextViews, imageView);
@@ -110,6 +114,11 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
             swipedDown();
             nextCard(cardTextViews, imageView);
         });
+
+        noSwipesContainer = view.findViewById(R.id.noSwipesContainer);
+        contentContainer = view.findViewById(R.id.contentContainer);
+        noSwipesContainer.setVisibility(View.INVISIBLE);
+        contentContainer.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -130,9 +139,9 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
             currentTenantInfo = this.tenantInfo.remove();
             displayCard(cardTitle, cardImage);
         } else {
-            // TODO:
-//            cardDescription.setText("...");
-//            cardTitle.setText("No more swipes in your area");
+            // no more swipes left
+            noSwipesContainer.setVisibility(View.VISIBLE);
+            contentContainer.setVisibility(View.INVISIBLE);
         }
     }
 

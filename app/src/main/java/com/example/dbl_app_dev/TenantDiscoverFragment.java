@@ -36,6 +36,8 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     private GestureDetector horizontalSwipeDetector;
     private AccommodationInfo currentAccommodationInfo = null; // currently viewed accommodation
     VerticalViewPager imageGalleryViewPager;
+    ConstraintLayout noSwipesContainer;
+    ConstraintLayout contentContainer;
 
     public TenantDiscoverFragment() {
         /* Required empty public constructor */
@@ -118,6 +120,10 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
             displayCard(cardTextViews, imageGalleryViewPager);
         }
 
+        noSwipesContainer = view.findViewById(R.id.noSwipesContainer);
+        contentContainer = view.findViewById(R.id.contentContainer);
+        noSwipesContainer.setVisibility(View.INVISIBLE);
+        contentContainer.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -129,9 +135,8 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
             displayCard(cardTextViews, imageGalleryViewPager);
         } else {
             // no more swipes left
-
-//            cardDescription.setText("...");
-//            cardTitle.setText("No more swipes in your area");
+            noSwipesContainer.setVisibility(View.VISIBLE);
+            contentContainer.setVisibility(View.INVISIBLE);
         }
     }
 
