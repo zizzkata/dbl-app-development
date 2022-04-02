@@ -55,7 +55,7 @@
             android:id="@+id/signupBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_400"
+            android:layout_marginTop="@dimen/spacing_200"
             android:background="@drawable/roundstyle"
             android:paddingHorizontal="@dimen/spacing_600"
             android:paddingVertical="@dimen/spacing_200"
@@ -65,7 +65,7 @@
             app:backgroundTint="@color/teal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editRepeatPasswordBox"
+            app:layout_constraintTop_toBottomOf="@+id/invalidUsername"
             tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
 
         <TextView
@@ -84,7 +84,7 @@
             android:id="@+id/editEmailBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_600"
+            android:layout_marginTop="@dimen/spacing_400"
             android:layout_marginRight="@dimen/spacing_600"
             android:background="@drawable/roundstyle"
             android:backgroundTint="@color/white"
@@ -104,11 +104,23 @@
             app:layout_constraintTop_toBottomOf="@+id/signUpTxt"
             tools:ignore="SpeakableTextPresentCheck,TextContrastCheck" />
 
+        <TextView
+            android:id="@+id/invalidEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_200"
+            android:text="@string/invalid_message"
+            android:textColor="@color/light_pink"
+            android:textSize="@dimen/font_size_200"
+            app:layout_constraintStart_toStartOf="@+id/editEmailBox"
+            app:layout_constraintTop_toBottomOf="@+id/editEmailBox"
+            tools:ignore="TextContrastCheck" />
+
         <EditText
             android:id="@+id/editUsernameBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_600"
+            android:layout_marginTop="@dimen/spacing_200"
             android:layout_marginRight="@dimen/spacing_600"
             android:background="@drawable/roundstyle"
             android:backgroundTint="@color/white"
@@ -125,14 +137,26 @@
             app:layout_constraintEnd_toStartOf="@+id/editRepeatPasswordBox"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editEmailBox"
+            app:layout_constraintTop_toBottomOf="@+id/invalidEmail"
             tools:ignore="SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/invalidUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_200"
+            android:text="@string/invalid_message"
+            android:textColor="@color/light_pink"
+            android:textSize="@dimen/font_size_200"
+            app:layout_constraintStart_toStartOf="@+id/editUsernameBox"
+            app:layout_constraintTop_toBottomOf="@+id/editUsernameBox"
+            tools:ignore="TextContrastCheck" />
 
         <EditText
             android:id="@+id/editPasswordBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="@dimen/spacing_400"
             android:background="@drawable/roundstyle"
             android:backgroundTint="@color/white"
             android:drawableStart="@drawable/ic_security"
@@ -151,11 +175,23 @@
             app:layout_constraintTop_toBottomOf="@+id/signUpTxt"
             tools:ignore="SpeakableTextPresentCheck,TextContrastCheck,TextContrastCheck" />
 
+        <TextView
+            android:id="@+id/invalidPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_200"
+            android:text="@string/invalid_message"
+            android:textColor="@color/light_pink"
+            android:textSize="@dimen/font_size_200"
+            app:layout_constraintStart_toStartOf="@+id/editPasswordBox"
+            app:layout_constraintTop_toBottomOf="@+id/editPasswordBox"
+            tools:ignore="TextContrastCheck" />
+
         <EditText
             android:id="@+id/editRepeatPasswordBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="@dimen/spacing_200"
             android:background="@drawable/roundstyle"
             android:backgroundTint="@color/white"
             android:drawableStart="@drawable/ic_security"
@@ -171,8 +207,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/editUsernameBox"
-            app:layout_constraintTop_toBottomOf="@+id/editPasswordBox"
+            app:layout_constraintTop_toBottomOf="@+id/invalidPassword"
             tools:ignore="SpeakableTextPresentCheck,TextContrastCheck,TextContrastCheck" />
+
+        <TextView
+            android:id="@+id/invalidRepeatPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_200"
+            android:text="@string/invalid_message"
+            android:textColor="@color/light_pink"
+            android:textSize="@dimen/font_size_200"
+            app:layout_constraintStart_toStartOf="@+id/editRepeatPasswordBox"
+            app:layout_constraintTop_toBottomOf="@+id/editRepeatPasswordBox"
+            tools:ignore="TextContrastCheck" />
 
         <TextView
             android:id="@+id/haveAccountTxt"
@@ -196,8 +244,7 @@
             app:backgroundTint="@color/creamy_white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/haveAccountTxt"
-            app:layout_constraintTop_toBottomOf="@+id/signupBtn"
-            app:layout_constraintVertical_bias="0.771"
+            app:layout_constraintTop_toTopOf="@+id/haveAccountTxt"
             tools:ignore="TextContrastCheck" />
 
 

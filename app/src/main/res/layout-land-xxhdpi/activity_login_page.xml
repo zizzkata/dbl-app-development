@@ -91,13 +91,13 @@
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginTop="@dimen/spacing_200"
-            android:layout_marginRight="@dimen/spacing_600"
+            android:layout_marginEnd="@dimen/spacing_600"
             android:text="@string/remember_me"
             android:textColor="#616161"
             android:textSize="@dimen/font_size_200"
             app:layout_constraintEnd_toStartOf="@+id/loginBtn"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editPasswordBox"
+            app:layout_constraintTop_toBottomOf="@+id/invalidCredentials"
             tools:ignore="TextContrastCheck" />
 
         <Button
@@ -112,7 +112,7 @@
             android:textSize="@dimen/font_size_300"
             app:backgroundTint="@color/teal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editPasswordBox"
+            app:layout_constraintTop_toBottomOf="@+id/invalidCredentials"
             tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
 
         <TextView
@@ -149,6 +149,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editUsernameBox"
             tools:ignore="SpeakableTextPresentCheck,TextContrastCheck,TextContrastCheck" />
+
+        <TextView
+            android:id="@+id/invalidCredentials"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_200"
+            android:text="@string/invalid_message"
+            android:textColor="@color/light_pink"
+            android:textSize="@dimen/font_size_200"
+            app:layout_constraintBottom_toTopOf="@+id/rememberMe"
+            app:layout_constraintStart_toStartOf="@+id/editPasswordBox"
+            app:layout_constraintTop_toBottomOf="@+id/editPasswordBox"
+            tools:ignore="TextContrastCheck" />
 
         <TextView
             android:id="@+id/haveAccountTxt"

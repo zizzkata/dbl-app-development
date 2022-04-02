@@ -140,4 +140,6 @@
     <string name="delete_listing"><u>Delete Listing</u></string>
     <string name="no_swipes_in_your_area">No swipes in your area!</string>
     <string name="sad_face_image">sad face image</string>
+    <string name="sample_error_login_text">* Username or password missing</string>
+    <string name="invalid_message">* Invalid message</string>
 </resources>
