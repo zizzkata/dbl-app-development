@@ -13,12 +13,16 @@ import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
 
@@ -33,6 +37,8 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
     private final Deque<TenantInfo> tenantInfo = new LinkedList<>();
     private GestureDetector swipeListener;
     private TenantInfo currentTenantInfo = null; // currently viewed tenant
+    ConstraintLayout noSwipesContainer;
+    ConstraintLayout contentContainer;
 
     public LandlordDiscoverFragment() {
         // Required empty public constructor
@@ -67,58 +73,75 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         super.onViewCreated(view, savedInstanceState);
 
         ConstraintLayout topCard = view.findViewById(R.id.topCard);
-        TextView nameTxt = view.findViewById(R.id.tenantName);
-        TextView descriptionTxt = view.findViewById(R.id.tenantDescription);
+
         ImageView imageView = view.findViewById(R.id.tenantPicture);
 
+        ArrayList<TextView> cardTextViews = new ArrayList<>();
+        cardTextViews.add(view.findViewById(R.id.nameTxt));
+        cardTextViews.add(view.findViewById(R.id.emailTxt));
+        cardTextViews.add(view.findViewById(R.id.phoneNumberTxt));
+        cardTextViews.add(view.findViewById(R.id.petsTxt));
+        cardTextViews.add(view.findViewById(R.id.smokerTxt));
+        cardTextViews.add(view.findViewById(R.id.descriptionTxt));
+        
         // makes sure that the a card is not discarded if it is not rated
         if (currentTenantInfo == null) {
-            nextCard(nameTxt, imageView, descriptionTxt);
+            nextCard(cardTextViews, imageView);
         } else {
-            displayCard(nameTxt, imageView, descriptionTxt);
+            displayCard(cardTextViews, imageView);
         }
 
         this.swipeListener = new GestureDetector(getContext(), new CardSwipeListener(this, true, true));
         topCard.setOnTouchListener((v, event) -> {
             if (swipeListener.onTouchEvent(event)) {
-                nextCard(nameTxt, imageView, descriptionTxt);
+                nextCard(cardTextViews, imageView);
             }
             return true;
         });
 
-        Button likeBtn = view.findViewById(R.id.tenantLikeBtn);
-        Button dislikeBtn = view.findViewById(R.id.tenantDislikeBtn);
-        Button neutralBtn = view.findViewById(R.id.tenantNeutralBtn);
+        Button likeBtn = view.findViewById(R.id.positiveButton);
+        Button dislikeBtn = view.findViewById(R.id.negativeButton);
+        Button neutralBtn = view.findViewById(R.id.neutralButton);
         likeBtn.setOnClickListener(v -> {
             swipedRight();
-            nextCard(nameTxt, imageView, descriptionTxt);
+            nextCard(cardTextViews, imageView);
         });
         dislikeBtn.setOnClickListener(v -> {
             swipedLeft();
-            nextCard(nameTxt, imageView, descriptionTxt);
+            nextCard(cardTextViews, imageView);
         });
         neutralBtn.setOnClickListener(v -> {
             swipedDown();
-            nextCard(nameTxt, imageView, descriptionTxt);
+            nextCard(cardTextViews, imageView);
         });
+
+        noSwipesContainer = view.findViewById(R.id.noSwipesContainer);
+        contentContainer = view.findViewById(R.id.contentContainer);
+        noSwipesContainer.setVisibility(View.INVISIBLE);
+        contentContainer.setVisibility(View.VISIBLE);
     }
 
     /**
      * Displays the information stored in currentAccommodationInfo
      */
-    private void displayCard(TextView cardTitle, ImageView cardImage, TextView cardDescription) {
-        cardTitle.setText(currentTenantInfo.getName());
-        cardDescription.setText(currentTenantInfo.getDescription());
+    private void displayCard(ArrayList<TextView> cardTextViews, ImageView cardImage) {
+        ArrayList<String> cardStrings = currentTenantInfo.getFormattedText();
+
+        assert (cardStrings.size() == cardTextViews.size()) : "Incorrect size of tenant info strings";
+        for (int i = 0; i < cardStrings.size(); i++) {
+            cardTextViews.get(i).setText(cardStrings.get(i));
+        }
         cardImage.setImageBitmap(currentTenantInfo.getPhoto());
     }
 
-    private void nextCard(TextView cardTitle, ImageView cardImage, TextView cardDescription) {
+    private void nextCard(ArrayList<TextView> cardTitle, ImageView cardImage) {
         if (tenantInfo.size() > 0) {
             currentTenantInfo = this.tenantInfo.remove();
-            displayCard(cardTitle, cardImage, cardDescription);
+            displayCard(cardTitle, cardImage);
         } else {
-            cardDescription.setText("...");
-            cardTitle.setText("No more swipes in your area");
+            // no more swipes left
+            noSwipesContainer.setVisibility(View.VISIBLE);
+            contentContainer.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -130,9 +153,13 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
     private void pullCardsInfo(int batchSize) {
         // TODO: remove placeholder code, get data from server
         for (int i = 0; i < batchSize; i++) {
+            String[] sample = new String[6];
+            Arrays.fill(sample, "text" + i);
+            ArrayList<String> sampleArrList = new ArrayList<>(Arrays.asList(sample));
+
             Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.default_tenant_picture);
             tenantInfo.add(
-                    new TenantInfo(String.format("John Doe %d", i), String.format("Description %d", i), image, 21 + i));
+                    new TenantInfo(sampleArrList, image));
         }
     }
 
@@ -165,4 +192,5 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
             Log.i("extra_debug", "Neutral Rating");
         }
     }
+
 }
