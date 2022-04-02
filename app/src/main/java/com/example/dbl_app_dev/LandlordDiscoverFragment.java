@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
 
@@ -114,19 +115,24 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
     /**
      * Displays the information stored in currentAccommodationInfo
      */
-    private void displayCard(TextView cardTitle, ImageView cardImage, TextView cardDescription) {
-        cardTitle.setText(currentTenantInfo.getName());
-        cardDescription.setText(currentTenantInfo.getDescription());
+    private void displayCard(ArrayList<TextView> cardTextViews, ImageView cardImage) {
+        ArrayList<String> cardStrings = currentTenantInfo.getFormattedText();
+
+        assert (cardStrings.size() == cardTextViews.size()) : "Incorrect size of tenant info strings";
+        for (int i = 0; i < cardStrings.size(); i++) {
+            cardTextViews.get(i).setText(cardStrings.get(i));
+        }
         cardImage.setImageBitmap(currentTenantInfo.getPhoto());
     }
 
-    private void nextCard(TextView cardTitle, ImageView cardImage, TextView cardDescription) {
+    private void nextCard(ArrayList<TextView> cardTitle, ImageView cardImage) {
         if (tenantInfo.size() > 0) {
             currentTenantInfo = this.tenantInfo.remove();
-            displayCard(cardTitle, cardImage, cardDescription);
+            displayCard(cardTitle, cardImage);
         } else {
-            cardDescription.setText("...");
-            cardTitle.setText("No more swipes in your area");
+            // TODO:
+//            cardDescription.setText("...");
+//            cardTitle.setText("No more swipes in your area");
         }
     }
 
@@ -138,9 +144,13 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
     private void pullCardsInfo(int batchSize) {
         // TODO: remove placeholder code, get data from server
         for (int i = 0; i < batchSize; i++) {
+            String[] sample = new String[6];
+            Arrays.fill(sample, "text" + i);
+            ArrayList<String> sampleArrList = new ArrayList<>(Arrays.asList(sample));
+
             Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.default_tenant_picture);
             tenantInfo.add(
-                    new TenantInfo(String.format("John Doe %d", i), String.format("Description %d", i), image, 21 + i));
+                    new TenantInfo(sampleArrList, image));
         }
     }
 
