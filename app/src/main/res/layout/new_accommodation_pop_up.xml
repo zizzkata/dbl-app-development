@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/filtersTxt"
+            android:id="@+id/popupTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/create_listing"
@@ -69,7 +69,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <View
-                android:id="@+id/passwordBotSeparator"
+                android:id="@+id/imagesSeparator"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginHorizontal="8dp"
@@ -86,7 +86,7 @@
                 android:layout_marginTop="12dp"
                 android:text="@string/panorama"
                 app:layout_constraintStart_toStartOf="@id/panoramaImage"
-                app:layout_constraintTop_toBottomOf="@id/passwordBotSeparator"
+                app:layout_constraintTop_toBottomOf="@id/imagesSeparator"
                 tools:ignore="TextContrastCheck" />
 
             <ImageView
@@ -298,7 +298,7 @@
                 app:layout_constraintTop_toBottomOf="@id/propertiesHeader" />
 
             <EditText
-                android:id="@+id/maxPriceTxt"
+                android:id="@+id/priceTxt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"
