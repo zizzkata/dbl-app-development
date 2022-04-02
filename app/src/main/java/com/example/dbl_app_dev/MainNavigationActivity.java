@@ -112,10 +112,19 @@ public class MainNavigationActivity extends AppCompatActivity {
     }
 
     /**
-     * Method used to create the popup that shows when removing a liked accommodation.
+     * Method used to create the popup that shows when removing a liked
+     * accommodation.
      */
     public void removeAccommodationDialog(View removedView) {
-        (new RemoveAccommDialogDisplayer(this, removedView))
+        (new RemoveAccommDialogDisplayer(this, removedView)).displayPopupDialog();
+    }
+
+    /**
+     * Method used to the popup for fitlers
+     */
+    public void openFilterDialog() {
+        View myView = getLayoutInflater().inflate(R.layout.activity_filters, null);
+        (new CreateAccommDialogDisplayer(this, R.id.cancelButton, R.id.saveBtn, myView))
                 .displayPopupDialog();
     }
 }

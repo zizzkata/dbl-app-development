@@ -23,24 +23,12 @@
             android:id="@+id/filtersTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/create_listing"
+            android:text="Filters"
             android:textColor="@color/dark_blue"
             android:textSize="32sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/cancelButton"
-            android:layout_width="42dp"
-            android:layout_height="0dp"
-            android:background="@drawable/ic_close_outline"
-            android:contentDescription="@string/cancel"
-            app:backgroundTint="@color/dark_blue"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck,TouchTargetSizeCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
@@ -59,115 +47,14 @@
             android:layout_marginHorizontal="12dp">
 
             <TextView
-                android:id="@+id/imagesHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:text="@string/pictures"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <View
-                android:id="@+id/passwordBotSeparator"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="2dp"
-                android:background="@android:color/darker_gray"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imagesHeader" />
-
-            <TextView
-                android:id="@+id/panoramaText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/panorama"
-                app:layout_constraintStart_toStartOf="@id/panoramaImage"
-                app:layout_constraintTop_toBottomOf="@id/passwordBotSeparator"
-                tools:ignore="TextContrastCheck" />
-
-            <ImageView
-                android:id="@+id/panoramaImage"
-                android:layout_width="125dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="4dp"
-                android:contentDescription="@string/image_to_show_the_selected_panorama_images_for_the_listing"
-                android:scaleType="centerCrop"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toStartOf="@+id/normalImage"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/panoramaText"
-                app:srcCompat="@drawable/default_accommodation_picture"
-                tools:ignore="RedundantDescriptionCheck" />
-
-            <TextView
-                android:id="@+id/panoramaImageCountText"
-                android:layout_width="30dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="-15dp"
-                android:layout_marginEnd="-15dp"
-                android:background="@drawable/circlestyle"
-                android:backgroundTint="@color/dark_blue"
-                android:gravity="center_horizontal|center_vertical"
-                android:text="@string/sample_99"
-                android:textColor="@color/white"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toEndOf="@+id/panoramaImage"
-                app:layout_constraintTop_toTopOf="@+id/panoramaImage" />
-
-            <TextView
-                android:id="@+id/panoramaText1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:text="@string/normal"
-                app:layout_constraintBottom_toTopOf="@+id/normalImage"
-                app:layout_constraintStart_toStartOf="@+id/normalImage"
-                tools:ignore="TextContrastCheck" />
-
-            <ImageView
-                android:id="@+id/normalImage"
-                android:layout_width="125dp"
-                android:layout_height="0dp"
-                android:contentDescription="@string/image_to_show_the_selected_normal_images_for_the_listing"
-                android:scaleType="centerCrop"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/panoramaImage"
-                app:layout_constraintTop_toTopOf="@id/panoramaImage"
-                app:srcCompat="@drawable/default_accommodation_picture"
-                tools:ignore="RedundantDescriptionCheck" />
-
-            <TextView
-                android:id="@+id/normalImageCountText"
-                android:layout_width="30dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="-15dp"
-                android:layout_marginEnd="-15dp"
-                android:background="@drawable/circlestyle"
-                android:backgroundTint="@color/dark_blue"
-                android:gravity="center_horizontal|center_vertical"
-                android:text="@string/sample_99"
-                android:textColor="@color/white"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toEndOf="@+id/normalImage"
-                app:layout_constraintTop_toTopOf="@+id/normalImage" />
-
-            <TextView
                 android:id="@+id/locationHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="16dp"
                 android:text="@string/location"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/panoramaImage" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <View
                 android:id="@+id/locationSeparator"
@@ -180,61 +67,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/locationHeader" />
 
-            <EditText
-                android:id="@+id/addressTxt"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/cityTextView"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/roundstyle"
-                android:backgroundTint="@color/white"
-                android:hint="@string/street"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="16dp"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/city"
+                android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/locationSeparator"
-                tools:ignore="TextContrastCheck" />
-
-            <EditText
-                android:id="@+id/apartmentNameText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="12dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/roundstyle"
-                android:backgroundTint="@color/white"
-                android:hint="@string/house_number"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="16dp"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addressTxt"
-                tools:ignore="TextContrastCheck" />
-
-            <EditText
-                android:id="@+id/floorTxt"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="12dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/roundstyle"
-                android:backgroundTint="@color/white"
-                android:hint="@string/floor"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="16dp"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/apartmentNameText"
+                app:layout_constraintTop_toBottomOf="@+id/locationSeparator"
                 tools:ignore="TextContrastCheck" />
 
             <EditText
@@ -242,49 +83,31 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="4dp"
                 android:background="@drawable/roundstyle"
                 android:backgroundTint="@color/white"
-                android:hint="@string/city"
+                android:hint="Choose city"
                 android:importantForAutofill="no"
                 android:inputType="text"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="16dp"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.541"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/floorTxt"
-                tools:ignore="TextContrastCheck" />
-
-            <EditText
-                android:id="@+id/postcodeTxt"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="12dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/roundstyle"
-                android:backgroundTint="@color/white"
-                android:hint="@string/postcode"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="16dp"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cityTxt"
+                app:layout_constraintTop_toBottomOf="@+id/cityTextView"
                 tools:ignore="TextContrastCheck" />
 
             <TextView
                 android:id="@+id/propertiesHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="16dp"
                 android:text="@string/properties"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/postcodeTxt" />
+                app:layout_constraintTop_toBottomOf="@+id/cityTxt" />
 
             <View
                 android:id="@+id/propertiesSeparator"
@@ -297,42 +120,69 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/propertiesHeader" />
 
-            <EditText
-                android:id="@+id/maxPriceTxt"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/minPriceTextView"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/roundstyle"
-                android:backgroundTint="@color/white"
-                android:hint="@string/monthly_rental_price"
-                android:importantForAutofill="no"
-                android:inputType="numberDecimal"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="16dp"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp"
+                android:text="@string/monthly_rental_price"
+                android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/propertiesSeparator"
                 tools:ignore="TextContrastCheck" />
 
             <EditText
-                android:id="@+id/minimumRentTxt"
+                android:id="@+id/minPriceTxt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="4dp"
                 android:background="@drawable/roundstyle"
                 android:backgroundTint="@color/white"
-                android:hint="@string/minimum_rental_period"
+                android:hint="Min. price"
                 android:importantForAutofill="no"
                 android:inputType="numberDecimal"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="16dp"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/maxPriceTxt"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/minPriceTextView"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/maxPriceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/monthly_rental_price"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/maxPriceTxt"
+                app:layout_constraintTop_toTopOf="@+id/minPriceTextView"
+                tools:ignore="TextContrastCheck" />
+
+            <EditText
+                android:id="@+id/maxPriceTxt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/roundstyle"
+                android:backgroundTint="@color/white"
+                android:hint="Max. price"
+                android:importantForAutofill="no"
+                android:inputType="numberDecimal"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="16dp"
+                android:textAlignment="center"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/priceTxt"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/minPriceTxt"
+                app:layout_constraintTop_toBottomOf="@+id/maxPriceTextView"
                 tools:ignore="TextContrastCheck" />
 
             <TextView
@@ -345,7 +195,7 @@
                 android:textSize="18sp"
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/minimumRentTxt"
+                app:layout_constraintTop_toBottomOf="@+id/maxPriceTxt"
                 tools:ignore="TextContrastCheck" />
 
             <TextView
@@ -360,6 +210,18 @@
                 app:layout_constraintStart_toEndOf="@+id/availabilityTxt"
                 tools:ignore="TextContrastCheck" />
 
+            <TextView
+                android:id="@+id/startDateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/start_date"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/availabilityTxt"
+                tools:ignore="TextContrastCheck" />
+
             <EditText
                 android:id="@+id/startDateEditTxt"
                 android:layout_width="0dp"
@@ -368,7 +230,7 @@
                 android:layout_marginTop="4dp"
                 android:background="@drawable/roundstyle"
                 android:backgroundTint="@color/white"
-                android:hint="@string/start_date"
+                android:hint="@string/add_start_date"
                 android:importantForAutofill="no"
                 android:inputType="datetime"
                 android:paddingHorizontal="8dp"
@@ -377,7 +239,18 @@
                 app:layout_constraintEnd_toStartOf="@+id/endDateEditTxt"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/availabilityTxt"
+                app:layout_constraintTop_toBottomOf="@+id/startDateTextView"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/endDateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/end_date"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/endDateEditTxt"
+                app:layout_constraintTop_toBottomOf="@id/availabilityTxt"
                 tools:ignore="TextContrastCheck" />
 
             <EditText
@@ -387,7 +260,7 @@
                 android:layout_marginHorizontal="12dp"
                 android:background="@drawable/roundstyle"
                 android:backgroundTint="@color/white"
-                android:hint="@string/end_date"
+                android:hint="@string/add_end_date"
                 android:importantForAutofill="no"
                 android:inputType="datetime"
                 android:paddingHorizontal="8dp"
@@ -398,53 +271,84 @@
                 app:layout_constraintTop_toTopOf="@+id/startDateEditTxt"
                 tools:ignore="TextContrastCheck" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:textSize="18sp"
+                android:textStyle="italic"
+                android:id="@+id/surfaceAreaTextView"
+                android:layout_marginHorizontal="12dp"
+                android:text="@string/surface_area"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/startDateEditTxt"
+                tools:ignore="TextContrastCheck" />
+
+
+            <TextView
+                android:id="@+id/minMetersTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="8dp"
+                android:text="Minimal area"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/surfaceAreaTextView"
+                tools:ignore="TextContrastCheck" />
+
             <EditText
-                android:id="@+id/surfaceAreaTxt"
+                android:id="@+id/minMetersTxt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="4dp"
                 android:background="@drawable/roundstyle"
                 android:backgroundTint="@color/white"
-                android:hint="@string/surface_area"
+                android:hint="0"
                 android:importantForAutofill="no"
                 android:inputType="numberDecimal"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="16dp"
+                android:textAlignment="center"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/maxMetersTxt"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/startDateEditTxt"
+                app:layout_constraintTop_toBottomOf="@+id/minMetersTextView"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/maxMetersTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Maximal area"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/maxMetersTxt"
+                app:layout_constraintTop_toTopOf="@+id/minMetersTextView"
                 tools:ignore="TextContrastCheck" />
 
             <EditText
-                android:id="@+id/descriptionTxt"
+                android:id="@+id/maxMetersTxt"
                 android:layout_width="0dp"
-                android:layout_height="156dp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="4dp"
                 android:background="@drawable/roundstyle"
                 android:backgroundTint="@color/white"
-                android:enabled="true"
-                android:focusable="true"
-                android:foregroundGravity="top"
-                android:gravity="start|top"
-                android:hint="@string/add_listing_description"
+                android:hint="Max. area"
                 android:importantForAutofill="no"
-                android:inputType="textMultiLine"
-                android:isScrollContainer="true"
-                android:maxLines="6"
-                android:overScrollMode="always"
+                android:inputType="numberDecimal"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="16dp"
-                android:scrollbarStyle="insideInset"
-                android:scrollbars="vertical"
-                android:scrollHorizontally="false"
-                android:selectAllOnFocus="true"
+                android:textAlignment="center"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/surfaceAreaTxt"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/minMetersTxt"
+                app:layout_constraintTop_toBottomOf="@+id/maxMetersTextView"
                 tools:ignore="TextContrastCheck" />
 
             <CheckBox
@@ -452,13 +356,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"
-                android:layout_marginTop="12dp"
                 android:importantForAutofill="no"
                 android:text="@string/is_the_listing_furnished"
                 android:textSize="16sp"
                 android:theme="@style/coloredCheckBox"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/descriptionTxt"
+                app:layout_constraintTop_toBottomOf="@+id/minMetersTxt"
                 tools:ignore="TextContrastCheck" />
 
             <CheckBox
@@ -498,7 +401,7 @@
         app:layout_constraintTop_toBottomOf="@id/listingScrollView">
 
         <Button
-            android:id="@+id/negativeButton"
+            android:id="@+id/cancelButton"
             android:layout_width="115dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
@@ -508,17 +411,17 @@
             android:textColor="@color/white"
             android:textSize="@dimen/font_size_300"
             app:backgroundTint="#a1a1a1"
-            app:layout_constraintEnd_toStartOf="@id/createButton"
+            app:layout_constraintEnd_toStartOf="@id/saveBtn"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="TextContrastCheck" />
 
         <Button
-            android:id="@+id/createButton"
+            android:id="@+id/saveBtn"
             android:layout_width="115dp"
             android:layout_height="wrap_content"
             android:background="@drawable/roundstyle"
             android:paddingVertical="@dimen/spacing_200"
-            android:text="@string/create"
+            android:text="@string/save"
             android:textColor="@color/white"
             android:textSize="@dimen/font_size_300"
             app:backgroundTint="@color/teal"

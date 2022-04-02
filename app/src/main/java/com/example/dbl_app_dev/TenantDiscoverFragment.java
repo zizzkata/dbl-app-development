@@ -63,7 +63,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tenant_discover, container, false);
     }
@@ -124,6 +124,11 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         contentContainer = view.findViewById(R.id.contentContainer);
         noSwipesContainer.setVisibility(View.INVISIBLE);
         contentContainer.setVisibility(View.VISIBLE);
+
+        Button filtersBtn = view.findViewById(R.id.filtersBtn);
+        filtersBtn.setOnClickListener(v -> {
+            ((MainNavigationActivity) getActivity()).openFilterDialog();
+        });
     }
 
     /**
