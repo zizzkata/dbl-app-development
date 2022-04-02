@@ -113,6 +113,11 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
             nextCard(cardTextViews, imageGalleryViewPager);
         });
 
+        Button filtersBtn = view.findViewById(R.id.filtersButton);
+        filtersBtn.setOnClickListener(v -> {
+            ((MainNavigationActivity) getActivity()).openFilterDialog();
+        });
+
         // makes sure that the a card is not discarded if it is not rated
         if (currentAccommodationInfo == null) {
             nextCard(cardTextViews, imageGalleryViewPager);

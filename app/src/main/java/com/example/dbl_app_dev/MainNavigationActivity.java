@@ -96,14 +96,17 @@ public class MainNavigationActivity extends AppCompatActivity {
      */
     public void editAccommodationDialog(View accommObject) {
         View myView = getLayoutInflater().inflate(R.layout.edit_accommodation_pop_up, null);
+        // (new EditAccommDialogDisplayer(this, R.id.cancelButton, R.id.saveBtn,
+        // myView))
         (new EditAccommDialogDisplayer(this,
-                R.id.cancelButton, R.id.saveButton, R.id.negativeButton, myView, accommObject))
+                R.id.cancelButton, R.id.saveBtn, R.id.negativeButton, myView, accommObject))
                 .displayPopupDialog();
     }
 
     /**
      * Method used to create the popup that shows an existing accommodation.
      */
+
     public void viewAccommodationDialog(View accommObject) {
         View myView = getLayoutInflater().inflate(R.layout.view_accommodation_pop_up, null);
         (new ViewAccommDialogDisplayer(this,
@@ -112,10 +115,20 @@ public class MainNavigationActivity extends AppCompatActivity {
     }
 
     /**
-     * Method used to create the popup that shows when removing a liked accommodation.
+     * Method used to create the popup that shows when removing a liked
+     * accommodation.
      */
     public void removeAccommodationDialog(View removedView) {
         (new RemoveAccommDialogDisplayer(this, removedView))
+                .displayPopupDialog();
+    }
+
+    /**
+     * Method used to create the popup that shows when adding a new accommodation.
+     */
+    public void openFilterDialog() {
+        View myView = getLayoutInflater().inflate(R.layout.activity_filters, null);
+        (new CreateAccommDialogDisplayer(this, R.id.cancelButton, R.id.saveBtn, -1, myView))
                 .displayPopupDialog();
     }
 }
