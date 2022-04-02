@@ -67,9 +67,9 @@ public class SettingsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_settings, container, false);
-        ((MainNavigationActivity)getActivity()).modeSwitchLogic(root.findViewById(R.id.modeSwitch));
+        ((MainNavigationActivity) getActivity()).modeSwitchLogic(root.findViewById(R.id.modeSwitch));
 
         // Inflate the layout for this fragment
         return root;

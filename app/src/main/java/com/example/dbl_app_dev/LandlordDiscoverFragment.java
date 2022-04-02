@@ -1,6 +1,8 @@
 package com.example.dbl_app_dev;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,22 +19,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * Discovery page fragment, if the user is in "Landlord" mode
- *
+ * <p>
  * Use the {@link LandlordDiscoverFragment #newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LandlordDiscoverFragment extends Fragment implements RatingHandler {
+public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
 
-    private Deque<TenantInfo> tenantInfo = new LinkedList<>();
-    private GestureDetector gestureDetector;
-    private TenantInfo currentTenantInfo = null;    // currently viewed tenant
+    private final Deque<TenantInfo> tenantInfo = new LinkedList<>();
+    private GestureDetector swipeListener;
+    private TenantInfo currentTenantInfo = null; // currently viewed tenant
 
     public LandlordDiscoverFragment() {
         // Required empty public constructor
@@ -51,11 +51,12 @@ public class LandlordDiscoverFragment extends Fragment implements RatingHandler 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        pullCardsInfo(10);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_landlord_discover, container, false);
     }
@@ -64,9 +65,7 @@ public class LandlordDiscoverFragment extends Fragment implements RatingHandler 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        assert view != null;
 
-        pullCardsInfo(10);
         ConstraintLayout topCard = view.findViewById(R.id.topCard);
         TextView nameTxt = view.findViewById(R.id.tenantName);
         TextView descriptionTxt = view.findViewById(R.id.tenantDescription);
@@ -76,13 +75,12 @@ public class LandlordDiscoverFragment extends Fragment implements RatingHandler 
         if (currentTenantInfo == null) {
             nextCard(nameTxt, imageView, descriptionTxt);
         } else {
-            tenantInfo.addFirst(currentTenantInfo);
-            nextCard(nameTxt, imageView, descriptionTxt);
+            displayCard(nameTxt, imageView, descriptionTxt);
         }
 
-        this.gestureDetector = new GestureDetector(getContext(), new CardSwipeListener(this));
+        this.swipeListener = new GestureDetector(getContext(), new CardSwipeListener(this, true, true));
         topCard.setOnTouchListener((v, event) -> {
-            if (gestureDetector.onTouchEvent(event)) {
+            if (swipeListener.onTouchEvent(event)) {
                 nextCard(nameTxt, imageView, descriptionTxt);
             }
             return true;
@@ -92,25 +90,32 @@ public class LandlordDiscoverFragment extends Fragment implements RatingHandler 
         Button dislikeBtn = view.findViewById(R.id.tenantDislikeBtn);
         Button neutralBtn = view.findViewById(R.id.tenantNeutralBtn);
         likeBtn.setOnClickListener(v -> {
-            positiveRating();
+            swipedRight();
             nextCard(nameTxt, imageView, descriptionTxt);
         });
         dislikeBtn.setOnClickListener(v -> {
-            negativeRating();
+            swipedLeft();
             nextCard(nameTxt, imageView, descriptionTxt);
         });
         neutralBtn.setOnClickListener(v -> {
-            neutralRating();
+            swipedDown();
             nextCard(nameTxt, imageView, descriptionTxt);
         });
+    }
+
+    /**
+     * Displays the information stored in currentAccommodationInfo
+     */
+    private void displayCard(TextView cardTitle, ImageView cardImage, TextView cardDescription) {
+        cardTitle.setText(currentTenantInfo.getName());
+        cardDescription.setText(currentTenantInfo.getDescription());
+        cardImage.setImageBitmap(currentTenantInfo.getPhoto());
     }
 
     private void nextCard(TextView cardTitle, ImageView cardImage, TextView cardDescription) {
         if (tenantInfo.size() > 0) {
             currentTenantInfo = this.tenantInfo.remove();
-            cardTitle.setText(currentTenantInfo.getName());
-            cardDescription.setText(currentTenantInfo.getDescription());
-//            cardImage.setImageBitmap(currentTenantInfo.getPhotos().get(0));
+            displayCard(cardTitle, cardImage, cardDescription);
         } else {
             cardDescription.setText("...");
             cardTitle.setText("No more swipes in your area");
@@ -123,9 +128,11 @@ public class LandlordDiscoverFragment extends Fragment implements RatingHandler 
      * @param batchSize number of cards to add to the tenantInfo queue
      */
     private void pullCardsInfo(int batchSize) {
-        // TODO: remove placeholder code
+        // TODO: remove placeholder code, get data from server
         for (int i = 0; i < batchSize; i++) {
-            tenantInfo.add(new TenantInfo(String.format("John Doe %d", i), String.format("Description %d", i), new ArrayList<>(), 21));
+            Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.default_tenant_picture);
+            tenantInfo.add(
+                    new TenantInfo(String.format("John Doe %d", i), String.format("Description %d", i), image, 21 + i));
         }
     }
 
@@ -133,7 +140,7 @@ public class LandlordDiscoverFragment extends Fragment implements RatingHandler 
      * POST's the positive rating given to the viewed tenant to the backend
      */
     @Override
-    public void positiveRating() {
+    public void swipedRight() {
         if (tenantInfo.size() > 0) {
             Log.i("extra_debug", "Positive Rating");
         }
@@ -143,7 +150,7 @@ public class LandlordDiscoverFragment extends Fragment implements RatingHandler 
      * POST's the negative rating given to the viewed tenant to the backend
      */
     @Override
-    public void negativeRating() {
+    public void swipedLeft() {
         if (tenantInfo.size() > 0) {
             Log.i("extra_debug", "Negative Rating");
         }
@@ -153,7 +160,7 @@ public class LandlordDiscoverFragment extends Fragment implements RatingHandler 
      * POST's the neutral rating given to the viewed tenant to the backend
      */
     @Override
-    public void neutralRating() {
+    public void swipedDown() {
         if (tenantInfo.size() > 0) {
             Log.i("extra_debug", "Neutral Rating");
         }
