@@ -227,23 +227,5 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.9" />
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/group3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="haveAcountText,signUpButton" />
-
-    <TextView
-        android:id="@+id/invalidCredentials"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="* Username or password missing"
-        android:textColor="@color/light_pink"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/rememberMe"
-        app:layout_constraintStart_toStartOf="@+id/editPasswordBox"
-        app:layout_constraintTop_toBottomOf="@+id/editPasswordBox"
-        tools:visibility="visible" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
