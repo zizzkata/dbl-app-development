@@ -49,6 +49,7 @@ public class LoginPage extends AppCompatActivity {
         signUpTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                setCredentialsWarning(false);
                 startActivity(new Intent(LoginPage.this, RegisterPage.class));
                 overridePendingTransition(0, 0);
             }
