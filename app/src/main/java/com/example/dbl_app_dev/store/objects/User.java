@@ -1,5 +1,6 @@
 package com.example.dbl_app_dev.store.objects;
 
+import android.util.Log;
 import com.example.dbl_app_dev.network_communication.Database;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -28,7 +29,7 @@ public class User {
         this.phoneNumber = (String) res.get("phone_number");
         this.description = (String) res.get("profile_description");
         this.age = (String) res.get("age");
-
+        // Log.i("User", this.firstName == null ? "null" : this.firstName); // TEST
         // pull image
         // TODO
 

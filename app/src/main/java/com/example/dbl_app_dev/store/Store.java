@@ -5,16 +5,25 @@ import com.example.dbl_app_dev.store.objects.User;
 import com.example.dbl_app_dev.network_communication.Authentication;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * Class that acts as local cache.
+ */
 public final class Store {
-    private Store() throws Exception {
-        throw new Exception("Cannot innitializee this class");
-    }
 
+    /** States and variables that need to be saved locally */
     private static User currentUser;
-
-
     private static Exception lastExecutedException;
 
+    private Store() throws Exception {
+        throw new Exception("Cannot initialize this class.");
+    }
+
+    /**
+     * Login using firebase and save it to the store
+     * @param email
+     * @param password
+     * @return true if successful else false;
+     */
     public static boolean login(String email, String password) {
         FirebaseUser auth;
         try {
@@ -24,11 +33,12 @@ public final class Store {
             lastExecutedException = e;
             return false;
         }
+        lastExecutedException = null;
         return true;
     }
 
-    public static User getCurrentUser() {
-        return currentUser;
-    }
-
+    /** Get the current user's information */
+    public static User getCurrentUser() { return currentUser; }
+    /** Get exception from the last transaction */
+    public static Exception getLastException() { return lastExecutedException; }
 }
