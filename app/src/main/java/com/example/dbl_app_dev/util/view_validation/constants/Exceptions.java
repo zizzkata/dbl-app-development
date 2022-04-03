@@ -9,4 +9,6 @@ public class Exceptions {
     public final static String INVALID_EMAIL_FORMAT_MESSAGE = "The email address is badly formatted.";
     public final static String NETWORK_ERROR = "com.google.firebase.FirebaseException: An internal error has occurred. [ Connection reset ]";
     public final static String NETWORK_ERROR_MESSAGE = "An internal error has occurred. [ Connection reset ]";
+    public final static String PERMISSION_DENIED_MESSAGE = "PERMISSION_DENIED: Missing or insufficient permissions.";
+    public final static String PERMISSION_DENIED = "com.google.firebase.firestore.FirebaseFirestoreException: PERMISSION_DENIED: Missing or insufficient permissions.";
 }

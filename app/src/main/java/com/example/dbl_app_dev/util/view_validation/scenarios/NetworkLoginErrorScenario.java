@@ -15,6 +15,7 @@ public class NetworkLoginErrorScenario extends NetworkExceptionValidator {
     public final static String INVALID_USER = "* No such user exists. Please first sign-up";
     public final static String NETWORK_ERROR = "* There is no Internet connection.";
     public final static String EMAIL_FORMAT_ERROR = "* Email format is invalid";
+    public final static String FATA_ERROR = "* Fatal error. Please contact the administrator.";
 
     public NetworkLoginErrorScenario(@NonNull Exception e) {
         super(e);
@@ -31,6 +32,8 @@ public class NetworkLoginErrorScenario extends NetworkExceptionValidator {
             return NETWORK_ERROR;
         } else if (errorRaw.equals(Exceptions.INVALID_EMAIL_FORMAT_MESSAGE)) {
             return EMAIL_FORMAT_ERROR;
+        }  else if (errorRaw.equals(Exceptions.PERMISSION_DENIED_MESSAGE)) {
+            return FATA_ERROR;
         } else {
             return errorRaw;
         }
