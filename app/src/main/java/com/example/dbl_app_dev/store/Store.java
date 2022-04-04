@@ -41,25 +41,6 @@ public final class Store {
     }
 
     /**
-     * Signup using firebase.
-     *
-     * @param email
-     * @param password
-     * @param username
-     * @return true if successful else false;
-     */
-    public static boolean signup(String email, String password, String username) {
-        try {
-            Authentication.firebaseSignup(email, password, username);
-        } catch (Exception e) {
-            lastExecutedException = e;
-            return false;
-        }
-        lastExecutedException = null;
-        return true;
-    }
-
-    /**
      * Get the current user's information
      */
     public static User getCurrentUser() {
