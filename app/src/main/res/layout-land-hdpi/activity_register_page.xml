@@ -25,7 +25,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/loginContainer"
         android:layout_width="453dp"
-        android:layout_height="234dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:background="@drawable/roundstyle"
         android:backgroundTint="@color/creamy_white"
@@ -50,7 +50,7 @@
             app:backgroundTint="@color/teal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editRepeatPasswordBox"
+            app:layout_constraintTop_toBottomOf="@+id/invalidUsername"
             tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
 
         <TextView
@@ -90,11 +90,23 @@
             app:layout_constraintTop_toBottomOf="@+id/signUpTxt"
             tools:ignore="SpeakableTextPresentCheck,TextContrastCheck" />
 
+        <TextView
+            android:id="@+id/invalidEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_200"
+            android:text="@string/invalid_message"
+            android:textColor="@color/light_pink"
+            android:textSize="@dimen/font_size_200"
+            app:layout_constraintStart_toStartOf="@+id/editEmailBox"
+            app:layout_constraintTop_toBottomOf="@+id/editEmailBox"
+            tools:ignore="TextContrastCheck" />
+
         <EditText
             android:id="@+id/editUsernameBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_600"
+            android:layout_marginTop="@dimen/spacing_200"
             android:layout_marginEnd="@dimen/spacing_600"
             android:background="@drawable/roundstyle"
             android:backgroundTint="@color/white"
@@ -111,8 +123,20 @@
             app:layout_constraintEnd_toStartOf="@+id/editRepeatPasswordBox"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editEmailBox"
+            app:layout_constraintTop_toBottomOf="@+id/invalidEmail"
             tools:ignore="SpeakableTextPresentCheck,TextContrastCheck,TextContrastCheck" />
+
+        <TextView
+            android:id="@+id/invalidUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_200"
+            android:text="@string/invalid_message"
+            android:textColor="@color/light_pink"
+            android:textSize="@dimen/font_size_200"
+            app:layout_constraintStart_toStartOf="@+id/editUsernameBox"
+            app:layout_constraintTop_toBottomOf="@+id/editUsernameBox"
+            tools:ignore="TextContrastCheck" />
 
         <EditText
             android:id="@+id/editPasswordBox"
@@ -136,11 +160,23 @@
             app:layout_constraintTop_toTopOf="@+id/editEmailBox"
             tools:ignore="SpeakableTextPresentCheck,TextContrastCheck,TextContrastCheck" />
 
+        <TextView
+            android:id="@+id/invalidPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_200"
+            android:text="@string/invalid_message"
+            android:textColor="@color/light_pink"
+            android:textSize="@dimen/font_size_200"
+            app:layout_constraintStart_toStartOf="@+id/editPasswordBox"
+            app:layout_constraintTop_toBottomOf="@+id/editPasswordBox"
+            tools:ignore="TextContrastCheck" />
+
         <EditText
             android:id="@+id/editRepeatPasswordBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/spacing_200"
             android:background="@drawable/roundstyle"
             android:backgroundTint="@color/white"
             android:drawableStart="@drawable/ic_security"
@@ -156,8 +192,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/editUsernameBox"
-            app:layout_constraintTop_toBottomOf="@+id/editPasswordBox"
+            app:layout_constraintTop_toBottomOf="@+id/invalidPassword"
             tools:ignore="SpeakableTextPresentCheck,TextContrastCheck,TextContrastCheck" />
+
+        <TextView
+            android:id="@+id/invalidRepeatPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_200"
+            android:text="@string/invalid_message"
+            android:textColor="@color/light_pink"
+            android:textSize="@dimen/font_size_200"
+            app:layout_constraintStart_toStartOf="@+id/editRepeatPasswordBox"
+            app:layout_constraintTop_toBottomOf="@+id/editRepeatPasswordBox"
+            tools:ignore="TextContrastCheck" />
 
         <TextView
             android:id="@+id/haveAccountTxt"

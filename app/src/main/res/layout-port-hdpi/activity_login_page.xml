@@ -48,6 +48,7 @@
         android:layout_marginTop="@dimen/spacing_200"
         android:layout_marginEnd="@dimen/spacing_600"
         android:layout_marginBottom="@dimen/spacing_200"
+        android:contentDescription="@string/logo_of_kamerdate"
         app:layout_constraintBottom_toTopOf="@+id/loginContainer"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,8 +56,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sloganTxt"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/ic_city_svg"
-        android:contentDescription="@string/logo_of_kamerdate" />
+        app:srcCompat="@drawable/ic_city_svg" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/loginContainer"
@@ -104,7 +104,7 @@
             android:textColor="#616161"
             android:textSize="@dimen/font_size_200"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editPasswordBox"
+            app:layout_constraintTop_toBottomOf="@+id/invalidCredentials"
             tools:ignore="TextContrastCheck" />
 
         <Button
@@ -119,7 +119,7 @@
             android:textSize="@dimen/font_size_300"
             app:backgroundTint="@color/teal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editPasswordBox"
+            app:layout_constraintTop_toBottomOf="@+id/invalidCredentials"
             tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
 
         <TextView
@@ -156,6 +156,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editUsernameBox"
             tools:ignore="SpeakableTextPresentCheck,TextContrastCheck,TextContrastCheck" />
+
+        <TextView
+            android:id="@+id/invalidCredentials"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_200"
+            android:text="@string/invalid_message"
+            android:textColor="@color/light_pink"
+            android:textSize="@dimen/font_size_200"
+            app:layout_constraintBottom_toTopOf="@+id/rememberMe"
+            app:layout_constraintStart_toStartOf="@+id/editPasswordBox"
+            app:layout_constraintTop_toBottomOf="@+id/editPasswordBox"
+            tools:ignore="TextContrastCheck" />
 
         <TextView
             android:id="@+id/haveAccountTxt"
