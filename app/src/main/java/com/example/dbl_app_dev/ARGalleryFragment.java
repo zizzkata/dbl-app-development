@@ -27,7 +27,6 @@ public class ARGalleryFragment extends Fragment {
         // NOTE: parcelable has 1MB file limit
         args.putParcelable("image", image);
         fragment.setArguments(args);
-        Log.d("debug_extra", "Arguments set");
         return fragment;
     }
 
@@ -41,7 +40,7 @@ public class ARGalleryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Log.d("extra_debug", "AR View Fragment Created");
+            Log.d("extra_debug", "AR View Fragment Created");
 
         assert getArguments() != null;
         Bitmap image = getArguments().getParcelable("image");
