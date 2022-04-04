@@ -1,15 +1,15 @@
 package com.example.dbl_app_dev;
 
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
-
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
 import com.example.dbl_app_dev.dialog_displayer.CreateAccommDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.EditAccommDialogDisplayer;
