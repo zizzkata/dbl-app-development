@@ -58,7 +58,10 @@ abstract class DialogDisplayer {
         additionalFunctionality();
     }
 
-    protected void additionalFunctionality(){};
+    protected void additionalFunctionality() {
+    }
+
+    ;
 
     protected void createDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);

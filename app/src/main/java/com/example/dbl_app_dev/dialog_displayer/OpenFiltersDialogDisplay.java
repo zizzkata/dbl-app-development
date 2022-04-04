@@ -1,8 +1,8 @@
 package com.example.dbl_app_dev.dialog_displayer;
 
-        import android.content.Context;
-        import android.view.View;
-        import android.widget.Toast;
+import android.content.Context;
+import android.view.View;
+import android.widget.Toast;
 
 /**
  * Concrete class of dialog_displayer
