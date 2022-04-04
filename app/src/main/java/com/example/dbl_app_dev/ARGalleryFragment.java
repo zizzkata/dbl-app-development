@@ -3,13 +3,11 @@ package com.example.dbl_app_dev;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -48,10 +46,11 @@ public class ARGalleryFragment extends Fragment {
 
         Log.d("extra_debug", "AR View Fragment Created");
 
+        assert getArguments() != null;
         Bitmap image = getArguments().getParcelable("image");
         VrPanoramaView mVRPanoramaView = (VrPanoramaView) requireView().findViewById(R.id.vrPanoramaView);
 
-        boolean hasGyroscope = getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_SENSOR_GYROSCOPE);
+        boolean hasGyroscope = requireContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_SENSOR_GYROSCOPE);
         // If phone doesn't have a gyroscope, allow vertical drag.
         if (!hasGyroscope) {
             mVRPanoramaView.setPureTouchTracking(true);
@@ -63,19 +62,9 @@ public class ARGalleryFragment extends Fragment {
     // Loads a jpeg image and maps it to the sphere.
     private void loadPhotoSphere(VrPanoramaView mVRPanoramaView, Bitmap image) {
         VrPanoramaView.Options options = new VrPanoramaView.Options();
-        InputStream inputStream = null;
 
-        AssetManager assetManager = getContext().getAssets();
-
-        try {
-            inputStream = assetManager.open("yosemite.jpg");
-            System.out.println(inputStream.toString());
-            options.inputType = VrPanoramaView.Options.TYPE_MONO;
-            mVRPanoramaView.loadImageFromBitmap(BitmapFactory.decodeStream(inputStream), options);
-            inputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        options.inputType = VrPanoramaView.Options.TYPE_MONO;
+        mVRPanoramaView.loadImageFromBitmap(image, options);
     }
 
     // Removes the information button and the cardboard button.

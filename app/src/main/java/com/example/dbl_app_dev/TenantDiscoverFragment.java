@@ -1,6 +1,7 @@
 package com.example.dbl_app_dev;
 
 import android.annotation.SuppressLint;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -18,7 +19,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.vr.sdk.widgets.pano.VrPanoramaView;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -166,7 +170,18 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     private void pullCardsInfo(int batchSize) {
         // TODO: remove placeholder code, pull data from the server
         Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.default_accommodation_picture);
-
+        Bitmap panoramicImage = null;
+        InputStream inputStream = null;
+        AssetManager assetManager = getContext().getAssets();
+        try {
+            inputStream = assetManager.open("yosemite.jpg");
+            System.out.println(inputStream.toString());
+            panoramicImage = BitmapFactory.decodeStream(inputStream);
+            inputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // END PLACEHOLDER CODE
         for (int i = 0; i < batchSize; i++) {
             String[] sample = new String[14];
             Arrays.fill(sample, "text" + i);
@@ -176,7 +191,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
             images.add(image);
             images.add(image);
 
-            dataModels.add(new AccommodationInfo(sampleArrList, images, null));
+            dataModels.add(new AccommodationInfo(sampleArrList, images, panoramicImage));
         }
     }
 
