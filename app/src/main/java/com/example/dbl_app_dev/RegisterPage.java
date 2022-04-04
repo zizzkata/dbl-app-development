@@ -1,6 +1,7 @@
 package com.example.dbl_app_dev;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,7 +13,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dbl_app_dev.network_communication.Authentication;
-import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.util.view_validation.validators.EmailValidator;
 import com.example.dbl_app_dev.util.view_validation.validators.PasswordValidator;
 import com.example.dbl_app_dev.util.view_validation.validators.RepeatPasswordValidator;
@@ -119,6 +119,7 @@ public class RegisterPage extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,24 +134,24 @@ public class RegisterPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!isSignUpValid()) {
-                    //return;
+                    return;
                 }
 
                 String emailString = email.getText().toString();
                 String usernameString = username.getText().toString();
                 String passwordString = password.getText().toString();
 
-                //if ()
-                if (Authentication.isUsernameUnique("test55")) {
+                try {
+                    Log.d("isUsernameUnique", "unique");
+                    Authentication.firebaseSignup(emailString, passwordString, usernameString);
+                } catch (Exception e) {
+                    Log.e("Signup", e.getMessage());
+                    // TODO problem with signup.
                     return;
                 }
 
-                Store.signup(emailString, passwordString, usernameString);
-
-
-
-//                startActivity(new Intent(com.example.dbl_app_dev.RegisterPage.this,
-//                        LoginPage.class));
+                startActivity(new Intent(com.example.dbl_app_dev.RegisterPage.this,
+                        LoginPage.class));
             }
         });
 
