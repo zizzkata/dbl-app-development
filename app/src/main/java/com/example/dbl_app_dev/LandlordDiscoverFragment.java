@@ -62,7 +62,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_landlord_discover, container, false);
     }
@@ -83,7 +83,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         cardTextViews.add(view.findViewById(R.id.petsTxt));
         cardTextViews.add(view.findViewById(R.id.smokerTxt));
         cardTextViews.add(view.findViewById(R.id.descriptionTxt));
-        
+
         // makes sure that the a card is not discarded if it is not rated
         if (currentTenantInfo == null) {
             nextCard(cardTextViews, imageView);

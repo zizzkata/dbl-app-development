@@ -12,9 +12,11 @@ import java.util.ArrayList;
 
 public class ImageViewPagerAdapter extends FragmentPagerAdapter {
     ArrayList<Bitmap> imageBitmaps;
+    Bitmap panoramicBitmap;
 
-    public ImageViewPagerAdapter(FragmentManager fm, ArrayList<Bitmap> imageBitmaps) {
+    public ImageViewPagerAdapter(FragmentManager fm, ArrayList<Bitmap> imageBitmaps, Bitmap panoramicBitmap) {
         super(fm);
+        this.panoramicBitmap = panoramicBitmap;
         this.imageBitmaps = imageBitmaps;
         Log.d("extra_debug", "ImageViewPagerAdapter Created");
     }
@@ -27,7 +29,11 @@ public class ImageViewPagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        return ImageGalleryFragment.newInstance(imageBitmaps.get(position));
+        if (position == 0) {
+            return ARGalleryFragment.newInstance(panoramicBitmap);
+        } else {
+            return ImageGalleryFragment.newInstance(imageBitmaps.get(position));
+        }
     }
 
     @Override

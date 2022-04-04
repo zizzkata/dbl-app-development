@@ -11,12 +11,12 @@ import com.google.vr.sdk.widgets.pano.VrPanoramaView;
 import java.io.InputStream;
 import android.content.res.AssetManager;
 
-public class activity_ar extends AppCompatActivity {
+public class activityAR extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ar);
+        setContentView(R.layout.fragment_ar);
         VrPanoramaView mVRPanoramaView = (VrPanoramaView) findViewById(R.id.vrPanoramaView);
         boolean hasGyroscope = getPackageManager().hasSystemFeature(PackageManager.FEATURE_SENSOR_GYROSCOPE);
         // If phone doesn't have a gyroscope, allow vertical drag.
