@@ -8,7 +8,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.dbl_app_dev.store.Store;
-import com.example.dbl_app_dev.util.view_validation.scenarios.NetworkLoginErrorScenario;
+import com.example.dbl_app_dev.util.view_validation.constants.Exceptions;
+//import com.example.dbl_app_dev.util.view_validation.scenarios.NetworkLoginErrorScenario;
 
 public class LoginPage extends AppCompatActivity {
 
@@ -69,8 +70,8 @@ public class LoginPage extends AppCompatActivity {
         String emailString = email.getText().toString();
         String passwordString = password.getText().toString();
 
-        if (emailString == "" || passwordString == "") {
-            setCredentialsWarning("Please fill in all fields.", true);
+        if (emailString.equals("") || passwordString.equals("")) {
+            setCredentialsWarning("* Please fill in all fields.", true);
             return;
         }
 
@@ -78,8 +79,8 @@ public class LoginPage extends AppCompatActivity {
             startActivity(new Intent(LoginPage.this, MainNavigationActivity.class));
             overridePendingTransition(0, 0);
         } else {
-            String err = new NetworkLoginErrorScenario(Store.getLastException()).getError();
-            setCredentialsWarning(err, true);
+            String warning = Exceptions.getWarning(Store.getLastException().getMessage());
+            setCredentialsWarning(warning, true);
         }
     }
 

@@ -1,21 +1,27 @@
 package com.example.dbl_app_dev;
 
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dbl_app_dev.network_communication.Authentication;
+import com.example.dbl_app_dev.util.view_validation.constants.Exceptions;
 import com.example.dbl_app_dev.util.view_validation.validators.EmailValidator;
 import com.example.dbl_app_dev.util.view_validation.validators.PasswordValidator;
 import com.example.dbl_app_dev.util.view_validation.validators.RepeatPasswordValidator;
+import com.example.dbl_app_dev.util.view_validation.validators.UsernameUniquenessValidator;
 import com.example.dbl_app_dev.util.view_validation.validators.UsernameValidator;
 import com.example.dbl_app_dev.util.view_validation.validators.ViewValidator;
 
@@ -146,7 +152,12 @@ public class RegisterPage extends AppCompatActivity {
                     Authentication.firebaseSignup(emailString, passwordString, usernameString);
                 } catch (Exception e) {
                     Log.e("Signup", e.getMessage());
-                    // TODO problem with signup.
+                    Context context = getApplicationContext();
+                    String text = Exceptions.getWarning(e.getMessage());
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
                     return;
                 }
 
@@ -179,7 +190,7 @@ public class RegisterPage extends AppCompatActivity {
 
         // add all validators to list
         validators.add(emailValidator);
-        validators.add(userValidator);
+        validators.add(new UsernameUniquenessValidator(username, usernameWarning));
         validators.add(passValidator);
         validators.add(repPassValidator);
 
