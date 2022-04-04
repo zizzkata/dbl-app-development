@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment;
 
 public class ImageGalleryFragment extends Fragment {
 
-
     public ImageGalleryFragment() {
         super();
     }

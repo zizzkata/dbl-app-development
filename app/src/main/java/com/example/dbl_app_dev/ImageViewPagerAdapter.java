@@ -14,7 +14,7 @@ public class ImageViewPagerAdapter extends FragmentPagerAdapter {
     ArrayList<Bitmap> imageBitmaps;
     Bitmap panoramicBitmap;
 
-    public ImageViewPagerAdapter(FragmentManager fm, ArrayList<Bitmap> imageBitmaps, Bitmap panoramicBitmap) {
+    public ImageViewPagerAdapter(FragmentManager fm, ArrayList<Bitmap> imageBitmaps, @NonNull Bitmap panoramicBitmap) {
         super(fm);
         this.panoramicBitmap = panoramicBitmap;
         this.imageBitmaps = imageBitmaps;
@@ -23,7 +23,7 @@ public class ImageViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return imageBitmaps.size();
+        return imageBitmaps.size() + 1;
     }
 
     @NonNull
@@ -32,7 +32,7 @@ public class ImageViewPagerAdapter extends FragmentPagerAdapter {
         if (position == 0) {
             return ARGalleryFragment.newInstance(panoramicBitmap);
         } else {
-            return ImageGalleryFragment.newInstance(imageBitmaps.get(position));
+            return ImageGalleryFragment.newInstance(imageBitmaps.get(position - 1));
         }
     }
 
