@@ -155,7 +155,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
             cardTextViews.get(i).setText(cardStrings.get(i));
         }
         imageGalleryViewPager
-                .setAdapter(new ImageViewPagerAdapter(getChildFragmentManager(), currentAccommodationInfo.getPhotos()));
+                .setAdapter(new ImageViewPagerAdapter(getChildFragmentManager(), currentAccommodationInfo.getPhotos(), currentAccommodationInfo.getPhotoPanoramic()));
     }
 
     /**
