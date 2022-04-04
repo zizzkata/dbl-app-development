@@ -41,7 +41,7 @@ public class AccommodationInfo {
         availableFromTxt = s.get(11);
         availableUntilTxt = s.get(12);
         descriptionTxt = s.get(13);
-        
+
         this.photos = new ArrayList<>(photos);
         this.photoPanoramic = photoPanoramic;
     }
@@ -55,23 +55,23 @@ public class AccommodationInfo {
     }
 
     public ArrayList<String> getCardFormattedText() {
-           ArrayList<String> result = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<>();
 
-           result.add(addressTxt);
-           result.add(floorTxt);
-           result.add(postcodeTxt);
-           result.add(priceTxt);
-           result.add(accommTypeTxt);
-           result.add(utilitiesTxt);
-           result.add(areaTxt);
-           result.add(furnishedTxt);
-           result.add(petsTxt);
-           result.add(smokersTxt);
-           result.add(minimumPeriodTxt);
-           result.add(availableFromTxt);
-           result.add(availableUntilTxt);
-           result.add(descriptionTxt);
+        result.add(addressTxt);
+        result.add(floorTxt);
+        result.add(postcodeTxt);
+        result.add(priceTxt);
+        result.add(accommTypeTxt);
+        result.add(utilitiesTxt);
+        result.add(areaTxt);
+        result.add(furnishedTxt);
+        result.add(petsTxt);
+        result.add(smokersTxt);
+        result.add(minimumPeriodTxt);
+        result.add(availableFromTxt);
+        result.add(availableUntilTxt);
+        result.add(descriptionTxt);
 
-           return result;
+        return result;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.dbl_app_dev;
 
 import android.annotation.SuppressLint;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -16,13 +17,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
-import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Dictionary;
 import java.util.LinkedList;
 
 /**
@@ -92,6 +90,11 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
 
         imageGalleryViewPager = view.findViewById(R.id.accommodationImageScroller);
 
+        noSwipesContainer = view.findViewById(R.id.noSwipesContainer);
+        contentContainer = view.findViewById(R.id.contentContainer);
+        noSwipesContainer.setVisibility(View.INVISIBLE);
+        contentContainer.setVisibility(View.VISIBLE);
+
         this.horizontalSwipeDetector = new GestureDetector(getContext(), new CardSwipeListener(this, true, false));
         topCard.setOnTouchListener((v, event) -> {
             if (horizontalSwipeDetector.onTouchEvent(event)) {
@@ -114,9 +117,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         });
 
         Button filtersBtn = view.findViewById(R.id.filtersButton);
-        filtersBtn.setOnClickListener(v -> {
-            ((MainNavigationActivity) getActivity()).openFilterDialog();
-        });
+        filtersBtn.setOnClickListener(v -> ((MainNavigationActivity) requireActivity()).openFilterDialog());
 
         // makes sure that the a card is not discarded if it is not rated
         if (currentAccommodationInfo == null) {
@@ -124,11 +125,6 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         } else {
             displayCard(cardTextViews, imageGalleryViewPager);
         }
-
-        noSwipesContainer = view.findViewById(R.id.noSwipesContainer);
-        contentContainer = view.findViewById(R.id.contentContainer);
-        noSwipesContainer.setVisibility(View.INVISIBLE);
-        contentContainer.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -140,6 +136,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
             displayCard(cardTextViews, imageGalleryViewPager);
         } else {
             // no more swipes left
+            currentAccommodationInfo = null;
             noSwipesContainer.setVisibility(View.VISIBLE);
             contentContainer.setVisibility(View.INVISIBLE);
         }
@@ -155,7 +152,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
             cardTextViews.get(i).setText(cardStrings.get(i));
         }
         imageGalleryViewPager
-                .setAdapter(new ImageViewPagerAdapter(getChildFragmentManager(), currentAccommodationInfo.getPhotos()));
+                .setAdapter(new ImageViewPagerAdapter(getChildFragmentManager(), currentAccommodationInfo.getPhotos(), currentAccommodationInfo.getPhotoPanoramic()));
     }
 
     /**
@@ -165,8 +162,19 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
      */
     private void pullCardsInfo(int batchSize) {
         // TODO: remove placeholder code, pull data from the server
+        // START PLACEHOLDER CODE
         Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.default_accommodation_picture);
-
+        Bitmap panoramicImage = null;
+        InputStream inputStream;
+        AssetManager assetManager = requireContext().getAssets();
+        try {
+            inputStream = assetManager.open("yosemite.jpg");
+            System.out.println(inputStream.toString());
+            panoramicImage = BitmapFactory.decodeStream(inputStream);
+            inputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         for (int i = 0; i < batchSize; i++) {
             String[] sample = new String[14];
             Arrays.fill(sample, "text" + i);
@@ -176,8 +184,9 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
             images.add(image);
             images.add(image);
 
-            dataModels.add(new AccommodationInfo(sampleArrList, images, null));
+            dataModels.add(new AccommodationInfo(sampleArrList, images, panoramicImage));
         }
+        // END PLACEHOLDER CODE
     }
 
     /**
