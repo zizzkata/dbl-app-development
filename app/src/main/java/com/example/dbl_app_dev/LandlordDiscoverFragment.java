@@ -34,7 +34,7 @@ import java.util.LinkedList;
  */
 public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
 
-    private final Deque<TenantInfo> tenantInfo = new LinkedList<>();
+    private LinkedList<TenantInfo> tenantInfo;
     private GestureDetector swipeListener;
     private TenantInfo currentTenantInfo = null; // currently viewed tenant
     ConstraintLayout noSwipesContainer;
@@ -57,12 +57,13 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        tenantInfo = new LinkedList<>();
         pullCardsInfo(10);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_landlord_discover, container, false);
     }
@@ -83,7 +84,12 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         cardTextViews.add(view.findViewById(R.id.petsTxt));
         cardTextViews.add(view.findViewById(R.id.smokerTxt));
         cardTextViews.add(view.findViewById(R.id.descriptionTxt));
-        
+
+        noSwipesContainer = view.findViewById(R.id.noSwipesContainer);
+        contentContainer = view.findViewById(R.id.contentContainer);
+        noSwipesContainer.setVisibility(View.INVISIBLE);
+        contentContainer.setVisibility(View.VISIBLE);
+
         // makes sure that the a card is not discarded if it is not rated
         if (currentTenantInfo == null) {
             nextCard(cardTextViews, imageView);
@@ -114,11 +120,6 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
             swipedDown();
             nextCard(cardTextViews, imageView);
         });
-
-        noSwipesContainer = view.findViewById(R.id.noSwipesContainer);
-        contentContainer = view.findViewById(R.id.contentContainer);
-        noSwipesContainer.setVisibility(View.INVISIBLE);
-        contentContainer.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -140,6 +141,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
             displayCard(cardTitle, cardImage);
         } else {
             // no more swipes left
+            currentTenantInfo = null;
             noSwipesContainer.setVisibility(View.VISIBLE);
             contentContainer.setVisibility(View.INVISIBLE);
         }
@@ -152,12 +154,12 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
      */
     private void pullCardsInfo(int batchSize) {
         // TODO: remove placeholder code, get data from server
+        Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.default_tenant_picture);
         for (int i = 0; i < batchSize; i++) {
             String[] sample = new String[6];
             Arrays.fill(sample, "text" + i);
             ArrayList<String> sampleArrList = new ArrayList<>(Arrays.asList(sample));
 
-            Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.default_tenant_picture);
             tenantInfo.add(
                     new TenantInfo(sampleArrList, image));
         }

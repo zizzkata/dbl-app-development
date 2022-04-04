@@ -21,7 +21,6 @@
             app:layout_constraintBottom_toTopOf="@id/buttonsContainer"
             app:layout_constraintTop_toTopOf="parent">
 
-
             <include
                 android:id="@+id/topCard"
                 layout="@layout/fragment_swipeable_accommodation"

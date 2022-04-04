@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment;
 
 public class ImageGalleryFragment extends Fragment {
 
-
     public ImageGalleryFragment() {
         super();
     }
@@ -24,7 +23,6 @@ public class ImageGalleryFragment extends Fragment {
         Bundle args = new Bundle();
 
         // NOTE: parcelable has 1MB file limit
-        args.putString("test", "test");
         args.putParcelable("image", image);
         fragment.setArguments(args);
         Log.d("debug_extra", "Arguments set");
