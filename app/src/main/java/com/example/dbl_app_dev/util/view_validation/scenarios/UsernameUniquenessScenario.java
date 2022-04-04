@@ -7,19 +7,17 @@ import android.widget.TextView;
 import com.example.dbl_app_dev.network_communication.Authentication;
 import com.example.dbl_app_dev.util.AsyncWrapper;
 
-public class NonUniqueUsernameScenario extends TextViewScenario {
+public final class UsernameUniquenessScenario extends TextViewScenario {
 
-    private final String NETWORK_ERROR = "Error contacting the server.";
-    private String genericWarning;
+    // To be used if server cannot be queried for username uniqueness
+    private final String NETWORK_ERROR = "* Error contacting the server";
 
-    public NonUniqueUsernameScenario(String warning) {
+    public UsernameUniquenessScenario(String warning) {
         super(warning);
-        this.genericWarning = warning;
     }
 
     @Override
     public boolean isValid(View view) {
-        super.warningText = genericWarning;
         try {
             return Authentication.isUsernameUnique(textViewToString((TextView)
                     view));
