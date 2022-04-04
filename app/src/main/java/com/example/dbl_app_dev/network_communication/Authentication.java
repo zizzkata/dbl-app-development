@@ -3,13 +3,15 @@ package com.example.dbl_app_dev.network_communication;
 import android.util.Log;
 import com.example.dbl_app_dev.util.AsyncWrapper;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public abstract class Authentication {
 
-    /**  Firebase Authenticator instance */
+    /**
+     * Firebase Authenticator instance
+     */
     private static FirebaseAuth auth = FirebaseAuth.getInstance();
 
     /**
@@ -56,6 +58,18 @@ public abstract class Authentication {
             AsyncWrapper.wrapSafe(res.getUser().delete());
             throw e;
         }
+    }
+
+    /**
+     * Returns if user with this exact username already exists.
+     *
+     * @param username
+     * @return
+     * @throws Exception
+     */
+    public static boolean isUsernameUnique(String username) throws Exception {
+        // Invert answer to match functionality
+        return !AsyncWrapper.wrap(FirebaseQueries.getUserInformation(username), 1200).exists();
     }
 
     public static FirebaseUser getCurrentUser() {
