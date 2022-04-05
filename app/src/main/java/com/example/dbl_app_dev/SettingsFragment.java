@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.dbl_app_dev.util.view_validation.validators.*;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,8 +30,56 @@ public class SettingsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    // text boxes
+    private EditText email;
+    private TextView emailWarning;
+    private EditText username;
+    private TextView usernameWarning;
+    private EditText currentPassword;
+    private TextView currentPasswordWarning;
+    private EditText password;
+    private TextView passwordWarning;
+    private EditText repeatPassword;
+    private TextView repeatPasswordWarning;
+
+    // all used validators
+    private ViewValidator emailValidator;
+    private ViewValidator userValidator;
+    private ViewValidator currPassValidator;
+    private ViewValidator passValidator;
+    private ViewValidator repPassValidator;
+
     public SettingsFragment() {
         // Required empty public constructor
+    }
+
+    private void init() {
+        // get views by id
+//        email = getView().findViewById(R.id.editEmailBox);
+//        emailWarning = getView().findViewById(R.id.invalidEmail);
+//        username = getView().findViewById(R.id.editUsernameBox);
+//        usernameWarning = getView().findViewById(R.id.invalidUsername);
+        currentPassword = getView().findViewById(R.id.currentPasswordBox);
+        currentPasswordWarning = getView().findViewById(R.id.invalidCurrentPassword);
+        password = getView().findViewById(R.id.newPasswordBox);
+        passwordWarning = getView().findViewById(R.id.invalidPassword);
+        repeatPassword = getView().findViewById(R.id.ConfirmNewPasswordBox);
+        repeatPasswordWarning = getView().findViewById(R.id.invalidRepeatPassword);
+
+        // instantiate validators
+//        emailValidator = new EmailValidator(email, emailWarning);
+//        userValidator = new UsernameValidator(username, usernameWarning);
+        currPassValidator = new currPasswordValidator(currentPassword, currentPasswordWarning);
+        passValidator = new PasswordValidator(password, passwordWarning);
+        repPassValidator = new RepeatPasswordValidator(repeatPassword, password, repeatPasswordWarning);
+    }
+
+    private void makeWarningsInvisible() {
+        emailWarning.setVisibility(View.GONE);
+        usernameWarning.setVisibility(View.GONE);
+        currentPasswordWarning.setVisibility(View.GONE);
+        passwordWarning.setVisibility(View.GONE);
+        repeatPasswordWarning.setVisibility(View.GONE);
     }
 
     /**
@@ -71,6 +122,9 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        init();
+        makeWarningsInvisible();
 
         // Sign Up button leading to RegisterPage
         TextView signUpTxt = getView().findViewById(R.id.logoutBtn);
