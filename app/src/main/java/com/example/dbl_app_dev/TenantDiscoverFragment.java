@@ -36,6 +36,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     VerticalViewPager imageGalleryViewPager;
     ConstraintLayout noSwipesContainer;
     ConstraintLayout contentContainer;
+    ImageViewPagerAdapter verticalViewPagerAdapter;
 
     public TenantDiscoverFragment() {
         /* Required empty public constructor */
@@ -106,6 +107,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
 
         Button likeBtn = view.findViewById(R.id.positiveButton);
         Button dislikeBtn = view.findViewById(R.id.negativeButton);
+        Button arBtn = view.findViewById(R.id.arButton);
 
         likeBtn.setOnClickListener(v -> {
             swipedRight();
@@ -114,6 +116,9 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         dislikeBtn.setOnClickListener(v -> {
             swipedLeft();
             nextCard(cardTextViews, imageGalleryViewPager);
+        });
+        arBtn.setOnClickListener(v -> {
+            imageGalleryViewPager.setAdapter(verticalViewPagerAdapter);
         });
 
         Button filtersBtn = view.findViewById(R.id.filtersButton);
@@ -151,8 +156,8 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         for (int i = 0; i < cardStrings.size(); i++) {
             cardTextViews.get(i).setText(cardStrings.get(i));
         }
-        imageGalleryViewPager
-                .setAdapter(new ImageViewPagerAdapter(getChildFragmentManager(), currentAccommodationInfo.getPhotos(), currentAccommodationInfo.getPhotoPanoramic()));
+        verticalViewPagerAdapter = new ImageViewPagerAdapter(getChildFragmentManager(), currentAccommodationInfo.getPhotos(), currentAccommodationInfo.getPhotoPanoramic());
+        imageGalleryViewPager.setAdapter(verticalViewPagerAdapter);
     }
 
     /**

@@ -100,7 +100,34 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="TextContrastCheck,RedundantDescriptionCheck" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+            
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/arButtonContainer"
+                android:layout_width="60dp"
+                android:layout_height="0dp"
+                android:layout_margin="12dp"
+                android:background="@drawable/circlestyle"
+                android:backgroundTint="@color/white"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/arButton"
+                    android:layout_width="48dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/ic_360_outline"
+                    android:backgroundTint="@color/dark_blue"
+                    android:contentDescription="@string/show_normal_or_ar_photos_button"
+                    android:paddingVertical="@dimen/spacing_200"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TextContrastCheck,RedundantDescriptionCheck" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
