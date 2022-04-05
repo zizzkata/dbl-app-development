@@ -18,12 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dbl_app_dev.network_communication.Authentication;
 import com.example.dbl_app_dev.util.view_validation.constants.Exceptions;
-import com.example.dbl_app_dev.util.view_validation.validators.EmailValidator;
-import com.example.dbl_app_dev.util.view_validation.validators.PasswordValidator;
-import com.example.dbl_app_dev.util.view_validation.validators.RepeatPasswordValidator;
-import com.example.dbl_app_dev.util.view_validation.validators.UsernameUniquenessValidator;
-import com.example.dbl_app_dev.util.view_validation.validators.UsernameValidator;
-import com.example.dbl_app_dev.util.view_validation.validators.ViewValidator;
+import com.example.dbl_app_dev.util.view_validation.validators.*;
+
 
 import java.util.ArrayList;
 
