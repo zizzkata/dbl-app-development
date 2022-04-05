@@ -171,6 +171,13 @@
                         android:padding="10dp"
                         android:textColorHint="#757575" />
 
+                    <TextView
+                        android:id="@+id/invalidCurrentPassword"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TextView"
+                        android:textColor="@color/light_pink" />
+
                     <EditText
                         android:id="@+id/newPasswordBox"
                         android:layout_width="match_parent"
@@ -187,6 +194,13 @@
                         android:padding="10dp"
                         android:textColorHint="#757575" />
 
+                    <TextView
+                        android:id="@+id/invalidPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="TextView"
+                        android:textColor="@color/light_pink" />
+
                     <EditText
                         android:id="@+id/ConfirmNewPasswordBox"
                         android:layout_width="match_parent"
@@ -201,6 +215,13 @@
                         android:minHeight="48dp"
                         android:padding="10dp"
                         android:textColorHint="#757575" />
+
+                    <TextView
+                        android:id="@+id/invalidRepeatPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="TextView"
+                        android:textColor="@color/light_pink" />
 
                 </LinearLayout>
 
