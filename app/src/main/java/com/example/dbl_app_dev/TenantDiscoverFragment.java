@@ -18,6 +18,8 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.dbl_app_dev.store.objects.AccommodationInfo;
+
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -213,4 +215,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
             Log.d("extra_debug", "Negative Rating");
         }
     }
+
+
+
 }
