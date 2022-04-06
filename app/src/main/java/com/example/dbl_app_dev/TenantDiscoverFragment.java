@@ -18,7 +18,11 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.dbl_app_dev.network_communication.Database;
 import com.example.dbl_app_dev.store.objects.AccommodationInfo;
+import com.example.dbl_app_dev.util.AsyncWrapper;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -172,6 +176,18 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         // START PLACEHOLDER CODE
         Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.default_accommodation_picture);
         Bitmap panoramicImage = null;
+        AsyncWrapper.wrap(() -> {
+            try {
+                QuerySnapshot qs = Database.getAccommodations();
+                Log.e("OPS", "OPS");
+                for (DocumentSnapshot doc: qs.getDocuments()) {
+                    Log.e("OPS", doc.getId());
+                    Log.e("OPS", doc.getString("address"));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         InputStream inputStream;
         AssetManager assetManager = requireContext().getAssets();
         try {
@@ -182,7 +198,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        for (int i = 0; i < batchSize; i++) {
+        for (int i = 0; i < 2; i++) {
             String[] sample = new String[14];
             Arrays.fill(sample, "text" + i);
             ArrayList<String> sampleArrList = new ArrayList<>(Arrays.asList(sample));
