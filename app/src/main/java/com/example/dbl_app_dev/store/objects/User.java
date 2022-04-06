@@ -37,6 +37,18 @@ public class User {
         getInformation();
     }
 
+    public User(DocumentSnapshot res) {
+        this.firstName = (String) res.get("first_name");
+        this.lastName = (String) res.get("last_name");
+        this.gender = (String) res.get("gender");
+        this.phoneNumber = (String) res.get("phone_number");
+        this.description = (String) res.get("profile_description");
+        this.age = (String) res.get("age");
+        this.tenantMode = (Boolean) res.get("tenant_mode");
+        this.smokes = (Boolean) res.get("smoke");
+        this.hasPets = (Boolean) res.get("pets");
+    }
+
     private void getInformation() throws Exception {
         DocumentSnapshot res = Database.getUserInformation(this.username);
         this.firstName = (String) res.get("first_name");

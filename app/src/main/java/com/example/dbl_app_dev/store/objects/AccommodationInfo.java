@@ -3,54 +3,75 @@ package com.example.dbl_app_dev.store.objects;
 import android.graphics.Bitmap;
 
 import com.example.dbl_app_dev.network_communication.Database;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 
 /**
- * Contains the information displayed in an accommodation card
+ * Contains the information displayed in an accommodation
  */
 public class AccommodationInfo {
 
-    private final String accommodationId;
+    private String accommodationId;
+    private boolean active;
+    private String ownerUsername;
+    private User owner;
     private ArrayList<Bitmap> photos;
     private Bitmap photoPanoramic;
+    private DocumentSnapshot documentSnapshot;
 
-    private final String addressTxt;
-    private final String floorTxt;
-    private final String postcodeTxt;
-    private final String priceTxt;
-    private final String accommTypeTxt;
-    private final String utilitiesTxt;
-    private final String areaTxt;
-    private final String furnishedTxt;
-    private final String petsTxt;
-    private final String smokersTxt;
-    private final String minimumPeriodTxt;
-    private final String availableFromTxt;
-    private final String availableUntilTxt;
-    private final String descriptionTxt;
+    private String address;
+    private String city;
+    private String floor;
+    private String houseNumber;
+    private String postcode;
+    private Long price;
+    private String currency;
+    private String accommType;
+    private String utilities;
+    private Long area_m2;
+    private String minimumPeriod;
+    private String availableFrom;
+    private String availableUntil;
+    private String description;
+
+    private Boolean furnished;
+    private Boolean pets;
+    private Boolean smokers;
 
     public AccommodationInfo(ArrayList<String> s, ArrayList<Bitmap> photos, Bitmap photoPanoramic) {
         this.accommodationId = "XAFxPJEMgTIRA4HUam4x";
-        addressTxt = s.get(0);
-        floorTxt = s.get(1);
-        postcodeTxt = s.get(2);
-        priceTxt = s.get(3);
-        accommTypeTxt = s.get(4);
-        utilitiesTxt = s.get(5);
-        areaTxt = s.get(6);
-        furnishedTxt = s.get(7);
-        petsTxt = s.get(8);
-        smokersTxt = s.get(9);
-        minimumPeriodTxt = s.get(10);
-        availableFromTxt = s.get(11);
-        availableUntilTxt = s.get(12);
-        descriptionTxt = s.get(13);
+
 
         //this.photos = new ArrayList<>(photos);
         //this.photoPanoramic = photoPanoramic;
     }
 
+    public AccommodationInfo(DocumentSnapshot ds) {
+        documentSnapshot = ds;
+        accommodationId = ds.getId();
+        address = (String) ds.get("address");
+        active = (Boolean) ds.get("active");
+        city = (String) ds.get("city");
+        currency = (String) ds.get("currency");
+        description = (String) ds.get("description");
+        availableUntil = (String) ds.get("end_date");
+        availableFrom = (String) ds.get("start_date");
+        floor = (String) ds.get("floor");
+        furnished = (Boolean) ds.get("furnished");
+        houseNumber = (String) ds.get("house_number");
+        minimumPeriod = (String) ds.get("minimum_rent_period");
+        ownerUsername = (String) ds.get("owner_username");
+        pets = (Boolean) ds.get("pets");
+        postcode = (String) ds.get("post_code");
+        price = (Long) ds.get("price");
+        area_m2 = (Long) ds.get("size_m2");
+        smokers = (Boolean) ds.get("smokers");
+    }
+
+    /**
+     * @return
+     */
     public ArrayList<Bitmap> getPhotos() {
         if (photos == null) {
             try {
@@ -63,6 +84,9 @@ public class AccommodationInfo {
         return photos;
     }
 
+    /**
+     * @return
+     */
     public Bitmap getPhotoPanoramic() {
         if (photoPanoramic == null) {
             try {
@@ -75,24 +99,62 @@ public class AccommodationInfo {
         return photoPanoramic;
     }
 
-    public ArrayList<String> getCardFormattedText() {
-        ArrayList<String> result = new ArrayList<>();
+    /**
+     * @return
+     */
+    public User getOwner() {
+        if (owner == null) {
+            try {
+                owner = new User(Database.getUserInformation(ownerUsername));
+            } catch (Exception e) {
+                // Anonymous
+                e.printStackTrace();
+            }
+        }
+        return owner;
+    }
 
-        result.add(addressTxt);
-        result.add(floorTxt);
-        result.add(postcodeTxt);
-        result.add(priceTxt);
-        result.add(accommTypeTxt);
-        result.add(utilitiesTxt);
-        result.add(areaTxt);
-        result.add(furnishedTxt);
-        result.add(petsTxt);
-        result.add(smokersTxt);
-        result.add(minimumPeriodTxt);
-        result.add(availableFromTxt);
-        result.add(availableUntilTxt);
-        result.add(descriptionTxt);
+    public DocumentSnapshot getSnapshot() {
+        return documentSnapshot;
+    }
 
-        return result;
+    public String getAddress() {
+        return address;
+    }
+
+    public String getAccommodationId() {
+        return accommodationId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getCity() {
+        return floor;
+    }
+
+    public String getHouseNumber() {
+        return houseNumber;
+    }
+
+    public String getFloor() {
+        return floor;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public Boolean getFurnished() {
+        return furnished;
+    }
+
+    public Boolean getPets() {
+        return pets;
+    }
+
+    public Boolean getSmokers() {
+        return smokers;
     }
 }
