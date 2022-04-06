@@ -1,7 +1,7 @@
 package com.example.dbl_app_dev.network_communication;
 
-import android.graphics.Bitmap;
 import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -11,6 +11,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Transaction;
 import com.google.firebase.firestore.WriteBatch;
@@ -19,7 +20,6 @@ import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -160,6 +160,7 @@ public abstract class FirebaseQueries {
 
     /**
      * Push data safely ith a transaction to Firebase database
+     *
      * @param docReference
      * @param newData
      * @return
@@ -183,6 +184,7 @@ public abstract class FirebaseQueries {
 
     /**
      * Pull image from Firebase Storage.
+     *
      * @param username
      * @return
      */
@@ -191,7 +193,6 @@ public abstract class FirebaseQueries {
     }
 
     /**
-     *
      * @param accommodationId
      * @return
      */
@@ -206,8 +207,8 @@ public abstract class FirebaseQueries {
     public static Task<byte[]> getReference(StorageReference reference) {
         return reference.getBytes(ONE_MEGABYTE);
     }
+
     /**
-     *
      * @param accommodationId
      * @param imageBytes
      * @return
@@ -216,4 +217,37 @@ public abstract class FirebaseQueries {
         return panoramicImages.child(accommodationId + ".jpg").putBytes(imageBytes);
     }
 
+    /**
+     * @param lastDocument
+     * @param amount
+     * @return
+     */
+    public static Query getActiveAccommodations(DocumentSnapshot lastDocument, int amount) {
+        return accommodations.startAfter(lastDocument).whereEqualTo("active", true)
+                .limit(amount);
+    }
+
+    public static Query getActiveAccommodations(DocumentSnapshot lastDocument) {
+        return accommodations.startAfter(lastDocument).whereEqualTo("active", true);
+    }
+
+    public static Query getActiveAccommodations() {
+        return accommodations.whereEqualTo("active", true);
+    }
+
+    public static Query getActiveAccommodations(int amount) {
+        return accommodations.whereEqualTo("active", true).limit(amount);
+    }
+
+    public static Query filterByPrice(int min, int max) {
+        return getActiveAccommodations()
+                .whereGreaterThanOrEqualTo("price", min)
+                .whereLessThanOrEqualTo("price", max);
+    }
+
+    public static Query filterByPrice(DocumentSnapshot lastDoc, int min, int max) {
+        return getActiveAccommodations(lastDoc)
+                .whereGreaterThanOrEqualTo("price", min)
+                .whereLessThanOrEqualTo("price", max);
+    }
 }

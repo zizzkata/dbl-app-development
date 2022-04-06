@@ -2,14 +2,13 @@ package com.example.dbl_app_dev.network_communication;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 
 import com.example.dbl_app_dev.util.AsyncWrapper;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
@@ -42,7 +41,7 @@ public abstract class Database {
      * Push data to a file.
      *
      * @param documentReference document to update
-     * @param data data to push
+     * @param data сdata to push
      * @throws Exception
      */
     public static void pushData(DocumentReference documentReference, Map<String, Object> data)
@@ -65,7 +64,7 @@ public abstract class Database {
         List<StorageReference> listResult = AsyncWrapper.wrap(FirebaseQueries.getListStaticImages(accommId))
                 .getItems();
         ArrayList<byte[]> byteImages = new ArrayList<>();
-        for(StorageReference sr : listResult) {
+        for (StorageReference sr : listResult) {
             byteImages.add(AsyncWrapper.wrap(FirebaseQueries.getReference(sr)));
         }
         return byteImages;
@@ -75,14 +74,38 @@ public abstract class Database {
         List<StorageReference> listResult = AsyncWrapper.wrap(FirebaseQueries.getListStaticImages(accommId))
                 .getItems();
         ArrayList<Bitmap> byteImages = new ArrayList<>();
-        for(StorageReference sr : listResult) {
+        for (StorageReference sr : listResult) {
             byte[] arr = AsyncWrapper.wrap(FirebaseQueries.getReference(sr));
             byteImages.add(BitmapFactory.decodeByteArray(arr, 0, arr.length));
         }
         return byteImages;
     }
 
-    public static QuerySnapshot getAccommodations() throws Exception {
-        return Tasks.await(FirebaseQueries.getAccommodations(0));
+    public static List<DocumentSnapshot> getAccommodations() throws Exception {
+        return Tasks.await(FirebaseQueries.getAccommodations(0)).getDocuments();
     }
+
+    public static List<DocumentSnapshot> getActiveAccommodations(int amount) throws Exception {
+        return Tasks.await(FirebaseQueries.getActiveAccommodations(amount).get()).getDocuments();
+    }
+
+    public static List<DocumentSnapshot> getActiveAccommodations(DocumentSnapshot lastDoc
+            , int amount) throws Exception {
+        return Tasks.await(FirebaseQueries.getActiveAccommodations(lastDoc, amount).get()).getDocuments();
+    }
+
+    public static List<DocumentSnapshot> getActiveAccommodations(Query filter, int amount)
+            throws Exception {
+        return Tasks.await(filter.limit(amount).get()).getDocuments();
+    }
+
+    public static QuerySnapshot filterQuery(Query filter, int amount) throws Exception {
+        return Tasks.await(filter.limit(amount).get());
+    }
+
+    public static QuerySnapshot filterQuery(Query filter, DocumentSnapshot ds, int amount)
+            throws Exception {
+        return Tasks.await(filter.startAfter(ds).limit(amount).get());
+    }
+
 }
