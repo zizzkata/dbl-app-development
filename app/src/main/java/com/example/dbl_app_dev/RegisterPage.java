@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dbl_app_dev.network_communication.Authentication;
+import com.example.dbl_app_dev.util.adapters.TextWatcherAdapter;
 import com.example.dbl_app_dev.util.view_validation.constants.Exceptions;
 import com.example.dbl_app_dev.util.view_validation.validators.*;
 
@@ -41,21 +42,6 @@ public class RegisterPage extends AppCompatActivity {
     private ViewValidator userValidator;
     private ViewValidator passValidator;
     private ViewValidator repPassValidator;
-
-    // adapter class for TextWatcher
-    private abstract class TextWatcherAdapter implements TextWatcher {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-        }
-    }
 
     /**
      * initialise text boxes
