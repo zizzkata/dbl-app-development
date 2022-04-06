@@ -1,5 +1,6 @@
 package com.example.dbl_app_dev.network_communication;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,8 +15,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Transaction;
 import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,11 +40,17 @@ public abstract class FirebaseQueries {
      */
     private static CollectionReference users = fireStore.collection("users");
     private static CollectionReference identity = fireStore.collection("identity");
+    private static CollectionReference accommodations = fireStore
+            .collection("accommodations");
 
     /**
-     *
+     * file collections
      */
     private static StorageReference usersImages = firebaseStorage.getReference("users");
+    private static StorageReference panoramicImages = firebaseStorage
+            .getReference("accommodations_360");
+    private static StorageReference staticImages = firebaseStorage
+            .getReference("accommodations_static");
 
     /**
      * Get batch job from Firestore
@@ -167,6 +177,10 @@ public abstract class FirebaseQueries {
         };
     }
 
+    public static Task<QuerySnapshot> getAccommodations(int offset) {
+        return accommodations.get();
+    }
+
     /**
      * Pull image from Firebase Storage.
      * @param username
@@ -175,4 +189,31 @@ public abstract class FirebaseQueries {
     public static Task<byte[]> getUserImage(String username) {
         return usersImages.child(username + ".jpg").getBytes(ONE_MEGABYTE);
     }
+
+    /**
+     *
+     * @param accommodationId
+     * @return
+     */
+    public static Task<byte[]> getPanoramicImage(String accommodationId) {
+        return panoramicImages.child(accommodationId + ".jpg").getBytes(ONE_MEGABYTE);
+    }
+
+    public static Task<ListResult> getListStaticImages(String accommodationId) {
+        return staticImages.child(accommodationId).listAll();
+    }
+
+    public static Task<byte[]> getReference(StorageReference reference) {
+        return reference.getBytes(ONE_MEGABYTE);
+    }
+    /**
+     *
+     * @param accommodationId
+     * @param imageBytes
+     * @return
+     */
+    public static UploadTask uploadPanoramicImage(String accommodationId, byte[] imageBytes) {
+        return panoramicImages.child(accommodationId + ".jpg").putBytes(imageBytes);
+    }
+
 }

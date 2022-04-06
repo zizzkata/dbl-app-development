@@ -2,14 +2,18 @@ package com.example.dbl_app_dev.store.objects;
 
 import android.graphics.Bitmap;
 
+import com.example.dbl_app_dev.network_communication.Database;
+
 import java.util.ArrayList;
 
 /**
  * Contains the information displayed in an accommodation card
  */
 public class AccommodationInfo {
-    private final ArrayList<Bitmap> photos;
-    private final Bitmap photoPanoramic;
+
+    private final String accommodationId;
+    private ArrayList<Bitmap> photos;
+    private Bitmap photoPanoramic;
 
     private final String addressTxt;
     private final String floorTxt;
@@ -27,6 +31,7 @@ public class AccommodationInfo {
     private final String descriptionTxt;
 
     public AccommodationInfo(ArrayList<String> s, ArrayList<Bitmap> photos, Bitmap photoPanoramic) {
+        this.accommodationId = "XAFxPJEMgTIRA4HUam4x";
         addressTxt = s.get(0);
         floorTxt = s.get(1);
         postcodeTxt = s.get(2);
@@ -42,15 +47,31 @@ public class AccommodationInfo {
         availableUntilTxt = s.get(12);
         descriptionTxt = s.get(13);
 
-        this.photos = new ArrayList<>(photos);
-        this.photoPanoramic = photoPanoramic;
+        //this.photos = new ArrayList<>(photos);
+        //this.photoPanoramic = photoPanoramic;
     }
 
     public ArrayList<Bitmap> getPhotos() {
+        if (photos == null) {
+            try {
+                this.photos = Database.getStaticImagesBitmaps(this.accommodationId);
+            } catch (Exception e) {
+                // Doesnt exist
+                e.printStackTrace();
+            }
+        }
         return photos;
     }
 
     public Bitmap getPhotoPanoramic() {
+        if (photoPanoramic == null) {
+            try {
+                photoPanoramic = Database.getPanoramicImage(this.accommodationId);
+            } catch (Exception e) {
+                // Doesn't exist
+                e.printStackTrace();
+            }
+        }
         return photoPanoramic;
     }
 
