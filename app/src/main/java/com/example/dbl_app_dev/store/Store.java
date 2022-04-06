@@ -2,6 +2,7 @@ package com.example.dbl_app_dev.store;
 
 
 import com.example.dbl_app_dev.network_communication.Authentication;
+import com.example.dbl_app_dev.network_communication.Database;
 import com.example.dbl_app_dev.store.objects.User;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -21,29 +22,12 @@ public final class Store {
     }
 
     /**
-     * Login using firebase and save it to the store
-     *
-     * @param email
-     * @param password
-     * @return true if successful else false;
+     * Get the current user's information or Download it if there is none.
      */
-    public static boolean login(String email, String password) {
-        FirebaseUser auth;
-        try {
-            auth = Authentication.firebaseLogin(email, password).getUser();
-            currentUser = new User(auth);
-        } catch (Exception e) {
-            lastExecutedException = e;
-            return false;
+    public static User getCurrentUser() throws Exception {
+        if (currentUser == null) {
+            currentUser = new User(Authentication.getCurrentUser());
         }
-        lastExecutedException = null;
-        return true;
-    }
-
-    /**
-     * Get the current user's information
-     */
-    public static User getCurrentUser() {
         return currentUser;
     }
 

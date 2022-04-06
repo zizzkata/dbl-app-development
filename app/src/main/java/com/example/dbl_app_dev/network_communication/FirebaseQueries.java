@@ -2,20 +2,33 @@ package com.example.dbl_app_dev.network_communication;
 
 import android.util.Log;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Transaction;
 import com.google.firebase.firestore.WriteBatch;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class FirebaseQueries {
+
+    private final static long ONE_MEGABYTE = 1024 * 1024;
     /**
      * firebase db
      */
     private static FirebaseFirestore fireStore = FirebaseFirestore
+            .getInstance(Authentication.getApp());
+
+    private static FirebaseStorage firebaseStorage = FirebaseStorage
             .getInstance(Authentication.getApp());
 
     /**
@@ -25,12 +38,28 @@ public abstract class FirebaseQueries {
     private static CollectionReference identity = fireStore.collection("identity");
 
     /**
+     *
+     */
+    private static StorageReference usersImages = firebaseStorage.getReference("users");
+
+    /**
      * Get batch job from Firestore
      *
      * @return Batch
      */
     public static WriteBatch getBatch() {
         return fireStore.batch();
+    }
+
+    /**
+     * Returns a transaction encapsulation
+     *
+     * @param function
+     * @param <U>
+     * @return Task<TResult>
+     */
+    public static <U> Task getTransaction(Transaction.Function<U> function) {
+        return fireStore.runTransaction(function);
     }
 
     /**
@@ -106,14 +135,44 @@ public abstract class FirebaseQueries {
     public static Task createNewUser(String username) {
         Log.d("reserveIdentity", "Username: " + username);
         // Fill in empty data
-        Map<String, String> userFile = new HashMap<>();
+        Map<String, Object> userFile = new HashMap<>();
         userFile.put("first_name", "");
         userFile.put("last_name", "");
         userFile.put("age", "");
         userFile.put("gender", "");
         userFile.put("phone_number", "");
         userFile.put("profile_description", "");
-        userFile.put("tenant_mode", "true");
+        userFile.put("tenant_mode", true);
+        userFile.put("smoke", false);
+        userFile.put("pets", false);
         return users.document(username).set(userFile);
+    }
+
+    /**
+     * Push data safely ith a transaction to Firebase database
+     * @param docReference
+     * @param newData
+     * @return
+     */
+    public static Transaction.Function<Void> pushData(DocumentReference docReference, Map<String
+            , Object> newData) {
+        return new Transaction.Function<Void>() {
+            @Nullable
+            @Override
+            public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+                DocumentSnapshot snapshot = transaction.get(docReference);
+                transaction.update(docReference, newData);
+                return null;
+            }
+        };
+    }
+
+    /**
+     * Pull image from Firebase Storage.
+     * @param username
+     * @return
+     */
+    public static Task<byte[]> getUserImage(String username) {
+        return usersImages.child(username + ".jpg").getBytes(ONE_MEGABYTE);
     }
 }
