@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dbl_app_dev.network_communication.Authentication;
 import com.example.dbl_app_dev.util.adapters.TextWatcherAdapter;
+import com.example.dbl_app_dev.util.AsyncWrapper;
 import com.example.dbl_app_dev.util.view_validation.constants.Exceptions;
 import com.example.dbl_app_dev.util.view_validation.validators.*;
 
@@ -129,22 +130,27 @@ public class RegisterPage extends AppCompatActivity {
                 String usernameString = username.getText().toString();
                 String passwordString = password.getText().toString();
 
-                try {
-                    Log.d("isUsernameUnique", "unique");
-                    Authentication.firebaseSignup(emailString, passwordString, usernameString);
-                } catch (Exception e) {
-                    Log.e("Signup", e.getMessage());
-                    Context context = getApplicationContext();
-                    String text = Exceptions.getWarning(e.getMessage());
-                    int duration = Toast.LENGTH_SHORT;
+                AsyncWrapper.wrap(() -> {
+                    try {
+                        Log.d("isUsernameUnique", "unique");
+                        Authentication.firebaseSignup(emailString, passwordString, usernameString);
+                        runOnUiThread(() -> startActivity(new Intent(com.example.dbl_app_dev.RegisterPage.this,
+                                LoginPage.class)));
+                    } catch (Exception e) {
+                        Log.e("Signup", e.getMessage());
+                        runOnUiThread(() -> {
+                            Context context = getApplicationContext();
+                            String text = Exceptions.getWarning(e.getMessage());
+                            int duration = Toast.LENGTH_SHORT;
 
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                    return;
-                }
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
+                        });
+                    }
+                });
 
-                startActivity(new Intent(com.example.dbl_app_dev.RegisterPage.this,
-                        LoginPage.class));
+
+
             }
         });
 
