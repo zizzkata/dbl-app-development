@@ -1,18 +1,30 @@
 package com.example.dbl_app_dev;
 
+import static android.content.ContentValues.TAG;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.dbl_app_dev.util.view_validation.validators.*;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.example.dbl_app_dev.util.adapters.TextWatcherAdapter;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -72,14 +84,63 @@ public class SettingsFragment extends Fragment {
         currPassValidator = new currPasswordValidator(currentPassword, currentPasswordWarning);
         passValidator = new PasswordValidator(password, passwordWarning);
         repPassValidator = new RepeatPasswordValidator(repeatPassword, password, repeatPasswordWarning);
+
+        password.addTextChangedListener(new TextWatcherAdapter() {
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                passValidator.validate();
+            }
+        });
+
+        password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus) {
+                    repPassValidator.validate();
+                }
+            }
+        });
+
+        repeatPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus) {
+                    repPassValidator.validate();
+                }
+            }
+        });
     }
 
     private void makeWarningsInvisible() {
-        emailWarning.setVisibility(View.GONE);
-        usernameWarning.setVisibility(View.GONE);
+//        emailWarning.setVisibility(View.GONE);
+//        usernameWarning.setVisibility(View.GONE);
         currentPasswordWarning.setVisibility(View.GONE);
         passwordWarning.setVisibility(View.GONE);
         repeatPasswordWarning.setVisibility(View.GONE);
+    }
+
+    private boolean areChangesValid() {
+        // list of all validator objects
+        ArrayList<ViewValidator> validators = new ArrayList<>();
+
+        // add all validators to list
+        //validators.add(emailValidator);
+        //validators.add(new UsernameUniquenessValidator(username, usernameWarning));
+        validators.add(currPassValidator);
+        validators.add(passValidator);
+        validators.add(repPassValidator);
+
+        // run validate on all validators
+        boolean areValidatorsValid = true;
+        for (ViewValidator validator : validators) {
+            validator.validate();
+
+            if (!validator.isValid()) {
+                areValidatorsValid = false;
+            }
+        }
+        // if all validators are valid, then return true, otherwise return false
+        return areValidatorsValid;
     }
 
     /**
@@ -126,13 +187,63 @@ public class SettingsFragment extends Fragment {
         init();
         makeWarningsInvisible();
 
-        // Sign Up button leading to RegisterPage
-        TextView signUpTxt = getView().findViewById(R.id.logoutBtn);
-        signUpTxt.setOnClickListener(new View.OnClickListener() {
+        // Logout button leading to LoginPage
+        TextView logoutButton = getView().findViewById(R.id.logoutBtn);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), LoginPage.class));
             }
         });
+
+        // Save button used to update current user's personal info and password
+        TextView saveButton = getView().findViewById(R.id.saveBtn);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!areChangesValid()) {
+                    Context context = getActivity().getApplicationContext();
+                    String text = "shit";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+
+                    return;
+                }
+
+                try {
+                    updateUserSettings();
+                } catch (Exception e) {
+
+                }
+
+                Context context = getActivity().getApplicationContext();
+                String text = "ok";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
+        });
+    }
+
+    private void updateUserSettings() {
+        updateUserPassword();
+    }
+
+    private void updateUserPassword() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String newPassword = password.getText().toString();
+
+        user.updatePassword(newPassword)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "User password updated.");
+                        }
+                    }
+                });
     }
 }
