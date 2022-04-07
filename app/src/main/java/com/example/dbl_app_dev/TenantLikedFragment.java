@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.store.objects.AccommodationInfo;
+import com.example.dbl_app_dev.store.objects.User;
 import com.example.dbl_app_dev.util.AsyncWrapper;
 
 import java.util.ArrayList;
@@ -110,7 +111,9 @@ public class TenantLikedFragment extends Fragment {
         // Add functionality for liked listings settings button
         Button settingsBtn = getView().findViewById(R.id.settingsButton);
         settingsBtn.setOnClickListener(view1 -> {
-            ((MainNavigationActivity) getActivity()).openLikedTenantSettingsDialog();
+            AlertDialog dialog = ((MainNavigationActivity) getActivity())
+                    .openLikedTenantSettingsDialog();
+            setDialogCheckBoxes(dialog);
         });
 
 
@@ -215,15 +218,31 @@ public class TenantLikedFragment extends Fragment {
                             .removeAccommodationDialog(a.compactView);
                 });
             }
-
         }
     }
 
     private void setDialogInfo(AlertDialog ad, AccommodationInfo listing) {
         // TODO
-        ((TextView) ad.findViewById(R.id.landlordNameTxt)).setText("Georgi" + " " + "Georgiev");
-        ((TextView) ad.findViewById(R.id.landlordEmailTxt)).setText("gosho@gmail.com");
-        ((TextView) ad.findViewById(R.id.phoneNumberTxt)).setText("0123456789");
+        AsyncWrapper.wrap(() -> {
+            try {
+                User owner = listing.getOwner();
+                getActivity().runOnUiThread(() -> {
+                    ((TextView) ad.findViewById(R.id.landlordNameTxt))
+                            .setText(owner.getFirstName() + " " + owner.getLastName());
+                    ((TextView) ad.findViewById(R.id.landlordEmailTxt)).setText(owner.getEmail());
+                    ((TextView) ad.findViewById(R.id.phoneNumberTxt))
+                            .setText(owner.getPhoneNumber());
+                });
+            } catch (Exception e) {
+                getActivity().runOnUiThread(() ->
+                {
+                    ((TextView) ad.findViewById(R.id.landlordNameTxt))
+                            .setText("Georgi" + " " + "Georgiev");
+                    ((TextView) ad.findViewById(R.id.landlordEmailTxt)).setText("gosho@gmail.com");
+                    ((TextView) ad.findViewById(R.id.phoneNumberTxt)).setText("0123456789");
+                });
+            }
+        });
 
         AsyncWrapper.wrap(() -> {
             try {
@@ -284,6 +303,18 @@ public class TenantLikedFragment extends Fragment {
         ((CheckBox) ad.findViewById(R.id.furnishedCheckBox)).setChecked(listing.getFurnished());
         ((CheckBox) ad.findViewById(R.id.smokerCheckBox)).setChecked(listing.getSmokers());
         ((CheckBox) ad.findViewById(R.id.petsCheckBox)).setChecked(listing.getPets());
+    }
+
+    private void setDialogCheckBoxes(AlertDialog dialog) {
+        ((androidx.appcompat.widget.SwitchCompat) dialog
+                .findViewById(R.id.showPositiveListingsSwitch))
+                .setChecked(positiveListingsParent.getVisibility() == View.VISIBLE);
+        ((androidx.appcompat.widget.SwitchCompat) dialog
+                .findViewById(R.id.showNeutralListingsSwitch))
+                .setChecked(neutralListingsParent.getVisibility() == View.VISIBLE);
+        ((androidx.appcompat.widget.SwitchCompat) dialog
+                .findViewById(R.id.showNegativeListingsSwitch12))
+                .setChecked(negativeListingsParent.getVisibility() == View.VISIBLE);
     }
 
     class TenantLikedAccommodationObject {

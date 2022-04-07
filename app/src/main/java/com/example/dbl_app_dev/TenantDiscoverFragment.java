@@ -74,7 +74,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tenant_discover, container, false);
     }
@@ -147,9 +147,9 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         AsyncWrapper.wrap(() -> {
             try {
                 User user = Store.getCurrentUser();
-                if (user.getFirstName().length() == 0 || user.getLastName().length() == 0 || user.getDescription().length() == 0)
-                    getActivity().runOnUiThread(() ->
-                            ((MainNavigationActivity) getActivity()).openSettingsDialog());
+                if (user.getFirstName().length() == 0 || user.getLastName().length() == 0
+                        || user.getDescription().length() == 0)
+                    getActivity().runOnUiThread(() -> ((MainNavigationActivity) getActivity()).openSettingsDialog());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -185,9 +185,9 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
      */
     @Override
     public void swipedRight() {
-//        if (dataModels.size() > 0) {
-//            Log.d("extra_debug", "Positive Rating");
-//        }
+        // if (dataModels.size() > 0) {
+        // Log.d("extra_debug", "Positive Rating");
+        // }
     }
 
     /**
@@ -195,9 +195,9 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
      */
     @Override
     public void swipedLeft() {
-//        if (dataModels.size() > 0) {
-//            Log.d("extra_debug", "Negative Rating");
-//        }
+        // if (dataModels.size() > 0) {
+        // Log.d("extra_debug", "Negative Rating");
+        // }
     }
 
     private void bindData(AccommodationInfo data) {

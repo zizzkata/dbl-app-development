@@ -7,7 +7,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.app.AlertDialog;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.navigation.NavController;
@@ -16,6 +15,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.dbl_app_dev.dialog_displayer.CreateAccommDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.EditAccommDialogDisplayer;
+import com.example.dbl_app_dev.dialog_displayer.LikedTenantSettingsDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.EditSettingsDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.LogoutDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.RemoveAccommDialogDisplayer;
@@ -79,10 +79,11 @@ public class MainNavigationActivity extends AppCompatActivity {
     /**
      * Method used to create the popup that opens the tenant liked settings
      */
-    public void openLikedTenantSettingsDialog() {
+    public AlertDialog openLikedTenantSettingsDialog() {
         View myView = getLayoutInflater().inflate(R.layout.liked_tenant_settings_pop_up, null);
-        (new CreateAccommDialogDisplayer(this,
-                R.id.cancelButton, R.id.saveButton, R.id.negativeButton, myView))
+        return (new LikedTenantSettingsDialogDisplayer(this,
+                R.id.cancelButton, R.id.saveButton, R.id.negativeButton,
+                myView, findViewById(R.id.scrollConstraintLayout)))
                 .displayPopupDialog();
     }
 

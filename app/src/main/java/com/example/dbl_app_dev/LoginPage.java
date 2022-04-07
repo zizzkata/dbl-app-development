@@ -8,8 +8,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.dbl_app_dev.network_communication.Authentication;
+import com.example.dbl_app_dev.network_communication.Database;
 import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.util.AsyncWrapper;
 import com.example.dbl_app_dev.util.view_validation.constants.Exceptions;
@@ -42,7 +42,6 @@ public class LoginPage extends AppCompatActivity {
         loginBtn = findViewById(R.id.loginBtn);
         signUpTxt = findViewById(R.id.signUpTxt);
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,9 +85,12 @@ public class LoginPage extends AppCompatActivity {
                 finish();
             });
             Store.getCurrentUser(); // don't get the parameter
-        } catch (Exception e) {
+        } catch (
+
+        Exception e) {
             Log.e("ERR", e.getMessage());
-            //String warning = Exceptions.getWarning(Store.getLastException().getMessage());
+            // String warning =
+            // Exceptions.getWarning(Store.getLastException().getMessage());
             runOnUiThread(() -> {
                 setCredentialsWarning(Exceptions.getWarning(e.getMessage()), true);
                 loginBtn.setEnabled(true);
