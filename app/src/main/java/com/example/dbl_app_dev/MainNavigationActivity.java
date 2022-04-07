@@ -16,6 +16,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.dbl_app_dev.dialog_displayer.CreateAccommDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.EditAccommDialogDisplayer;
+import com.example.dbl_app_dev.dialog_displayer.EditSettingsDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.LogoutDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.RemoveAccommDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.ViewAccommDialogDisplayer;
@@ -147,5 +148,16 @@ public class MainNavigationActivity extends AppCompatActivity {
     public void logout() {
         startActivity(new Intent(this, LoginPage.class));
         finish();
+    }
+
+    public void openSettingsDialog() {
+        (new EditSettingsDialogDisplayer(this))
+                .displayPopupDialog();
+    }
+
+    public void openSettingsFragment() {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        Menu navBarMenu = bottomNavigationView.getMenu();
+        navBarMenu.performIdentifierAction(R.id.settingsFragment, 0);
     }
 }
