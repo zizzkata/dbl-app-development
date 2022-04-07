@@ -134,8 +134,11 @@ public class RegisterPage extends AppCompatActivity {
                     try {
                         Log.d("isUsernameUnique", "unique");
                         Authentication.firebaseSignup(emailString, passwordString, usernameString);
-                        runOnUiThread(() -> startActivity(new Intent(com.example.dbl_app_dev.RegisterPage.this,
-                                LoginPage.class)));
+                        runOnUiThread(() -> {
+                            startActivity(new Intent(RegisterPage.this,
+                                    LoginPage.class));
+                            finish();
+                        });
                     } catch (Exception e) {
                         Log.e("Signup", e.getMessage());
                         runOnUiThread(() -> {
@@ -161,6 +164,7 @@ public class RegisterPage extends AppCompatActivity {
                 makeWarningsInvisible();
                 startActivity(new Intent(RegisterPage.this,
                         LoginPage.class));
+                finish();
             }
         });
     }

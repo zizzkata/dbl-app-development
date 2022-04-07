@@ -144,7 +144,7 @@ public class MainNavigationActivity extends AppCompatActivity {
                 .displayPopupDialog();
     }
 
-    public void restartApp() {
+    public void logout() {
         startActivity(new Intent(this, LoginPage.class));
         finish();
     }

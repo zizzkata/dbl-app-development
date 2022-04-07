@@ -220,7 +220,6 @@ public class SettingsFragment extends Fragment {
         TextView logOutBtn = getView().findViewById(R.id.logoutBtn);
         logOutBtn.setOnClickListener(view1 -> {
             ((MainNavigationActivity) getActivity()).logoutDialog();
-//                startActivity(new Intent(getActivity(), LoginPage.class));
         });
 
         // Save button used to update current user's personal info and password
