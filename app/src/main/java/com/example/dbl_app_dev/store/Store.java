@@ -1,12 +1,9 @@
 package com.example.dbl_app_dev.store;
 
-import android.provider.ContactsContract;
-
 import com.example.dbl_app_dev.network_communication.Authentication;
 import com.example.dbl_app_dev.network_communication.Database;
 import com.example.dbl_app_dev.store.objects.AccommodationInfo;
 import com.example.dbl_app_dev.store.objects.User;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 
@@ -25,8 +22,8 @@ public final class Store {
      */
     private static User currentUser;
     private static ArrayList<AccommodationInfo> discoveryAccommodations = new ArrayList<>();
-    private static final ArrayList<AccommodationInfo> likedProperties = new ArrayList<>();
-    private static final ArrayList<AccommodationInfo> listedProperties = new ArrayList<>();
+    private static ArrayList<AccommodationInfo> likedProperties = new ArrayList<>();
+    private static ArrayList<AccommodationInfo> listedProperties = new ArrayList<>();
 
     private static Query discoveryFilter;
 
@@ -46,7 +43,6 @@ public final class Store {
     }
 
     /**
-     *
      * @return
      */
     public static AccommodationInfo getNextAccommodation() throws Exception {
@@ -72,7 +68,8 @@ public final class Store {
             newData = transformDocuments(
                     Database.filterQuery(query, MAX_ACCOMMODATIONS_PER_PULL).getDocuments());
             discoveryFilter = query;
-        } discoveryAccommodations = newData; // let garbage collector take care
+        }
+        discoveryAccommodations = newData; // let garbage collector take care
     }
 
     public static void pullMoreAccommodations(DocumentSnapshot lastAccommodation) throws Exception {
@@ -89,14 +86,20 @@ public final class Store {
 
     }
 
+    public static ArrayList<AccommodationInfo> getCurrentUserLikedAccommodations()
+            throws Exception {
+        if (likedProperties.size() == 0) {
+            likedProperties = transformDocuments(
+                    Database.getLikedAccommodations(currentUser.getUsername()));
+        }
+        return likedProperties;
+    }
+
     private static ArrayList<AccommodationInfo> transformDocuments(List<DocumentSnapshot> documents) {
         ArrayList<AccommodationInfo> returnArray = new ArrayList<>();
-        for(DocumentSnapshot ds: documents) {
+        for (DocumentSnapshot ds : documents) {
             returnArray.add(new AccommodationInfo(ds));
         }
         return returnArray;
     }
-
-
-
 }

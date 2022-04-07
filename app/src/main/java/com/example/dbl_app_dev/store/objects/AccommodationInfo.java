@@ -172,4 +172,7 @@ public class AccommodationInfo {
 
     public String getAvailableUntil() { return availableUntil; }
 
+    public void rateAccommodation(String username, boolean rate) throws Exception {
+        Database.rateAccommodation(accommodationId, username, rate);
+    }
 }

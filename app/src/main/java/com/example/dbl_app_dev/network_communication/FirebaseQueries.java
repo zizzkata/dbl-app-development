@@ -42,6 +42,10 @@ public abstract class FirebaseQueries {
     private static CollectionReference identity = fireStore.collection("identity");
     private static CollectionReference accommodations = fireStore
             .collection("accommodations");
+    private static CollectionReference ratedAccommodations = fireStore
+            .collection("rated_accommodations");
+    private static CollectionReference usersAccommodations = fireStore
+            .collection("rated_accommodations_users");
 
     /**
      * file collections
@@ -182,6 +186,10 @@ public abstract class FirebaseQueries {
         return accommodations.get();
     }
 
+    public static Task<DocumentSnapshot> getAccommodation(String id) {
+        return accommodations.document(id).get();
+    }
+
     /**
      * Pull image from Firebase Storage.
      *
@@ -253,5 +261,18 @@ public abstract class FirebaseQueries {
 
     public static Task<Void> updateUserInfo(String username, Map<String, Object> data) {
         return users.document(username).update(data);
+    }
+
+    public static Task<QuerySnapshot> getLikedAccommodationsIds(String username) {
+        return ratedAccommodations.document(username).collection("accommodations")
+                .whereEqualTo("rated", "positive").get();
+    }
+
+    public static Task<Void> rateAccommodation(String accommodationId, String username
+            , boolean rate) {
+        Map<String, Object> rating = new HashMap<>();
+        rating.put("rated", rate ? "positive" : "negative");
+        return ratedAccommodations.document(username).collection("accommodation")
+                .document(accommodationId).update(rating);
     }
 }

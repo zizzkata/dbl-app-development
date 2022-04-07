@@ -2,7 +2,6 @@ package com.example.dbl_app_dev.network_communication;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
 import com.example.dbl_app_dev.util.AsyncWrapper;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentReference;
@@ -10,7 +9,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.StorageReference;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -113,4 +111,19 @@ public abstract class Database {
         Tasks.await(FirebaseQueries.updateUserInfo(username, data));
     }
 
+    public static ArrayList<DocumentSnapshot> getLikedAccommodations(String username) throws Exception {
+        QuerySnapshot likedAccommodations = Tasks.await(
+                FirebaseQueries.getLikedAccommodationsIds(username));
+        ArrayList<DocumentSnapshot> accommodations = new ArrayList<>();
+        for(DocumentSnapshot rate : likedAccommodations.getDocuments()) {
+            //TODO add try/catch
+            accommodations.add(Tasks.await(FirebaseQueries.getAccommodation(rate.getId())));
+        }
+        return accommodations;
+    }
+
+    public static void rateAccommodation(String accommodationId, String username
+            , boolean rating) throws Exception {
+        Tasks.await(FirebaseQueries.rateAccommodation(accommodationId, username, rating));
+    }
 }
