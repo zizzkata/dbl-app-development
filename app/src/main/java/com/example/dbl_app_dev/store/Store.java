@@ -98,5 +98,9 @@ public final class Store {
     }
 
 
+    public static void killStore() {
+        currentUser = null;
+        discoveryAccommodations = new ArrayList<>();
+    }
 
 }
