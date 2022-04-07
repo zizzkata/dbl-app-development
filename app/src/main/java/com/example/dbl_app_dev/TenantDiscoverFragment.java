@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.dbl_app_dev.dialog_displayer.LogoutDialogDisplayer;
 import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.store.objects.AccommodationInfo;
 import com.example.dbl_app_dev.util.AsyncWrapper;
@@ -145,6 +146,9 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         } else {
             displayCard();
         }
+
+        // open pop-up
+        ((MainNavigationActivity) getActivity()).openSettingsDialog();
     }
 
     /**

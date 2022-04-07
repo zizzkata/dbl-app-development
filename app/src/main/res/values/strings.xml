@@ -144,4 +144,6 @@
     <string name="invalid_message">* Invalid message</string>
     <string name="logout_title">Log Out</string>
     <string name="logout_message">Are you sure you want to log out?</string>
+    <string name="edit_settings_title">Set your details</string>
+    <string name="edit_settings_message">You have to fill in a few more details about yourself before you can use the app as a tenant.</string>
 </resources>
