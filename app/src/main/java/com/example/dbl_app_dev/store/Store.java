@@ -102,4 +102,11 @@ public final class Store {
         }
         return returnArray;
     }
+
+
+    public static void killStore() {
+        currentUser = null;
+        discoveryAccommodations = new ArrayList<>();
+    }
+
 }

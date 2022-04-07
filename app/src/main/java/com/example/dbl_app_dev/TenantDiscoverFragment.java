@@ -1,9 +1,7 @@
 package com.example.dbl_app_dev;
 
 import android.annotation.SuppressLint;
-import android.content.res.AssetManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -18,15 +16,12 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
-import com.example.dbl_app_dev.dialog_displayer.LogoutDialogDisplayer;
 import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.store.objects.AccommodationInfo;
+import com.example.dbl_app_dev.store.objects.User;
 import com.example.dbl_app_dev.util.AsyncWrapper;
 
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 
 /**
  * Discovery page fragment, if the user is in "Tenant" mode
@@ -148,7 +143,16 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         }
 
         // open pop-up
-        ((MainNavigationActivity) getActivity()).openSettingsDialog();
+        AsyncWrapper.wrap(() -> {
+            try {
+                User user = Store.getCurrentUser();
+                if (user.getFirstName().length() == 0 || user.getLastName().length() == 0 || user.getDescription().length() == 0)
+                    getActivity().runOnUiThread(() ->
+                            ((MainNavigationActivity) getActivity()).openSettingsDialog());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     /**

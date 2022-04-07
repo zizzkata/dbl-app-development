@@ -20,6 +20,7 @@ import com.example.dbl_app_dev.dialog_displayer.EditSettingsDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.LogoutDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.RemoveAccommDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.ViewAccommDialogDisplayer;
+import com.example.dbl_app_dev.store.Store;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainNavigationActivity extends AppCompatActivity {
@@ -146,6 +147,7 @@ public class MainNavigationActivity extends AppCompatActivity {
     }
 
     public void logout() {
+        Store.killStore();
         startActivity(new Intent(this, LoginPage.class));
         finish();
     }

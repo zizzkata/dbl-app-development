@@ -28,7 +28,7 @@ public class EditSettingsDialogDisplayer extends DialogDisplayer {
         dialog.setIcon(R.drawable.ic_warning_filled);
         dialog.setTitle(title);
         dialog.setMessage(message);
-        
+
         // TODO: remove the option to cancel
         dialog.setButton(dialog.BUTTON_NEUTRAL, "Cancel",
                 (dialog, which) -> dialog.dismiss());
