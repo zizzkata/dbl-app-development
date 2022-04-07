@@ -122,8 +122,8 @@ public abstract class Database {
         return accommodations;
     }
 
-    public static void rateAccommodation(String accommodationId, String username
-            , boolean rating) throws Exception {
+    public static void rateAccommodation(String accommodationId, String username,
+                                         boolean rating) throws Exception {
         Tasks.await(FirebaseQueries.rateAccommodation(accommodationId, username, rating));
     }
 }

@@ -2,7 +2,9 @@ package com.example.dbl_app_dev;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,16 +12,20 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.store.objects.AccommodationInfo;
 import com.example.dbl_app_dev.util.AsyncWrapper;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.LinkedList;
 
 /**
@@ -39,6 +45,7 @@ public class TenantLikedFragment extends Fragment {
     ConstraintLayout negativeListingsParent;
 
     ArrayList<AccommodationInfo> likedListings = null;
+    ArrayList<TenantLikedAccommodationObject> likedObjects = new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -111,30 +118,22 @@ public class TenantLikedFragment extends Fragment {
         });
 
 
+        // Get the liked listings of the user
         AsyncWrapper.wrap(() -> {
             try {
                 likedListings = Store.getCurrentUserLikedAccommodations();
-                getActivity().runOnUiThread(() -> addLikedListings(positiveListingsParent, R.layout.positive_accommodation_object));
+                getActivity().runOnUiThread(() -> {
+                            if (likedListings != null) {
+                                addLikedListings(positiveListingsParent, R.layout.positive_accommodation_object);
+                                addAllInfoButtonsFunctionality();
+                            }
+                        }
+                );
             } catch (Exception e) {
                 Log.e("ERR", e.getMessage());
             }
         });
-        // Get the liked listings of the user
-/*        try {
-            likedListings = Store.getLikedListings();
-        } catch (Exception e) {
-            Log.e("OPS", "OPS");
-            e.printStackTrace();
-            return;
-        }*/
-        if (likedListings != null) {
-            addLikedListings(positiveListingsParent, R.layout.positive_accommodation_object);
-            addAllInfoButtonsFunctionality();
-        }
 
-
-
-        //addAllInfoButtonsFunctionality();
     }
 
     private void addLikedListings(ConstraintLayout currentListingParent,
@@ -180,46 +179,20 @@ public class TenantLikedFragment extends Fragment {
     }
 
     private void addAllInfoButtonsFunctionality() {
-        for (TenantLikedAccommodationObject a: likedObjects) {
+        for (TenantLikedAccommodationObject a : likedObjects) {
             if (a.rating == rating.POSITIVE || a.rating == rating.NEUTRAL) {
                 a.compactView.findViewById(R.id.actionIcon).setOnClickListener(view1 -> {
                     AlertDialog d = ((MainNavigationActivity) getActivity()).viewAccommodationDialog(a.compactView);
                     getActivity().runOnUiThread(() -> setDialogInfo(d, a.accommodationInfo));
                 });
             } else if (a.rating == rating.NEGATIVE) {
+                // TODO remove liking from DB
                 a.compactView.findViewById(R.id.actionIcon).setOnClickListener(view1 -> {
                     ((MainNavigationActivity) getActivity()).removeAccommodationDialog(a.compactView);
                 });
             }
 
         }
-/*        // Add the positive listing "info" button functionality
-        for (int i = 0; i < positiveListingsParent.getChildCount(); i++) {
-            View v = positiveListingsParent.getChildAt(i);
-            v.findViewById(R.id.actionIcon).setOnClickListener(view1 -> {
-                AlertDialog d = ((MainNavigationActivity) getActivity()).viewAccommodationDialog(v);
-                //AccommodationInfo accommodationInfo = new AccommodationInfo();
-                //getActivity().runOnUiThread(() -> setDialogInfo(d, accommodationInfo));
-            });
-        }
-
-        // Add the neutral listing "info" button functionality
-        for (int i = 0; i < neutralListingsParent.getChildCount(); i++) {
-            View v = neutralListingsParent.getChildAt(i);
-            v.findViewById(R.id.actionIcon).setOnClickListener(view1 -> {
-                AlertDialog d = ((MainNavigationActivity) getActivity()).viewAccommodationDialog(v);
-                //AccommodationInfo accommodationInfo = new AccommodationInfo();
-                //getActivity().runOnUiThread(() -> setDialogInfo(d, accommodationInfo));
-            });
-        }
-
-        // Add the negative listing "remove" button functionality
-        for (int i = 0; i < negativeListingsParent.getChildCount(); i++) {
-            View v = negativeListingsParent.getChildAt(i);
-            v.findViewById(R.id.actionIcon).setOnClickListener(view1 -> {
-                ((MainNavigationActivity) getActivity()).removeAccommodationDialog(v);
-            });
-        }*/
     }
 
     private void setDialogInfo(AlertDialog ad, AccommodationInfo listing) {
@@ -228,11 +201,44 @@ public class TenantLikedFragment extends Fragment {
         ((TextView) ad.findViewById(R.id.landlordEmailTxt)).setText("myEmail");
         ((TextView) ad.findViewById(R.id.phoneNumberTxt)).setText("0000000000");
 
-        // TODO
-        ((ImageView) ad.findViewById(R.id.panoramaImage))
-                .setImageDrawable(getResources().getDrawable(R.drawable.ic_buildings_filled));
-        ((ImageView) ad.findViewById(R.id.normalImage))
-                .setImageDrawable(getResources().getDrawable(R.drawable.ic_buildings_filled));
+        AsyncWrapper.wrap(() -> {
+            try {
+                Bitmap image = listing.getPhotos().get(0);
+                getActivity().runOnUiThread(() -> {
+                    ((TextView) ad.findViewById(R.id.normalImageCountText))
+                            .setText(listing.getPhotos().size());
+                            ((ImageView) ad.findViewById(R.id.normalImage))
+                                    .setImageBitmap(image);
+                        }
+                );
+            } catch (Exception e) {
+                getActivity().runOnUiThread(() ->
+                        {
+                            ((TextView) ad.findViewById(R.id.normalImageCountText))
+                                    .setText("0");
+                            ((ImageView) ad.findViewById(R.id.normalImage))
+                                    .setImageDrawable(getResources()
+                                            .getDrawable(R.drawable.ic_buildings_filled));
+                        }
+                );
+            }
+        });
+
+        AsyncWrapper.wrap(() -> {
+            try {
+                Bitmap image = listing.getPhotoPanoramic();
+                getActivity().runOnUiThread(() ->
+                        ((ImageView) ad.findViewById(R.id.panoramaImage))
+                                .setImageBitmap(image)
+                );
+            } catch (Exception e) {
+                getActivity().runOnUiThread(() ->
+                        ((ImageView) ad.findViewById(R.id.panoramaImage))
+                                .setImageDrawable(getResources()
+                                        .getDrawable(R.drawable.ic_buildings_filled)));
+
+            }
+        });
 
         ((TextView) ad.findViewById(R.id.addressTxt)).setText(listing.getAddress());
         ((TextView) ad.findViewById(R.id.apartmentNameText)).setText(listing.getHouseNumber());
