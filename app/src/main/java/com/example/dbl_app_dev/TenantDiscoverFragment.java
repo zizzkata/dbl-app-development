@@ -141,8 +141,6 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         // makes sure that the a card is not discarded if it is not rated
         if (currentAccommodationInfo == null) {
             nextCard();
-        } else {
-            displayCard();
         }
 
         // open pop-up
@@ -181,20 +179,6 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         });
 
     }
-
-    /**
-     * Displays the information stored in currentAccommodationInfo
-     */
-    private void displayCard(ArrayList<TextView> cardTextViews, VerticalViewPager imageGalleryViewPager) {
-        ArrayList<String> cardStrings = currentAccommodationInfo.getCardFormattedText();
-        assert (cardStrings.size() == cardTextViews.size()) : "Incorrect size of accommodation info strings";
-        for (int i = 0; i < cardStrings.size(); i++) {
-            cardTextViews.get(i).setText(cardStrings.get(i));
-        }
-        verticalViewPagerAdapter = new ImageViewPagerAdapter(getChildFragmentManager(), currentAccommodationInfo.getPhotos(), currentAccommodationInfo.getPhotoPanoramic());
-        imageGalleryViewPager.setAdapter(verticalViewPagerAdapter);
-    }
-
 
     /**
      * POST's the positive rating given to the viewed accommodation to the backend
