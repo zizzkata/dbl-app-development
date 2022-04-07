@@ -88,11 +88,12 @@ public final class Store {
 
     public static ArrayList<AccommodationInfo> getCurrentUserLikedAccommodations()
             throws Exception {
-        if (likedProperties.size() == 0) {
-            likedProperties = transformDocuments(
-                    Database.getLikedAccommodations(currentUser.getUsername()));
-        }
-        return likedProperties;
+//        if (likedProperties.size() == 0) {
+//            likedProperties = transformDocuments(
+//                    Database.getLikedAccommodations(currentUser.getUsername()));
+//        }
+//        return likedProperties;
+        return transformDocuments(Database.getLikedAccommodations(currentUser.getUsername()));
     }
 
     private static ArrayList<AccommodationInfo> transformDocuments(List<DocumentSnapshot> documents) {
