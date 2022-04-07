@@ -21,24 +21,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.dbl_app_dev.util.view_validation.validators.*;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.example.dbl_app_dev.util.adapters.TextWatcherAdapter;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.store.objects.User;
 import com.example.dbl_app_dev.util.AsyncWrapper;
 import com.example.dbl_app_dev.util.Tools;
+import com.example.dbl_app_dev.util.adapters.TextWatcherAdapter;
 import com.example.dbl_app_dev.util.view_validation.validators.PasswordValidator;
 import com.example.dbl_app_dev.util.view_validation.validators.RepeatPasswordValidator;
 import com.example.dbl_app_dev.util.view_validation.validators.ViewValidator;
 import com.example.dbl_app_dev.util.view_validation.validators.currPasswordValidator;
-
-import java.util.ArrayList;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,16 +44,6 @@ import java.io.InputStream;
  * create an instance of this fragment.
  */
 public class SettingsFragment extends Fragment {
-
-    //User currentUser = new User()
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     // text boxes
     private EditText email;
@@ -175,20 +163,9 @@ public class SettingsFragment extends Fragment {
         return areValidatorsValid;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment thirdFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SettingsFragment newInstance(String param1, String param2) {
+    public static SettingsFragment newInstance() {
         SettingsFragment fragment = new SettingsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -196,11 +173,6 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
     }
 
     @Override
@@ -218,7 +190,7 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         init();
-        //makeWarningsInvisible();
+//         makeWarningsInvisible();
         AsyncWrapper.wrap(() -> {
             User user;
             try {
@@ -234,11 +206,11 @@ public class SettingsFragment extends Fragment {
             Bitmap profilePic = user.getProfilePic();
             try {
                 if (profilePic == null) {
-                    InputStream stream =  getContext()
+                    InputStream stream = getContext()
                             .getAssets().open("default-user-image.png");
                     profilePic = BitmapFactory.decodeStream(stream);
                 }
-                Bitmap finalProfilePic = profilePic; // necessary for javalint to run ;/
+                Bitmap finalProfilePic = profilePic; // necessary for java lint to run ;/
                 getActivity().runOnUiThread(() -> bindUserImage(finalProfilePic));
             } catch (Exception e) { // never happens
                 Log.e("FATAL", e.getMessage());
@@ -247,43 +219,38 @@ public class SettingsFragment extends Fragment {
         });
 
         // Sign Up button leading to RegisterPage
-        TextView signUpTxt = getView().findViewById(R.id.logoutBtn);
-        signUpTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        TextView logOutBtn = getView().findViewById(R.id.logoutBtn);
+        logOutBtn.setOnClickListener(view1 -> {
+//            ((MainNavigationActivity) getActivity()).viewAccommodationDialog(view1);
                 startActivity(new Intent(getActivity(), LoginPage.class));
-            }
         });
 
         // Save button used to update current user's personal info and password
         TextView saveButton = getView().findViewById(R.id.saveBtn);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!areChangesValid()) {
-                    Context context = getActivity().getApplicationContext();
-                    String text = "shit";
-                    int duration = Toast.LENGTH_SHORT;
-
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-
-                    return;
-                }
-
-                try {
-                    updateUserSettings();
-                } catch (Exception e) {
-
-                }
-
+        saveButton.setOnClickListener(view2 -> {
+            if (!areChangesValid()) {
                 Context context = getActivity().getApplicationContext();
                 String text = "ok";
                 int duration = Toast.LENGTH_SHORT;
 
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
+
+                return;
             }
+
+            try {
+                updateUserSettings();
+            } catch (Exception ignored) {
+                // exceptions are ignored
+            }
+
+            Context context = getActivity().getApplicationContext();
+            String text = "ok";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
         });
     }
 
