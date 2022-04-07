@@ -1,7 +1,6 @@
 package com.example.dbl_app_dev.dialog_displayer;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.example.dbl_app_dev.MainNavigationActivity;
 import com.example.dbl_app_dev.R;

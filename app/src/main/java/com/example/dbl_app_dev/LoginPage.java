@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dbl_app_dev.network_communication.Authentication;
-import com.example.dbl_app_dev.network_communication.Database;
 import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.util.AsyncWrapper;
 import com.example.dbl_app_dev.util.view_validation.constants.Exceptions;
@@ -86,7 +85,7 @@ public class LoginPage extends AppCompatActivity {
                 loginBtn.setEnabled(true);
                 finish();
             });
-            Store.getCurrentUser(); // dont get the parameter
+            Store.getCurrentUser(); // don't get the parameter
         } catch (Exception e) {
             Log.e("ERR", e.getMessage());
             //String warning = Exceptions.getWarning(Store.getLastException().getMessage());

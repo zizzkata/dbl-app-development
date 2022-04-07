@@ -3,12 +3,8 @@ package com.example.dbl_app_dev;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,11 +13,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dbl_app_dev.network_communication.Authentication;
-import com.example.dbl_app_dev.util.adapters.TextWatcherAdapter;
 import com.example.dbl_app_dev.util.AsyncWrapper;
+import com.example.dbl_app_dev.util.adapters.TextWatcherAdapter;
 import com.example.dbl_app_dev.util.view_validation.constants.Exceptions;
-import com.example.dbl_app_dev.util.view_validation.validators.*;
-
+import com.example.dbl_app_dev.util.view_validation.validators.EmailValidator;
+import com.example.dbl_app_dev.util.view_validation.validators.PasswordValidator;
+import com.example.dbl_app_dev.util.view_validation.validators.RepeatPasswordValidator;
+import com.example.dbl_app_dev.util.view_validation.validators.UsernameUniquenessValidator;
+import com.example.dbl_app_dev.util.view_validation.validators.UsernameValidator;
+import com.example.dbl_app_dev.util.view_validation.validators.ViewValidator;
 
 import java.util.ArrayList;
 
