@@ -32,6 +32,7 @@ public class User {
     private boolean tenantMode;
     private boolean smokes;
     private boolean hasPets;
+    private DocumentSnapshot snapshot;
 
     public User(FirebaseUser user) throws Exception {
         this.email = user.getEmail();
@@ -53,8 +54,13 @@ public class User {
         this.hasPets = (Boolean) res.get("pets");
     }
 
+    /**
+     *  Pull user information from db
+     * @throws Exception
+     */
     private void getInformation() throws Exception {
         DocumentSnapshot res = Database.getUserInformation(this.username);
+        this.snapshot = res;
         this.firstName = (String) res.get("first_name");
         this.lastName = (String) res.get("last_name");
         this.gender = (String) res.get("gender");
@@ -154,6 +160,23 @@ public class User {
     public void updateUser() throws Exception {
         Database.updateUserInformation(this.username, transformUser());
     }
+
+    /**
+     * Reset the variables to the last pulled instance
+     */
+    public void resetToOriginal() {
+        this.firstName = (String) snapshot.get("first_name");
+        this.lastName = (String) snapshot.get("last_name");
+        this.gender = (String) snapshot.get("gender");
+        this.phoneNumber = (String) snapshot.get("phone_number");
+        this.description = (String) snapshot.get("profile_description");
+        this.age = (String) snapshot.get("age");
+        this.tenantMode = (Boolean) snapshot.get("tenant_mode");
+        this.smokes = (Boolean) snapshot.get("smoke");
+        this.hasPets = (Boolean) snapshot.get("pets");
+    }
+
+    public
 
     private Map<String, Object> transformUser() {
         Map<String, Object> transformedData = new HashMap<>();
