@@ -103,14 +103,16 @@ public class TenantLikedFragment extends Fragment {
                 .findViewById(R.id.negativeListingsContainer);
 
         // Remove all previous listing objects
-        positiveListingsParent.removeAllViews();
+        //positiveListingsParent.removeAllViews();
         neutralListingsParent.removeAllViews();
-        negativeListingsParent.removeAllViews();
+        //negativeListingsParent.removeAllViews();
 
         // Add functionality for liked listings settings button
         Button settingsBtn = getView().findViewById(R.id.settingsButton);
         settingsBtn.setOnClickListener(view1 -> {
-            ((MainNavigationActivity) getActivity()).openLikedTenantSettingsDialog();
+            AlertDialog dialog = ((MainNavigationActivity) getActivity())
+                    .openLikedTenantSettingsDialog();
+            setDialogCheckBoxes(dialog);
         });
 
 
@@ -284,6 +286,18 @@ public class TenantLikedFragment extends Fragment {
         ((CheckBox) ad.findViewById(R.id.furnishedCheckBox)).setChecked(listing.getFurnished());
         ((CheckBox) ad.findViewById(R.id.smokerCheckBox)).setChecked(listing.getSmokers());
         ((CheckBox) ad.findViewById(R.id.petsCheckBox)).setChecked(listing.getPets());
+    }
+
+    private void setDialogCheckBoxes(AlertDialog dialog) {
+        ((androidx.appcompat.widget.SwitchCompat) dialog
+                .findViewById(R.id.showPositiveListingsSwitch))
+                .setChecked(positiveListingsParent.getVisibility() == View.VISIBLE);
+        ((androidx.appcompat.widget.SwitchCompat) dialog
+                .findViewById(R.id.showNeutralListingsSwitch))
+                .setChecked(neutralListingsParent.getVisibility() == View.VISIBLE);
+        ((androidx.appcompat.widget.SwitchCompat) dialog
+                .findViewById(R.id.showNegativeListingsSwitch12))
+                .setChecked(negativeListingsParent.getVisibility() == View.VISIBLE);
     }
 
     class TenantLikedAccommodationObject {
