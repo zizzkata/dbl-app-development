@@ -103,9 +103,9 @@ public class TenantLikedFragment extends Fragment {
                 .findViewById(R.id.negativeListingsContainer);
 
         // Remove all previous listing objects
-        //positiveListingsParent.removeAllViews();
+        positiveListingsParent.removeAllViews();
         neutralListingsParent.removeAllViews();
-        //negativeListingsParent.removeAllViews();
+        negativeListingsParent.removeAllViews();
 
         // Add functionality for liked listings settings button
         Button settingsBtn = getView().findViewById(R.id.settingsButton);
