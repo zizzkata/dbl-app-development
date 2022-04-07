@@ -117,7 +117,8 @@ public abstract class Database {
         ArrayList<DocumentSnapshot> accommodations = new ArrayList<>();
         for(DocumentSnapshot rate : likedAccommodations.getDocuments()) {
             //TODO add try/catch
-            accommodations.add(Tasks.await(FirebaseQueries.getAccommodation(rate.getId())));
+            accommodations.add(Tasks.await(FirebaseQueries.getAccommodation(
+                    (String) rate.get("accommodationId"))));
         }
         return accommodations;
     }
