@@ -2,7 +2,6 @@ package com.example.dbl_app_dev.network_communication;
 
 import android.util.Log;
 import com.example.dbl_app_dev.util.AsyncWrapper;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,9 +22,8 @@ public abstract class Authentication {
      * @return
      * @throws Exception
      */
-    public static Task<AuthResult> firebaseLogin(String email, String password) throws Exception {
-        //return AsyncWrapper.wrap(auth.signInWithEmailAndPassword(email, password));
-        return auth.signInWithEmailAndPassword(email, password);
+    public static AuthResult firebaseLogin(String email, String password) throws Exception {
+        return AsyncWrapper.wrap(auth.signInWithEmailAndPassword(email, password));
     }
 
     /**

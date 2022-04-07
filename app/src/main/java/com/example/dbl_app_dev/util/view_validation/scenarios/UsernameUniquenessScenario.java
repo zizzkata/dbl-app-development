@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.dbl_app_dev.network_communication.Authentication;
+import com.example.dbl_app_dev.util.AsyncWrapper;
 
 public final class UsernameUniquenessScenario extends TextViewScenario {
 

@@ -1,38 +1,21 @@
 package com.example.dbl_app_dev.network_communication;
 
 import android.util.Log;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.Transaction;
 import com.google.firebase.firestore.WriteBatch;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.ListResult;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class FirebaseQueries {
-
-    private final static long ONE_MEGABYTE = 1024 * 1024;
     /**
      * firebase db
      */
     private static FirebaseFirestore fireStore = FirebaseFirestore
-            .getInstance(Authentication.getApp());
-
-    private static FirebaseStorage firebaseStorage = FirebaseStorage
             .getInstance(Authentication.getApp());
 
     /**
@@ -40,21 +23,6 @@ public abstract class FirebaseQueries {
      */
     private static CollectionReference users = fireStore.collection("users");
     private static CollectionReference identity = fireStore.collection("identity");
-    private static CollectionReference accommodations = fireStore
-            .collection("accommodations");
-    private static CollectionReference ratedAccommodations = fireStore
-            .collection("rated_accommodations");
-    private static CollectionReference usersAccommodations = fireStore
-            .collection("rated_accommodations_users");
-
-    /**
-     * file collections
-     */
-    private static StorageReference usersImages = firebaseStorage.getReference("users");
-    private static StorageReference panoramicImages = firebaseStorage
-            .getReference("accommodations_360");
-    private static StorageReference staticImages = firebaseStorage
-            .getReference("accommodations_static");
 
     /**
      * Get batch job from Firestore
@@ -63,17 +31,6 @@ public abstract class FirebaseQueries {
      */
     public static WriteBatch getBatch() {
         return fireStore.batch();
-    }
-
-    /**
-     * Returns a transaction encapsulation
-     *
-     * @param function
-     * @param <U>
-     * @return Task<TResult>
-     */
-    public static <U> Task getTransaction(Transaction.Function<U> function) {
-        return fireStore.runTransaction(function);
     }
 
     /**
@@ -149,133 +106,14 @@ public abstract class FirebaseQueries {
     public static Task createNewUser(String username) {
         Log.d("reserveIdentity", "Username: " + username);
         // Fill in empty data
-        Map<String, Object> userFile = new HashMap<>();
+        Map<String, String> userFile = new HashMap<>();
         userFile.put("first_name", "");
         userFile.put("last_name", "");
         userFile.put("age", "");
         userFile.put("gender", "");
         userFile.put("phone_number", "");
         userFile.put("profile_description", "");
-        userFile.put("tenant_mode", true);
-        userFile.put("smoke", false);
-        userFile.put("pets", false);
+        userFile.put("tenant_mode", "true");
         return users.document(username).set(userFile);
-    }
-
-    /**
-     * Push data safely ith a transaction to Firebase database
-     *
-     * @param docReference
-     * @param newData
-     * @return
-     */
-    public static Transaction.Function<Void> pushData(DocumentReference docReference, Map<String
-            , Object> newData) {
-        return new Transaction.Function<Void>() {
-            @Nullable
-            @Override
-            public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
-                DocumentSnapshot snapshot = transaction.get(docReference);
-                transaction.update(docReference, newData);
-                return null;
-            }
-        };
-    }
-
-    public static Task<QuerySnapshot> getAccommodations(int offset) {
-        return accommodations.get();
-    }
-
-    public static Task<DocumentSnapshot> getAccommodation(String id) {
-        return accommodations.document(id).get();
-    }
-
-    /**
-     * Pull image from Firebase Storage.
-     *
-     * @param username
-     * @return
-     */
-    public static Task<byte[]> getUserImage(String username) {
-        return usersImages.child(username + ".jpg").getBytes(ONE_MEGABYTE);
-    }
-
-    /**
-     * @param accommodationId
-     * @return
-     */
-    public static Task<byte[]> getPanoramicImage(String accommodationId) {
-        return panoramicImages.child(accommodationId + ".jpg").getBytes(ONE_MEGABYTE);
-    }
-
-    public static Task<ListResult> getListStaticImages(String accommodationId) {
-        return staticImages.child(accommodationId).listAll();
-    }
-
-    public static Task<byte[]> getReference(StorageReference reference) {
-        return reference.getBytes(ONE_MEGABYTE);
-    }
-
-    /**
-     * @param accommodationId
-     * @param imageBytes
-     * @return
-     */
-    public static UploadTask uploadPanoramicImage(String accommodationId, byte[] imageBytes) {
-        return panoramicImages.child(accommodationId + ".jpg").putBytes(imageBytes);
-    }
-
-    /**
-     * @param lastDocument
-     * @param amount
-     * @return
-     */
-    public static Query getActiveAccommodations(DocumentSnapshot lastDocument, int amount) {
-        return accommodations.startAfter(lastDocument).whereEqualTo("active", true)
-                .limit(amount);
-    }
-
-    public static Query getActiveAccommodations(DocumentSnapshot lastDocument) {
-        return accommodations.startAfter(lastDocument).whereEqualTo("active", true);
-    }
-
-    public static Query getActiveAccommodations() {
-        return accommodations.whereEqualTo("active", true);
-    }
-
-    public static Query getActiveAccommodations(int amount) {
-        return accommodations.whereEqualTo("active", true).limit(amount);
-    }
-
-    public static Query filterByPrice(int min, int max) {
-        return getActiveAccommodations()
-                .whereGreaterThanOrEqualTo("price", min)
-                .whereLessThanOrEqualTo("price", max);
-    }
-
-    public static Query filterByPrice(DocumentSnapshot lastDoc, int min, int max) {
-        return getActiveAccommodations(lastDoc)
-                .whereGreaterThanOrEqualTo("price", min)
-                .whereLessThanOrEqualTo("price", max);
-    }
-
-    public static Task<Void> updateUserInfo(String username, Map<String, Object> data) {
-        return users.document(username).update(data);
-    }
-
-    public static Task<QuerySnapshot> getLikedAccommodationsIds(String username) {
-        return ratedAccommodations.whereEqualTo("ratedTenant", 1)
-                .whereEqualTo("tenantUsername", username)
-                .get();
-    }
-
-    public static Task<Void> rateAccommodation(String accommodationId, String username
-            , boolean rate) {
-        throw new Error("OPA");
-//        Map<String, Object> rating = new HashMap<>();
-//        rating.put("rated", rate ? "positive" : "negative");
-//        rating.put("owner_rating", "neutral");
-//        return ratedAccommodations.document(username).collection("accommodation")
-//                .document(accommodationId).set(rating);
     }
 }

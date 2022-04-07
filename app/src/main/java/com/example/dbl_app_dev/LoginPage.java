@@ -6,15 +6,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.dbl_app_dev.network_communication.Authentication;
-import com.example.dbl_app_dev.network_communication.Database;
 import com.example.dbl_app_dev.store.Store;
-import com.example.dbl_app_dev.util.AsyncWrapper;
 import com.example.dbl_app_dev.util.view_validation.constants.Exceptions;
-import com.google.android.gms.tasks.Tasks;
-import com.google.firebase.auth.AuthResult;
+//import com.example.dbl_app_dev.util.view_validation.scenarios.NetworkLoginErrorScenario;
 
 public class LoginPage extends AppCompatActivity {
 
@@ -43,64 +38,53 @@ public class LoginPage extends AppCompatActivity {
         signUpTxt = findViewById(R.id.signUpTxt);
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(null);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
 
         init();
 
         // Sign Up button leading to RegisterPage
-        signUpTxt.setOnClickListener(view -> {
-            setCredentialsWarning(false);
-            startActivity(new Intent(LoginPage.this, RegisterPage.class));
-            overridePendingTransition(0, 0);
-            finish();
+        signUpTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setCredentialsWarning(false);
+                startActivity(new Intent(LoginPage.this, RegisterPage.class));
+                overridePendingTransition(0, 0);
+            }
         });
 
         // Log in button leading to MainNavigationPage
-        loginBtn.setOnClickListener(view -> {
-            setCredentialsWarning(false); // hide error message
-            String emailString = email.getText().toString();
-            String passwordString = password.getText().toString();
-
-            loginBtn.setEnabled(false);
-
-            if (emailString.equals("") || passwordString.equals("")) {
-                setCredentialsWarning("* Please fill in all fields.", true);
-                return;
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setCredentialsWarning(false); // hide error message
+                login(view);
             }
-
-            AsyncWrapper.wrap(() -> login(emailString, passwordString));
         });
     }
 
-    private void login(String email, String password) {
-        try {
-            AuthResult res = Tasks.await(Authentication.firebaseLogin(email, password));
-            runOnUiThread(() -> {
-                startActivity(new Intent(LoginPage.this, MainNavigationActivity.class));
-                overridePendingTransition(0, 0);
-                loginBtn.setEnabled(true);
-                finish();
-            });
-            Store.getCurrentUser(); // don't get the parameter
-        } catch (
+    private void login(View view) {
+        String emailString = email.getText().toString();
+        String passwordString = password.getText().toString();
 
-        Exception e) {
-            Log.e("ERR", e.getMessage());
-            // String warning =
-            // Exceptions.getWarning(Store.getLastException().getMessage());
-            runOnUiThread(() -> {
-                setCredentialsWarning(Exceptions.getWarning(e.getMessage()), true);
-                loginBtn.setEnabled(true);
-            });
+        if (emailString.equals("") || passwordString.equals("")) {
+            setCredentialsWarning("* Please fill in all fields.", true);
+            return;
+        }
+
+        if (Store.login(emailString, passwordString)) {
+            startActivity(new Intent(LoginPage.this, MainNavigationActivity.class));
+            overridePendingTransition(0, 0);
+        } else {
+            String warning = Exceptions.getWarning(Store.getLastException().getMessage());
+            setCredentialsWarning(warning, true);
         }
     }
 
-    /**
-     * Controls for the warning message field
-     */
+    /** Controls for the warning message field */
     private void setCredentialsWarning(String message, boolean visible) {
         credentialsWarning.setText(message);
         credentialsWarning.setVisibility(visible ? View.VISIBLE : View.GONE);

@@ -56,44 +56,33 @@
                     android:baselineAligned="false"
                     android:orientation="horizontal">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <LinearLayout
                         android:id="@+id/PhotoLayout"
-                        android:layout_width="118dp"
-                        android:layout_height="match_parent">
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="5dp">
 
                         <TextView
                             android:id="@+id/profilePhotoTxt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginBottom="12dp"
                             android:padding="8dp"
                             android:text="@string/profile_photo"
                             android:textAlignment="center"
-                            android:textColor="#616161"
-                            app:layout_constraintBottom_toTopOf="@+id/imageView"
-                            app:layout_constraintStart_toStartOf="parent" />
+                            android:textColor="#616161" />
 
                         <ImageView
                             android:id="@+id/imageView"
-                            android:layout_width="103dp"
-                            android:layout_height="112dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginBottom="4dp"
-                            android:adjustViewBounds="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
                             android:contentDescription="@string/todo"
-                            android:maxWidth="130dp"
-                            android:maxHeight="150dp"
                             android:padding="5dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@+id/profilePhotoTxt"
-                            app:layout_constraintHorizontal_bias="0.363"
-                            app:layout_constraintStart_toStartOf="@+id/profilePhotoTxt"
                             tools:ignore="ImageContrastCheck"
                             tools:src="@tools:sample/avatars" />
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/nameLayout"
