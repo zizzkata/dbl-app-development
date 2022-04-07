@@ -39,7 +39,7 @@ public class LogoutDialogDisplayer extends DialogDisplayer {
         dialog.setButton(dialog.BUTTON_POSITIVE, "Log out",
                 (dialog, which) -> {
                     Toast.makeText(context, "Logged Out", Toast.LENGTH_SHORT).show();
-                    mainNavigationActivity.restartApp();
+                    mainNavigationActivity.logout();
                     dialog.dismiss();
                 });
     }

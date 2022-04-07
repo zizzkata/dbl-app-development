@@ -55,6 +55,7 @@ public class LoginPage extends AppCompatActivity {
             setCredentialsWarning(false);
             startActivity(new Intent(LoginPage.this, RegisterPage.class));
             overridePendingTransition(0, 0);
+            finish();
         });
 
         // Log in button leading to MainNavigationPage
@@ -81,6 +82,7 @@ public class LoginPage extends AppCompatActivity {
                 startActivity(new Intent(LoginPage.this, MainNavigationActivity.class));
                 overridePendingTransition(0, 0);
                 loginBtn.setEnabled(true);
+                finish();
             });
             Store.getCurrentUser(); // dont get the parameter
         } catch (Exception e) {
