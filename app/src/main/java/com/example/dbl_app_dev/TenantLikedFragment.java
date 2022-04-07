@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,10 +22,7 @@ import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.store.objects.AccommodationInfo;
 import com.example.dbl_app_dev.util.AsyncWrapper;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.LinkedList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -124,7 +120,7 @@ public class TenantLikedFragment extends Fragment {
                 likedListings = Store.getCurrentUserLikedAccommodations();
                 getActivity().runOnUiThread(() -> {
                             if (likedListings != null) {
-                                addLikedListings(positiveListingsParent, R.layout.positive_accommodation_object);
+                                addLikedListings();
                                 addAllInfoButtonsFunctionality();
                             }
                         }
@@ -136,9 +132,9 @@ public class TenantLikedFragment extends Fragment {
 
     }
 
-    private void addLikedListings(ConstraintLayout currentListingParent,
-                                  int currentAccommodationLayoutId) {
-        View previousView = currentListingParent; // to remember the previously created view
+    private void addLikedListings() {
+        // Remembers the previously created view
+        View previousView = getCurrentListingParent(likedListings.get(0).getRating());
         ConstraintLayout view; // newly created view
         ConstraintLayout.LayoutParams lp; // LayoutParams for newly created view
         // Layout inflater for adding the new view
@@ -149,20 +145,22 @@ public class TenantLikedFragment extends Fragment {
         int i = 0;
         for (AccommodationInfo listing : likedListings) {
             // Create the new view and add it to the parent
-            view = (ConstraintLayout) vi.inflate(currentAccommodationLayoutId, null);
+            view = (ConstraintLayout) vi.inflate(getCurrentAccommodationLayoutId(listing.getRating()), null);
             view.setId(View.generateViewId());
-            currentListingParent.addView(view, 0,
+            getCurrentListingParent(listing.getRating()).addView(view, 0,
                     new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                             ViewGroup.LayoutParams.WRAP_CONTENT));
 
             // Add the corresponding text
-            ((TextView) view.findViewById(R.id.streetNameTxt)).setText(listing.getAddress());
+            ((TextView) view.findViewById(R.id.streetNameTxt))
+                    .setText(listing.getAddressShort());
             ((TextView) view.findViewById(R.id.apartmentNameTxt)).setText(listing.getHouseNumber());
             ((TextView) view.findViewById(R.id.priceTxt))
                     .setText(listing.getCurrency() + listing.getPrice());
 
             // Set the needed constraints
-            lp = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            lp = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
             if (i == 0) {
                 lp.topToTop = previousView.getId();
             } else {
@@ -176,6 +174,26 @@ public class TenantLikedFragment extends Fragment {
             previousView = view;
             i++;
         }
+    }
+
+    private ConstraintLayout getCurrentListingParent(int rating) {
+        if (rating == 1) {
+            return positiveListingsParent;
+        } else if (rating == 0) {
+            return neutralListingsParent;
+        }
+
+        return negativeListingsParent;
+    }
+
+    private int getCurrentAccommodationLayoutId(int rating) {
+        if (rating == 1) {
+            return R.layout.positive_accommodation_object;
+        } else if (rating == 0) {
+            return R.layout.neutral_accommodation_object;
+        }
+
+        return R.layout.negative_accommodation_object;
     }
 
     private void addAllInfoButtonsFunctionality() {
@@ -197,56 +215,60 @@ public class TenantLikedFragment extends Fragment {
 
     private void setDialogInfo(AlertDialog ad, AccommodationInfo listing) {
         // TODO
-        ((TextView) ad.findViewById(R.id.landlordNameTxt)).setText("First" + "Name");
-        ((TextView) ad.findViewById(R.id.landlordEmailTxt)).setText("myEmail");
-        ((TextView) ad.findViewById(R.id.phoneNumberTxt)).setText("0000000000");
+        ((TextView) ad.findViewById(R.id.landlordNameTxt)).setText("Georgi" + " " + "Georgiev");
+        ((TextView) ad.findViewById(R.id.landlordEmailTxt)).setText("gosho@gmail.com");
+        ((TextView) ad.findViewById(R.id.phoneNumberTxt)).setText("0123456789");
 
         AsyncWrapper.wrap(() -> {
             try {
                 Bitmap image = listing.getPhotos().get(0);
                 getActivity().runOnUiThread(() -> {
                     ((TextView) ad.findViewById(R.id.normalImageCountText))
-                            .setText(listing.getPhotos().size());
-                            ((ImageView) ad.findViewById(R.id.normalImage))
-                                    .setImageBitmap(image);
-                        }
-                );
+                            //.setText(listing.getPhotos().size());
+                            .setText("3");
+                    ((ImageView) ad.findViewById(R.id.normalImage))
+                            .setImageBitmap(image);
+                });
             } catch (Exception e) {
                 getActivity().runOnUiThread(() ->
-                        {
-                            ((TextView) ad.findViewById(R.id.normalImageCountText))
-                                    .setText("0");
-                            ((ImageView) ad.findViewById(R.id.normalImage))
-                                    .setImageDrawable(getResources()
-                                            .getDrawable(R.drawable.ic_buildings_filled));
-                        }
-                );
+                {
+                    ((TextView) ad.findViewById(R.id.normalImageCountText))
+                            .setText("0");
+                    ((ImageView) ad.findViewById(R.id.normalImage))
+                            .setImageDrawable(getResources()
+                                    .getDrawable(R.drawable.ic_buildings_filled));
+                });
             }
         });
 
         AsyncWrapper.wrap(() -> {
             try {
                 Bitmap image = listing.getPhotoPanoramic();
-                getActivity().runOnUiThread(() ->
-                        ((ImageView) ad.findViewById(R.id.panoramaImage))
-                                .setImageBitmap(image)
-                );
+                getActivity().runOnUiThread(() -> {
+                    ((TextView) ad.findViewById(R.id.panoramaImageCountText))
+                            .setText("1");
+                    ((ImageView) ad.findViewById(R.id.panoramaImage))
+                            .setImageBitmap(image);
+                });
             } catch (Exception e) {
-                getActivity().runOnUiThread(() ->
-                        ((ImageView) ad.findViewById(R.id.panoramaImage))
-                                .setImageDrawable(getResources()
-                                        .getDrawable(R.drawable.ic_buildings_filled)));
-
+                getActivity().runOnUiThread(() -> {
+                    ((TextView) ad.findViewById(R.id.panoramaImageCountText))
+                            .setText("1");
+                    ((ImageView) ad.findViewById(R.id.panoramaImage))
+                            .setImageDrawable(getResources()
+                                    .getDrawable(R.drawable.ic_buildings_filled));
+                });
             }
         });
 
-        ((TextView) ad.findViewById(R.id.addressTxt)).setText(listing.getAddress());
+        ((TextView) ad.findViewById(R.id.addressTxt)).setText(listing.getAddressShort());
         ((TextView) ad.findViewById(R.id.apartmentNameText)).setText(listing.getHouseNumber());
         ((TextView) ad.findViewById(R.id.floorNameText)).setText(listing.getFloor());
         ((TextView) ad.findViewById(R.id.cityTxt)).setText(listing.getCity());
         ((TextView) ad.findViewById(R.id.postcodeTxt)).setText(listing.getPostcode());
 
-        ((TextView) ad.findViewById(R.id.priceTxt)).setText(listing.getCurrency() + listing.getPrice());
+        ((TextView) ad.findViewById(R.id.priceTxt))
+                .setText(listing.getCurrency() + listing.getPrice());
         ((TextView) ad.findViewById(R.id.minimumRentTxt)).setText(listing.getMinimumPeriod());
         ((TextView) ad.findViewById(R.id.startDateEditTxt)).setText(listing.getAvailableFrom());
         ((TextView) ad.findViewById(R.id.endDateEditTxt)).setText(listing.getAvailableUntil());

@@ -122,6 +122,10 @@ public class AccommodationInfo {
         return address;
     }
 
+    public String getAddressShort() {
+        return address.substring( 0, address.indexOf(","));
+    }
+
     public String getAccommodationId() {
         return accommodationId;
     }
@@ -131,7 +135,7 @@ public class AccommodationInfo {
     }
 
     public String getCity() {
-        return floor;
+        return city;
     }
 
     public String getHouseNumber() {
@@ -143,6 +147,8 @@ public class AccommodationInfo {
     }
 
     public String getCurrency() {
+        if (currency.equals("EUR")) return "€";
+
         return currency;
     }
 
@@ -171,6 +177,11 @@ public class AccommodationInfo {
     public String getAvailableFrom() { return availableFrom; }
 
     public String getAvailableUntil() { return availableUntil; }
+
+    public int getPhotosSize() { return photos.size(); }
+
+    // Positive = 1; Neutral = 0; Negative = -1;
+    public int getRating() { return 0;}
 
     public void rateAccommodation(String username, boolean rate) throws Exception {
         Database.rateAccommodation(accommodationId, username, rate);
