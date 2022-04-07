@@ -169,7 +169,8 @@ public class TenantLikedFragment extends Fragment {
             view.setLayoutParams(lp);
 
             // Remember the view
-            likedObjects.add(new TenantLikedAccommodationObject(view, listing, rating.NEUTRAL));
+            likedObjects
+                    .add(new TenantLikedAccommodationObject(view, listing, listing.getRating()));
 
             previousView = view;
             i++;
@@ -286,10 +287,14 @@ public class TenantLikedFragment extends Fragment {
         rating rating;
 
         TenantLikedAccommodationObject(View compactAccomm,
-                                       AccommodationInfo accommodationObj, rating rating) {
+                                       AccommodationInfo accommodationObj, int _r) {
             this.compactView = compactAccomm;
             this.accommodationInfo = accommodationObj;
-            this.rating = rating;
+
+            rating r = rating.NEGATIVE;
+            if (_r == 1) r = rating.POSITIVE;
+            if (_r == 0) r = rating.NEUTRAL;
+            this.rating = r;
         }
     }
 }
