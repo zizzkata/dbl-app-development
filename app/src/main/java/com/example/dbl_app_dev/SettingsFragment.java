@@ -131,9 +131,17 @@ public class SettingsFragment extends Fragment {
         // add all validators to list
         //validators.add(emailValidator);
         //validators.add(new UsernameUniquenessValidator(username, usernameWarning));
-        validators.add(currPassValidator);
-        validators.add(passValidator);
-        validators.add(repPassValidator);
+        if (currentPassword.getText().toString().length() > 0) {
+            validators.add(currPassValidator);
+        }
+
+        if (password.getText().toString().length() > 0) {
+            validators.add(passValidator);
+        }
+
+        if (repeatPassword.getText().toString().length() > 0) {
+            validators.add(repPassValidator);
+        }
 
         // run validate on all validators
         boolean areValidatorsValid = true;
@@ -217,7 +225,7 @@ public class SettingsFragment extends Fragment {
             public void onClick(View view) {
                 if (!areChangesValid()) {
                     Context context = getActivity().getApplicationContext();
-                    String text = "shit";
+                    String text = "Not saved";
                     int duration = Toast.LENGTH_SHORT;
 
                     Toast toast = Toast.makeText(context, text, duration);
@@ -226,14 +234,16 @@ public class SettingsFragment extends Fragment {
                     return;
                 }
 
+                boolean saved = false;
                 try {
-                    updateUserSettings();
+                    saved = updateUserSettings();
                 } catch (Exception e) {
 
                 }
 
+                makeWarningsInvisible();
                 Context context = getActivity().getApplicationContext();
-                String text = "ok";
+                String text = saved ? "Saved" : "Not saved";
                 int duration = Toast.LENGTH_SHORT;
 
                 Toast toast = Toast.makeText(context, text, duration);
@@ -242,8 +252,17 @@ public class SettingsFragment extends Fragment {
         });
     }
 
-    private void updateUserSettings() {
-        updateUserPassword();
+    private boolean updateUserSettings() {
+        boolean saved = false;
+
+        if (currentPassword.getText().toString().length() > 0 &&
+                password.getText().toString().length() > 0 &&
+                repeatPassword.getText().toString().length() > 0) {
+            updateUserPassword();
+            saved = true;
+        }
+
+        return saved;
     }
 
     private void updateUserPassword() {
