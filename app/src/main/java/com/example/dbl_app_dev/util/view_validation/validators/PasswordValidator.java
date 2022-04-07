@@ -7,7 +7,7 @@ import com.example.dbl_app_dev.util.view_validation.scenarios.TextPatternScenari
 
 import java.util.regex.Pattern;
 
-public class PasswordValidator extends TextPatternValidator {
+public final class PasswordValidator extends TextPatternValidator {
     public PasswordValidator(View toValidate, TextView warning) {
         super(toValidate, warning);
 

@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 public final class TextMatchingScenario extends TextViewScenario {
-    private TextView textView;
+    TextView textView;
 
     public TextMatchingScenario(TextView textView, String warning) {
         super(warning);

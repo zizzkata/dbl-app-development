@@ -6,7 +6,7 @@ import android.widget.TextView;
 import java.util.regex.Pattern;
 
 public final class TextPatternScenario extends TextViewScenario {
-    private Pattern pattern;
+    Pattern pattern;
 
     public TextPatternScenario(Pattern pattern, String warning) {
         super(warning);

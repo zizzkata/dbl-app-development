@@ -98,4 +98,3 @@
         app:layout_constraintTop_toTopOf="@id/contentContainer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
