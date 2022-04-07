@@ -134,7 +134,7 @@ public class TenantLikedFragment extends Fragment {
 
     private void addLikedListings() {
         // Remembers the previously created view
-        View previousView = getCurrentListingParent(likedListings.get(0).getRating());
+        View previousView = null;
         ConstraintLayout view; // newly created view
         ConstraintLayout.LayoutParams lp; // LayoutParams for newly created view
         // Layout inflater for adding the new view
@@ -144,8 +144,11 @@ public class TenantLikedFragment extends Fragment {
         // Create the listings
         int i = 0;
         for (AccommodationInfo listing : likedListings) {
+            if (i == 0) previousView = getCurrentListingParent(likedListings.get(0).getRating());
+
             // Create the new view and add it to the parent
-            view = (ConstraintLayout) vi.inflate(getCurrentAccommodationLayoutId(listing.getRating()), null);
+            view = (ConstraintLayout) vi
+                    .inflate(getCurrentAccommodationLayoutId(listing.getRating()), null);
             view.setId(View.generateViewId());
             getCurrentListingParent(listing.getRating()).addView(view, 0,
                     new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -201,13 +204,15 @@ public class TenantLikedFragment extends Fragment {
         for (TenantLikedAccommodationObject a : likedObjects) {
             if (a.rating == rating.POSITIVE || a.rating == rating.NEUTRAL) {
                 a.compactView.findViewById(R.id.actionIcon).setOnClickListener(view1 -> {
-                    AlertDialog d = ((MainNavigationActivity) getActivity()).viewAccommodationDialog(a.compactView);
+                    AlertDialog d = ((MainNavigationActivity) getActivity())
+                            .viewAccommodationDialog(a.compactView);
                     getActivity().runOnUiThread(() -> setDialogInfo(d, a.accommodationInfo));
                 });
             } else if (a.rating == rating.NEGATIVE) {
                 // TODO remove liking from DB
                 a.compactView.findViewById(R.id.actionIcon).setOnClickListener(view1 -> {
-                    ((MainNavigationActivity) getActivity()).removeAccommodationDialog(a.compactView);
+                    ((MainNavigationActivity) getActivity())
+                            .removeAccommodationDialog(a.compactView);
                 });
             }
 
