@@ -3,8 +3,12 @@ package com.example.dbl_app_dev;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -13,8 +17,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dbl_app_dev.network_communication.Authentication;
-import com.example.dbl_app_dev.util.AsyncWrapper;
-import com.example.dbl_app_dev.util.adapters.TextWatcherAdapter;
 import com.example.dbl_app_dev.util.view_validation.constants.Exceptions;
 import com.example.dbl_app_dev.util.view_validation.validators.EmailValidator;
 import com.example.dbl_app_dev.util.view_validation.validators.PasswordValidator;
@@ -43,6 +45,21 @@ public class RegisterPage extends AppCompatActivity {
     private ViewValidator userValidator;
     private ViewValidator passValidator;
     private ViewValidator repPassValidator;
+
+    // adapter class for TextWatcher
+    private abstract class TextWatcherAdapter implements TextWatcher {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+        }
+    }
 
     /**
      * initialise text boxes
@@ -130,29 +147,22 @@ public class RegisterPage extends AppCompatActivity {
                 String usernameString = username.getText().toString();
                 String passwordString = password.getText().toString();
 
-                AsyncWrapper.wrap(() -> {
-                    try {
-                        Log.d("isUsernameUnique", "unique");
-                        Authentication.firebaseSignup(emailString, passwordString, usernameString);
-                        runOnUiThread(() -> {
-                            startActivity(new Intent(RegisterPage.this,
-                                    LoginPage.class));
-                            finish();
-                        });
-                    } catch (Exception e) {
-                        Log.e("Signup", e.getMessage());
-                        runOnUiThread(() -> {
-                            Context context = getApplicationContext();
-                            String text = Exceptions.getWarning(e.getMessage());
-                            int duration = Toast.LENGTH_SHORT;
+                try {
+                    Log.d("isUsernameUnique", "unique");
+                    Authentication.firebaseSignup(emailString, passwordString, usernameString);
+                } catch (Exception e) {
+                    Log.e("Signup", e.getMessage());
+                    Context context = getApplicationContext();
+                    String text = Exceptions.getWarning(e.getMessage());
+                    int duration = Toast.LENGTH_SHORT;
 
-                            Toast toast = Toast.makeText(context, text, duration);
-                            toast.show();
-                        });
-                    }
-                });
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                    return;
+                }
 
-
+                startActivity(new Intent(com.example.dbl_app_dev.RegisterPage.this,
+                        LoginPage.class));
             }
         });
 
@@ -163,7 +173,6 @@ public class RegisterPage extends AppCompatActivity {
                 makeWarningsInvisible();
                 startActivity(new Intent(RegisterPage.this,
                         LoginPage.class));
-                finish();
             }
         });
     }

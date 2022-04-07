@@ -97,14 +97,4 @@ public class AsyncWrapper {
         }
         return result;
     }
-
-    /**
-     * Async wrapper: Fire and forget
-     * @param task call to execute async.
-     */
-    public static void wrap(Runnable task) {
-        CompletableFuture.runAsync(() -> {
-           task.run();
-        });
-    }
 }

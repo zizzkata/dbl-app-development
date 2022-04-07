@@ -8,6 +8,10 @@ public interface SwipeHandler {
     default void swipedDown() {
     }
 
+    ;
+
     default void swipedUp() {
     }
+
+    ;
 }
