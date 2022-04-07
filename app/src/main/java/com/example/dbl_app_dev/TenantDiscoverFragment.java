@@ -131,6 +131,9 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         arBtn.setOnClickListener(v -> {
             imageGalleryViewPager.setAdapter(verticalViewPagerAdapter);
         });
+        arBtn.setOnClickListener(v -> {
+            imageGalleryViewPager.setAdapter(verticalViewPagerAdapter);
+        });
 
         Button filtersBtn = view.findViewById(R.id.filtersButton);
         filtersBtn.setOnClickListener(v -> ((MainNavigationActivity) requireActivity()).openFilterDialog());
@@ -182,7 +185,12 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     /**
      * Displays the information stored in currentAccommodationInfo
      */
-    private void displayCard() {
+    private void displayCard(ArrayList<TextView> cardTextViews, VerticalViewPager imageGalleryViewPager) {
+        ArrayList<String> cardStrings = currentAccommodationInfo.getCardFormattedText();
+        assert (cardStrings.size() == cardTextViews.size()) : "Incorrect size of accommodation info strings";
+        for (int i = 0; i < cardStrings.size(); i++) {
+            cardTextViews.get(i).setText(cardStrings.get(i));
+        }
         verticalViewPagerAdapter = new ImageViewPagerAdapter(getChildFragmentManager(), currentAccommodationInfo.getPhotos(), currentAccommodationInfo.getPhotoPanoramic());
         imageGalleryViewPager.setAdapter(verticalViewPagerAdapter);
     }
