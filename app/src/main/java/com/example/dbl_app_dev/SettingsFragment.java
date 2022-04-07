@@ -1,18 +1,23 @@
 package com.example.dbl_app_dev;
 
+import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -187,6 +192,15 @@ public class SettingsFragment extends Fragment {
         init();
         makeWarningsInvisible();
 
+        TextView addImage = getView().findViewById(R.id.addImageBtn);
+        addImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, 3);
+            }
+        });
+
         // Logout button leading to LoginPage
         TextView logoutButton = getView().findViewById(R.id.logoutBtn);
         logoutButton.setOnClickListener(new View.OnClickListener() {
@@ -245,5 +259,15 @@ public class SettingsFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            Uri selectedImage = data.getData();
+            ImageView imageView = getView().findViewById(R.id.imageView);
+            imageView.setImageURI(selectedImage);
+        }
     }
 }
