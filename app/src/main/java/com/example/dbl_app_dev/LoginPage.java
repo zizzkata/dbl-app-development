@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.dbl_app_dev.network_communication.Authentication;
 import com.example.dbl_app_dev.network_communication.Database;
@@ -42,10 +43,9 @@ public class LoginPage extends AppCompatActivity {
         signUpTxt = findViewById(R.id.signUpTxt);
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(null);
         setContentView(R.layout.activity_login_page);
 
         init();
@@ -55,6 +55,7 @@ public class LoginPage extends AppCompatActivity {
             setCredentialsWarning(false);
             startActivity(new Intent(LoginPage.this, RegisterPage.class));
             overridePendingTransition(0, 0);
+            finish();
         });
 
         // Log in button leading to MainNavigationPage
@@ -76,16 +77,20 @@ public class LoginPage extends AppCompatActivity {
 
     private void login(String email, String password) {
         try {
-            AuthResult res =  Tasks.await(Authentication.firebaseLogin(email, password));
+            AuthResult res = Tasks.await(Authentication.firebaseLogin(email, password));
             runOnUiThread(() -> {
                 startActivity(new Intent(LoginPage.this, MainNavigationActivity.class));
                 overridePendingTransition(0, 0);
                 loginBtn.setEnabled(true);
+                finish();
             });
-            Store.getCurrentUser(); // dont get the parameter
-        } catch (Exception e) {
+            Store.getCurrentUser(); // don't get the parameter
+        } catch (
+
+        Exception e) {
             Log.e("ERR", e.getMessage());
-            //String warning = Exceptions.getWarning(Store.getLastException().getMessage());
+            // String warning =
+            // Exceptions.getWarning(Store.getLastException().getMessage());
             runOnUiThread(() -> {
                 setCredentialsWarning(Exceptions.getWarning(e.getMessage()), true);
                 loginBtn.setEnabled(true);
@@ -93,7 +98,9 @@ public class LoginPage extends AppCompatActivity {
         }
     }
 
-    /** Controls for the warning message field */
+    /**
+     * Controls for the warning message field
+     */
     private void setCredentialsWarning(String message, boolean visible) {
         credentialsWarning.setText(message);
         credentialsWarning.setVisibility(visible ? View.VISIBLE : View.GONE);

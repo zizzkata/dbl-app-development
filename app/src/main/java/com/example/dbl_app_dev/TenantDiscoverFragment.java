@@ -1,9 +1,7 @@
 package com.example.dbl_app_dev;
 
 import android.annotation.SuppressLint;
-import android.content.res.AssetManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -20,12 +18,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.store.objects.AccommodationInfo;
+import com.example.dbl_app_dev.store.objects.User;
 import com.example.dbl_app_dev.util.AsyncWrapper;
 
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 
 /**
  * Discovery page fragment, if the user is in "Tenant" mode
@@ -78,7 +74,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tenant_discover, container, false);
     }
@@ -135,6 +131,9 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         arBtn.setOnClickListener(v -> {
             imageGalleryViewPager.setAdapter(verticalViewPagerAdapter);
         });
+        arBtn.setOnClickListener(v -> {
+            imageGalleryViewPager.setAdapter(verticalViewPagerAdapter);
+        });
 
         Button filtersBtn = view.findViewById(R.id.filtersButton);
         filtersBtn.setOnClickListener(v -> ((MainNavigationActivity) requireActivity()).openFilterDialog());
@@ -142,9 +141,19 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         // makes sure that the a card is not discarded if it is not rated
         if (currentAccommodationInfo == null) {
             nextCard();
-        } else {
-            displayCard();
         }
+
+        // open pop-up
+        AsyncWrapper.wrap(() -> {
+            try {
+                User user = Store.getCurrentUser();
+                if (user.getFirstName().length() == 0 || user.getLastName().length() == 0
+                        || user.getDescription().length() == 0)
+                    getActivity().runOnUiThread(() -> ((MainNavigationActivity) getActivity()).openSettingsDialog());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     /**
@@ -172,23 +181,13 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     }
 
     /**
-     * Displays the information stored in currentAccommodationInfo
-     */
-    private void displayCard() {
-        verticalViewPagerAdapter = new ImageViewPagerAdapter(getChildFragmentManager(), currentAccommodationInfo.getPhotos(), currentAccommodationInfo.getPhotoPanoramic());
-        imageGalleryViewPager.setAdapter(verticalViewPagerAdapter);
-    }
-
-
-
-    /**
      * POST's the positive rating given to the viewed accommodation to the backend
      */
     @Override
     public void swipedRight() {
-//        if (dataModels.size() > 0) {
-//            Log.d("extra_debug", "Positive Rating");
-//        }
+        // if (dataModels.size() > 0) {
+        // Log.d("extra_debug", "Positive Rating");
+        // }
     }
 
     /**
@@ -196,9 +195,9 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
      */
     @Override
     public void swipedLeft() {
-//        if (dataModels.size() > 0) {
-//            Log.d("extra_debug", "Negative Rating");
-//        }
+        // if (dataModels.size() > 0) {
+        // Log.d("extra_debug", "Negative Rating");
+        // }
     }
 
     private void bindData(AccommodationInfo data) {

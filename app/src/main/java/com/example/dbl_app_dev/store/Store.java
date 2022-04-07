@@ -27,7 +27,6 @@ public final class Store {
 
     private static Query discoveryFilter;
 
-
     private Store() throws Exception {
         throw new Exception("Cannot initialize this class.");
     }
@@ -75,15 +74,12 @@ public final class Store {
     public static void pullMoreAccommodations(DocumentSnapshot lastAccommodation) throws Exception {
         if (discoveryFilter == null) {
             ArrayList<AccommodationInfo> newData = transformDocuments(
-                    Database.getActiveAccommodations(lastAccommodation
-                            , MAX_ACCOMMODATIONS_PER_PULL));
+                    Database.getActiveAccommodations(lastAccommodation, MAX_ACCOMMODATIONS_PER_PULL));
         } else {
             ArrayList<AccommodationInfo> newData = transformDocuments(
-                    Database.filterQuery(discoveryFilter
-                            , lastAccommodation
-                            , MAX_ACCOMMODATIONS_PER_PULL).getDocuments());
+                    Database.filterQuery(discoveryFilter, lastAccommodation, MAX_ACCOMMODATIONS_PER_PULL)
+                            .getDocuments());
         }
-
     }
 
     public static ArrayList<AccommodationInfo> getCurrentUserLikedAccommodations()
@@ -102,4 +98,10 @@ public final class Store {
         }
         return returnArray;
     }
+
+    public static void killStore() {
+        currentUser = null;
+        discoveryAccommodations = new ArrayList<>();
+    }
+
 }
