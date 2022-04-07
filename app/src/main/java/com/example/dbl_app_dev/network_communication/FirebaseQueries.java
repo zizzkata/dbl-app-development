@@ -264,16 +264,18 @@ public abstract class FirebaseQueries {
     }
 
     public static Task<QuerySnapshot> getLikedAccommodationsIds(String username) {
-        return ratedAccommodations.document(username).collection("accommodations")
-                .whereEqualTo("rated", "positive").get();
+        return ratedAccommodations.whereEqualTo("ratedTenant", 1)
+                .whereEqualTo("tenantUsername", username)
+                .get();
     }
 
     public static Task<Void> rateAccommodation(String accommodationId, String username
             , boolean rate) {
-        Map<String, Object> rating = new HashMap<>();
-        rating.put("rated", rate ? "positive" : "negative");
-        rating.put("owner_rating", "neutral");
-        return ratedAccommodations.document(username).collection("accommodation")
-                .document(accommodationId).set(rating);
+        throw new Error("OPA");
+//        Map<String, Object> rating = new HashMap<>();
+//        rating.put("rated", rate ? "positive" : "negative");
+//        rating.put("owner_rating", "neutral");
+//        return ratedAccommodations.document(username).collection("accommodation")
+//                .document(accommodationId).set(rating);
     }
 }
