@@ -268,7 +268,7 @@ public abstract class FirebaseQueries {
                 .whereEqualTo("rated", "positive").get();
     }
 
-    public static Task<Void> createrateAccommodation(String accommodationId, String username
+    public static Task<Void> rateAccommodation(String accommodationId, String username
             , boolean rate) {
         Map<String, Object> rating = new HashMap<>();
         rating.put("rated", rate ? "positive" : "negative");
