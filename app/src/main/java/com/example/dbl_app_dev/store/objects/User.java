@@ -176,8 +176,6 @@ public class User {
         this.hasPets = (Boolean) snapshot.get("pets");
     }
 
-    public
-
     private Map<String, Object> transformUser() {
         Map<String, Object> transformedData = new HashMap<>();
         transformedData.put("first_name", this.firstName);
