@@ -1,14 +1,9 @@
 package com.example.dbl_app_dev;
 
-
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,9 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dbl_app_dev.network_communication.Authentication;
 import com.example.dbl_app_dev.util.adapters.TextWatcherAdapter;
+
+import com.example.dbl_app_dev.util.AsyncWrapper;
 import com.example.dbl_app_dev.util.view_validation.constants.Exceptions;
 import com.example.dbl_app_dev.util.view_validation.validators.*;
-
 
 import java.util.ArrayList;
 
@@ -116,7 +112,7 @@ public class RegisterPage extends AppCompatActivity {
         init();
         makeWarningsInvisible();
 
-        //Log in button leading to LoginPage
+        // Log in button leading to LoginPage
 
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,22 +125,27 @@ public class RegisterPage extends AppCompatActivity {
                 String usernameString = username.getText().toString();
                 String passwordString = password.getText().toString();
 
-                try {
-                    Log.d("isUsernameUnique", "unique");
-                    Authentication.firebaseSignup(emailString, passwordString, usernameString);
-                } catch (Exception e) {
-                    Log.e("Signup", e.getMessage());
-                    Context context = getApplicationContext();
-                    String text = Exceptions.getWarning(e.getMessage());
-                    int duration = Toast.LENGTH_SHORT;
+                AsyncWrapper.wrap(() -> {
+                    try {
+                        Log.d("isUsernameUnique", "unique");
+                        Authentication.firebaseSignup(emailString, passwordString, usernameString);
+                        runOnUiThread(() -> {
+                            startActivity(new Intent(RegisterPage.this,
+                                    LoginPage.class));
+                            finish();
+                        });
+                    } catch (Exception e) {
+                        Log.e("Signup", e.getMessage());
+                        runOnUiThread(() -> {
+                            Context context = getApplicationContext();
+                            String text = Exceptions.getWarning(e.getMessage());
+                            int duration = Toast.LENGTH_SHORT;
 
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                    return;
-                }
-
-                startActivity(new Intent(com.example.dbl_app_dev.RegisterPage.this,
-                        LoginPage.class));
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
+                        });
+                    }
+                });
             }
         });
 
@@ -155,6 +156,7 @@ public class RegisterPage extends AppCompatActivity {
                 makeWarningsInvisible();
                 startActivity(new Intent(RegisterPage.this,
                         LoginPage.class));
+                finish();
             }
         });
     }

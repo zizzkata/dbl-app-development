@@ -6,12 +6,19 @@ import static android.content.ContentValues.TAG;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.provider.MediaStore;
+import static android.content.ContentValues.TAG;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import android.widget.CheckBox;
+
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,12 +29,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+
 import com.example.dbl_app_dev.util.view_validation.validators.*;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.example.dbl_app_dev.util.adapters.TextWatcherAdapter;
+
+import com.example.dbl_app_dev.store.Store;
+import com.example.dbl_app_dev.store.objects.User;
+import com.example.dbl_app_dev.util.AsyncWrapper;
+import com.example.dbl_app_dev.util.Tools;
+import com.example.dbl_app_dev.util.adapters.TextWatcherAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
+
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+
+import java.io.InputStream;
 
 import java.util.ArrayList;
 
@@ -38,14 +57,31 @@ import java.util.ArrayList;
  */
 public class SettingsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    // text boxes
+    private EditText email;
+    private TextView emailWarning;
+    private EditText username;
+    private TextView usernameWarning;
+    private EditText currentPassword;
+    private TextView currentPasswordWarning;
+    private EditText password;
+    private TextView passwordWarning;
+    private EditText repeatPassword;
+    private TextView repeatPasswordWarning;
+    private EditText firstName;
+    private EditText lastName;
+    private EditText phoneNumber;
+    private EditText description;
+    private CheckBox smokes;
+    private CheckBox hasPets;
+    private ImageView profilePic;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    // all used validators
+    private ViewValidator emailValidator;
+    private ViewValidator userValidator;
+    private ViewValidator currPassValidator;
+    private ViewValidator passValidator;
+    private ViewValidator repPassValidator;
 
     // text boxes
     private EditText email;
@@ -72,9 +108,12 @@ public class SettingsFragment extends Fragment {
 
     private void init() {
         // get views by id
-//        email = getView().findViewById(R.id.editEmailBox);
+
+        email = getView().findViewById(R.id.editTextTextEmailAddress);
+        //email.setEnabled(false);
 //        emailWarning = getView().findViewById(R.id.invalidEmail);
-//        username = getView().findViewById(R.id.editUsernameBox);
+        username = getView().findViewById(R.id.usernameBox);
+        //username.setEnabled(false);
 //        usernameWarning = getView().findViewById(R.id.invalidUsername);
         currentPassword = getView().findViewById(R.id.currentPasswordBox);
         currentPasswordWarning = getView().findViewById(R.id.invalidCurrentPassword);
@@ -82,6 +121,14 @@ public class SettingsFragment extends Fragment {
         passwordWarning = getView().findViewById(R.id.invalidPassword);
         repeatPassword = getView().findViewById(R.id.ConfirmNewPasswordBox);
         repeatPasswordWarning = getView().findViewById(R.id.invalidRepeatPassword);
+
+        firstName = getView().findViewById(R.id.firstNameBox);
+        lastName = getView().findViewById(R.id.lastNameBox);
+        profilePic = getView().findViewById(R.id.imageView);
+        phoneNumber = getView().findViewById(R.id.changePhoneBox);
+        description = getView().findViewById(R.id.descriptionBox);
+        smokes = getView().findViewById(R.id.smokingCheckBox);
+        hasPets = getView().findViewById(R.id.havePetsCheckBox);
 
         // instantiate validators
 //        emailValidator = new EmailValidator(email, emailWarning);
@@ -156,20 +203,10 @@ public class SettingsFragment extends Fragment {
         return areValidatorsValid;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment thirdFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SettingsFragment newInstance(String param1, String param2) {
+
+    public static SettingsFragment newInstance() {
         SettingsFragment fragment = new SettingsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -177,10 +214,6 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -212,11 +245,41 @@ public class SettingsFragment extends Fragment {
         // Logout button leading to LoginPage
         TextView logoutButton = getView().findViewById(R.id.logoutBtn);
         logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), LoginPage.class));
+//         makeWarningsInvisible();
+        AsyncWrapper.wrap(() -> {
+            User user;
+            try {
+                user = Store.getCurrentUser();
+                getActivity().runOnUiThread(() -> bindUserData(user));
+            } catch (Exception e) {
+                Log.e("OPS", "OPS");
+                e.printStackTrace();
+                // TODO fail on username
+                return;
+            }
+
+            Bitmap profilePic = user.getProfilePic();
+            try {
+                if (profilePic == null) {
+                    InputStream stream = getContext()
+                            .getAssets().open("default-user-image.png");
+                    profilePic = BitmapFactory.decodeStream(stream);
+                }
+                Bitmap finalProfilePic = profilePic; // necessary for java lint to run ;/
+                getActivity().runOnUiThread(() -> bindUserImage(finalProfilePic));
+            } catch (Exception e) { // never happens
+                Log.e("FATAL", e.getMessage());
+                e.printStackTrace();
             }
         });
+
+        // Sign Up button leading to RegisterPage
+        TextView logOutBtn = getView().findViewById(R.id.logoutBtn);
+        logOutBtn.setOnClickListener(view1 -> {
+            ((MainNavigationActivity) getActivity()).logoutDialog();
+        });
+
+        
 
         // Save button used to update current user's personal info and password
         TextView saveButton = getView().findViewById(R.id.saveBtn);
@@ -288,5 +351,58 @@ public class SettingsFragment extends Fragment {
             ImageView imageView = getView().findViewById(R.id.imageView);
             imageView.setImageURI(selectedImage);
         }
+    }
+
+    private void bindUserData(User user) {
+        email.setText(user.getEmail());
+        username.setText(user.getUsername());
+        firstName.setText(user.getFirstName());
+        lastName.setText(user.getLastName());
+        phoneNumber.setText(user.getPhoneNumber());
+        description.setText(user.getDescription());
+        smokes.setChecked(user.smokes());
+        hasPets.setChecked(user.hasPets());
+        // TODO save tenant mode
+    }
+
+    private void bindUserImage(Bitmap image) {
+        profilePic.setImageBitmap(Tools.getResizedBitmap(image, 250));
+    }
+
+    // TODO password
+    private void updateUserSettings() {
+        //updateUserPassword();
+        try {
+            setNewInformation();
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    private void setNewInformation() throws Exception {
+        User currentUser = Store.getCurrentUser();
+        currentUser.setFirstName(firstName.getText().toString());
+        currentUser.setLastName(lastName.getText().toString());
+        currentUser.setPhoneNumber(phoneNumber.getText().toString());
+        currentUser.setDescription(description.getText().toString());
+        currentUser.setSmokes(smokes.isChecked());
+        currentUser.setHasPets(hasPets.isChecked());
+        currentUser.updateUser();
+    }
+
+    private void updateUserPassword() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String newPassword = password.getText().toString();
+
+        user.updatePassword(newPassword)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "User password updated.");
+                        }
+                    }
+                });
     }
 }
