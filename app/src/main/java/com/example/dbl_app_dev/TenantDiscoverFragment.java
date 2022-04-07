@@ -188,7 +188,6 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     }
 
 
-
     /**
      * POST's the positive rating given to the viewed accommodation to the backend
      */

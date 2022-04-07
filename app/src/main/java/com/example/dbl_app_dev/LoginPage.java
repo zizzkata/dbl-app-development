@@ -6,7 +6,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.dbl_app_dev.network_communication.Authentication;
 import com.example.dbl_app_dev.network_communication.Database;
 import com.example.dbl_app_dev.store.Store;
@@ -77,7 +79,7 @@ public class LoginPage extends AppCompatActivity {
 
     private void login(String email, String password) {
         try {
-            AuthResult res =  Tasks.await(Authentication.firebaseLogin(email, password));
+            AuthResult res = Tasks.await(Authentication.firebaseLogin(email, password));
             runOnUiThread(() -> {
                 startActivity(new Intent(LoginPage.this, MainNavigationActivity.class));
                 overridePendingTransition(0, 0);
@@ -95,7 +97,9 @@ public class LoginPage extends AppCompatActivity {
         }
     }
 
-    /** Controls for the warning message field */
+    /**
+     * Controls for the warning message field
+     */
     private void setCredentialsWarning(String message, boolean visible) {
         credentialsWarning.setText(message);
         credentialsWarning.setVisibility(visible ? View.VISIBLE : View.GONE);
