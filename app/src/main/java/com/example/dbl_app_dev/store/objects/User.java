@@ -15,6 +15,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class User {
 
@@ -36,6 +38,8 @@ public class User {
         this.username = Database.getUsername(this.email);
         getInformation();
     }
+
+
 
     public User(DocumentSnapshot res) {
         this.firstName = (String) res.get("first_name");
@@ -86,6 +90,47 @@ public class User {
 
     public boolean smokes() { return smokes; }
 
+
+    /** setters */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public void setTenantMode(boolean tenantMode) {
+        this.tenantMode = tenantMode;
+    }
+
+    public void setSmokes(boolean smokes) {
+        this.smokes = smokes;
+    }
+
+    public void setHasPets(boolean hasPets) {
+        this.hasPets = hasPets;
+    }
+
     /**
      *
      * @return
@@ -100,5 +145,26 @@ public class User {
             }
         }
         return profilePic;
+    }
+
+    /**
+     *
+     * @throws Exception
+     */
+    public void updateUser() throws Exception {
+        Database.updateUserInformation(this.username, transformUser());
+    }
+
+    private Map<String, Object> transformUser() {
+        Map<String, Object> transformedData = new HashMap<>();
+        transformedData.put("first_name", this.firstName);
+        transformedData.put("last_name", this.lastName);
+        transformedData.put("age", this.age);
+        transformedData.put("gender", this.gender);
+        transformedData.put("pets", this.hasPets);
+        transformedData.put("phone_number", this.phoneNumber);
+        transformedData.put("profile_description", this.description);
+        transformedData.put("smoke", this.smokes);
+        return transformedData;
     }
 }

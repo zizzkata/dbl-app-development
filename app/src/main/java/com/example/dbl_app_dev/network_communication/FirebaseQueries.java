@@ -250,4 +250,8 @@ public abstract class FirebaseQueries {
                 .whereGreaterThanOrEqualTo("price", min)
                 .whereLessThanOrEqualTo("price", max);
     }
+
+    public static Task<Void> updateUserInfo(String username, Map<String, Object> data) {
+        return users.document(username).update(data);
+    }
 }

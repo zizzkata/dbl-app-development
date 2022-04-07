@@ -2,7 +2,6 @@ package com.example.dbl_app_dev;
 
 import static android.content.ContentValues.TAG;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,29 +15,24 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import com.example.dbl_app_dev.util.view_validation.validators.*;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.example.dbl_app_dev.util.adapters.TextWatcherAdapter;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.store.objects.User;
 import com.example.dbl_app_dev.util.AsyncWrapper;
 import com.example.dbl_app_dev.util.Tools;
+import com.example.dbl_app_dev.util.adapters.TextWatcherAdapter;
 import com.example.dbl_app_dev.util.view_validation.validators.PasswordValidator;
 import com.example.dbl_app_dev.util.view_validation.validators.RepeatPasswordValidator;
 import com.example.dbl_app_dev.util.view_validation.validators.ViewValidator;
 import com.example.dbl_app_dev.util.view_validation.validators.currPasswordValidator;
-
-import java.util.ArrayList;
-
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -156,7 +150,9 @@ public class SettingsFragment extends Fragment {
         ArrayList<ViewValidator> validators = new ArrayList<>();
 
         // add all validators to list
+        // SAME FOR EMAIL
         //validators.add(emailValidator);
+        // IMPORTANT CANNOT CHANGE USERNAME
         //validators.add(new UsernameUniquenessValidator(username, usernameWarning));
         validators.add(currPassValidator);
         validators.add(passValidator);
@@ -234,7 +230,7 @@ public class SettingsFragment extends Fragment {
             Bitmap profilePic = user.getProfilePic();
             try {
                 if (profilePic == null) {
-                    InputStream stream =  getContext()
+                    InputStream stream = getContext()
                             .getAssets().open("default-user-image.png");
                     profilePic = BitmapFactory.decodeStream(stream);
                 }
@@ -260,29 +256,33 @@ public class SettingsFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!areChangesValid()) {
-                    Context context = getActivity().getApplicationContext();
-                    String text = "shit";
-                    int duration = Toast.LENGTH_SHORT;
+//                if (!areChangesValid()) {
+//                    Context context = getActivity().getApplicationContext();
+//                    String text = "shit";
+//                    int duration = Toast.LENGTH_SHORT;
+//
+//                    Toast toast = Toast.makeText(context, text, duration);
+//                    toast.show();
+//
+//                    return;
+//                }
 
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-
-                    return;
-                }
-
-                try {
-                    updateUserSettings();
-                } catch (Exception e) {
-
-                }
-
-                Context context = getActivity().getApplicationContext();
-                String text = "ok";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+                AsyncWrapper.wrap(() -> {
+                    try {
+                        setNewInformation();
+                        getActivity().runOnUiThread(() -> {
+                            Toast.makeText(getActivity().getApplicationContext()
+                                    , "Success", Toast.LENGTH_LONG);
+                        });
+                    } catch (Exception e) {
+                        // ERR show
+                        Log.e("updateUserInformation", e.getMessage());
+                        getActivity().runOnUiThread(() -> {
+                            Toast.makeText(getActivity().getApplicationContext()
+                                    , e.getMessage(), Toast.LENGTH_LONG);
+                        });
+                    }
+                });
             }
         });
     }
@@ -303,8 +303,26 @@ public class SettingsFragment extends Fragment {
         profilePic.setImageBitmap(Tools.getResizedBitmap(image, 250));
     }
 
+    // TODO password
     private void updateUserSettings() {
-        updateUserPassword();
+        //updateUserPassword();
+        try {
+            setNewInformation();
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    private void setNewInformation() throws Exception {
+        User currentUser = Store.getCurrentUser();
+        currentUser.setFirstName(firstName.getText().toString());
+        currentUser.setLastName(lastName.getText().toString());
+        currentUser.setPhoneNumber(phoneNumber.getText().toString());
+        currentUser.setDescription(description.getText().toString());
+        currentUser.setSmokes(smokes.isChecked());
+        currentUser.setHasPets(hasPets.isChecked());
+        currentUser.updateUser();
     }
 
     private void updateUserPassword() {

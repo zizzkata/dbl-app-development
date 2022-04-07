@@ -108,4 +108,9 @@ public abstract class Database {
         return Tasks.await(filter.startAfter(ds).limit(amount).get());
     }
 
+    public static void updateUserInformation(String username, Map<String, Object> data)
+        throws Exception {
+        Tasks.await(FirebaseQueries.updateUserInfo(username, data));
+    }
+
 }
