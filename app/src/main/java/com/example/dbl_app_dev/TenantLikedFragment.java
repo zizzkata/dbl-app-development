@@ -17,6 +17,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.dbl_app_dev.store.objects.AccommodationInfo;
+import com.example.dbl_app_dev.util.AsyncWrapper;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -37,9 +38,7 @@ public class TenantLikedFragment extends Fragment {
     ConstraintLayout neutralListingsParent;
     ConstraintLayout negativeListingsParent;
 
-    ArrayList<TenantLikedAccommodationObject> likedObjects = new ArrayList<>();
-
-    LinkedList<AccommodationInfo> likedListings = null;
+    ArrayList<AccommodationInfo> likedListings = null;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -111,6 +110,15 @@ public class TenantLikedFragment extends Fragment {
             ((MainNavigationActivity) getActivity()).openLikedTenantSettingsDialog();
         });
 
+
+        AsyncWrapper.wrap(() -> {
+            try {
+                likedListings = Store.getCurrentUserLikedAccommodations();
+                getActivity().runOnUiThread(() -> addLikedListings(positiveListingsParent, R.layout.positive_accommodation_object));
+            } catch (Exception e) {
+                Log.e("ERR", e.getMessage());
+            }
+        });
         // Get the liked listings of the user
 /*        try {
             likedListings = Store.getLikedListings();
@@ -124,6 +132,9 @@ public class TenantLikedFragment extends Fragment {
             addAllInfoButtonsFunctionality();
         }
 
+
+
+        //addAllInfoButtonsFunctionality();
     }
 
     private void addLikedListings(ConstraintLayout currentListingParent,
