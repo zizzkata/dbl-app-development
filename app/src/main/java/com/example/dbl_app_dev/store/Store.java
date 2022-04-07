@@ -22,8 +22,8 @@ public final class Store {
      */
     private static User currentUser;
     private static ArrayList<AccommodationInfo> discoveryAccommodations = new ArrayList<>();
-    private static final ArrayList<AccommodationInfo> likedProperties = new ArrayList<>();
-    private static final ArrayList<AccommodationInfo> listedProperties = new ArrayList<>();
+    private static ArrayList<AccommodationInfo> likedProperties = new ArrayList<>();
+    private static ArrayList<AccommodationInfo> listedProperties = new ArrayList<>();
 
     private static Query discoveryFilter;
 
@@ -84,6 +84,15 @@ public final class Store {
                             , MAX_ACCOMMODATIONS_PER_PULL).getDocuments());
         }
 
+    }
+
+    public static ArrayList<AccommodationInfo> getCurrentUserLikedAccommodations()
+            throws Exception {
+        if (likedProperties.size() == 0) {
+            likedProperties = transformDocuments(
+                    Database.getLikedAccommodations(currentUser.getUsername()));
+        }
+        return likedProperties;
     }
 
     private static ArrayList<AccommodationInfo> transformDocuments(List<DocumentSnapshot> documents) {

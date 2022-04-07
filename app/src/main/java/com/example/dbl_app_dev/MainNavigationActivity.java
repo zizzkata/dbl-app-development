@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.app.AlertDialog;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
@@ -111,9 +113,9 @@ public class MainNavigationActivity extends AppCompatActivity {
      * Method used to create the popup that shows an existing accommodation.
      */
 
-    public void viewAccommodationDialog(View accommObject) {
+    public AlertDialog viewAccommodationDialog(View accommObject) {
         View myView = getLayoutInflater().inflate(R.layout.view_accommodation_pop_up, null);
-        (new ViewAccommDialogDisplayer(this,
+        return (new ViewAccommDialogDisplayer(this,
                 R.id.cancelButton, R.id.saveButton, myView, accommObject))
                 .displayPopupDialog();
     }

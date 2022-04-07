@@ -2,7 +2,7 @@ package com.example.dbl_app_dev;
 
 import static android.content.ContentValues.TAG;
 
-import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -15,11 +15,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.store.objects.User;
 import com.example.dbl_app_dev.util.AsyncWrapper;
@@ -33,7 +31,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -143,7 +140,9 @@ public class SettingsFragment extends Fragment {
         ArrayList<ViewValidator> validators = new ArrayList<>();
 
         // add all validators to list
+        // SAME FOR EMAIL
         //validators.add(emailValidator);
+        // IMPORTANT CANNOT CHANGE USERNAME
         //validators.add(new UsernameUniquenessValidator(username, usernameWarning));
         validators.add(currPassValidator);
         validators.add(passValidator);
@@ -225,16 +224,36 @@ public class SettingsFragment extends Fragment {
 
         // Save button used to update current user's personal info and password
         TextView saveButton = getView().findViewById(R.id.saveBtn);
-        saveButton.setOnClickListener(view2 -> {
-            if (!areChangesValid()) {
-                Context context = getActivity().getApplicationContext();
-                String text = "ok";
-                int duration = Toast.LENGTH_SHORT;
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                if (!areChangesValid()) {
+//                    Context context = getActivity().getApplicationContext();
+//                    String text = "shit";
+//                    int duration = Toast.LENGTH_SHORT;
+//
+//                    Toast toast = Toast.makeText(context, text, duration);
+//                    toast.show();
+//
+//                    return;
+//                }
 
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-
-                return;
+                AsyncWrapper.wrap(() -> {
+                    try {
+                        setNewInformation();
+                        getActivity().runOnUiThread(() -> {
+                            Toast.makeText(getActivity().getApplicationContext()
+                                    , "Success", Toast.LENGTH_LONG);
+                        });
+                    } catch (Exception e) {
+                        // ERR show
+                        Log.e("updateUserInformation", e.getMessage());
+                        getActivity().runOnUiThread(() -> {
+                            Toast.makeText(getActivity().getApplicationContext()
+                                    , e.getMessage(), Toast.LENGTH_LONG);
+                        });
+                    }
+                });
             }
 
             try {
@@ -268,8 +287,26 @@ public class SettingsFragment extends Fragment {
         profilePic.setImageBitmap(Tools.getResizedBitmap(image, 250));
     }
 
+    // TODO password
     private void updateUserSettings() {
-        updateUserPassword();
+        //updateUserPassword();
+        try {
+            setNewInformation();
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    private void setNewInformation() throws Exception {
+        User currentUser = Store.getCurrentUser();
+        currentUser.setFirstName(firstName.getText().toString());
+        currentUser.setLastName(lastName.getText().toString());
+        currentUser.setPhoneNumber(phoneNumber.getText().toString());
+        currentUser.setDescription(description.getText().toString());
+        currentUser.setSmokes(smokes.isChecked());
+        currentUser.setHasPets(hasPets.isChecked());
+        currentUser.updateUser();
     }
 
     private void updateUserPassword() {
