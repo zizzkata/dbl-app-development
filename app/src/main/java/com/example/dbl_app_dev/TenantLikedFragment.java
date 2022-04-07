@@ -1,15 +1,29 @@
 package com.example.dbl_app_dev;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
+
+import com.example.dbl_app_dev.store.Store;
+import com.example.dbl_app_dev.store.objects.AccommodationInfo;
+import com.example.dbl_app_dev.store.objects.User;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,6 +31,12 @@ import androidx.fragment.app.Fragment;
  * create an instance of this fragment.
  */
 public class TenantLikedFragment extends Fragment {
+
+    ConstraintLayout positiveListingsParent;
+    ConstraintLayout neutralListingsParent;
+    ConstraintLayout negativeListingsParent;
+
+    LinkedList<AccommodationInfo> likedListings = null;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,25 +89,79 @@ public class TenantLikedFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Get the parent views of the different listing objects
+        positiveListingsParent = getView()
+                .findViewById(R.id.positiveListingsContainer);
+        neutralListingsParent = getView()
+                .findViewById(R.id.neutralListingsContainer);
+        negativeListingsParent = getView()
+                .findViewById(R.id.negativeListingsContainer);
+
         // Add functionality for liked listings settings button
         Button settingsBtn = getView().findViewById(R.id.settingsButton);
         settingsBtn.setOnClickListener(view1 -> {
             ((MainNavigationActivity) getActivity()).openLikedTenantSettingsDialog();
         });
 
-        // Get the parent views of the different listing objects
-        ConstraintLayout positiveListingsParent = getView()
-                .findViewById(R.id.positiveListingsContainer);
-        ConstraintLayout neutralListingsParent = getView()
-                .findViewById(R.id.neutralListingsContainer);
-        ConstraintLayout negativeListingsParent = getView()
-                .findViewById(R.id.negativeListingsContainer);
+        // Get the liked listings of the user
+/*        try {
+            likedListings = Store.getLikedListings();
+        } catch (Exception e) {
+            Log.e("OPS", "OPS");
+            e.printStackTrace();
+            return;
+        }*/
 
+        addLikedListings(positiveListingsParent, R.layout.positive_accommodation_object);
+
+        //addAllInfoButtonsFunctionality();
+    }
+
+    private void addLikedListings(ConstraintLayout currentListingParent,
+                                  int currentAccommodationLayoutId) {
+        View previousView = currentListingParent; // to remember the previously created view
+        ConstraintLayout view; // newly created view
+        ConstraintLayout.LayoutParams lp; // LayoutParams for newly created view
+
+        // Layout inflater for adding the new view
+        LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        // Create the listings
+        int i = 0;
+        for (AccommodationInfo listing: likedListings) {
+            // Create the new view and add it to the parent
+            view = (ConstraintLayout) vi.inflate(currentAccommodationLayoutId, null);
+            view.setId(View.generateViewId());
+            currentListingParent.addView(view, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            // Add the corresponding text
+            ((TextView)view.findViewById(R.id.streetNameTxt)).setText(listing.getAddress());
+            ((TextView)view.findViewById(R.id.apartmentNameTxt)).setText(listing.getHouseNumber());
+            ((TextView)view.findViewById(R.id.priceTxt))
+                    .setText(listing.getCurrency()+listing.getPrice());
+
+            // Set the needed constraints
+            lp = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            if (i == 0) {
+                lp.topToTop = previousView.getId();
+            } else {
+                lp.topToBottom = previousView.getId();
+            }
+            view.setLayoutParams(lp);
+
+            previousView = view;
+            i++;
+        }
+    }
+
+    private void addAllInfoButtonsFunctionality() {
         // Add the positive listing "info" button functionality
         for (int i = 0; i < positiveListingsParent.getChildCount(); i++) {
             View v = positiveListingsParent.getChildAt(i);
             v.findViewById(R.id.actionIcon).setOnClickListener(view1 -> {
-                ((MainNavigationActivity) getActivity()).viewAccommodationDialog(v);
+                AlertDialog d = ((MainNavigationActivity) getActivity()).viewAccommodationDialog(v);
+                //AccommodationInfo accommodationInfo = new AccommodationInfo();
+                //getActivity().runOnUiThread(() -> setDialogInfo(d, accommodationInfo));
             });
         }
 
@@ -95,7 +169,9 @@ public class TenantLikedFragment extends Fragment {
         for (int i = 0; i < neutralListingsParent.getChildCount(); i++) {
             View v = neutralListingsParent.getChildAt(i);
             v.findViewById(R.id.actionIcon).setOnClickListener(view1 -> {
-                ((MainNavigationActivity) getActivity()).viewAccommodationDialog(v);
+                AlertDialog d = ((MainNavigationActivity) getActivity()).viewAccommodationDialog(v);
+                //AccommodationInfo accommodationInfo = new AccommodationInfo();
+                //getActivity().runOnUiThread(() -> setDialogInfo(d, accommodationInfo));
             });
         }
 
@@ -106,5 +182,35 @@ public class TenantLikedFragment extends Fragment {
                 ((MainNavigationActivity) getActivity()).removeAccommodationDialog(v);
             });
         }
+    }
+
+    private void setDialogInfo(AlertDialog ad, AccommodationInfo listing) {
+        // TODO
+        ((TextView)ad.findViewById(R.id.landlordNameTxt)).setText("First"+"Name");
+        ((TextView)ad.findViewById(R.id.landlordEmailTxt)).setText("myEmail");
+        ((TextView)ad.findViewById(R.id.phoneNumberTxt)).setText("0000000000");
+
+        // TODO
+        ((ImageView)ad.findViewById(R.id.panoramaImage))
+                .setImageDrawable(getResources().getDrawable(R.drawable.ic_buildings_filled));
+        ((ImageView)ad.findViewById(R.id.normalImage))
+                .setImageDrawable(getResources().getDrawable(R.drawable.ic_buildings_filled));
+
+        ((TextView)ad.findViewById(R.id.addressTxt)).setText(listing.getAddress());
+        ((TextView)ad.findViewById(R.id.apartmentNameText)).setText(listing.getHouseNumber());
+        ((TextView)ad.findViewById(R.id.floorNameText)).setText(listing.getFloor());
+        ((TextView)ad.findViewById(R.id.cityTxt)).setText(listing.getCity());
+        ((TextView)ad.findViewById(R.id.postcodeTxt)).setText(listing.getPostcode());
+
+        ((TextView)ad.findViewById(R.id.priceTxt)).setText(listing.getCurrency()+listing.getPrice());
+        ((TextView)ad.findViewById(R.id.minimumRentTxt)).setText(listing.getMinimumPeriod());
+        ((TextView)ad.findViewById(R.id.startDateEditTxt)).setText(listing.getAvailableFrom());
+        ((TextView)ad.findViewById(R.id.endDateEditTxt)).setText(listing.getAvailableUntil());
+        ((TextView)ad.findViewById(R.id.surfaceAreaTxt)).setText(listing.getAreaString());
+        ((TextView)ad.findViewById(R.id.descriptionTxt)).setText(listing.getDescription());
+
+        ((CheckBox)ad.findViewById(R.id.furnishedCheckBox)).setChecked(listing.getFurnished());
+        ((CheckBox)ad.findViewById(R.id.smokerCheckBox)).setChecked(listing.getSmokers());
+        ((CheckBox)ad.findViewById(R.id.petsCheckBox)).setChecked(listing.getPets());
     }
 }
