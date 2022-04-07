@@ -1,5 +1,12 @@
 package com.example.dbl_app_dev;
 
+import static android.app.Activity.RESULT_OK;
+import static android.content.ContentValues.TAG;
+
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.MediaStore;
 import static android.content.ContentValues.TAG;
 
 import android.graphics.Bitmap;
@@ -9,31 +16,38 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.CheckBox;
+
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+
+import com.example.dbl_app_dev.util.view_validation.validators.*;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.example.dbl_app_dev.util.adapters.TextWatcherAdapter;
 
 import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.store.objects.User;
 import com.example.dbl_app_dev.util.AsyncWrapper;
 import com.example.dbl_app_dev.util.Tools;
 import com.example.dbl_app_dev.util.adapters.TextWatcherAdapter;
-import com.example.dbl_app_dev.util.view_validation.validators.PasswordValidator;
-import com.example.dbl_app_dev.util.view_validation.validators.RepeatPasswordValidator;
-import com.example.dbl_app_dev.util.view_validation.validators.ViewValidator;
-import com.example.dbl_app_dev.util.view_validation.validators.currPasswordValidator;
 import com.google.android.gms.tasks.OnCompleteListener;
+
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+
 import java.io.InputStream;
+
 import java.util.ArrayList;
 
 /**
@@ -69,12 +83,32 @@ public class SettingsFragment extends Fragment {
     private ViewValidator passValidator;
     private ViewValidator repPassValidator;
 
+    // text boxes
+    private EditText email;
+    private TextView emailWarning;
+    private EditText username;
+    private TextView usernameWarning;
+    private EditText currentPassword;
+    private TextView currentPasswordWarning;
+    private EditText password;
+    private TextView passwordWarning;
+    private EditText repeatPassword;
+    private TextView repeatPasswordWarning;
+
+    // all used validators
+    private ViewValidator emailValidator;
+    private ViewValidator userValidator;
+    private ViewValidator currPassValidator;
+    private ViewValidator passValidator;
+    private ViewValidator repPassValidator;
+
     public SettingsFragment() {
         // Required empty public constructor
     }
 
     private void init() {
         // get views by id
+
         email = getView().findViewById(R.id.editTextTextEmailAddress);
         //email.setEnabled(false);
 //        emailWarning = getView().findViewById(R.id.invalidEmail);
@@ -142,13 +176,19 @@ public class SettingsFragment extends Fragment {
         ArrayList<ViewValidator> validators = new ArrayList<>();
 
         // add all validators to list
-        // SAME FOR EMAIL
         //validators.add(emailValidator);
-        // IMPORTANT CANNOT CHANGE USERNAME
         //validators.add(new UsernameUniquenessValidator(username, usernameWarning));
-        validators.add(currPassValidator);
-        validators.add(passValidator);
-        validators.add(repPassValidator);
+        if (currentPassword.getText().toString().length() > 0) {
+            validators.add(currPassValidator);
+        }
+
+        if (password.getText().toString().length() > 0) {
+            validators.add(passValidator);
+        }
+
+        if (repeatPassword.getText().toString().length() > 0) {
+            validators.add(repPassValidator);
+        }
 
         // run validate on all validators
         boolean areValidatorsValid = true;
@@ -162,6 +202,7 @@ public class SettingsFragment extends Fragment {
         // if all validators are valid, then return true, otherwise return false
         return areValidatorsValid;
     }
+
 
     public static SettingsFragment newInstance() {
         SettingsFragment fragment = new SettingsFragment();
@@ -190,6 +231,20 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         init();
+        makeWarningsInvisible();
+
+        TextView addImage = getView().findViewById(R.id.addImageBtn);
+        addImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, 3);
+            }
+        });
+
+        // Logout button leading to LoginPage
+        TextView logoutButton = getView().findViewById(R.id.logoutBtn);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
 //         makeWarningsInvisible();
         AsyncWrapper.wrap(() -> {
             User user;
@@ -224,40 +279,78 @@ public class SettingsFragment extends Fragment {
             ((MainNavigationActivity) getActivity()).logoutDialog();
         });
 
+        
+
         // Save button used to update current user's personal info and password
         TextView saveButton = getView().findViewById(R.id.saveBtn);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (!areChangesValid()) {
-//                    Context context = getActivity().getApplicationContext();
-//                    String text = "shit";
-//                    int duration = Toast.LENGTH_SHORT;
-//
-//                    Toast toast = Toast.makeText(context, text, duration);
-//                    toast.show();
-//
-//                    return;
-//                }
+                if (!areChangesValid()) {
+                    Context context = getActivity().getApplicationContext();
+                    String text = "Not saved";
+                    int duration = Toast.LENGTH_SHORT;
 
-                AsyncWrapper.wrap(() -> {
-                    try {
-                        setNewInformation();
-                        getActivity().runOnUiThread(() -> {
-                            Toast.makeText(getActivity().getApplicationContext()
-                                    , "Success", Toast.LENGTH_LONG);
-                        });
-                    } catch (Exception e) {
-                        // ERR show
-                        Log.e("updateUserInformation", e.getMessage());
-                        getActivity().runOnUiThread(() -> {
-                            Toast.makeText(getActivity().getApplicationContext()
-                                    , e.getMessage(), Toast.LENGTH_LONG);
-                        });
-                    }
-                });
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+
+                    return;
+                }
+
+                boolean saved = false;
+                try {
+                    saved = updateUserSettings();
+                } catch (Exception e) {
+
+                }
+
+                makeWarningsInvisible();
+                Context context = getActivity().getApplicationContext();
+                String text = saved ? "Saved" : "Not saved";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
             }
         });
+    }
+
+    private boolean updateUserSettings() {
+        boolean saved = false;
+
+        if (currentPassword.getText().toString().length() > 0 &&
+                password.getText().toString().length() > 0 &&
+                repeatPassword.getText().toString().length() > 0) {
+            updateUserPassword();
+            saved = true;
+        }
+
+        return saved;
+    }
+
+    private void updateUserPassword() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String newPassword = password.getText().toString();
+
+        user.updatePassword(newPassword)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "User password updated.");
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            Uri selectedImage = data.getData();
+            ImageView imageView = getView().findViewById(R.id.imageView);
+            imageView.setImageURI(selectedImage);
+        }
     }
 
     private void bindUserData(User user) {

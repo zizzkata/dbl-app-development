@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dbl_app_dev.network_communication.Authentication;
 import com.example.dbl_app_dev.util.adapters.TextWatcherAdapter;
+
 import com.example.dbl_app_dev.util.AsyncWrapper;
 import com.example.dbl_app_dev.util.view_validation.constants.Exceptions;
 import com.example.dbl_app_dev.util.view_validation.validators.*;
