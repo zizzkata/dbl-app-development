@@ -142,4 +142,6 @@
     <string name="sad_face_image">sad face image</string>
     <string name="sample_error_login_text">* Username or password missing</string>
     <string name="invalid_message">* Invalid message</string>
+    <string name="logout_title">Log Out</string>
+    <string name="logout_message">Are you sure you want to log out?</string>
 </resources>
