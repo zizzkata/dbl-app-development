@@ -221,8 +221,8 @@ public class SettingsFragment extends Fragment {
         // Sign Up button leading to RegisterPage
         TextView logOutBtn = getView().findViewById(R.id.logoutBtn);
         logOutBtn.setOnClickListener(view1 -> {
-//            ((MainNavigationActivity) getActivity()).viewAccommodationDialog(view1);
-                startActivity(new Intent(getActivity(), LoginPage.class));
+            ((MainNavigationActivity) getActivity()).logoutDialog();
+//                startActivity(new Intent(getActivity(), LoginPage.class));
         });
 
         // Save button used to update current user's personal info and password
