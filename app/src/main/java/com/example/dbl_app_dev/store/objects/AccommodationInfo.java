@@ -102,14 +102,9 @@ public class AccommodationInfo {
     /**
      * @return
      */
-    public User getOwner() {
+    public User getOwner() throws Exception{
         if (owner == null) {
-            try {
                 owner = new User(Database.getUserInformation(ownerUsername));
-            } catch (Exception e) {
-                // Anonymous
-                e.printStackTrace();
-            }
         }
         return owner;
     }

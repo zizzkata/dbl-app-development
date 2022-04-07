@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.store.objects.AccommodationInfo;
+import com.example.dbl_app_dev.store.objects.User;
 import com.example.dbl_app_dev.util.AsyncWrapper;
 
 import java.util.ArrayList;
@@ -217,15 +218,31 @@ public class TenantLikedFragment extends Fragment {
                             .removeAccommodationDialog(a.compactView);
                 });
             }
-
         }
     }
 
     private void setDialogInfo(AlertDialog ad, AccommodationInfo listing) {
         // TODO
-        ((TextView) ad.findViewById(R.id.landlordNameTxt)).setText("Georgi" + " " + "Georgiev");
-        ((TextView) ad.findViewById(R.id.landlordEmailTxt)).setText("gosho@gmail.com");
-        ((TextView) ad.findViewById(R.id.phoneNumberTxt)).setText("0123456789");
+        AsyncWrapper.wrap(() -> {
+            try {
+                User owner = listing.getOwner();
+                getActivity().runOnUiThread(() -> {
+                    ((TextView) ad.findViewById(R.id.landlordNameTxt))
+                            .setText(owner.getFirstName() + " " + owner.getLastName());
+                    ((TextView) ad.findViewById(R.id.landlordEmailTxt)).setText(owner.getEmail());
+                    ((TextView) ad.findViewById(R.id.phoneNumberTxt))
+                            .setText(owner.getPhoneNumber());
+                });
+            } catch (Exception e) {
+                getActivity().runOnUiThread(() ->
+                {
+                    ((TextView) ad.findViewById(R.id.landlordNameTxt))
+                            .setText("Georgi" + " " + "Georgiev");
+                    ((TextView) ad.findViewById(R.id.landlordEmailTxt)).setText("gosho@gmail.com");
+                    ((TextView) ad.findViewById(R.id.phoneNumberTxt)).setText("0123456789");
+                });
+            }
+        });
 
         AsyncWrapper.wrap(() -> {
             try {
