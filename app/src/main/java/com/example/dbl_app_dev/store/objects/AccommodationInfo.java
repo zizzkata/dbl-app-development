@@ -157,4 +157,19 @@ public class AccommodationInfo {
     public Boolean getSmokers() {
         return smokers;
     }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public String getPostcode() { return postcode; }
+
+    public String getAreaString() { return area_m2.toString(); }
+
+    public String getMinimumPeriod() { return minimumPeriod; }
+
+    public String getAvailableFrom() { return availableFrom; }
+
+    public String getAvailableUntil() { return availableUntil; }
+
 }
