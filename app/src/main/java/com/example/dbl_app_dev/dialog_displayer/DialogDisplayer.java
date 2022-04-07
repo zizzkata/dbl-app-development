@@ -30,7 +30,7 @@ abstract class DialogDisplayer {
     }
 
     // Template method
-    public void displayPopupDialog() {
+    public AlertDialog displayPopupDialog() {
         // Set-up dialog
         createDialog();
         setCancelable();
@@ -56,12 +56,12 @@ abstract class DialogDisplayer {
         }
 
         additionalFunctionality();
+
+        return dialog;
     }
 
     protected void additionalFunctionality() {
     }
-
-    ;
 
     protected void createDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);

@@ -1,9 +1,12 @@
 package com.example.dbl_app_dev;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.app.AlertDialog;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
@@ -13,8 +16,11 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.dbl_app_dev.dialog_displayer.CreateAccommDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.EditAccommDialogDisplayer;
+import com.example.dbl_app_dev.dialog_displayer.EditSettingsDialogDisplayer;
+import com.example.dbl_app_dev.dialog_displayer.LogoutDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.RemoveAccommDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.ViewAccommDialogDisplayer;
+import com.example.dbl_app_dev.store.Store;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainNavigationActivity extends AppCompatActivity {
@@ -107,9 +113,9 @@ public class MainNavigationActivity extends AppCompatActivity {
      * Method used to create the popup that shows an existing accommodation.
      */
 
-    public void viewAccommodationDialog(View accommObject) {
+    public AlertDialog viewAccommodationDialog(View accommObject) {
         View myView = getLayoutInflater().inflate(R.layout.view_accommodation_pop_up, null);
-        (new ViewAccommDialogDisplayer(this,
+        return (new ViewAccommDialogDisplayer(this,
                 R.id.cancelButton, R.id.saveButton, myView, accommObject))
                 .displayPopupDialog();
     }
@@ -130,5 +136,30 @@ public class MainNavigationActivity extends AppCompatActivity {
         View myView = getLayoutInflater().inflate(R.layout.activity_filters, null);
         (new CreateAccommDialogDisplayer(this, R.id.cancelButton, R.id.saveBtn, -1, myView))
                 .displayPopupDialog();
+    }
+
+    /**
+     * Method used to create the popup that shows when confirming a log out
+     */
+    public void logoutDialog() {
+        (new LogoutDialogDisplayer(this))
+                .displayPopupDialog();
+    }
+
+    public void logout() {
+        Store.killStore();
+        startActivity(new Intent(this, LoginPage.class));
+        finish();
+    }
+
+    public void openSettingsDialog() {
+        (new EditSettingsDialogDisplayer(this))
+                .displayPopupDialog();
+    }
+
+    public void openSettingsFragment() {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        Menu navBarMenu = bottomNavigationView.getMenu();
+        navBarMenu.performIdentifierAction(R.id.settingsFragment, 0);
     }
 }

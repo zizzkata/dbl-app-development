@@ -79,18 +79,7 @@
                             layout="@layout/positive_accommodation_object"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
-
-                        <include
-                            android:id="@+id/positiveListing2"
-                            layout="@layout/positive_accommodation_object"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/positiveListing1" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -107,18 +96,7 @@
                             layout="@layout/neutral_accommodation_object"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
-
-                        <include
-                            android:id="@+id/neutralListing2"
-                            layout="@layout/neutral_accommodation_object"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/neutralListing1" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -135,18 +113,7 @@
                             layout="@layout/negative_accommodation_object"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
-
-                        <include
-                            android:id="@+id/negativeListing2"
-                            layout="@layout/negative_accommodation_object"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/negativeListing1" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
