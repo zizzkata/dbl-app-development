@@ -18,6 +18,21 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import com.example.dbl_app_dev.store.Store;
+import com.example.dbl_app_dev.store.objects.User;
+import com.example.dbl_app_dev.util.AsyncWrapper;
+import com.example.dbl_app_dev.util.Tools;
+import com.example.dbl_app_dev.util.adapters.TextWatcherAdapter;
+import com.example.dbl_app_dev.util.view_validation.validators.PasswordValidator;
+import com.example.dbl_app_dev.util.view_validation.validators.RepeatPasswordValidator;
+import com.example.dbl_app_dev.util.view_validation.validators.ViewValidator;
+import com.example.dbl_app_dev.util.view_validation.validators.currPasswordValidator;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import java.io.InputStream;
+import java.util.ArrayList;
 
 import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.store.objects.User;
@@ -42,6 +57,32 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class SettingsFragment extends Fragment {
+
+    // text boxes
+    private EditText email;
+    private TextView emailWarning;
+    private EditText username;
+    private TextView usernameWarning;
+    private EditText currentPassword;
+    private TextView currentPasswordWarning;
+    private EditText password;
+    private TextView passwordWarning;
+    private EditText repeatPassword;
+    private TextView repeatPasswordWarning;
+    private EditText firstName;
+    private EditText lastName;
+    private EditText phoneNumber;
+    private EditText description;
+    private CheckBox smokes;
+    private CheckBox hasPets;
+    private ImageView profilePic;
+
+    // all used validators
+    private ViewValidator emailValidator;
+    private ViewValidator userValidator;
+    private ViewValidator currPassValidator;
+    private ViewValidator passValidator;
+    private ViewValidator repPassValidator;
 
     // text boxes
     private EditText email;
@@ -222,6 +263,41 @@ public class SettingsFragment extends Fragment {
         TextView logOutBtn = getView().findViewById(R.id.logoutBtn);
         logOutBtn.setOnClickListener(view1 -> {
             ((MainNavigationActivity) getActivity()).logoutDialog();
+        });
+
+        // Save button used to update current user's personal info and password
+        TextView saveButton = getView().findViewById(R.id.saveBtn);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                if (!areChangesValid()) {
+//                    Context context = getActivity().getApplicationContext();
+//                    String text = "shit";
+//                    int duration = Toast.LENGTH_SHORT;
+//
+//                    Toast toast = Toast.makeText(context, text, duration);
+//                    toast.show();
+//
+//                    return;
+//                }
+
+                AsyncWrapper.wrap(() -> {
+                    try {
+                        setNewInformation();
+                        getActivity().runOnUiThread(() -> {
+                            Toast.makeText(getActivity().getApplicationContext()
+                                    , "Success", Toast.LENGTH_LONG);
+                        });
+                    } catch (Exception e) {
+                        // ERR show
+                        Log.e("updateUserInformation", e.getMessage());
+                        getActivity().runOnUiThread(() -> {
+                            Toast.makeText(getActivity().getApplicationContext()
+                                    , e.getMessage(), Toast.LENGTH_LONG);
+                        });
+                    }
+                });
+            }
         });
 
         // Save button used to update current user's personal info and password

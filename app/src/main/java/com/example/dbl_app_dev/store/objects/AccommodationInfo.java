@@ -42,8 +42,9 @@ public class AccommodationInfo {
     public AccommodationInfo(ArrayList<String> s, ArrayList<Bitmap> photos, Bitmap photoPanoramic) {
         this.accommodationId = "XAFxPJEMgTIRA4HUam4x";
 
-        // this.photos = new ArrayList<>(photos);
-        // this.photoPanoramic = photoPanoramic;
+
+        //this.photos = new ArrayList<>(photos);
+        //this.photoPanoramic = photoPanoramic;
     }
 
     public AccommodationInfo(DocumentSnapshot ds) {
@@ -101,9 +102,14 @@ public class AccommodationInfo {
     /**
      * @return
      */
-    public User getOwner() throws Exception {
+    public User getOwner() {
         if (owner == null) {
-            owner = new User(Database.getUserInformation(ownerUsername));
+            try {
+                owner = new User(Database.getUserInformation(ownerUsername));
+            } catch (Exception e) {
+                // Anonymous
+                e.printStackTrace();
+            }
         }
         return owner;
     }
@@ -117,7 +123,7 @@ public class AccommodationInfo {
     }
 
     public String getAddressShort() {
-        return address.substring(0, address.indexOf(","));
+        return address.substring( 0, address.indexOf(","));
     }
 
     public String getAccommodationId() {
@@ -141,8 +147,7 @@ public class AccommodationInfo {
     }
 
     public String getCurrency() {
-        if (currency.equals("EUR"))
-            return "€";
+        if (currency.equals("EUR")) return "€";
 
         return currency;
     }
@@ -163,34 +168,20 @@ public class AccommodationInfo {
         return price;
     }
 
-    public String getPostcode() {
-        return postcode;
-    }
+    public String getPostcode() { return postcode; }
 
-    public String getAreaString() {
-        return area_m2.toString();
-    }
+    public String getAreaString() { return area_m2.toString(); }
 
-    public String getMinimumPeriod() {
-        return minimumPeriod;
-    }
+    public String getMinimumPeriod() { return minimumPeriod; }
 
-    public String getAvailableFrom() {
-        return availableFrom;
-    }
+    public String getAvailableFrom() { return availableFrom; }
 
-    public String getAvailableUntil() {
-        return availableUntil;
-    }
+    public String getAvailableUntil() { return availableUntil; }
 
-    public int getPhotosSize() {
-        return photos.size();
-    }
+    public int getPhotosSize() { return photos.size(); }
 
     // Positive = 1; Neutral = 0; Negative = -1;
-    public int getRating() {
-        return 0;
-    }
+    public int getRating() { return 0;}
 
     public void rateAccommodation(String username, boolean rate) throws Exception {
         Database.rateAccommodation(accommodationId, username, rate);

@@ -17,6 +17,7 @@ import com.example.dbl_app_dev.util.AsyncWrapper;
 import com.example.dbl_app_dev.util.view_validation.constants.Exceptions;
 import com.example.dbl_app_dev.util.view_validation.validators.*;
 
+
 import java.util.ArrayList;
 
 public class RegisterPage extends AppCompatActivity {
