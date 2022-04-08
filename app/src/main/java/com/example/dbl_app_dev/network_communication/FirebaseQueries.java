@@ -301,5 +301,8 @@ public abstract class FirebaseQueries {
     public static Task<Void> createAccommodationListing(Map<String, Object> newData) {
         return accommodations.document().set(newData);
     }
-
+    
+    public static Task<QuerySnapshot> getTenants(String ownerUsername) {
+        return ratedAccommodations.whereEqualTo("owner_username", ownerUsername).get();
+    }
 }

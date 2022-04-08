@@ -2,6 +2,8 @@ package com.example.dbl_app_dev.network_communication;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
+import com.example.dbl_app_dev.store.objects.User;
 import com.example.dbl_app_dev.util.AsyncWrapper;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -144,5 +146,21 @@ public abstract class Database {
 
     public static void updateAccommodation(String accommodationId, Map<String, Object> newData) throws Exception {
         Tasks.await(FirebaseQueries.updateAccommodationListing(accommodationId, newData));
+    }
+
+    public static ArrayList<User> getRatedTenants(String ownerId) throws Exception {
+        List<DocumentSnapshot> docs = Tasks.await(FirebaseQueries.getTenants(ownerId))
+                .getDocuments();
+        ArrayList<User> users = new ArrayList<>();
+        for (DocumentSnapshot ds : docs) {
+            try {
+                users.add(
+                        new User(getUserInformation(
+                                (String) ds.get("tenantUsername"))));
+            } catch (Exception e) {
+                // IGNORE
+            }
+        }
+        return users;
     }
 }
