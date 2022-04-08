@@ -152,6 +152,10 @@ public class AccommodationInfo {
         return currency;
     }
 
+    public String getOwnerUsername() {
+        return ownerUsername;
+    }
+
     public Boolean getFurnished() {
         return furnished;
     }
@@ -184,6 +188,6 @@ public class AccommodationInfo {
     public int getRating() { return 0;}
 
     public void rateAccommodation(String username, boolean rate) throws Exception {
-        Database.rateAccommodation(accommodationId, username, rate);
+        Database.createRatingAccommodation(accommodationId, username, ownerUsername, rate);
     }
 }
