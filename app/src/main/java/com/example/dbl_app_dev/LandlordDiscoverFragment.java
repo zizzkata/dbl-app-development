@@ -80,6 +80,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         cardTextViews.add(view.findViewById(R.id.petsTxt));
         cardTextViews.add(view.findViewById(R.id.smokerTxt));
         cardTextViews.add(view.findViewById(R.id.descriptionTxt));
+        cardTextViews.add(view.findViewById(R.id.genderTxt));
 
         noSwipesContainer = view.findViewById(R.id.noSwipesContainer);
         contentContainer = view.findViewById(R.id.contentContainer);
@@ -152,7 +153,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         // TODO: remove placeholder code, get data from server
         Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.default_tenant_picture);
         for (int i = 0; i < batchSize; i++) {
-            String[] sample = new String[6];
+            String[] sample = new String[7];
             Arrays.fill(sample, "text" + i);
             ArrayList<String> sampleArrList = new ArrayList<>(Arrays.asList(sample));
 

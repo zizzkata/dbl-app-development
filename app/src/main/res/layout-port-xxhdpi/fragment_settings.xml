@@ -293,6 +293,24 @@
                         android:padding="10sp" />
 
                     <TextView
+                        android:id="@+id/genderTxt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/change_your_gender"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/genderBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/roundstyle"
+                        android:backgroundTint="@color/white"
+                        android:ems="10"
+                        android:padding="10sp" />
+
+                    <TextView
                         android:id="@+id/descriptionTxt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

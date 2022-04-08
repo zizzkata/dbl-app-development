@@ -61,6 +61,7 @@ public class SettingsFragment extends Fragment {
     private CheckBox smokes;
     private CheckBox hasPets;
     private ImageView profilePic;
+    private EditText gender;
 
     // all used validators
     private ViewValidator emailValidator;
@@ -87,6 +88,8 @@ public class SettingsFragment extends Fragment {
         passwordWarning = getView().findViewById(R.id.invalidPassword);
         repeatPassword = getView().findViewById(R.id.ConfirmNewPasswordBox);
         repeatPasswordWarning = getView().findViewById(R.id.invalidRepeatPassword);
+
+        gender = getView().findViewById(R.id.genderBox);
 
         firstName = getView().findViewById(R.id.firstNameBox);
         lastName = getView().findViewById(R.id.lastNameBox);
@@ -269,6 +272,7 @@ public class SettingsFragment extends Fragment {
         description.setText(user.getDescription());
         smokes.setChecked(user.smokes());
         hasPets.setChecked(user.hasPets());
+        gender.setText(user.getGender());
         // TODO save tenant mode
     }
 
@@ -293,6 +297,7 @@ public class SettingsFragment extends Fragment {
         currentUser.setLastName(lastName.getText().toString());
         currentUser.setPhoneNumber(phoneNumber.getText().toString());
         currentUser.setDescription(description.getText().toString());
+        currentUser.setGender(gender.getText().toString());
         currentUser.setSmokes(smokes.isChecked());
         currentUser.setHasPets(hasPets.isChecked());
         currentUser.updateUser();
