@@ -2,6 +2,7 @@ package com.example.dbl_app_dev;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -163,5 +164,16 @@ public class MainNavigationActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         Menu navBarMenu = bottomNavigationView.getMenu();
         navBarMenu.performIdentifierAction(R.id.settingsFragment, 0);
+    }
+
+
+    /**
+     * Overridden to prevent TransactionTooLargeException on starting a new intent
+     */
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.clear();
+        super.onSaveInstanceState(outState);
+        Log.d("extra", "Instance state of main navigation activity cleared");
     }
 }

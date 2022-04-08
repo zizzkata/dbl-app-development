@@ -174,7 +174,6 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
                     imageGalleryViewPager.setAdapter(verticalViewPagerAdapter);
                     ((ImageViewPagerAdapter) imageGalleryViewPager.getAdapter()).notifyChangeInPosition(n.size() + 1);
                     imageGalleryViewPager.getAdapter().notifyDataSetChanged();
-
                 });
             } catch (Exception e) {
                 e.printStackTrace();
@@ -234,5 +233,15 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         } else {
             return "No";
         }
+    }
+
+    /**
+     * Overridden to prevent TransactionTooLargeException on starting a new intent
+     */
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.clear();
+        super.onSaveInstanceState(outState);
+        Log.d("extra", "Instance state of discovery fragment cleared");
     }
 }
