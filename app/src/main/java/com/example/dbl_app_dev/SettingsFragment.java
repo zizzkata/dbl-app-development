@@ -1,10 +1,15 @@
 package com.example.dbl_app_dev;
 
+import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -161,9 +166,18 @@ public class SettingsFragment extends Fragment {
         //validators.add(emailValidator);
         // IMPORTANT CANNOT CHANGE USERNAME
         //validators.add(new UsernameUniquenessValidator(username, usernameWarning));
-        validators.add(currPassValidator);
-        validators.add(passValidator);
-        validators.add(repPassValidator);
+
+        if (currentPassword.getText().toString().length() > 0) {
+            validators.add(currPassValidator);
+        }
+
+        if (password.getText().toString().length() > 0) {
+            validators.add(passValidator);
+        }
+
+        if (repeatPassword.getText().toString().length() > 0) {
+            validators.add(repPassValidator);
+        }
 
         // run validate on all validators
         boolean areValidatorsValid = true;
@@ -205,7 +219,7 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         init();
-//         makeWarningsInvisible();
+        makeWarningsInvisible();
         AsyncWrapper.wrap(() -> {
             User user;
             try {
@@ -233,6 +247,15 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        TextView addImage = getView().findViewById(R.id.addImageBtn);
+        addImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, 3);
+            }
+        });
+
         // Sign Up button leading to RegisterPage
         TextView logOutBtn = getView().findViewById(R.id.logoutBtn);
         logOutBtn.setOnClickListener(view1 -> {
@@ -244,66 +267,30 @@ public class SettingsFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (!areChangesValid()) {
-//                    Context context = getActivity().getApplicationContext();
-//                    String text = "shit";
-//                    int duration = Toast.LENGTH_SHORT;
-//
-//                    Toast toast = Toast.makeText(context, text, duration);
-//                    toast.show();
-//
-//                    return;
-//                }
+                if (!areChangesValid()) {
+                    Context context = getActivity().getApplicationContext();
+                    String text = "Not Saved";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+
+                    return;
+                }
 
                 AsyncWrapper.wrap(() -> {
                     try {
+                        updateUserPassword();
                         setNewInformation();
-                        getActivity().runOnUiThread(() -> {
-                            Toast.makeText(getActivity().getApplicationContext()
-                                    , "Success", Toast.LENGTH_LONG);
-                        });
                     } catch (Exception e) {
                         // ERR show
                         Log.e("updateUserInformation", e.getMessage());
-                        getActivity().runOnUiThread(() -> {
-                            Toast.makeText(getActivity().getApplicationContext()
-                                    , e.getMessage(), Toast.LENGTH_LONG);
-                        });
+                        return;
                     }
                 });
-            }
-        });
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                if (!areChangesValid()) {
-//                    Context context = getActivity().getApplicationContext();
-//                    String text = "shit";
-//                    int duration = Toast.LENGTH_SHORT;
-//
-//                    Toast toast = Toast.makeText(context, text, duration);
-//                    toast.show();
-//
-//                    return;
-//                }
-
-                AsyncWrapper.wrap(() -> {
-                    try {
-                        setNewInformation();
-                        getActivity().runOnUiThread(() -> {
-                            Toast.makeText(getActivity().getApplicationContext()
-                                    , "Success", Toast.LENGTH_LONG);
-                        });
-                    } catch (Exception e) {
-                        // ERR show
-                        Log.e("updateUserInformation", e.getMessage());
-                        getActivity().runOnUiThread(() -> {
-                            Toast.makeText(getActivity().getApplicationContext()
-                                    , e.getMessage(), Toast.LENGTH_LONG);
-                        });
-                    }
-                });
+                Toast.makeText(getActivity().getApplicationContext()
+                        , "Saved", Toast.LENGTH_LONG);
             }
         });
     }
@@ -350,14 +337,29 @@ public class SettingsFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String newPassword = password.getText().toString();
 
-        user.updatePassword(newPassword)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "User password updated.");
+        if (currentPassword.getText().toString().length() > 0 &&
+                password.getText().toString().length() > 0 &&
+                repeatPassword.getText().toString().length() > 0) {
+
+            user.updatePassword(newPassword)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "User password updated.");
+                            }
                         }
-                    }
-                });
+                    });
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            Uri selectedImage = data.getData();
+            ImageView imageView = getView().findViewById(R.id.imageView);
+            imageView.setImageURI(selectedImage);
+        }
     }
 }
