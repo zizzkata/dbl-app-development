@@ -82,6 +82,12 @@
                             tools:ignore="ImageContrastCheck"
                             tools:src="@tools:sample/avatars" />
 
+                        <Button
+                            android:id="@+id/addImageBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Add image" />
+
                     </LinearLayout>
 
                     <LinearLayout
