@@ -174,7 +174,6 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
                     imageGalleryViewPager.setAdapter(verticalViewPagerAdapter);
                     ((ImageViewPagerAdapter) imageGalleryViewPager.getAdapter()).notifyChangeInPosition(n.size() + 1);
                     imageGalleryViewPager.getAdapter().notifyDataSetChanged();
-
                 });
             } catch (Exception e) {
                 e.printStackTrace();
@@ -213,7 +212,36 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
 
     private void bindData(AccommodationInfo data) {
         addressTxt.setText(data.getAddress());
-        postcodeTxt.setText(data.getDescription());
-        floorTxt.setText(data.getFloor());
+        postcodeTxt.setText("Postcode: " + data.getPostcode());
+        floorTxt.setText("Floor: " + data.getFloor());
+        priceTxt.setText("Rental price:  €" + data.getPrice().toString() + "p/m");
+//      TODO: accommTypeTxt.setText();
+//      TODO: utilitiesTxt.setText();
+        areaTxt.setText("Surface area: " + data.getAreaString());
+        furnishedTxt.setText("Is furnished: " + booleanToYesNo(data.getFurnished()));
+        smokersTxt.setText("Accepts smokers: " + booleanToYesNo(data.getSmokers()));
+        petsTxt.setText("Accepts pet owners: " + booleanToYesNo(data.getPets()));
+        minimumPeriodTxt.setText("Minimum rental period: " + data.getMinimumPeriod());
+        availableTxt.setText("Available from: " + data.getAvailableFrom());
+        untilTxt.setText("Available until: " + data.getAvailableUntil());
+        descriptionTxt.setText(data.getDescription());
+    }
+
+    private String booleanToYesNo(boolean x) {
+        if (x) {
+            return "Yes";
+        } else {
+            return "No";
+        }
+    }
+
+    /**
+     * Overridden to prevent TransactionTooLargeException on starting a new intent
+     */
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.clear();
+        super.onSaveInstanceState(outState);
+        Log.d("extra", "Instance state of discovery fragment cleared");
     }
 }
