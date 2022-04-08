@@ -123,8 +123,9 @@ public abstract class Database {
         return accommodations;
     }
 
-    public static void rateAccommodation(String accommodationId, String username,
-                                         boolean rating) throws Exception {
-        Tasks.await(FirebaseQueries.rateAccommodation(accommodationId, username, rating));
+    public static void createRatingAccommodation(String accommodationId, String username
+            , String ownerUsername, boolean rating) throws Exception {
+        Tasks.await(FirebaseQueries.createRatingOnAccommodation(accommodationId
+                , username, ownerUsername, rating));
     }
 }

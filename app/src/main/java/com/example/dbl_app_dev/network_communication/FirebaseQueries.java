@@ -5,6 +5,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.dbl_app_dev.store.objects.AccommodationInfo;
+import com.example.dbl_app_dev.store.objects.User;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -269,13 +271,14 @@ public abstract class FirebaseQueries {
                 .get();
     }
 
-    public static Task<Void> rateAccommodation(String accommodationId, String username
-            , boolean rate) {
-        throw new Error("OPA");
-//        Map<String, Object> rating = new HashMap<>();
-//        rating.put("rated", rate ? "positive" : "negative");
-//        rating.put("owner_rating", "neutral");
-//        return ratedAccommodations.document(username).collection("accommodation")
-//                .document(accommodationId).set(rating);
+    public static Task<Void> createRatingOnAccommodation(String accommodationId
+            , String tenantId, String ownerId, boolean rate) {
+        Map<String, Object> rating = new HashMap<>();
+        rating.put("accommodationId", accommodationId);
+        rating.put("tenantUsername", tenantId);
+        rating.put("owner_username", ownerId);
+        rating.put("ratedLandlord", 0);
+        rating.put("ratedTenant", rate ? 1 : -1);
+        return ratedAccommodations.document().set(rating);
     }
 }
