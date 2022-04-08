@@ -281,4 +281,15 @@ public abstract class FirebaseQueries {
         rating.put("ratedTenant", rate ? 1 : -1);
         return ratedAccommodations.document().set(rating);
     }
+
+    public static Query getOneRatingOnAccommodation(String accommodationId, String tenantId) {
+        return ratedAccommodations
+                .whereEqualTo("accommodationId", accommodationId)
+                .whereEqualTo("tenantUsername", tenantId)
+                .limit(1);
+    }
+
+    public static Task<Void> deleteRatingOnAccommodation(String documentId) {
+        return ratedAccommodations.document(documentId).delete();
+    }
 }
