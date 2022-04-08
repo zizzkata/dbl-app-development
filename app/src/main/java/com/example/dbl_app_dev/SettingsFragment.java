@@ -85,32 +85,6 @@ public class SettingsFragment extends Fragment {
     private ViewValidator passValidator;
     private ViewValidator repPassValidator;
 
-    // text boxes
-    private EditText email;
-    private TextView emailWarning;
-    private EditText username;
-    private TextView usernameWarning;
-    private EditText currentPassword;
-    private TextView currentPasswordWarning;
-    private EditText password;
-    private TextView passwordWarning;
-    private EditText repeatPassword;
-    private TextView repeatPasswordWarning;
-    private EditText firstName;
-    private EditText lastName;
-    private EditText phoneNumber;
-    private EditText description;
-    private CheckBox smokes;
-    private CheckBox hasPets;
-    private ImageView profilePic;
-
-    // all used validators
-    private ViewValidator emailValidator;
-    private ViewValidator userValidator;
-    private ViewValidator currPassValidator;
-    private ViewValidator passValidator;
-    private ViewValidator repPassValidator;
-
     public SettingsFragment() {
         // Required empty public constructor
     }
@@ -303,8 +277,6 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        // Save button used to update current user's personal info and password
-        TextView saveButton = getView().findViewById(R.id.saveBtn);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
