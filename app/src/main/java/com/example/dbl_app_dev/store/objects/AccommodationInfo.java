@@ -123,7 +123,10 @@ public class AccommodationInfo {
     }
 
     public String getAddressShort() {
-        return address.substring( 0, address.indexOf(","));
+        if (address == null) return "";
+        if (address.length() == 0) return "";
+        String s = address + ",";
+        return s.substring( 0, s.indexOf(","));
     }
 
     public String getAccommodationId() {
@@ -175,9 +178,13 @@ public class AccommodationInfo {
         return price;
     }
 
+    public boolean getActive() { return active; }
+
     public String getPostcode() { return postcode; }
 
     public String getAreaString() { return area_m2.toString(); }
+
+    public Long getArea() { return area_m2; }
 
     public String getMinimumPeriod() { return minimumPeriod; }
 
@@ -193,4 +200,21 @@ public class AccommodationInfo {
     public void rateAccommodation(String username, boolean rate) throws Exception {
         Database.createRatingAccommodation(accommodationId, username, ownerUsername, rate);
     }
+
+    public void setAddress(String s) {this.address = s;}
+    public void setCity(String s) {this.city = s;}
+    public void setCurrency(String s) {this.currency = s;}
+    public void setDescription1(String s) {this.description = s;}
+    public void setAvailableUntil(String s) {this.availableUntil = s;}
+    public void setAvailableFrom(String s) {this.availableFrom = s;}
+    public void setFloor(String s) {this.floor = s;}
+    public void setFurnished(boolean b) {this.furnished = b;}
+    public void setHouseNumber(String s) {this.houseNumber = s;}
+    public void setMinimumPeriod(String s) {this.minimumPeriod = s;}
+    public void setOwnerUsername(String s) {this.ownerUsername = s;}
+    public void setPets1(boolean b) {this.pets = b;}
+    public void setPostcode(String s) {this.postcode = s;}
+    public void setPrice(Long l) {this.price = l;}
+    public void setArea_m2(Long l) {this.area_m2 = l;}
+    public void setSmokers(boolean b) {this.smokers = b;}
 }
