@@ -1,15 +1,29 @@
 package com.example.dbl_app_dev;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+
+import com.example.dbl_app_dev.store.Store;
+import com.example.dbl_app_dev.store.objects.AccommodationInfo;
+import com.example.dbl_app_dev.store.objects.User;
+import com.example.dbl_app_dev.util.AsyncWrapper;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,6 +32,10 @@ import androidx.fragment.app.Fragment;
  * create an instance of this fragment.
  */
 public class LandlordAccommodationManagementFragment extends Fragment {
+
+    ConstraintLayout accommParent;
+    ArrayList<AccommodationInfo> myListings = null;
+    ArrayList<TenantAccommodationObject> myListingsObjects = new ArrayList<>();
 
     public LandlordAccommodationManagementFragment() {
         // Required empty public constructor
@@ -53,16 +71,150 @@ public class LandlordAccommodationManagementFragment extends Fragment {
 
 
         // Get the parent view of the accommodation objects
-        ConstraintLayout accommParent = getView()
-                .findViewById(R.id.scrollConstraintLayout);
+        accommParent = getView().findViewById(R.id.scrollConstraintLayout);
+        accommParent.removeAllViews();
 
-        // Add the accommodation settings button functionality
-        final int childCount = accommParent.getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            View v = accommParent.getChildAt(i);
-            v.findViewById(R.id.settingsIcon).setOnClickListener(view1 -> {
-                ((MainNavigationActivity) getActivity()).editAccommodationDialog(v);
+        // Get the liked listings of the user
+        AsyncWrapper.wrap(() -> {
+            try {
+                myListings = Store.getCurrentUserLikedAccommodations();
+                getActivity().runOnUiThread(() -> {
+                            if (myListings != null) {
+                                addMyListings();
+                                addAllEditButtonsFunctionality();
+                            }
+                        }
+                );
+            } catch (Exception e) {
+                Log.e("ERR", e.getMessage());
+            }
+        });
+    }
+
+    private void addMyListings() {
+        // Remembers the previously created view
+        View previousView = null;
+        ConstraintLayout view; // newly created view
+        ConstraintLayout.LayoutParams lp; // LayoutParams for newly created view
+        // Layout inflater for adding the new view
+        LayoutInflater vi = (LayoutInflater) getContext()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        // Create the listings
+        int i = 0;
+        for (AccommodationInfo listing : myListings) {
+            if (i == 0) previousView = accommParent;
+
+            // Create the new view and add it to the parent
+            view = (ConstraintLayout) vi
+                    .inflate(R.layout.compact_accommodation_object, null);
+            view.setId(View.generateViewId());
+            accommParent.addView(view, 0,
+                    new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            // Add the corresponding text
+            ((TextView) view.findViewById(R.id.streetNameTxt))
+                    .setText(listing.getAddressShort());
+            ((TextView) view.findViewById(R.id.apartmentNameTxt)).setText(listing.getHouseNumber());
+
+            // Set the needed constraints
+            lp = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            if (i == 0) {
+                lp.topToTop = previousView.getId();
+            } else {
+                lp.topToBottom = previousView.getId();
+            }
+            view.setLayoutParams(lp);
+
+            // Remember the view
+            myListingsObjects.add(new TenantAccommodationObject(view, listing));
+
+            previousView = view;
+            i++;
+        }
+    }
+
+    private void addAllEditButtonsFunctionality() {
+        for (TenantAccommodationObject a : myListingsObjects) {
+            a.compactView.findViewById(R.id.settingsIcon).setOnClickListener(view1 -> {
+                AlertDialog d = ((MainNavigationActivity) getActivity())
+                        .editAccommodationDialog(a.compactView);
+                getActivity().runOnUiThread(() -> setDialogInfo(d, a.accommodationInfo));
             });
+        }
+    }
+
+    private void setDialogInfo(AlertDialog ad, AccommodationInfo listing) {
+        AsyncWrapper.wrap(() -> {
+            try {
+                Bitmap image = listing.getPhotos().get(0);
+                getActivity().runOnUiThread(() -> {
+                    ((TextView) ad.findViewById(R.id.normalImageCountText))
+                            //.setText(listing.getPhotos().size());
+                            .setText("3");
+                    ((ImageView) ad.findViewById(R.id.normalImage))
+                            .setImageBitmap(image);
+                });
+            } catch (Exception e) {
+                getActivity().runOnUiThread(() ->
+                {
+                    ((TextView) ad.findViewById(R.id.normalImageCountText))
+                            .setText("0");
+                    ((ImageView) ad.findViewById(R.id.normalImage))
+                            .setImageDrawable(getResources()
+                                    .getDrawable(R.drawable.ic_buildings_filled));
+                });
+            }
+        });
+
+        AsyncWrapper.wrap(() -> {
+            try {
+                Bitmap image = listing.getPhotoPanoramic();
+                getActivity().runOnUiThread(() -> {
+                    ((TextView) ad.findViewById(R.id.panoramaImageCountText))
+                            .setText("1");
+                    ((ImageView) ad.findViewById(R.id.panoramaImage))
+                            .setImageBitmap(image);
+                });
+            } catch (Exception e) {
+                getActivity().runOnUiThread(() -> {
+                    ((TextView) ad.findViewById(R.id.panoramaImageCountText))
+                            .setText("1");
+                    ((ImageView) ad.findViewById(R.id.panoramaImage))
+                            .setImageDrawable(getResources()
+                                    .getDrawable(R.drawable.ic_buildings_filled));
+                });
+            }
+        });
+
+        ((TextView) ad.findViewById(R.id.addressTxt)).setText(listing.getAddressShort());
+        ((TextView) ad.findViewById(R.id.apartmentNameText)).setText(listing.getHouseNumber());
+        ((TextView) ad.findViewById(R.id.floorTxt)).setText(listing.getFloor());
+        ((TextView) ad.findViewById(R.id.cityTxt)).setText(listing.getCity());
+        ((TextView) ad.findViewById(R.id.postcodeTxt)).setText(listing.getPostcode());
+
+        ((TextView) ad.findViewById(R.id.maxPriceTxt))
+                .setText(listing.getCurrency() + listing.getPrice());
+        ((TextView) ad.findViewById(R.id.minimumRentTxt)).setText(listing.getMinimumPeriod());
+        ((TextView) ad.findViewById(R.id.startDateEditTxt)).setText(listing.getAvailableFrom());
+        ((TextView) ad.findViewById(R.id.endDateEditTxt)).setText(listing.getAvailableUntil());
+        ((TextView) ad.findViewById(R.id.surfaceAreaTxt)).setText(listing.getAreaString());
+        ((TextView) ad.findViewById(R.id.descriptionTxt)).setText(listing.getDescription());
+
+        ((CheckBox) ad.findViewById(R.id.furnishedCheckBox)).setChecked(listing.getFurnished());
+        ((CheckBox) ad.findViewById(R.id.smokerCheckBox)).setChecked(listing.getSmokers());
+        ((CheckBox) ad.findViewById(R.id.petsCheckBox)).setChecked(listing.getPets());
+    }
+
+    class TenantAccommodationObject {
+        View compactView;
+        AccommodationInfo accommodationInfo;
+
+        TenantAccommodationObject(View compactAccomm, AccommodationInfo accommodationObj) {
+            this.compactView = compactAccomm;
+            this.accommodationInfo = accommodationObj;
         }
     }
 }

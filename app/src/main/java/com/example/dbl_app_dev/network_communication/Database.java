@@ -137,4 +137,12 @@ public abstract class Database {
                         .get()).getDocuments().get(0);
         Tasks.await(FirebaseQueries.deleteRatingOnAccommodation(reference.getId()));
     }
+
+    public static void createAccommodation(Map<String, Object> data) throws Exception {
+        Tasks.await(FirebaseQueries.createAccommodationListing(data));
+    }
+
+    public static void updateAccommodation(String accommodationId, Map<String, Object> newData) throws Exception {
+        Tasks.await(FirebaseQueries.updateAccommodationListing(accommodationId, newData));
+    }
 }

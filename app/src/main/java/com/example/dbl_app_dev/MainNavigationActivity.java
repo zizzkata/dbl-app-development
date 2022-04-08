@@ -102,11 +102,11 @@ public class MainNavigationActivity extends AppCompatActivity {
      * Method used to create the popup that shows when editing an existing
      * accommodation.
      */
-    public void editAccommodationDialog(View accommObject) {
+    public AlertDialog editAccommodationDialog(View accommObject) {
         View myView = getLayoutInflater().inflate(R.layout.edit_accommodation_pop_up, null);
         // (new EditAccommDialogDisplayer(this, R.id.cancelButton, R.id.saveBtn,
         // myView))
-        (new EditAccommDialogDisplayer(this,
+        return (new EditAccommDialogDisplayer(this,
                 R.id.cancelButton, R.id.saveBtn, R.id.negativeButton, myView, accommObject))
                 .displayPopupDialog();
     }
