@@ -171,7 +171,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
                 getActivity().runOnUiThread(() -> {
                     verticalViewPagerAdapter = new ImageViewPagerAdapter(getChildFragmentManager(), n, pan);
                     imageGalleryViewPager.setAdapter(verticalViewPagerAdapter);
-                    ((ImageViewPagerAdapter) imageGalleryViewPager.getAdapter()).notifyChangeInPosition(1);
+                    ((ImageViewPagerAdapter) imageGalleryViewPager.getAdapter()).notifyChangeInPosition(n.size() + 1);
                     imageGalleryViewPager.getAdapter().notifyDataSetChanged();
 
                 });
