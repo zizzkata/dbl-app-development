@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.dbl_app_dev.network_communication.Database;
 import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.store.objects.AccommodationInfo;
 import com.example.dbl_app_dev.store.objects.User;
@@ -187,9 +188,13 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
      */
     @Override
     public void swipedRight() {
-        // if (dataModels.size() > 0) {
-        // Log.d("extra_debug", "Positive Rating");
-        // }
+        AsyncWrapper.wrap(() -> {
+            try {
+               currentAccommodationInfo.rateAccommodation(Store.getCurrentUser().getUsername(), true);
+            } catch (Exception e) {
+                Log.e("swipeRgiht", e.getMessage());
+            }
+        });
     }
 
     /**
@@ -197,9 +202,13 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
      */
     @Override
     public void swipedLeft() {
-        // if (dataModels.size() > 0) {
-        // Log.d("extra_debug", "Negative Rating");
-        // }
+        AsyncWrapper.wrap(() -> {
+            try {
+                currentAccommodationInfo.rateAccommodation(Store.getCurrentUser().getUsername(), true);
+            } catch (Exception e) {
+                Log.e("swipeLeft", e.getMessage());
+            }
+        });
     }
 
     private void bindData(AccommodationInfo data) {

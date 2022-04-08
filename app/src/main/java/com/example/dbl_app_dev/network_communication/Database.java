@@ -3,6 +3,7 @@ package com.example.dbl_app_dev.network_communication;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import com.example.dbl_app_dev.util.AsyncWrapper;
+import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -123,8 +124,17 @@ public abstract class Database {
         return accommodations;
     }
 
-    public static void rateAccommodation(String accommodationId, String username,
-                                         boolean rating) throws Exception {
-        Tasks.await(FirebaseQueries.rateAccommodation(accommodationId, username, rating));
+    public static void createRatingAccommodation(String accommodationId, String username
+            , String ownerUsername, boolean rating) throws Exception {
+        Tasks.await(FirebaseQueries.createRatingOnAccommodation(accommodationId
+                , username, ownerUsername, rating));
+    }
+
+    public static void deleteRatingAccommodation(String accommodationId, String tenantUsername)
+            throws Exception {
+        DocumentSnapshot reference = Tasks.await(
+                FirebaseQueries.getOneRatingOnAccommodation(accommodationId, tenantUsername)
+                        .get()).getDocuments().get(0);
+        Tasks.await(FirebaseQueries.deleteRatingOnAccommodation(reference.getId()));
     }
 }
