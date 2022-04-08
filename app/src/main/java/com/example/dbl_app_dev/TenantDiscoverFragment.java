@@ -31,7 +31,7 @@ import java.util.ArrayList;
  */
 public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     private GestureDetector horizontalSwipeDetector;
-    private AccommodationInfo currentAccommodationInfo = null; // currently viewed accommodation
+    private AccommodationInfo currentAccommodationInfo; // currently viewed accommodation
     VerticalViewPager imageGalleryViewPager;
     ConstraintLayout noSwipesContainer;
     ConstraintLayout contentContainer;
@@ -110,7 +110,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         this.horizontalSwipeDetector = new GestureDetector(getContext(), new CardSwipeListener(this, true, false));
         topCard.setOnTouchListener((v, event) -> {
             if (horizontalSwipeDetector.onTouchEvent(event)) {
-                nextCard();
+                displayCard(true);
                 return false;
             }
             return true;
@@ -122,11 +122,11 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
 
         likeBtn.setOnClickListener(v -> {
             swipedRight();
-            nextCard();
+            displayCard(true);
         });
         dislikeBtn.setOnClickListener(v -> {
             swipedLeft();
-            nextCard();
+            displayCard(true);
         });
         arBtn.setOnClickListener(v -> {
             imageGalleryViewPager.setAdapter(verticalViewPagerAdapter);
@@ -139,9 +139,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         filtersBtn.setOnClickListener(v -> ((MainNavigationActivity) requireActivity()).openFilterDialog());
 
         // makes sure that the a card is not discarded if it is not rated
-        if (currentAccommodationInfo == null) {
-            nextCard();
-        }
+        displayCard(currentAccommodationInfo == null);
 
         // open pop-up
         AsyncWrapper.wrap(() -> {
@@ -159,10 +157,12 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     /**
      * Updates the information on currentAccommodationInfo and displays it
      */
-    private void nextCard() {
+    private void displayCard(boolean nextCard) {
         AsyncWrapper.wrap(() -> {
             try {
-                currentAccommodationInfo = Store.getNextAccommodation();
+                if (nextCard) {
+                    currentAccommodationInfo = Store.getNextAccommodation();
+                }
                 getActivity().runOnUiThread(() -> {
                     bindData(currentAccommodationInfo);
                 });
@@ -180,7 +180,6 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
                 Log.e("ERR", e.getMessage());
             }
         });
-
     }
 
     /**
