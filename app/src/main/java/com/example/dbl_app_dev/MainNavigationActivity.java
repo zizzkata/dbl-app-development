@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.app.AlertDialog;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.navigation.NavController;
