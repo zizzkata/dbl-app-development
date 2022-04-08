@@ -92,11 +92,11 @@ public class SettingsFragment extends Fragment {
     private void init() {
         // get views by id
         email = getView().findViewById(R.id.editTextTextEmailAddress);
-        //email.setEnabled(false);
-//        emailWarning = getView().findViewById(R.id.invalidEmail);
+        // email.setEnabled(false);
+        // emailWarning = getView().findViewById(R.id.invalidEmail);
         username = getView().findViewById(R.id.usernameBox);
-        //username.setEnabled(false);
-//        usernameWarning = getView().findViewById(R.id.invalidUsername);
+        // username.setEnabled(false);
+        // usernameWarning = getView().findViewById(R.id.invalidUsername);
         currentPassword = getView().findViewById(R.id.currentPasswordBox);
         currentPasswordWarning = getView().findViewById(R.id.invalidCurrentPassword);
         password = getView().findViewById(R.id.newPasswordBox);
@@ -115,8 +115,8 @@ public class SettingsFragment extends Fragment {
         hasPets = getView().findViewById(R.id.havePetsCheckBox);
 
         // instantiate validators
-//        emailValidator = new EmailValidator(email, emailWarning);
-//        userValidator = new UsernameValidator(username, usernameWarning);
+        // emailValidator = new EmailValidator(email, emailWarning);
+        // userValidator = new UsernameValidator(username, usernameWarning);
         currPassValidator = new currPasswordValidator(currentPassword, currentPasswordWarning);
         passValidator = new PasswordValidator(password, passwordWarning);
         repPassValidator = new RepeatPasswordValidator(repeatPassword, password, repeatPasswordWarning);
@@ -148,8 +148,8 @@ public class SettingsFragment extends Fragment {
     }
 
     private void makeWarningsInvisible() {
-//        emailWarning.setVisibility(View.GONE);
-//        usernameWarning.setVisibility(View.GONE);
+        // emailWarning.setVisibility(View.GONE);
+        // usernameWarning.setVisibility(View.GONE);
         currentPasswordWarning.setVisibility(View.GONE);
         passwordWarning.setVisibility(View.GONE);
         repeatPasswordWarning.setVisibility(View.GONE);
@@ -161,9 +161,9 @@ public class SettingsFragment extends Fragment {
 
         // add all validators to list
         // SAME FOR EMAIL
-        //validators.add(emailValidator);
+        // validators.add(emailValidator);
         // IMPORTANT CANNOT CHANGE USERNAME
-        //validators.add(new UsernameUniquenessValidator(username, usernameWarning));
+        // validators.add(new UsernameUniquenessValidator(username, usernameWarning));
         validators.add(currPassValidator);
         validators.add(passValidator);
         validators.add(repPassValidator);
@@ -195,7 +195,7 @@ public class SettingsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_settings, container, false);
         ((MainNavigationActivity) getActivity()).modeSwitchLogic(root.findViewById(R.id.modeSwitch));
 
@@ -208,7 +208,7 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         init();
-//         makeWarningsInvisible();
+        // makeWarningsInvisible();
         AsyncWrapper.wrap(() -> {
             User user;
             try {
@@ -247,30 +247,28 @@ public class SettingsFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (!areChangesValid()) {
-//                    Context context = getActivity().getApplicationContext();
-//                    String text = "shit";
-//                    int duration = Toast.LENGTH_SHORT;
-//
-//                    Toast toast = Toast.makeText(context, text, duration);
-//                    toast.show();
-//
-//                    return;
-//                }
+                // if (!areChangesValid()) {
+                // Context context = getActivity().getApplicationContext();
+                // String text = "shit";
+                // int duration = Toast.LENGTH_SHORT;
+                //
+                // Toast toast = Toast.makeText(context, text, duration);
+                // toast.show();
+                //
+                // return;
+                // }
 
                 AsyncWrapper.wrap(() -> {
                     try {
                         setNewInformation();
                         getActivity().runOnUiThread(() -> {
-                            Toast.makeText(getActivity().getApplicationContext()
-                                    , "Success", Toast.LENGTH_LONG);
+                            Toast.makeText(getActivity().getApplicationContext(), "Success", Toast.LENGTH_LONG);
                         });
                     } catch (Exception e) {
                         // ERR show
                         Log.e("updateUserInformation", e.getMessage());
                         getActivity().runOnUiThread(() -> {
-                            Toast.makeText(getActivity().getApplicationContext()
-                                    , e.getMessage(), Toast.LENGTH_LONG);
+                            Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG);
                         });
                     }
                 });
@@ -280,30 +278,28 @@ public class SettingsFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (!areChangesValid()) {
-//                    Context context = getActivity().getApplicationContext();
-//                    String text = "shit";
-//                    int duration = Toast.LENGTH_SHORT;
-//
-//                    Toast toast = Toast.makeText(context, text, duration);
-//                    toast.show();
-//
-//                    return;
-//                }
+                // if (!areChangesValid()) {
+                // Context context = getActivity().getApplicationContext();
+                // String text = "shit";
+                // int duration = Toast.LENGTH_SHORT;
+                //
+                // Toast toast = Toast.makeText(context, text, duration);
+                // toast.show();
+                //
+                // return;
+                // }
 
                 AsyncWrapper.wrap(() -> {
                     try {
                         setNewInformation();
                         getActivity().runOnUiThread(() -> {
-                            Toast.makeText(getActivity().getApplicationContext()
-                                    , "Success", Toast.LENGTH_LONG);
+                            Toast.makeText(getActivity().getApplicationContext(), "Success", Toast.LENGTH_LONG);
                         });
                     } catch (Exception e) {
                         // ERR show
                         Log.e("updateUserInformation", e.getMessage());
                         getActivity().runOnUiThread(() -> {
-                            Toast.makeText(getActivity().getApplicationContext()
-                                    , e.getMessage(), Toast.LENGTH_LONG);
+                            Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG);
                         });
                     }
                 });
@@ -330,7 +326,7 @@ public class SettingsFragment extends Fragment {
 
     // TODO password
     private void updateUserSettings() {
-        //updateUserPassword();
+        // updateUserPassword();
         try {
             setNewInformation();
         } catch (Exception e) {
