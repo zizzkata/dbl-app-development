@@ -292,4 +292,14 @@ public abstract class FirebaseQueries {
     public static Task<Void> deleteRatingOnAccommodation(String documentId) {
         return ratedAccommodations.document(documentId).delete();
     }
+
+    public static Task<Void> updateAccommodationListing(String accommodationId
+            , Map<String, Object> newData) {
+        return accommodations.document(accommodationId).update(newData);
+    }
+
+    public static Task<Void> createAccommodationListing(Map<String, Object> newData) {
+        return accommodations.document().set(newData);
+    }
+
 }
