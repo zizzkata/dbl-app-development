@@ -2,12 +2,15 @@ package com.example.dbl_app_dev;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.store.objects.AccommodationInfo;
+import com.example.dbl_app_dev.store.objects.User;
 import com.example.dbl_app_dev.util.AsyncWrapper;
 
 import java.util.ArrayList;
@@ -77,7 +81,7 @@ public class LandlordAccommodationManagementFragment extends Fragment {
                 getActivity().runOnUiThread(() -> {
                             if (myListings != null) {
                                 addMyListings();
-                                //addAllEditButtonsFunctionality();
+                                addAllEditButtonsFunctionality();
                             }
                         }
                 );
@@ -85,15 +89,6 @@ public class LandlordAccommodationManagementFragment extends Fragment {
                 Log.e("ERR", e.getMessage());
             }
         });
-
-/*        // Add the accommodation settings button functionality
-        final int childCount = accommParent.getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            View v = accommParent.getChildAt(i);
-            v.findViewById(R.id.settingsIcon).setOnClickListener(view1 -> {
-                ((MainNavigationActivity) getActivity()).editAccommodationDialog(v);
-            });
-        }*/
     }
 
     private void addMyListings() {
@@ -141,15 +136,77 @@ public class LandlordAccommodationManagementFragment extends Fragment {
         }
     }
 
-/*    private void addAllEditButtonsFunctionality() {
+    private void addAllEditButtonsFunctionality() {
         for (TenantAccommodationObject a : myListingsObjects) {
-            a.compactView.findViewById(R.id.actionIcon).setOnClickListener(view1 -> {
+            a.compactView.findViewById(R.id.settingsIcon).setOnClickListener(view1 -> {
                 AlertDialog d = ((MainNavigationActivity) getActivity())
-                        .viewAccommodationDialog(a.compactView);
+                        .editAccommodationDialog(a.compactView);
                 getActivity().runOnUiThread(() -> setDialogInfo(d, a.accommodationInfo));
             });
         }
-    }*/
+    }
+
+    private void setDialogInfo(AlertDialog ad, AccommodationInfo listing) {
+        AsyncWrapper.wrap(() -> {
+            try {
+                Bitmap image = listing.getPhotos().get(0);
+                getActivity().runOnUiThread(() -> {
+                    ((TextView) ad.findViewById(R.id.normalImageCountText))
+                            //.setText(listing.getPhotos().size());
+                            .setText("3");
+                    ((ImageView) ad.findViewById(R.id.normalImage))
+                            .setImageBitmap(image);
+                });
+            } catch (Exception e) {
+                getActivity().runOnUiThread(() ->
+                {
+                    ((TextView) ad.findViewById(R.id.normalImageCountText))
+                            .setText("0");
+                    ((ImageView) ad.findViewById(R.id.normalImage))
+                            .setImageDrawable(getResources()
+                                    .getDrawable(R.drawable.ic_buildings_filled));
+                });
+            }
+        });
+
+        AsyncWrapper.wrap(() -> {
+            try {
+                Bitmap image = listing.getPhotoPanoramic();
+                getActivity().runOnUiThread(() -> {
+                    ((TextView) ad.findViewById(R.id.panoramaImageCountText))
+                            .setText("1");
+                    ((ImageView) ad.findViewById(R.id.panoramaImage))
+                            .setImageBitmap(image);
+                });
+            } catch (Exception e) {
+                getActivity().runOnUiThread(() -> {
+                    ((TextView) ad.findViewById(R.id.panoramaImageCountText))
+                            .setText("1");
+                    ((ImageView) ad.findViewById(R.id.panoramaImage))
+                            .setImageDrawable(getResources()
+                                    .getDrawable(R.drawable.ic_buildings_filled));
+                });
+            }
+        });
+
+        ((TextView) ad.findViewById(R.id.addressTxt)).setText(listing.getAddressShort());
+        ((TextView) ad.findViewById(R.id.apartmentNameText)).setText(listing.getHouseNumber());
+        ((TextView) ad.findViewById(R.id.floorTxt)).setText(listing.getFloor());
+        ((TextView) ad.findViewById(R.id.cityTxt)).setText(listing.getCity());
+        ((TextView) ad.findViewById(R.id.postcodeTxt)).setText(listing.getPostcode());
+
+        ((TextView) ad.findViewById(R.id.maxPriceTxt))
+                .setText(listing.getCurrency() + listing.getPrice());
+        ((TextView) ad.findViewById(R.id.minimumRentTxt)).setText(listing.getMinimumPeriod());
+        ((TextView) ad.findViewById(R.id.startDateEditTxt)).setText(listing.getAvailableFrom());
+        ((TextView) ad.findViewById(R.id.endDateEditTxt)).setText(listing.getAvailableUntil());
+        ((TextView) ad.findViewById(R.id.surfaceAreaTxt)).setText(listing.getAreaString());
+        ((TextView) ad.findViewById(R.id.descriptionTxt)).setText(listing.getDescription());
+
+        ((CheckBox) ad.findViewById(R.id.furnishedCheckBox)).setChecked(listing.getFurnished());
+        ((CheckBox) ad.findViewById(R.id.smokerCheckBox)).setChecked(listing.getSmokers());
+        ((CheckBox) ad.findViewById(R.id.petsCheckBox)).setChecked(listing.getPets());
+    }
 
     class TenantAccommodationObject {
         View compactView;

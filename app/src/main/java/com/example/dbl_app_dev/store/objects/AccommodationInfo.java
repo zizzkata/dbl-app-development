@@ -35,9 +35,9 @@ public class AccommodationInfo {
     private String availableUntil;
     private String description;
 
-    private Boolean furnished;
-    private Boolean pets;
-    private Boolean smokers;
+    private Boolean furnished = false;
+    private Boolean pets = false;
+    private Boolean smokers = false;
 
     public AccommodationInfo(ArrayList<String> s, ArrayList<Bitmap> photos, Bitmap photoPanoramic) {
         this.accommodationId = "XAFxPJEMgTIRA4HUam4x";
@@ -157,14 +157,17 @@ public class AccommodationInfo {
     }
 
     public Boolean getFurnished() {
+        if (furnished == null) return false;
         return furnished;
     }
 
     public Boolean getPets() {
+        if (pets == null) return false;
         return pets;
     }
 
     public Boolean getSmokers() {
+        if (smokers == null) return false;
         return smokers;
     }
 
