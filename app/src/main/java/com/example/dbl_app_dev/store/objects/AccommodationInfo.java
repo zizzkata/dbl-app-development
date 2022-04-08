@@ -157,14 +157,20 @@ public class AccommodationInfo {
     }
 
     public Boolean getFurnished() {
+        if (furnished == null)
+            return false;
         return furnished;
     }
 
     public Boolean getPets() {
+        if (pets == null)
+            return false;
         return pets;
     }
 
     public Boolean getSmokers() {
+        if (smokers == null)
+            return false;
         return smokers;
     }
 
