@@ -18,6 +18,11 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.dbl_app_dev.network_communication.Database;
+import com.example.dbl_app_dev.store.Store;
+import com.example.dbl_app_dev.store.objects.User;
+import com.example.dbl_app_dev.util.AsyncWrapper;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -149,16 +154,40 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
      * @param batchSize number of cards to add to the tenantInfo queue
      */
     private void pullCardsInfo(int batchSize) {
-        // TODO: remove placeholder code, get data from server
-        Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.default_tenant_picture);
-        for (int i = 0; i < batchSize; i++) {
-            String[] sample = new String[6];
-            Arrays.fill(sample, "text" + i);
-            ArrayList<String> sampleArrList = new ArrayList<>(Arrays.asList(sample));
+        AsyncWrapper.wrap(() -> {
+            /*try {
+                User currentUser = Store.getCurrentUser();
+                Bitmap cuImage = currentUser.getProfilePic();
+                String[] name = new String[6];
+                name[0] = currentUser.getFirstName() + " " + currentUser.getFirstName();
+                name[1] = "bulgari unaci";
+                name[2] = "bulgari unaci";
+                name[3] = "bulgari unaci";
+                name[4] = "bulgari unaci";
+                name[5] = "bulgari unaci";
+                tenantInfo.add(new TenantInfo(new ArrayList<>(Arrays.asList(name)), cuImage));
+            } catch (Exception e) {
+                Log.i("getCurrentUserDiscover", e.getMessage());
+            }*/
 
-            tenantInfo.add(
-                    new TenantInfo(sampleArrList, image));
-        }
+            try {
+                User currentUser = Store.getCurrentUser();
+                ArrayList<User> ratedTenants = Database.getRatedTenants(currentUser.getUsername());
+                for (User tenant : ratedTenants) {
+                    Bitmap currentImage = tenant.getProfilePic();
+                    String[] tenantData = new String[6];
+                    tenantData[0] = tenant.getFirstName() + " " + tenant.getLastName();
+                    tenantData[1] = tenant.getAge();
+                    tenantData[2] = "woagawkgwoagwogkaw";
+                    tenantData[3] = "woagawkgwoagwogkaw";
+                    tenantData[4] = "woagawkgwoagwogkaw";
+                    tenantData[5] = "woagawkgwoagwogkaw";
+                    tenantInfo.add(new TenantInfo(new ArrayList<>(Arrays.asList(tenantData)), currentImage));
+                }
+            } catch (Exception e) {
+                Log.i("Port user to discovery component", e.getMessage());
+            }
+        });
     }
 
     /**
