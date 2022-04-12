@@ -82,7 +82,8 @@ public class LandlordAccommodationManagementFragment extends Fragment {
         // Get the liked listings of the user
         AsyncWrapper.wrap(() -> {
             try {
-                myListings = Store.getCurrentUserLikedAccommodations();
+                myListings = Database
+                        .getActiveAccommodationsByOwner(Store.getCurrentUser().getUsername());
                 getActivity().runOnUiThread(() -> {
                             if (myListings != null) {
                                 addMyListings();
