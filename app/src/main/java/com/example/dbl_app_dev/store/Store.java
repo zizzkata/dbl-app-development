@@ -3,6 +3,7 @@ package com.example.dbl_app_dev.store;
 import com.example.dbl_app_dev.network_communication.Authentication;
 import com.example.dbl_app_dev.network_communication.Database;
 import com.example.dbl_app_dev.store.objects.AccommodationInfo;
+import com.example.dbl_app_dev.store.objects.Rating;
 import com.example.dbl_app_dev.store.objects.User;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
@@ -22,8 +23,8 @@ public final class Store {
      */
     private static User currentUser;
     private static ArrayList<AccommodationInfo> discoveryAccommodations = new ArrayList<>();
-    private static ArrayList<AccommodationInfo> likedProperties = new ArrayList<>();
     private static ArrayList<AccommodationInfo> listedProperties = new ArrayList<>();
+    private static ArrayList<Rating> likedAccommodations = new ArrayList<>();
 
     private static Query discoveryFilter;
 
@@ -84,11 +85,14 @@ public final class Store {
 
     public static ArrayList<AccommodationInfo> getCurrentUserLikedAccommodations()
             throws Exception {
-        if (likedProperties.size() == 0) {
-            likedProperties = transformDocuments(
-                    Database.getLikedAccommodations(currentUser.getUsername()));
+       return null;
+    }
+
+    public static ArrayList<Rating> getLikedAccommodations() throws Exception {
+        if (likedAccommodations.size() == 0) { // TOTALLY USELESS FOR NO BUT WILL FIX IT
+            likedAccommodations = Database.getRatedAccommodations(currentUser.getUsername());
         }
-        return likedProperties;
+        return likedAccommodations;
     }
 
     private static ArrayList<AccommodationInfo> transformDocuments(List<DocumentSnapshot> documents) {
@@ -102,6 +106,7 @@ public final class Store {
     public static void killStore() {
         currentUser = null;
         discoveryAccommodations = new ArrayList<>();
+        likedAccommodations = new ArrayList<>();
     }
 
 }

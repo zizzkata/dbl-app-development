@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.store.objects.AccommodationInfo;
+import com.example.dbl_app_dev.store.objects.Rating;
 import com.example.dbl_app_dev.store.objects.User;
 import com.example.dbl_app_dev.util.AsyncWrapper;
 
@@ -41,7 +42,7 @@ public class TenantLikedFragment extends Fragment {
     ConstraintLayout neutralListingsParent;
     ConstraintLayout negativeListingsParent;
 
-    ArrayList<AccommodationInfo> likedListings = null;
+    ArrayList<Rating> ratings = null;
     ArrayList<TenantLikedAccommodationObject> likedObjects = new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
@@ -120,9 +121,9 @@ public class TenantLikedFragment extends Fragment {
         // Get the liked listings of the user
         AsyncWrapper.wrap(() -> {
             try {
-                likedListings = Store.getCurrentUserLikedAccommodations();
+                ratings = Store.getLikedAccommodations();
                 getActivity().runOnUiThread(() -> {
-                            if (likedListings != null) {
+                            if (ratings != null) { // check that again, wwe may return one with size 0 if it fails
                                 addLikedListings();
                                 addAllInfoButtonsFunctionality();
                             }
@@ -145,28 +146,51 @@ public class TenantLikedFragment extends Fragment {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // Create the listings
-        int i = 0;
-        for (AccommodationInfo listing : likedListings) {
-            if (i == 0) previousView = getCurrentListingParent(likedListings.get(0).getRating());
+        for (Rating rating : ratings) {
+
+            if (rating == ratings.get(0)) previousView = getCurrentListingParent(
+                    rating.getRatingLandlord().intValue());
 
             // Create the new view and add it to the parent
             view = (ConstraintLayout) vi
-                    .inflate(getCurrentAccommodationLayoutId(listing.getRating()), null);
+                    .inflate(getCurrentAccommodationLayoutId(
+                            rating.getRatingLandlord().intValue()), null);
             view.setId(View.generateViewId());
-            getCurrentListingParent(listing.getRating()).addView(view, 0,
+            getCurrentListingParent(rating.getRatingTenant().intValue()).addView(view, 0,
                     new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                             ViewGroup.LayoutParams.WRAP_CONTENT));
 
-            // Change photo
             final View v = view;
+            // Download user if it doesn't exist
             AsyncWrapper.wrap(() -> {
                 try {
-                    Bitmap image = listing.getPhotos().get(0);
+                    AccommodationInfo accommodation = rating.getAccommodation();
+                    getActivity().runOnUiThread(() -> {
+                        // Add the corresponding text
+                        ((TextView) v.findViewById(R.id.streetNameTxt))
+                                .setText(accommodation.getAddressShort());
+                        ((TextView) v.findViewById(R.id.apartmentNameTxt))
+                                .setText(accommodation.getHouseNumber());
+                        ((TextView) v.findViewById(R.id.priceTxt))
+                                .setText(accommodation.getCurrency() + accommodation.getPrice());
+                    });
+                    Bitmap image = accommodation.getPhotos().get(0);
                     getActivity().runOnUiThread(() -> {
                         ((ImageView) v.findViewById(R.id.listingThumbnail))
                                 .setImageBitmap(image);
                     });
+                    // OLD EXCEPTION
+//                } catch (Exception e) {
+//                    getActivity().runOnUiThread(() ->
+//                    {
+//                        ((ImageView) v.findViewById(R.id.listingThumbnail))
+//                                .setImageDrawable(getResources()
+//                                        .getDrawable(R.drawable.ic_buildings_filled));
+//                    });
+//                }
                 } catch (Exception e) {
+                    // IGNORE
+                    Log.e("getLikedListings", e.getMessage());
                     getActivity().runOnUiThread(() ->
                     {
                         ((ImageView) v.findViewById(R.id.listingThumbnail))
@@ -176,17 +200,10 @@ public class TenantLikedFragment extends Fragment {
                 }
             });
 
-            // Add the corresponding text
-            ((TextView) view.findViewById(R.id.streetNameTxt))
-                    .setText(listing.getAddressShort());
-            ((TextView) view.findViewById(R.id.apartmentNameTxt)).setText(listing.getHouseNumber());
-            ((TextView) view.findViewById(R.id.priceTxt))
-                    .setText(listing.getCurrency() + listing.getPrice());
-
             // Set the needed constraints
             lp = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
-            if (i == 0) {
+            if (rating == ratings.get(0)) {
                 lp.topToTop = previousView.getId();
             } else {
                 lp.topToBottom = previousView.getId();
@@ -195,10 +212,10 @@ public class TenantLikedFragment extends Fragment {
 
             // Remember the view
             likedObjects
-                    .add(new TenantLikedAccommodationObject(view, listing, listing.getRating()));
+                    .add(new TenantLikedAccommodationObject(view, rating
+                            , rating.getRatingLandlord().intValue()));
 
             previousView = view;
-            i++;
         }
     }
 
@@ -228,7 +245,14 @@ public class TenantLikedFragment extends Fragment {
                 a.compactView.findViewById(R.id.actionIcon).setOnClickListener(view1 -> {
                     AlertDialog d = ((MainNavigationActivity) getActivity())
                             .viewAccommodationDialog(a.compactView);
-                    getActivity().runOnUiThread(() -> setDialogInfo(d, a.accommodationInfo));
+                    AsyncWrapper.wrap(() -> {
+                        try {
+                            AccommodationInfo acc =  a.ratingObj.getAccommodation();
+                            getActivity().runOnUiThread(() -> setDialogInfo(d, acc));
+                        } catch (Exception e) {
+                            // IGNORE
+                        }
+                    });
                 });
             } else if (a.rating == rating.NEGATIVE) {
                 // TODO remove liking from DB
@@ -338,13 +362,13 @@ public class TenantLikedFragment extends Fragment {
 
     class TenantLikedAccommodationObject {
         View compactView;
-        AccommodationInfo accommodationInfo;
+        Rating ratingObj;
         rating rating;
 
         TenantLikedAccommodationObject(View compactAccomm,
-                                       AccommodationInfo accommodationObj, int _r) {
+                                       Rating ratingObj, int _r) {
             this.compactView = compactAccomm;
-            this.accommodationInfo = accommodationObj;
+            this.ratingObj = ratingObj;
 
             rating r = rating.NEGATIVE;
             if (_r == 1) r = rating.POSITIVE;

@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.example.dbl_app_dev.store.objects.AccommodationInfo;
+import com.example.dbl_app_dev.store.objects.Rating;
 import com.example.dbl_app_dev.store.objects.User;
 import com.example.dbl_app_dev.util.AsyncWrapper;
 import com.google.android.gms.tasks.Task;
@@ -121,9 +122,10 @@ public abstract class Database {
         Tasks.await(FirebaseQueries.updateUserInfo(username, data));
     }
 
+    @Deprecated
     public static ArrayList<DocumentSnapshot> getLikedAccommodations(String username) throws Exception {
         QuerySnapshot likedAccommodations = Tasks.await(
-                FirebaseQueries.getLikedAccommodationsIds(username));
+                FirebaseQueries.getLikedAccommodations(username));
         ArrayList<DocumentSnapshot> accommodations = new ArrayList<>();
         for(DocumentSnapshot rate : likedAccommodations.getDocuments()) {
             //TODO add try/catch
@@ -185,5 +187,16 @@ public abstract class Database {
             activeAccommodations.add(new AccommodationInfo(ds));
         }
         return activeAccommodations;
+    }
+
+    public static ArrayList<Rating> getRatedAccommodations(String username) throws Exception {
+        ArrayList<Rating> ratings = new ArrayList<>();
+        QuerySnapshot snapshotRatings = Tasks.await(
+                FirebaseQueries.getRatedAccommodations(username));
+        for (DocumentSnapshot ds : snapshotRatings.getDocuments()) {
+            ratings.add(new Rating(ds));
+        }
+
+        return ratings;
     }
 }
