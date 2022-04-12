@@ -17,6 +17,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.dbl_app_dev.dialog_displayer.CreateAccommDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.EditAccommDialogDisplayer;
+import com.example.dbl_app_dev.dialog_displayer.FiltersDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.LikedTenantSettingsDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.EditSettingsDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.LogoutDialogDisplayer;
@@ -137,7 +138,7 @@ public class MainNavigationActivity extends AppCompatActivity {
      */
     public void openFilterDialog() {
         View myView = getLayoutInflater().inflate(R.layout.activity_filters, null);
-        (new CreateAccommDialogDisplayer(this, R.id.cancelButton, R.id.saveBtn, -1, myView))
+        (new FiltersDialogDisplayer(this, R.id.cancelButton, R.id.saveBtn, -1, myView))
                 .displayPopupDialog();
     }
 
