@@ -24,14 +24,13 @@
             android:layout_width="84dp"
             android:layout_height="84dp"
             android:background="@drawable/circlestyle"
-            android:backgroundTint="@color/black"
+            android:backgroundTint="@color/transparent"
             android:clipToOutline="true"
             android:contentDescription="@string/thumbnail_of_accommodation"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/default_accommodation_picture"
             tools:ignore="ImageContrastCheck"
             tools:targetApi="s" />
 

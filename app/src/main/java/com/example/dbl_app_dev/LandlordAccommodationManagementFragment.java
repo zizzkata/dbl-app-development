@@ -122,6 +122,25 @@ public class LandlordAccommodationManagementFragment extends Fragment {
                     new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                             ViewGroup.LayoutParams.WRAP_CONTENT));
 
+            // Change photo
+            final View v = view;
+            AsyncWrapper.wrap(() -> {
+                try {
+                    Bitmap image = listing.getPhotos().get(0);
+                    getActivity().runOnUiThread(() -> {
+                        ((ImageView) v.findViewById(R.id.listingThumbnail))
+                                .setImageBitmap(image);
+                    });
+                } catch (Exception e) {
+                    getActivity().runOnUiThread(() ->
+                    {
+                        ((ImageView) v.findViewById(R.id.listingThumbnail))
+                                .setImageDrawable(getResources()
+                                        .getDrawable(R.drawable.ic_buildings_filled));
+                    });
+                }
+            });
+
             // Add the corresponding text
             ((TextView) view.findViewById(R.id.streetNameTxt))
                     .setText(listing.getAddressShort());
