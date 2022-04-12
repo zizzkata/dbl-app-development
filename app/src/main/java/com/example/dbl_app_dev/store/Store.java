@@ -95,6 +95,16 @@ public final class Store {
         return likedAccommodations;
     }
 
+    public static void rateAccommodation(AccommodationInfo accommodation, Long impression)
+            throws Exception {
+        if (impression > 1 || impression < -1)
+            throw new Exception("Invalid impression of the rating given.");
+
+        Rating rating = new Rating(accommodation, currentUser, impression);
+        rating.pushRating();
+        likedAccommodations.add(rating);
+    }
+
     private static ArrayList<AccommodationInfo> transformDocuments(List<DocumentSnapshot> documents) {
         ArrayList<AccommodationInfo> returnArray = new ArrayList<>();
         for (DocumentSnapshot ds : documents) {
