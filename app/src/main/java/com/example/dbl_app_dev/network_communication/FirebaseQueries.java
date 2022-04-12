@@ -318,7 +318,7 @@ public abstract class FirebaseQueries {
             , String tenantId, String ownerId, boolean rate) {
         Map<String, Object> rating = new HashMap<>();
         rating.put("accommodationId", accommodationId);
-        rating.put("tenantUsername", tenantId);
+        rating.put("tenant_username", tenantId);
         rating.put("owner_username", ownerId);
         rating.put("ratedLandlord", 0);
         rating.put("ratedTenant", rate ? 1 : -1);
