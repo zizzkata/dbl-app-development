@@ -228,11 +228,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     }
 
     private String booleanToYesNo(boolean x) {
-        if (x) {
-            return "Yes";
-        } else {
-            return "No";
-        }
+       return x ? "Yes" : "No";
     }
 
     /**
