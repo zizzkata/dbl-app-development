@@ -74,13 +74,14 @@
 
                         <ImageView
                             android:id="@+id/imageView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="115dp"
+                            android:layout_height="115dp"
                             android:layout_margin="8dp"
                             android:contentDescription="@string/todo"
                             android:padding="5dp"
+                            android:scaleType="centerCrop"
                             tools:ignore="ImageContrastCheck"
-                            tools:src="@tools:sample/avatars" />
+                            tools:src="@drawable/default_accommodation_picture" />
 
                         <Button
                             android:id="@+id/addImageBtn"
