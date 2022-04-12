@@ -248,7 +248,6 @@ public class TenantLikedFragment extends Fragment {
                 getActivity().runOnUiThread(() -> {
                     ((TextView) ad.findViewById(R.id.landlordNameTxt))
                             .setText(owner.getFirstName() + " " + owner.getLastName());
-                    ((TextView) ad.findViewById(R.id.landlordEmailTxt)).setText(owner.getEmail());
                     ((TextView) ad.findViewById(R.id.phoneNumberTxt))
                             .setText(owner.getPhoneNumber());
                 });
@@ -257,7 +256,6 @@ public class TenantLikedFragment extends Fragment {
                 {
                     ((TextView) ad.findViewById(R.id.landlordNameTxt))
                             .setText("Georgi" + " " + "Georgiev");
-                    ((TextView) ad.findViewById(R.id.landlordEmailTxt)).setText("gosho@gmail.com");
                     ((TextView) ad.findViewById(R.id.phoneNumberTxt)).setText("0123456789");
                 });
             }
