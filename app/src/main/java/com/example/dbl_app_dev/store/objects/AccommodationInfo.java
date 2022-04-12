@@ -74,7 +74,7 @@ public class AccommodationInfo {
     public AccommodationInfo(String ownerUsername, String address, String city, String description
             , String availableUntil, String availableFrom, String floor, Boolean furnished
             , Boolean pets, Boolean smokers, String houseNumber, String minimumPeriod
-            , String postcode, Long price, Long area_m2) {
+            , String postcode, Long price, Long area_m2, Bitmap panorama, ArrayList<Bitmap> photos) {
         //documentSnapshot = ds;
         //accommodationId = ds.getId(); // indicates that it doesn't exist in db
         this.address = address;
