@@ -2,7 +2,9 @@ package com.example.dbl_app_dev.network_communication;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
+import com.example.dbl_app_dev.store.objects.AccommodationInfo;
 import com.example.dbl_app_dev.store.objects.User;
 import com.example.dbl_app_dev.util.AsyncWrapper;
 import com.google.android.gms.tasks.Task;
@@ -148,19 +150,35 @@ public abstract class Database {
         Tasks.await(FirebaseQueries.updateAccommodationListing(accommodationId, newData));
     }
 
-    public static ArrayList<User> getRatedTenants(String ownerId) throws Exception {
-        List<DocumentSnapshot> docs = Tasks.await(FirebaseQueries.getTenants(ownerId))
-                .getDocuments();
+    public static ArrayList<User> getRatedTenants(String ownerUsername) throws Exception {
+        QuerySnapshot active = Tasks.await(
+                FirebaseQueries.getActiveAccommodationsOwner(ownerUsername));
         ArrayList<User> users = new ArrayList<>();
-        for (DocumentSnapshot ds : docs) {
+        for (DocumentSnapshot activeAcc : active.getDocuments()) {
             try {
-                users.add(
-                        new User(getUserInformation(
-                                (String) ds.get("tenantUsername"))));
+                QuerySnapshot accommodations = Tasks.await(
+                        FirebaseQueries.getRatingsByAccommodationId(activeAcc.getId()));
+                for (DocumentSnapshot listing : accommodations.getDocuments()) {
+                    DocumentSnapshot user = Tasks.await(FirebaseQueries.getUserInformation(
+                            (String) listing.get("tenantUsername")));
+                    users.add(new User(user));
+                }
             } catch (Exception e) {
+                Log.e("getRatedTenants: invalid listing",e.getMessage());
                 // IGNORE
             }
         }
         return users;
+    }
+
+    public static ArrayList<AccommodationInfo> getActiveAccommodationsByOwner(String ownerUsername)
+            throws Exception {
+        QuerySnapshot active = Tasks.await(
+                FirebaseQueries.getActiveAccommodationsOwner(ownerUsername));
+        ArrayList<AccommodationInfo> activeAccommodations = new ArrayList<>();
+        for (DocumentSnapshot ds : active.getDocuments()) {
+            activeAccommodations.add(new AccommodationInfo(ds));
+        }
+        return activeAccommodations;
     }
 }

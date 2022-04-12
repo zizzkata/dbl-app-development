@@ -366,8 +366,33 @@ public abstract class FirebaseQueries {
     public static Task<Void> createAccommodationListing(Map<String, Object> newData) {
         return accommodations.document().set(newData);
     }
-    
+
+    /**
+     *
+     * @param ownerUsername
+     * @return
+     */
     public static Task<QuerySnapshot> getTenants(String ownerUsername) {
         return ratedAccommodations.whereEqualTo("owner_username", ownerUsername).get();
+    }
+
+    /**
+     *
+     * @param ownerUsername
+     * @return
+     */
+    public static Task<QuerySnapshot> getActiveAccommodationsOwner(String ownerUsername) {
+        return accommodations.whereEqualTo("owner_username", ownerUsername)
+                .whereEqualTo("active", true)
+                .get();
+    }
+
+    /**
+     *
+     * @param accommodationId
+     * @return
+     */
+    public static Task<QuerySnapshot> getRatingsByAccommodationId(String accommodationId) {
+        return ratedAccommodations.whereEqualTo("accommodationId", accommodationId).get();
     }
 }
