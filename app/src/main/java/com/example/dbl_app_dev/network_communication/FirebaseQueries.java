@@ -4,9 +4,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.example.dbl_app_dev.store.objects.AccommodationInfo;
-import com.example.dbl_app_dev.store.objects.User;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -237,40 +234,86 @@ public abstract class FirebaseQueries {
                 .limit(amount);
     }
 
+    /**
+     *
+     * @param lastDocument
+     * @return
+     */
     public static Query getActiveAccommodations(DocumentSnapshot lastDocument) {
         return accommodations.startAfter(lastDocument).whereEqualTo("active", true);
     }
 
+    /**
+     *
+     * @return
+     */
     public static Query getActiveAccommodations() {
         return accommodations.whereEqualTo("active", true);
     }
 
+    /**
+     *
+     * @param amount
+     * @return
+     */
     public static Query getActiveAccommodations(int amount) {
         return accommodations.whereEqualTo("active", true).limit(amount);
     }
 
+    /**
+     *
+     * @param min
+     * @param max
+     * @return
+     */
     public static Query filterByPrice(int min, int max) {
         return getActiveAccommodations()
                 .whereGreaterThanOrEqualTo("price", min)
                 .whereLessThanOrEqualTo("price", max);
     }
 
+    /**
+     *
+     * @param lastDoc
+     * @param min
+     * @param max
+     * @return
+     */
     public static Query filterByPrice(DocumentSnapshot lastDoc, int min, int max) {
         return getActiveAccommodations(lastDoc)
                 .whereGreaterThanOrEqualTo("price", min)
                 .whereLessThanOrEqualTo("price", max);
     }
 
+    /**
+     *
+     * @param username
+     * @param data
+     * @return
+     */
     public static Task<Void> updateUserInfo(String username, Map<String, Object> data) {
         return users.document(username).update(data);
     }
 
+    /**
+     *
+     * @param username
+     * @return
+     */
     public static Task<QuerySnapshot> getLikedAccommodationsIds(String username) {
         return ratedAccommodations.whereEqualTo("ratedTenant", 1)
                 .whereEqualTo("tenantUsername", username)
                 .get();
     }
 
+    /**
+     *
+     * @param accommodationId
+     * @param tenantId
+     * @param ownerId
+     * @param rate
+     * @return
+     */
     public static Task<Void> createRatingOnAccommodation(String accommodationId
             , String tenantId, String ownerId, boolean rate) {
         Map<String, Object> rating = new HashMap<>();
@@ -282,6 +325,12 @@ public abstract class FirebaseQueries {
         return ratedAccommodations.document().set(rating);
     }
 
+    /**
+     *
+     * @param accommodationId
+     * @param tenantId
+     * @return
+     */
     public static Query getOneRatingOnAccommodation(String accommodationId, String tenantId) {
         return ratedAccommodations
                 .whereEqualTo("accommodationId", accommodationId)
@@ -289,15 +338,31 @@ public abstract class FirebaseQueries {
                 .limit(1);
     }
 
+    /**
+     *
+     * @param documentId
+     * @return
+     */
     public static Task<Void> deleteRatingOnAccommodation(String documentId) {
         return ratedAccommodations.document(documentId).delete();
     }
 
+    /**
+     *
+     * @param accommodationId
+     * @param newData
+     * @return
+     */
     public static Task<Void> updateAccommodationListing(String accommodationId
             , Map<String, Object> newData) {
         return accommodations.document(accommodationId).update(newData);
     }
 
+    /**
+     *
+     * @param newData
+     * @return
+     */
     public static Task<Void> createAccommodationListing(Map<String, Object> newData) {
         return accommodations.document().set(newData);
     }
