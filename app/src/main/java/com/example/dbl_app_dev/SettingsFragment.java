@@ -290,7 +290,7 @@ public class SettingsFragment extends Fragment {
                 });
 
                 Toast.makeText(getActivity().getApplicationContext()
-                        , "Saved", Toast.LENGTH_LONG);
+                        , "Saved", Toast.LENGTH_LONG).show();
             }
         });
     }
