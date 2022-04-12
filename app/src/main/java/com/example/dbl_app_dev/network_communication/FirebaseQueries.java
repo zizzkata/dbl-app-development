@@ -300,9 +300,19 @@ public abstract class FirebaseQueries {
      * @param username
      * @return
      */
-    public static Task<QuerySnapshot> getLikedAccommodationsIds(String username) {
+    public static Task<QuerySnapshot> getLikedAccommodations(String username) {
         return ratedAccommodations.whereEqualTo("rating_tenant", 1)
                 .whereEqualTo("tenant_username", username)
+                .get();
+    }
+
+    /**
+     *
+     * @param username
+     * @return
+     */
+    public static Task<QuerySnapshot> getRatedAccommodations(String username) {
+        return ratedAccommodations.whereEqualTo("tenant_username", username)
                 .get();
     }
 

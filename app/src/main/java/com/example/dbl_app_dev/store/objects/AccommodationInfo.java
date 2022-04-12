@@ -195,7 +195,7 @@ public class AccommodationInfo {
     public int getPhotosSize() { return photos.size(); }
 
     // Positive = 1; Neutral = 0; Negative = -1;
-    public int getRating() { return 0;}
+    // public int getRating() { return 0;}
 
     public void rateAccommodation(String username, boolean rate) throws Exception {
         Database.createRatingAccommodation(accommodationId, username, ownerUsername, rate);
