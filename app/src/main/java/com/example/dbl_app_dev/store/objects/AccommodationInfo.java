@@ -6,6 +6,8 @@ import com.example.dbl_app_dev.network_communication.Database;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Contains the information displayed in an accommodation

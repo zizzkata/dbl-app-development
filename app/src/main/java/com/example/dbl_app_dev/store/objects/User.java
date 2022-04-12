@@ -161,6 +161,16 @@ public class User {
     }
 
     /**
+     *
+     * @param image
+     * @throws Exception
+     */
+    public void updateUserImage(Bitmap image) throws Exception {
+        this.profilePic = image;
+        Database.uploadProfilePic(this.username, this.profilePic);
+    }
+
+    /**
      * Reset the variables to the last pulled instance
      */
     public void resetToOriginal() {

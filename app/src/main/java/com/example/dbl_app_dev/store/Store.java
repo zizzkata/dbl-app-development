@@ -24,7 +24,8 @@ public final class Store {
     private static User currentUser;
     private static ArrayList<AccommodationInfo> discoveryAccommodations = new ArrayList<>();
     private static ArrayList<AccommodationInfo> listedProperties = new ArrayList<>();
-    private static ArrayList<Rating> likedAccommodations = new ArrayList<>();
+    private static ArrayList<Rating> ratingsTenant = new ArrayList<>();
+    private static ArrayList<Rating> ratingsLandlord = new ArrayList<>();
 
     private static Query discoveryFilter;
 
@@ -72,6 +73,13 @@ public final class Store {
         discoveryAccommodations = newData; // let garbage collector take care
     }
 
+    public static User getUserToBeRated()  throws Exception {
+        if (ratingsLandlord.size() == 0) {
+            //ratingsLandlord = Database.getRatedTenants(currentUser.getUsername());
+        }
+        return null;
+    }
+
     public static void pullMoreAccommodations(DocumentSnapshot lastAccommodation) throws Exception {
         if (discoveryFilter == null) {
             ArrayList<AccommodationInfo> newData = transformDocuments(
@@ -83,16 +91,17 @@ public final class Store {
         }
     }
 
+    @Deprecated
     public static ArrayList<AccommodationInfo> getCurrentUserLikedAccommodations()
             throws Exception {
-       return null;
+        return null;
     }
 
-    public static ArrayList<Rating> getLikedAccommodations() throws Exception {
-        if (likedAccommodations.size() == 0) { // TOTALLY USELESS FOR NO BUT WILL FIX IT
-            likedAccommodations = Database.getRatedAccommodations(currentUser.getUsername());
+    public static ArrayList<Rating> getRatingsTenant() throws Exception {
+        if (ratingsTenant.size() == 0) {
+            ratingsTenant = Database.getRatedAccommodations(currentUser.getUsername());
         }
-        return likedAccommodations;
+        return ratingsTenant;
     }
 
     public static void rateAccommodation(AccommodationInfo accommodation, Long impression)
@@ -102,7 +111,7 @@ public final class Store {
 
         Rating rating = new Rating(accommodation, currentUser, impression);
         rating.pushRating();
-        likedAccommodations.add(rating);
+        ratingsTenant.add(rating);
     }
 
     private static ArrayList<AccommodationInfo> transformDocuments(List<DocumentSnapshot> documents) {
@@ -113,10 +122,25 @@ public final class Store {
         return returnArray;
     }
 
+//    private static ArrayList<User> extractDiscoveryUsers() throws Exception {
+//        ArrayList<Rating> rt = getRatingsTenant();
+//        ArrayList<User> usersExtracted = new ArrayList<>();
+//        for (Rating rating : rt) {
+//            if (rating.getRatingLandlord() != 0)
+//                discoveryUsers.add(rating.getTenant());
+//        }
+//        return usersExtracted;
+//    }
+
+    private static User extractDiscoveryUser(Rating rating) throws Exception {
+        if (rating.getRatingLandlord() != 0)
+            return rating.getTenant();
+        return null;
+    }
+
     public static void killStore() {
         currentUser = null;
         discoveryAccommodations = new ArrayList<>();
-        likedAccommodations = new ArrayList<>();
+        ratingsTenant = new ArrayList<>();
     }
-
 }

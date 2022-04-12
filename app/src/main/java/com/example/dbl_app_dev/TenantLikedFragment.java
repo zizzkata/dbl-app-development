@@ -121,7 +121,7 @@ public class TenantLikedFragment extends Fragment {
         // Get the liked listings of the user
         AsyncWrapper.wrap(() -> {
             try {
-                ratings = Store.getLikedAccommodations();
+                ratings = Store.getRatingsTenant();
                 getActivity().runOnUiThread(() -> {
                             if (ratings != null) { // check that again, wwe may return one with size 0 if it fails
                                 addLikedListings();
