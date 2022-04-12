@@ -161,11 +161,13 @@ public class User {
     }
 
     /**
-     *
+     * Update user's image and upload he image at the same time.
      * @param image
      * @throws Exception
      */
     public void updateUserImage(Bitmap image) throws Exception {
+        if (image == null)
+            throw new Exception("Invalid image. Bitmap is null.");
         this.profilePic = image;
         Database.uploadProfilePic(this.username, this.profilePic);
     }
@@ -185,6 +187,10 @@ public class User {
         this.hasPets = (Boolean) snapshot.get("pets");
     }
 
+    /**
+     * Transform the User object into hashmap
+     * @return
+     */
     private Map<String, Object> transformUser() {
         Map<String, Object> transformedData = new HashMap<>();
         transformedData.put("first_name", this.firstName);

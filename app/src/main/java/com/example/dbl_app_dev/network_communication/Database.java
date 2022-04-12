@@ -57,6 +57,14 @@ public abstract class Database {
                 FirebaseQueries.pushData(documentReference, data)));
     }
 
+
+
+    /**
+     *  IMAGE MANIPULATION
+     */
+
+
+
     public static Bitmap getUserImage(String username) throws Exception {
         byte[] byteArray = AsyncWrapper.wrap(FirebaseQueries.getUserImage(username));
         return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
@@ -65,6 +73,12 @@ public abstract class Database {
     public static Bitmap getPanoramicImage(String accommId) throws Exception {
         byte[] byteArray = AsyncWrapper.wrap(FirebaseQueries.getPanoramicImage(accommId));
         return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+    }
+
+    public static void uploadProfilePic(String username, Bitmap image) throws Exception {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 60, stream);
+        Tasks.await(FirebaseQueries.uploadUserProfile(username, stream.toByteArray()));
     }
 
     public static ArrayList<byte[]> getStaticImages(String accommId) throws Exception {
@@ -87,6 +101,13 @@ public abstract class Database {
         }
         return byteImages;
     }
+
+
+
+    /**
+     * ACCOMMODATION
+     */
+
 
     public static List<DocumentSnapshot> getAccommodations() throws Exception {
         return Tasks.await(FirebaseQueries.getAccommodations(0)).getDocuments();
