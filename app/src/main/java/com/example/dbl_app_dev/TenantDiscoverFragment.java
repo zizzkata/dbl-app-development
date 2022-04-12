@@ -192,7 +192,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
                 Store.rateAccommodation(currentAccommodationInfo, (long) 1);
             } catch (Exception e) {
                 // TODO: toaster
-                Log.e("swipeRgiht", e.getMessage());
+                Log.e("swipeRight", e.getMessage());
             }
         });
     }
