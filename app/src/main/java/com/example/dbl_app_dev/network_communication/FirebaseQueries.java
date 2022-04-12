@@ -301,8 +301,8 @@ public abstract class FirebaseQueries {
      * @return
      */
     public static Task<QuerySnapshot> getLikedAccommodationsIds(String username) {
-        return ratedAccommodations.whereEqualTo("ratedTenant", 1)
-                .whereEqualTo("tenantUsername", username)
+        return ratedAccommodations.whereEqualTo("rating_tenant", 1)
+                .whereEqualTo("tenant_username", username)
                 .get();
     }
 
@@ -317,11 +317,11 @@ public abstract class FirebaseQueries {
     public static Task<Void> createRatingOnAccommodation(String accommodationId
             , String tenantId, String ownerId, boolean rate) {
         Map<String, Object> rating = new HashMap<>();
-        rating.put("accommodationId", accommodationId);
+        rating.put("accommodation_id", accommodationId);
         rating.put("tenant_username", tenantId);
         rating.put("owner_username", ownerId);
-        rating.put("ratedLandlord", 0);
-        rating.put("ratedTenant", rate ? 1 : -1);
+        rating.put("rating_landlord", 0);
+        rating.put("rating_tenant", rate ? 1 : -1);
         return ratedAccommodations.document().set(rating);
     }
 
@@ -333,8 +333,8 @@ public abstract class FirebaseQueries {
      */
     public static Query getOneRatingOnAccommodation(String accommodationId, String tenantId) {
         return ratedAccommodations
-                .whereEqualTo("accommodationId", accommodationId)
-                .whereEqualTo("tenantUsername", tenantId)
+                .whereEqualTo("accommodation_id", accommodationId)
+                .whereEqualTo("tenant_username", tenantId)
                 .limit(1);
     }
 
@@ -393,6 +393,6 @@ public abstract class FirebaseQueries {
      * @return
      */
     public static Task<QuerySnapshot> getRatingsByAccommodationId(String accommodationId) {
-        return ratedAccommodations.whereEqualTo("accommodationId", accommodationId).get();
+        return ratedAccommodations.whereEqualTo("accommodation_id", accommodationId).get();
     }
 }
