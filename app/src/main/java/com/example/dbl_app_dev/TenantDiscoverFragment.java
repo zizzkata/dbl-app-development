@@ -189,9 +189,10 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     public void swipedRight() {
         AsyncWrapper.wrap(() -> {
             try {
-               currentAccommodationInfo.rateAccommodation(Store.getCurrentUser().getUsername(), true);
+                Store.rateAccommodation(currentAccommodationInfo, (long) 1);
             } catch (Exception e) {
-                Log.e("swipeRgiht", e.getMessage());
+                // TODO: toaster
+                Log.e("swipeRight", e.getMessage());
             }
         });
     }
@@ -203,8 +204,9 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     public void swipedLeft() {
         AsyncWrapper.wrap(() -> {
             try {
-                currentAccommodationInfo.rateAccommodation(Store.getCurrentUser().getUsername(), true);
+                Store.rateAccommodation(currentAccommodationInfo, (long) -1);
             } catch (Exception e) {
+                // TODO: toaster
                 Log.e("swipeLeft", e.getMessage());
             }
         });

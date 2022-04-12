@@ -3,6 +3,7 @@ package com.example.dbl_app_dev.store;
 import com.example.dbl_app_dev.network_communication.Authentication;
 import com.example.dbl_app_dev.network_communication.Database;
 import com.example.dbl_app_dev.store.objects.AccommodationInfo;
+import com.example.dbl_app_dev.store.objects.Rating;
 import com.example.dbl_app_dev.store.objects.User;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
@@ -22,8 +23,9 @@ public final class Store {
      */
     private static User currentUser;
     private static ArrayList<AccommodationInfo> discoveryAccommodations = new ArrayList<>();
-    private static ArrayList<AccommodationInfo> likedProperties = new ArrayList<>();
     private static ArrayList<AccommodationInfo> listedProperties = new ArrayList<>();
+    private static ArrayList<Rating> ratingsTenant = new ArrayList<>();
+    private static ArrayList<Rating> ratingsLandlord = new ArrayList<>();
 
     private static Query discoveryFilter;
 
@@ -71,6 +73,13 @@ public final class Store {
         discoveryAccommodations = newData; // let garbage collector take care
     }
 
+    public static User getUserToBeRated()  throws Exception {
+        if (ratingsLandlord.size() == 0) {
+            //ratingsLandlord = Database.getRatedTenants(currentUser.getUsername());
+        }
+        return null;
+    }
+
     public static void pullMoreAccommodations(DocumentSnapshot lastAccommodation) throws Exception {
         if (discoveryFilter == null) {
             ArrayList<AccommodationInfo> newData = transformDocuments(
@@ -82,13 +91,27 @@ public final class Store {
         }
     }
 
+    @Deprecated
     public static ArrayList<AccommodationInfo> getCurrentUserLikedAccommodations()
             throws Exception {
-        if (likedProperties.size() == 0) {
-            likedProperties = transformDocuments(
-                    Database.getLikedAccommodations(currentUser.getUsername()));
+        return null;
+    }
+
+    public static ArrayList<Rating> getRatingsTenant() throws Exception {
+        if (ratingsTenant.size() == 0) {
+            ratingsTenant = Database.getRatedAccommodations(currentUser.getUsername());
         }
-        return likedProperties;
+        return ratingsTenant;
+    }
+
+    public static void rateAccommodation(AccommodationInfo accommodation, Long impression)
+            throws Exception {
+        if (impression > 1 || impression < -1)
+            throw new Exception("Invalid impression of the rating given.");
+
+        Rating rating = new Rating(accommodation, currentUser, impression);
+        rating.pushRating();
+        ratingsTenant.add(rating);
     }
 
     private static ArrayList<AccommodationInfo> transformDocuments(List<DocumentSnapshot> documents) {
@@ -99,9 +122,25 @@ public final class Store {
         return returnArray;
     }
 
+//    private static ArrayList<User> extractDiscoveryUsers() throws Exception {
+//        ArrayList<Rating> rt = getRatingsTenant();
+//        ArrayList<User> usersExtracted = new ArrayList<>();
+//        for (Rating rating : rt) {
+//            if (rating.getRatingLandlord() != 0)
+//                discoveryUsers.add(rating.getTenant());
+//        }
+//        return usersExtracted;
+//    }
+
+    private static User extractDiscoveryUser(Rating rating) throws Exception {
+        if (rating.getRatingLandlord() != 0)
+            return rating.getTenant();
+        return null;
+    }
+
     public static void killStore() {
         currentUser = null;
         discoveryAccommodations = new ArrayList<>();
+        ratingsTenant = new ArrayList<>();
     }
-
 }

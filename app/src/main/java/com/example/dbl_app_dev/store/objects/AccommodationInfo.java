@@ -6,6 +6,8 @@ import com.example.dbl_app_dev.network_communication.Database;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Contains the information displayed in an accommodation
@@ -195,26 +197,110 @@ public class AccommodationInfo {
     public int getPhotosSize() { return photos.size(); }
 
     // Positive = 1; Neutral = 0; Negative = -1;
-    public int getRating() { return 0;}
+    // public int getRating() { return 0;}
 
     public void rateAccommodation(String username, boolean rate) throws Exception {
         Database.createRatingAccommodation(accommodationId, username, ownerUsername, rate);
     }
 
-    public void setAddress(String s) {this.address = s;}
-    public void setCity(String s) {this.city = s;}
-    public void setCurrency(String s) {this.currency = s;}
-    public void setDescription1(String s) {this.description = s;}
-    public void setAvailableUntil(String s) {this.availableUntil = s;}
-    public void setAvailableFrom(String s) {this.availableFrom = s;}
-    public void setFloor(String s) {this.floor = s;}
-    public void setFurnished(boolean b) {this.furnished = b;}
-    public void setHouseNumber(String s) {this.houseNumber = s;}
-    public void setMinimumPeriod(String s) {this.minimumPeriod = s;}
-    public void setOwnerUsername(String s) {this.ownerUsername = s;}
-    public void setPets1(boolean b) {this.pets = b;}
-    public void setPostcode(String s) {this.postcode = s;}
-    public void setPrice(Long l) {this.price = l;}
-    public void setArea_m2(Long l) {this.area_m2 = l;}
-    public void setSmokers(boolean b) {this.smokers = b;}
+    public void setAddress(String s) {
+        this.address = s;
+    }
+
+    public void setCity(String s) {
+        this.city = s;
+    }
+
+    public void setCurrency(String s) {
+        this.currency = s;
+    }
+
+    public void setDescription1(String s) {
+        this.description = s;
+    }
+
+    public void setAvailableUntil(String s) {
+        this.availableUntil = s;
+    }
+
+    public void setAvailableFrom(String s) {
+        this.availableFrom = s;
+    }
+
+    public void setFloor(String s) {
+        this.floor = s;
+    }
+
+    public void setFurnished(boolean b) {
+        this.furnished = b;
+    }
+
+    public void setHouseNumber(String s) {
+        this.houseNumber = s;
+    }
+
+    public void setMinimumPeriod(String s) {
+        this.minimumPeriod = s;
+    }
+
+    public void setOwnerUsername(String s) {
+        this.ownerUsername = s;
+    }
+
+    public void setPets1(boolean b) {
+        this.pets = b;
+    }
+
+    public void setPostcode(String s) {
+        this.postcode = s;
+    }
+
+    public void setPrice(Long l) {
+        this.price = l;
+    }
+
+    public void setArea_m2(Long l) {
+        this.area_m2 = l;
+    }
+
+    public void setSmokers(boolean b) {
+        this.smokers = b;
+    }
+
+    private Map<String, Object> transformToHash() {
+        Map<String, Object> data = new HashMap<>();
+        data.put("address", this.address);
+        data.put("active", this.active);
+        data.put("city", this.city);
+        data.put("currency", this.currency);
+        data.put("description", this.description);
+        data.put("end_date", this.availableUntil);
+        data.put("start_date", this.availableFrom);
+        data.put("floor", this.floor);
+        data.put("furnished", this.furnished);
+        data.put("house_number", this.houseNumber);
+        data.put("minimum_rent_period", this.minimumPeriod);
+        data.put("owner_username", this.ownerUsername);
+        data.put("pets", this.pets);
+        data.put("post_code", this.postcode);
+        data.put("price", this.price);
+        data.put("size_m2", this.area_m2);
+        data.put("smokers", this.smokers);
+        return data;
+    }
+
+    /**
+     * Creates a new instance of accommodation in the database,
+     * or updates it if it already exists.
+     * @throws Exception
+     */
+    public void pushAccommodation() throws Exception {
+        // TODO check for anonymous owners.
+        Map<String, Object> data = transformToHash();
+        if (accommodationId == null || accommodationId == "") { // create new file
+            // TODO
+        } else { //update accommodation
+            //TODO
+        }
+    }
 }
