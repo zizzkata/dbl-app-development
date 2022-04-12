@@ -40,9 +40,8 @@ public class User {
         getInformation();
     }
 
-
-
     public User(DocumentSnapshot res) {
+        this.username = res.getId();
         this.firstName = (String) res.get("first_name");
         this.lastName = (String) res.get("last_name");
         this.gender = (String) res.get("gender");
