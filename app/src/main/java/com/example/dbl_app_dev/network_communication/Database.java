@@ -92,6 +92,11 @@ public abstract class Database {
         return Tasks.await(FirebaseQueries.getActiveAccommodations(amount).get()).getDocuments();
     }
 
+    public static AccommodationInfo getAccommodation(String accommodationId) throws Exception {
+        return new AccommodationInfo(
+                Tasks.await(FirebaseQueries.getAccommodation(accommodationId)));
+    }
+
     public static List<DocumentSnapshot> getActiveAccommodations(DocumentSnapshot lastDoc
             , int amount) throws Exception {
         return Tasks.await(FirebaseQueries.getActiveAccommodations(lastDoc, amount).get()).getDocuments();
