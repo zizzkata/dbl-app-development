@@ -17,12 +17,14 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.dbl_app_dev.dialog_displayer.CreateAccommDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.EditAccommDialogDisplayer;
+import com.example.dbl_app_dev.dialog_displayer.FiltersDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.LikedTenantSettingsDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.EditSettingsDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.LogoutDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.RemoveAccommDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.ViewAccommDialogDisplayer;
 import com.example.dbl_app_dev.store.Store;
+import com.example.dbl_app_dev.util.Filters;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainNavigationActivity extends AppCompatActivity {
@@ -135,9 +137,9 @@ public class MainNavigationActivity extends AppCompatActivity {
     /**
      * Method used to create the popup that shows when adding a new accommodation.
      */
-    public void openFilterDialog() {
+    public void openFilterDialog(Filters filters) {
         View myView = getLayoutInflater().inflate(R.layout.activity_filters, null);
-        (new CreateAccommDialogDisplayer(this, R.id.cancelButton, R.id.saveBtn, -1, myView))
+        (new FiltersDialogDisplayer(this, R.id.cancelButton, R.id.saveBtn, -1, myView, filters))
                 .displayPopupDialog();
     }
 

@@ -21,6 +21,7 @@ import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.store.objects.AccommodationInfo;
 import com.example.dbl_app_dev.store.objects.User;
 import com.example.dbl_app_dev.util.AsyncWrapper;
+import com.example.dbl_app_dev.util.Filters;
 
 import java.util.ArrayList;
 
@@ -37,6 +38,8 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     ConstraintLayout noSwipesContainer;
     ConstraintLayout contentContainer;
     ImageViewPagerAdapter verticalViewPagerAdapter;
+
+    private Filters filters;
 
     private TextView addressTxt;
     private TextView floorTxt;
@@ -70,6 +73,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        filters = new Filters();
         // Get information of accommodation cards
     }
 
@@ -137,7 +141,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         });
 
         Button filtersBtn = view.findViewById(R.id.filtersButton);
-        filtersBtn.setOnClickListener(v -> ((MainNavigationActivity) requireActivity()).openFilterDialog());
+        filtersBtn.setOnClickListener(v -> ((MainNavigationActivity) requireActivity()).openFilterDialog(filters));
 
         // makes sure that the a card is not discarded if it is not rated
         displayCard(currentAccommodationInfo == null);
