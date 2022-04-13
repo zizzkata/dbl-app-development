@@ -146,93 +146,100 @@
                             android:padding="10dp"
                             android:text="@string/ivanov" />
                     </LinearLayout>
-
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/passwordLayout"
+
+                <TextView
+                    android:id="@+id/changePasswordTxt"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:padding="10dp">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:padding="5dp"
+                    android:text="@string/change_your_password"
+                    android:textSize="18sp" />
 
-                    <TextView
-                        android:id="@+id/changePasswordTxt"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:padding="5dp"
-                        android:text="@string/change_your_password"
-                        android:textSize="18sp" />
+                <EditText
+                    android:id="@+id/currentPasswordBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/roundstyle"
+                    android:backgroundTint="@color/white"
+                    android:ems="10"
+                    android:hint="@string/current_password"
+                    android:importantForAutofill="no"
+                    android:inputType="textPassword"
+                    android:minHeight="48dp"
+                    android:padding="10dp"
+                    android:textColorHint="#757575" />
 
-                    <EditText
-                        android:id="@+id/currentPasswordBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:background="@drawable/roundstyle"
-                        android:backgroundTint="@color/white"
-                        android:ems="10"
-                        android:hint="@string/current_password"
-                        android:importantForAutofill="no"
-                        android:inputType="textPassword"
-                        android:minHeight="48dp"
-                        android:padding="10dp"
-                        android:textColorHint="#757575" />
+                <TextView
+                    android:id="@+id/invalidCurrentPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textColor="@color/light_pink" />
 
-                    <TextView
-                        android:id="@+id/invalidCurrentPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="TextView"
-                        android:textColor="@color/light_pink" />
+                <EditText
+                    android:id="@+id/newPasswordBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/roundstyle"
 
-                    <EditText
-                        android:id="@+id/newPasswordBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:background="@drawable/roundstyle"
+                    android:backgroundTint="@color/white"
+                    android:ems="10"
+                    android:hint="@string/new_password"
+                    android:importantForAutofill="no"
+                    android:inputType="textPassword"
+                    android:minHeight="48dp"
+                    android:padding="10dp"
+                    android:textColorHint="#757575" />
 
-                        android:backgroundTint="@color/white"
-                        android:ems="10"
-                        android:hint="@string/new_password"
-                        android:importantForAutofill="no"
-                        android:inputType="textPassword"
-                        android:minHeight="48dp"
-                        android:padding="10dp"
-                        android:textColorHint="#757575" />
+                <TextView
+                    android:id="@+id/invalidPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textColor="@color/light_pink" />
 
-                    <TextView
-                        android:id="@+id/invalidPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="TextView"
-                        android:textColor="@color/light_pink" />
+                <EditText
+                    android:id="@+id/ConfirmNewPasswordBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/roundstyle"
+                    android:backgroundTint="@color/white"
+                    android:ems="10"
+                    android:hint="@string/confirm_new_password"
+                    android:importantForAutofill="no"
+                    android:inputType="textPassword"
+                    android:minHeight="48dp"
+                    android:padding="10dp"
+                    android:textColorHint="#757575" />
 
-                    <EditText
-                        android:id="@+id/ConfirmNewPasswordBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:background="@drawable/roundstyle"
-                        android:backgroundTint="@color/white"
-                        android:ems="10"
-                        android:hint="@string/confirm_new_password"
-                        android:importantForAutofill="no"
-                        android:inputType="textPassword"
-                        android:minHeight="48dp"
-                        android:padding="10dp"
-                        android:textColorHint="#757575" />
+                <TextView
+                    android:id="@+id/invalidRepeatPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textColor="@color/light_pink" />
 
-                    <TextView
-                        android:id="@+id/invalidRepeatPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="TextView"
-                        android:textColor="@color/light_pink" />
-
-                </LinearLayout>
+                <Button
+                    android:id="@+id/saveBtnPass"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/roundstyle"
+                    android:paddingVertical="@dimen/spacing_200"
+                    android:text="@string/confirm_changes"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_size_200"
+                    app:backgroundTint="@color/teal"
+                    tools:ignore="TextContrastCheck" />
 
                 <LinearLayout
                     android:id="@+id/usernameLayout"

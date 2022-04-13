@@ -153,17 +153,9 @@ public class SettingsFragment extends Fragment {
         // IMPORTANT CANNOT CHANGE USERNAME
         //validators.add(new UsernameUniquenessValidator(username, usernameWarning));
 
-        if (currentPassword.getText().toString().length() > 0) {
-            validators.add(currPassValidator);
-        }
-
-        if (password.getText().toString().length() > 0) {
-            validators.add(passValidator);
-        }
-
-        if (repeatPassword.getText().toString().length() > 0) {
-            validators.add(repPassValidator);
-        }
+        validators.add(currPassValidator);
+        validators.add(passValidator);
+        validators.add(repPassValidator);
 
         // run validate on all validators
         boolean areValidatorsValid = true;
@@ -248,9 +240,9 @@ public class SettingsFragment extends Fragment {
             ((MainNavigationActivity) getActivity()).logoutDialog();
         });
 
-        // Save button used to update current user's personal info and password
-        TextView saveButton = getView().findViewById(R.id.saveBtn);
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        // Save button used to update current user's password
+        TextView saveButtonPass = getView().findViewById(R.id.saveBtnPass);
+        saveButtonPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!areChangesValid()) {
@@ -263,20 +255,42 @@ public class SettingsFragment extends Fragment {
 
                     return;
                 }
-
                 AsyncWrapper.wrap(() -> {
                     try {
                         updateUserPassword();
+                        getActivity().runOnUiThread(() ->
+                                Toast.makeText(getContext(), "Password Updated!",
+                                        Toast.LENGTH_SHORT).show());
+                    } catch (Exception ignored) {
+                        getActivity().runOnUiThread(() ->
+                                Toast.makeText(getContext(), "Error! Password Not Updated",
+                                        Toast.LENGTH_SHORT).show());
+                    }
+                });
+            }
+        });
+
+        // Save button used to update current user's personal info
+        TextView saveButton = getView().findViewById(R.id.saveBtn);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AsyncWrapper.wrap(() -> {
+                    try {
                         setNewInformation();
+                        getActivity().runOnUiThread(() ->
+                                Toast.makeText(getContext(), "Account Details Saved!",
+                                        Toast.LENGTH_SHORT).show());
                     } catch (Exception e) {
                         // ERR show
                         Log.e("updateUserInformation", e.getMessage());
-                        return;
+
+                        getActivity().runOnUiThread(() ->
+                                Toast.makeText(getContext(), "Error!",
+                                        Toast.LENGTH_SHORT).show());
                     }
                 });
 
-                Toast.makeText(getActivity().getApplicationContext()
-                        , "Saved", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -297,17 +311,6 @@ public class SettingsFragment extends Fragment {
         profilePic.setImageBitmap(Tools.getResizedBitmap(image, 250));
     }
 
-    // TODO password
-    private void updateUserSettings() {
-        //updateUserPassword();
-        try {
-            setNewInformation();
-        } catch (Exception e) {
-
-        }
-
-    }
-
     private void setNewInformation() throws Exception {
         User currentUser = Store.getCurrentUser();
         currentUser.setFirstName(firstName.getText().toString());
@@ -323,20 +326,14 @@ public class SettingsFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String newPassword = password.getText().toString();
 
-        if (currentPassword.getText().toString().length() > 0 &&
-                password.getText().toString().length() > 0 &&
-                repeatPassword.getText().toString().length() > 0) {
-
-            user.updatePassword(newPassword)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Log.d(TAG, "User password updated.");
-                            }
-                        }
-                    });
-        }
+        user.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "User password updated.");
+                }
+            }
+        });
     }
 
     @Override
