@@ -16,7 +16,7 @@ import java.util.List;
  */
 public final class Store {
 
-    private static final int MAX_ACCOMMODATIONS_PER_PULL = 5;
+    private static final int MAX_ACCOMMODATIONS_PER_PULL = 3;
 
     /**
      * States and variables that need to be saved locally
@@ -26,6 +26,7 @@ public final class Store {
     private static ArrayList<AccommodationInfo> listedProperties = new ArrayList<>();
     private static ArrayList<Rating> ratingsTenant = new ArrayList<>();
     private static ArrayList<Rating> ratingsLandlord = new ArrayList<>();
+    private static ArrayList<String> ratedAccommodationsIds = new ArrayList<>();
 
     private static Query discoveryFilter;
 
@@ -49,28 +50,15 @@ public final class Store {
     public static AccommodationInfo getNextAccommodation() throws Exception {
         // Refresh
         if (discoveryAccommodations.size() == 0) {
-            refreshAccommodations(discoveryFilter);
-        } else if (discoveryAccommodations.size() < 2) { // Pull more data
-            pullMoreAccommodations(discoveryAccommodations.get(0).getSnapshot());
+            refreshAccommodations();
         }
-        if (discoveryAccommodations.size() != 0) {
-            return discoveryAccommodations.remove(0);
-        }
-        return null;
+        return discoveryAccommodations.remove(0);
     }
 
-    public static void refreshAccommodations(Query query) throws Exception {
-        ArrayList<AccommodationInfo> newData;
-        if (query == null) {
-            newData = transformDocuments(
-                    Database.getActiveAccommodations(MAX_ACCOMMODATIONS_PER_PULL));
-            discoveryFilter = null;
-        } else {
-            newData = transformDocuments(
-                    Database.filterQuery(query, MAX_ACCOMMODATIONS_PER_PULL).getDocuments());
-            discoveryFilter = query;
-        }
-        discoveryAccommodations = newData; // let garbage collector take care
+    //TODO add filtes
+    public static void refreshAccommodations() throws Exception {
+        discoveryAccommodations = transformDocuments(
+                    Database.getActiveAccommodations(getCurrentUser().getUsername(), MAX_ACCOMMODATIONS_PER_PULL));
     }
 
     public static User getUserToBeRated()  throws Exception {
@@ -80,6 +68,7 @@ public final class Store {
         return null;
     }
 
+    @Deprecated
     public static void pullMoreAccommodations(DocumentSnapshot lastAccommodation) throws Exception {
         if (discoveryFilter == null) {
             ArrayList<AccommodationInfo> newData = transformDocuments(
@@ -89,6 +78,13 @@ public final class Store {
                     Database.filterQuery(discoveryFilter, lastAccommodation, MAX_ACCOMMODATIONS_PER_PULL)
                             .getDocuments());
         }
+    }
+
+    @Deprecated
+    public static void pullMoreAccommodations() throws Exception {
+        discoveryAccommodations = transformDocuments(
+                    Database.getActiveAccommodations(currentUser.getUsername()
+                            , MAX_ACCOMMODATIONS_PER_PULL));
     }
 
     @Deprecated
@@ -104,6 +100,12 @@ public final class Store {
         return ratingsTenant;
     }
 
+    /**
+     *
+     * @param accommodation
+     * @param impression
+     * @throws Exception
+     */
     public static void rateAccommodation(AccommodationInfo accommodation, Long impression)
             throws Exception {
         if (impression > 1 || impression < -1)

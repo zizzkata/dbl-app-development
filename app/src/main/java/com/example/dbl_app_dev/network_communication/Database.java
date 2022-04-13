@@ -117,6 +117,27 @@ public abstract class Database {
         return Tasks.await(FirebaseQueries.getActiveAccommodations(amount).get()).getDocuments();
     }
 
+    public static List<DocumentSnapshot> getActiveAccommodations(String username, int amount)
+            throws Exception {
+        QuerySnapshot viewAccommodations = Tasks.await(
+                FirebaseQueries.getRatedAccommodations(username));
+        ArrayList<String> accommodationIds =
+                Tools.getListParameterFromCollection("accommodation_id"
+                        , viewAccommodations.getDocuments());
+        List<DocumentSnapshot> activeAccommodations = new ArrayList<>();
+        if (accommodationIds.size() > 0) {
+            activeAccommodations  = Tasks.await(FirebaseQueries.getActiveAccommodations(accommodationIds
+                    , username, amount).get()).getDocuments();
+        } else {
+            activeAccommodations = Tasks.await(FirebaseQueries.getActiveAccommodations(username, amount).get())
+                    .getDocuments();
+        }
+        activeAccommodations.removeIf(accomm -> accomm.get("owner_username") == username);
+        return activeAccommodations;
+    }
+
+
+
     public static AccommodationInfo getAccommodation(String accommodationId) throws Exception {
         return new AccommodationInfo(
                 Tasks.await(FirebaseQueries.getAccommodation(accommodationId)));
@@ -160,7 +181,7 @@ public abstract class Database {
     }
 
     public static void createRatingAccommodation(String accommodationId, String username
-            , String ownerUsername, boolean rating) throws Exception {
+            , String ownerUsername, Long rating) throws Exception {
         Tasks.await(FirebaseQueries.createRatingOnAccommodation(accommodationId
                 , username, ownerUsername, rating));
     }

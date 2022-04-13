@@ -346,13 +346,15 @@ public class SettingsFragment extends Fragment {
             Uri selectedImage = data.getData();
             ImageView imageView = getView().findViewById(R.id.imageView);
             imageView.setImageURI(selectedImage);
-            try {
-                Store.getCurrentUser().updateUserImage(
-                        ((BitmapDrawable) imageView.getDrawable()).getBitmap());
-            } catch (Exception e) {
-                Log.e("Image", e.getMessage());
-            }
 
+            AsyncWrapper.wrap(() -> {
+                try {
+                    Store.getCurrentUser().updateUserImage(
+                            ((BitmapDrawable) imageView.getDrawable()).getBitmap());
+                } catch (Exception e) {
+                    Log.e("Image", e.getMessage());
+                }
+            });
         }
     }
 }

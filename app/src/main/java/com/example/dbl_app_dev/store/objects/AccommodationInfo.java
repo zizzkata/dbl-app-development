@@ -242,7 +242,7 @@ public class AccommodationInfo {
 
     @Deprecated
     public void rateAccommodation(String username, boolean rate) throws Exception {
-        Database.createRatingAccommodation(accommodationId, username, ownerUsername, rate);
+        //Database.createRatingAccommodation(accommodationId, username, ownerUsername, rate);
     }
 
     public void setAddress(String s) {
