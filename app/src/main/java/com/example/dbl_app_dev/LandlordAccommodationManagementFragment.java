@@ -120,6 +120,7 @@ public class LandlordAccommodationManagementFragment extends Fragment {
 
                     // Get the liked listings of the user
                     try {
+                        // TODO properly push current listing to store or whatever
                         myListings.add(listing);
                         getActivity().runOnUiThread(() -> {
                                     if (myListings != null) {
