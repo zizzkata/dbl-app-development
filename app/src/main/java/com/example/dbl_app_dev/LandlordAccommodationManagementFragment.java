@@ -1,9 +1,15 @@
 package com.example.dbl_app_dev;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +28,8 @@ import androidx.fragment.app.Fragment;
 import com.example.dbl_app_dev.network_communication.Database;
 import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.store.objects.AccommodationInfo;
-import com.example.dbl_app_dev.store.objects.User;
 import com.example.dbl_app_dev.util.AsyncWrapper;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +43,21 @@ import java.util.Map;
  */
 public class LandlordAccommodationManagementFragment extends Fragment {
 
+    abstract class OnClickListenerAdapter implements View.OnClickListener {
+        private int request;
+
+        public OnClickListenerAdapter(int request) {
+            this.request = request;
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, request);
+        }
+    }
+
+    private AlertDialog currDialog;
     ConstraintLayout accommParent;
     ArrayList<AccommodationInfo> myListings = null;
     ArrayList<TenantAccommodationObject> myListingsObjects = new ArrayList<>();
@@ -71,7 +92,13 @@ public class LandlordAccommodationManagementFragment extends Fragment {
         Button addListingBtn = getView().findViewById(R.id.addListingBtn);
         addListingBtn.setOnClickListener(view1 -> {
             AlertDialog d = ((MainNavigationActivity) getActivity()).createNewAccommodationDialog();
-            setCreateButtonFunctionality(d);
+            setCurrentDialog(d);
+            addImageListeners(d);
+
+            d.findViewById(R.id.createButton).setOnClickListener(view2 -> {
+                AccommodationInfo listing = getCurrentListing(d);
+                // TODO push listing to db
+            });
         });
 
 
@@ -97,8 +124,54 @@ public class LandlordAccommodationManagementFragment extends Fragment {
         });
     }
 
-    private void setCreateButtonFunctionality(AlertDialog ad) {
-        //IDK
+    private void addImageListeners(AlertDialog ad) {
+        ImageView panorama = ad.findViewById(R.id.panoramaImage);
+        ImageView normal = ad.findViewById(R.id.normalImage);
+
+        final int panoramaRequest = 0;
+        final int normalRequest = 1;
+
+        panorama.setOnClickListener(new OnClickListenerAdapter(panoramaRequest) {
+        });
+
+        normal.setOnClickListener(new OnClickListenerAdapter(normalRequest) {
+        });
+    }
+
+    private AccommodationInfo getCurrentListing(AlertDialog ad) {
+        String username = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        String address = ((TextView) ad.findViewById(R.id.addressTxt)).getText().toString();
+        String houseNumber = ((TextView) ad.findViewById(R.id.apartmentNameText)).getText().toString();
+        String floor = ((TextView) ad.findViewById(R.id.floorTxt)).getText().toString();
+        String city = ((TextView) ad.findViewById(R.id.cityTxt)).getText().toString();
+        String postcode = ((TextView) ad.findViewById(R.id.postcodeTxt)).getText().toString();
+        String rentPeriod = ((TextView) ad.findViewById(R.id.minimumRentTxt)).getText().toString();
+        String startDate = ((TextView) ad.findViewById(R.id.startDateEditTxt)).getText().toString();
+        String endDate = ((TextView) ad.findViewById(R.id.endDateEditTxt)).getText().toString();
+        String description = ((TextView) ad.findViewById(R.id.descriptionTxt)).getText().toString();
+        boolean furnished = ((CheckBox) ad.findViewById(R.id.furnishedCheckBox)).isChecked();
+        boolean smoker = ((CheckBox) ad.findViewById(R.id.smokerCheckBox)).isChecked();
+        boolean pets = ((CheckBox) ad.findViewById(R.id.petsCheckBox)).isChecked();
+
+        String s1 = ((TextView) ad.findViewById(R.id.maxPriceTxt)).getText().toString();
+        String s2 = ((TextView) ad.findViewById(R.id.surfaceAreaTxt)).getText().toString();
+        Long rentPrice = Long.parseLong(s1);
+        Long surfaceArea = Long.parseLong(s2);
+
+        ImageView panorama = ad.findViewById(R.id.panoramaImage);
+        ImageView normal = ad.findViewById(R.id.normalImage);
+        Bitmap panoramaBitmap = ((BitmapDrawable) panorama.getDrawable()).getBitmap();
+        ArrayList<Bitmap> photos = new ArrayList<>();
+        photos.add(((BitmapDrawable) normal.getDrawable()).getBitmap());
+
+        AccommodationInfo listing = new AccommodationInfo(username, address, city,
+                description, endDate, startDate, floor, furnished, pets, smoker,
+                houseNumber, rentPeriod, postcode, rentPrice, surfaceArea, panoramaBitmap,
+                photos);
+
+        Toast.makeText(getContext(), "New Accommodation Created", Toast.LENGTH_SHORT).show();
+        ad.dismiss();
+        return listing;
     }
 
     private void addMyListings() {
@@ -170,6 +243,8 @@ public class LandlordAccommodationManagementFragment extends Fragment {
             a.compactView.findViewById(R.id.settingsIcon).setOnClickListener(view1 -> {
                 AlertDialog d = ((MainNavigationActivity) getActivity())
                         .editAccommodationDialog(a.compactView);
+                setCurrentDialog(d);
+                addImageListeners(d);
                 getActivity().runOnUiThread(() -> setDialogInfo(d, a));
             });
         }
@@ -226,7 +301,7 @@ public class LandlordAccommodationManagementFragment extends Fragment {
         ((TextView) ad.findViewById(R.id.postcodeTxt)).setText(listing.getPostcode());
 
         ((TextView) ad.findViewById(R.id.maxPriceTxt))
-                .setText(listing.getCurrency() + listing.getPrice());
+                .setText(listing.getPrice().toString());
         ((TextView) ad.findViewById(R.id.minimumRentTxt)).setText(listing.getMinimumPeriod());
         ((TextView) ad.findViewById(R.id.startDateEditTxt)).setText(listing.getAvailableFrom());
         ((TextView) ad.findViewById(R.id.endDateEditTxt)).setText(listing.getAvailableUntil());
@@ -237,6 +312,7 @@ public class LandlordAccommodationManagementFragment extends Fragment {
         ((CheckBox) ad.findViewById(R.id.smokerCheckBox)).setChecked(listing.getSmokers());
         ((CheckBox) ad.findViewById(R.id.petsCheckBox)).setChecked(listing.getPets());
 
+        // TODO also update images
         ad.findViewById(R.id.saveBtn).setOnClickListener(view1 -> {
             updateAccommodationDetails(ad, listing);
             AsyncWrapper.wrap(() -> {
@@ -273,7 +349,6 @@ public class LandlordAccommodationManagementFragment extends Fragment {
         listing.setPostcode(((TextView) ad.findViewById(R.id.postcodeTxt)).getText().toString());
 
         String s1 = ((TextView) ad.findViewById(R.id.maxPriceTxt)).getText().toString();
-        if (s1.length() >= 1) s1 = s1.substring(1);
         listing.setPrice(Long.parseLong(s1));
 
         String s2 = ((TextView) ad.findViewById(R.id.surfaceAreaTxt)).getText().toString();
@@ -313,5 +388,31 @@ public class LandlordAccommodationManagementFragment extends Fragment {
             this.compactView = compactAccomm;
             this.accommodationInfo = accommodationObj;
         }
+
+        private void setListing(AccommodationInfo listing) {
+            this.accommodationInfo = listing;
+        }
+    }
+
+    private void setCurrentDialog(AlertDialog ad) {
+        this.currDialog = ad;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (data == null) {
+            return;
+        }
+
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+
+        Uri selectedImage = data.getData();
+        ImageView imageView = (requestCode == 0)
+                ? currDialog.findViewById(R.id.panoramaImage) : currDialog.findViewById(R.id.normalImage);
+        imageView.setImageURI(selectedImage);
     }
 }

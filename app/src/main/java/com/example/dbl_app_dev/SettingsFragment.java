@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -23,21 +24,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import com.example.dbl_app_dev.store.Store;
-import com.example.dbl_app_dev.store.objects.User;
-import com.example.dbl_app_dev.util.AsyncWrapper;
-import com.example.dbl_app_dev.util.Tools;
-import com.example.dbl_app_dev.util.adapters.TextWatcherAdapter;
-import com.example.dbl_app_dev.util.view_validation.validators.PasswordValidator;
-import com.example.dbl_app_dev.util.view_validation.validators.RepeatPasswordValidator;
-import com.example.dbl_app_dev.util.view_validation.validators.ViewValidator;
-import com.example.dbl_app_dev.util.view_validation.validators.currPasswordValidator;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import java.io.InputStream;
-import java.util.ArrayList;
 
 import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.store.objects.User;
@@ -360,6 +346,15 @@ public class SettingsFragment extends Fragment {
             Uri selectedImage = data.getData();
             ImageView imageView = getView().findViewById(R.id.imageView);
             imageView.setImageURI(selectedImage);
+
+            AsyncWrapper.wrap(() -> {
+                try {
+                    Store.getCurrentUser().updateUserImage(
+                            ((BitmapDrawable) imageView.getDrawable()).getBitmap());
+                } catch (Exception e) {
+                    Log.e("Image", e.getMessage());
+                }
+            });
         }
     }
 }

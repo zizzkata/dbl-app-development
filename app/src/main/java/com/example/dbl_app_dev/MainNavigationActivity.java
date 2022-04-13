@@ -173,7 +173,8 @@ public class MainNavigationActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.clear();
-        super.onSaveInstanceState(outState);
+        Bundle b = new Bundle();
+        super.onSaveInstanceState(b);
         Log.d("extra", "Instance state of main navigation activity cleared");
     }
 }

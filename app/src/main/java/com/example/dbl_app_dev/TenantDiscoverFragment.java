@@ -178,6 +178,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e("ERR", e.getMessage());
+                currentAccommodationInfo = null;
             }
         });
     }
@@ -189,9 +190,10 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     public void swipedRight() {
         AsyncWrapper.wrap(() -> {
             try {
-               currentAccommodationInfo.rateAccommodation(Store.getCurrentUser().getUsername(), true);
+                Store.rateAccommodation(currentAccommodationInfo, (long) 1);
             } catch (Exception e) {
-                Log.e("swipeRgiht", e.getMessage());
+                // TODO: toaster
+                Log.e("swipeRight", e.getMessage());
             }
         });
     }
@@ -203,8 +205,9 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     public void swipedLeft() {
         AsyncWrapper.wrap(() -> {
             try {
-                currentAccommodationInfo.rateAccommodation(Store.getCurrentUser().getUsername(), true);
+                Store.rateAccommodation(currentAccommodationInfo, (long) -1);
             } catch (Exception e) {
+                // TODO: toaster
                 Log.e("swipeLeft", e.getMessage());
             }
         });
@@ -228,11 +231,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     }
 
     private String booleanToYesNo(boolean x) {
-        if (x) {
-            return "Yes";
-        } else {
-            return "No";
-        }
+       return x ? "Yes" : "No";
     }
 
     /**

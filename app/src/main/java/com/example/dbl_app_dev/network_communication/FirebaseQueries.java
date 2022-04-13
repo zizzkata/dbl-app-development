@@ -1,5 +1,6 @@
 package com.example.dbl_app_dev.network_communication;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -199,6 +201,10 @@ public abstract class FirebaseQueries {
         return usersImages.child(username + ".jpg").getBytes(ONE_MEGABYTE);
     }
 
+    public static UploadTask uploadUserProfile(String username, byte[] image) {
+        return usersImages.child(username + ".jpg").putBytes(image);
+    }
+
     /**
      * @param accommodationId
      * @return
@@ -243,6 +249,8 @@ public abstract class FirebaseQueries {
         return accommodations.startAfter(lastDocument).whereEqualTo("active", true);
     }
 
+    ///public static Query
+
     /**
      *
      * @return
@@ -258,6 +266,20 @@ public abstract class FirebaseQueries {
      */
     public static Query getActiveAccommodations(int amount) {
         return accommodations.whereEqualTo("active", true).limit(amount);
+    }
+
+    public static Query getActiveAccommodations(ArrayList<String> exclude, String ownerUsername
+            , int amount) {
+        return accommodations.whereEqualTo("active", true)
+               //.whereNotEqualTo("owner_username", ownerUsername) // cannot do multiple inequality queries
+                .whereNotIn("__name__", exclude)
+                .limit(amount);
+    }
+
+    public static Query getActiveAccommodations(String ownerUsername, int amount) {
+        return accommodations.whereEqualTo("active", true)
+                .whereNotEqualTo("owner_username", ownerUsername)
+                .limit(amount);
     }
 
     /**
@@ -300,9 +322,19 @@ public abstract class FirebaseQueries {
      * @param username
      * @return
      */
-    public static Task<QuerySnapshot> getLikedAccommodationsIds(String username) {
-        return ratedAccommodations.whereEqualTo("ratedTenant", 1)
-                .whereEqualTo("tenantUsername", username)
+    public static Task<QuerySnapshot> getLikedAccommodations(String username) {
+        return ratedAccommodations.whereEqualTo("rating_tenant", 1)
+                .whereEqualTo("tenant_username", username)
+                .get();
+    }
+
+    /**
+     *
+     * @param username
+     * @return
+     */
+    public static Task<QuerySnapshot> getRatedAccommodations(String username) {
+        return ratedAccommodations.whereEqualTo("tenant_username", username)
                 .get();
     }
 
@@ -315,13 +347,13 @@ public abstract class FirebaseQueries {
      * @return
      */
     public static Task<Void> createRatingOnAccommodation(String accommodationId
-            , String tenantId, String ownerId, boolean rate) {
+            , String tenantId, String ownerId, Long rate) {
         Map<String, Object> rating = new HashMap<>();
-        rating.put("accommodationId", accommodationId);
-        rating.put("tenantUsername", tenantId);
+        rating.put("accommodation_id", accommodationId);
+        rating.put("tenant_username", tenantId);
         rating.put("owner_username", ownerId);
-        rating.put("ratedLandlord", 0);
-        rating.put("ratedTenant", rate ? 1 : -1);
+        rating.put("rating_landlord", 0);
+        rating.put("rating_tenant", rate);
         return ratedAccommodations.document().set(rating);
     }
 
@@ -333,8 +365,8 @@ public abstract class FirebaseQueries {
      */
     public static Query getOneRatingOnAccommodation(String accommodationId, String tenantId) {
         return ratedAccommodations
-                .whereEqualTo("accommodationId", accommodationId)
-                .whereEqualTo("tenantUsername", tenantId)
+                .whereEqualTo("accommodation_id", accommodationId)
+                .whereEqualTo("tenant_username", tenantId)
                 .limit(1);
     }
 
@@ -393,6 +425,6 @@ public abstract class FirebaseQueries {
      * @return
      */
     public static Task<QuerySnapshot> getRatingsByAccommodationId(String accommodationId) {
-        return ratedAccommodations.whereEqualTo("accommodationId", accommodationId).get();
+        return ratedAccommodations.whereEqualTo("accommodation_id", accommodationId).get();
     }
 }
