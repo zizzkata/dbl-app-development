@@ -94,10 +94,7 @@ public final class Store {
     }
 
     public static ArrayList<Rating> getRatingsTenant() throws Exception {
-        if (ratingsTenant.size() == 0) {
-            ratingsTenant = Database.getRatedAccommodations(currentUser.getUsername());
-        }
-        return ratingsTenant;
+        return Database.getRatedAccommodations(currentUser.getUsername());
     }
 
     /**

@@ -411,8 +411,14 @@ public class LandlordAccommodationManagementFragment extends Fragment {
             AsyncWrapper.wrap(() -> {
                 try {
                     Database.updateAccommodation(listing.getAccommodationId(), transformedData);
+                    getActivity().runOnUiThread(() ->
+                            Toast.makeText(getContext(), "Deletion successful!",
+                                    Toast.LENGTH_SHORT).show());
                 } catch (Exception e) {
                     Log.e("ERROR", e.getMessage());
+                    getActivity().runOnUiThread(() ->
+                            Toast.makeText(getContext(), "Deletion unsuccessful!",
+                                    Toast.LENGTH_SHORT).show());
                 }
             });
         });
