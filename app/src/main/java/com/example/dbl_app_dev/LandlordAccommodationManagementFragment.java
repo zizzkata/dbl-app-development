@@ -29,7 +29,8 @@ import com.example.dbl_app_dev.network_communication.Database;
 import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.store.objects.AccommodationInfo;
 import com.example.dbl_app_dev.util.AsyncWrapper;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.dbl_app_dev.util.view_validation.validators.ImageValidator;
+import com.example.dbl_app_dev.util.view_validation.validators.ViewValidator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,19 +95,41 @@ public class LandlordAccommodationManagementFragment extends Fragment {
             AlertDialog d = ((MainNavigationActivity) getActivity()).createNewAccommodationDialog();
             setCurrentDialog(d);
             addImageListeners(d);
+            makeWarningsInvisible(d);
 
             d.findViewById(R.id.createButton).setOnClickListener(view2 -> {
+                if (!isAccommodationValid(d)) {
+                    return;
+                }
+
                 AccommodationInfo listing = getCurrentListing(d);
                 AsyncWrapper.wrap(() -> {
                     try {
                         Database.createAccommodation(transformAccommodation(listing));
+
                         getActivity().runOnUiThread(() ->
                                 Toast.makeText(getContext(), "New Accommodation Created",
                                         Toast.LENGTH_SHORT).show());
+
                     } catch (Exception e) {
                         getActivity().runOnUiThread(() ->
                                 Toast.makeText(getContext(), "Creation unsuccessful",
                                         Toast.LENGTH_SHORT).show());
+                        return;
+                    }
+
+                    // Get the liked listings of the user
+                    try {
+                        myListings.add(listing);
+                        getActivity().runOnUiThread(() -> {
+                                    if (myListings != null) {
+                                        addMyListings();
+                                        addAllEditButtonsFunctionality();
+                                    }
+                                }
+                        );
+                    } catch (Exception e) {
+                        Log.e("ERR", e.getMessage());
                     }
                 });
             });
@@ -135,9 +158,16 @@ public class LandlordAccommodationManagementFragment extends Fragment {
         });
     }
 
+    private void makeWarningsInvisible(AlertDialog d) {
+        d.findViewById(R.id.panoramaWarning).setVisibility(View.GONE);
+        d.findViewById(R.id.imageWarning).setVisibility(View.GONE);
+    }
+
     private void addImageListeners(AlertDialog ad) {
         ImageView panorama = ad.findViewById(R.id.panoramaImage);
         ImageView normal = ad.findViewById(R.id.normalImage);
+        TextView addPanorama = ad.findViewById(R.id.addPanorama);
+        TextView addImage = ad.findViewById(R.id.addNormal);
 
         final int panoramaRequest = 0;
         final int normalRequest = 1;
@@ -146,6 +176,12 @@ public class LandlordAccommodationManagementFragment extends Fragment {
         });
 
         normal.setOnClickListener(new OnClickListenerAdapter(normalRequest) {
+        });
+
+        addPanorama.setOnClickListener(new OnClickListenerAdapter(panoramaRequest) {
+        });
+
+        addImage.setOnClickListener(new OnClickListenerAdapter(normalRequest) {
         });
     }
 
@@ -260,6 +296,7 @@ public class LandlordAccommodationManagementFragment extends Fragment {
                         .editAccommodationDialog(a.compactView);
                 setCurrentDialog(d);
                 addImageListeners(d);
+                makeWarningsInvisible(d);
                 removeListingFunctionality(d, a);
                 getActivity().runOnUiThread(() -> setDialogInfo(d, a));
             });
@@ -330,6 +367,10 @@ public class LandlordAccommodationManagementFragment extends Fragment {
 
         // TODO also update images
         ad.findViewById(R.id.saveBtn).setOnClickListener(view1 -> {
+            if (!isAccommodationValid(ad)) {
+                return;
+            }
+
             updateAccommodationDetails(ad, listing);
             AsyncWrapper.wrap(() -> {
                 try {
@@ -437,6 +478,31 @@ public class LandlordAccommodationManagementFragment extends Fragment {
                 }
             });
         });
+    }
+
+    private boolean isAccommodationValid(AlertDialog ad) {
+        // list of all validator objects
+        ArrayList<ViewValidator> validators = new ArrayList<>();
+
+        ImageView panorama = ad.findViewById(R.id.panoramaImage);
+        ImageView image = ad.findViewById(R.id.normalImage);
+        TextView panoramaWarning = ad.findViewById(R.id.panoramaWarning);
+        TextView imageWarning = ad.findViewById(R.id.imageWarning);
+
+        validators.add(new ImageValidator(panorama, panoramaWarning));
+        validators.add(new ImageValidator(image, imageWarning));
+
+        // run validate on all validators
+        boolean areValidatorsValid = true;
+        for (ViewValidator validator : validators) {
+            validator.validate();
+
+            if (!validator.isValid()) {
+                areValidatorsValid = false;
+            }
+        }
+        // if all validators are valid, then return true, otherwise return false
+        return areValidatorsValid;
     }
 
     @Override
