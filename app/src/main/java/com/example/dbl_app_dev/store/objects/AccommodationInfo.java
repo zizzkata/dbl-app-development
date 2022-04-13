@@ -1,6 +1,7 @@
 package com.example.dbl_app_dev.store.objects;
 
 import android.graphics.Bitmap;
+import android.provider.ContactsContract;
 
 import com.example.dbl_app_dev.network_communication.Database;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -94,6 +95,12 @@ public class AccommodationInfo {
         this.price = price;
         this.area_m2 = area_m2;
         this.smokers = smokers;
+        this.photoPanoramic = panorama;
+
+        this.photos = new ArrayList<>();
+        for (Bitmap photo : photos) {
+            this.photos.add(photo);
+        }
     }
 
     /**
@@ -334,13 +341,15 @@ public class AccommodationInfo {
     /**
      * Creates a new instance of accommodation in the database,
      * or updates it if it already exists.
+     *
      * @throws Exception
      */
     public void pushAccommodation() throws Exception {
         // TODO check for anonymous owners.
         Map<String, Object> data = transformToHash();
-        if (accommodationId == null || accommodationId == "") { // create new file
-            // TODO
+        if (accommodationId == null || accommodationId.equals("")) { // create new file
+            Database.createAccommodation(data);
+            //TODO also push images and link accommodation to user
         } else { //update accommodation
             //TODO
         }

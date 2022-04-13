@@ -97,7 +97,18 @@ public class LandlordAccommodationManagementFragment extends Fragment {
 
             d.findViewById(R.id.createButton).setOnClickListener(view2 -> {
                 AccommodationInfo listing = getCurrentListing(d);
-                // TODO push listing to db
+                AsyncWrapper.wrap(() -> {
+                    try {
+                        Database.createAccommodation(transformAccommodation(listing));
+                        getActivity().runOnUiThread(() ->
+                                Toast.makeText(getContext(), "New Accommodation Created",
+                                        Toast.LENGTH_SHORT).show());
+                    } catch (Exception e) {
+                        getActivity().runOnUiThread(() ->
+                                Toast.makeText(getContext(), "Creation unsuccessful",
+                                        Toast.LENGTH_SHORT).show());
+                    }
+                });
             });
         });
 
@@ -155,8 +166,8 @@ public class LandlordAccommodationManagementFragment extends Fragment {
 
         String s1 = ((TextView) ad.findViewById(R.id.maxPriceTxt)).getText().toString();
         String s2 = ((TextView) ad.findViewById(R.id.surfaceAreaTxt)).getText().toString();
-        Long rentPrice = Long.parseLong(s1);
-        Long surfaceArea = Long.parseLong(s2);
+        Long rentPrice = s1.equals("") ? 0 : Long.parseLong(s1);
+        Long surfaceArea = s2.equals("") ? 0 : Long.parseLong(s2);
 
         ImageView panorama = ad.findViewById(R.id.panoramaImage);
         ImageView normal = ad.findViewById(R.id.normalImage);
@@ -169,7 +180,6 @@ public class LandlordAccommodationManagementFragment extends Fragment {
                 houseNumber, rentPeriod, postcode, rentPrice, surfaceArea, panoramaBitmap,
                 photos);
 
-        Toast.makeText(getContext(), "New Accommodation Created", Toast.LENGTH_SHORT).show();
         ad.dismiss();
         return listing;
     }
@@ -349,10 +359,10 @@ public class LandlordAccommodationManagementFragment extends Fragment {
         listing.setPostcode(((TextView) ad.findViewById(R.id.postcodeTxt)).getText().toString());
 
         String s1 = ((TextView) ad.findViewById(R.id.maxPriceTxt)).getText().toString();
-        listing.setPrice(Long.parseLong(s1));
+        listing.setPrice(s1.equals("") ? 0 : Long.parseLong(s1));
 
         String s2 = ((TextView) ad.findViewById(R.id.surfaceAreaTxt)).getText().toString();
-        listing.setArea_m2(Long.parseLong(s2));
+        listing.setArea_m2(s2.equals("") ? 0 : Long.parseLong(s2));
 
         listing.setSmokers(((CheckBox) ad.findViewById(R.id.smokerCheckBox)).isChecked());
 
