@@ -150,7 +150,12 @@ public class LandlordAccommodationManagementFragment extends Fragment {
     }
 
     private AccommodationInfo getCurrentListing(AlertDialog ad) {
-        String username = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        String username = "";
+        try {
+            username = Store.getCurrentUser().getUsername();
+        } catch (Exception e) {
+            // TODO
+        }
         String address = ((TextView) ad.findViewById(R.id.addressTxt)).getText().toString();
         String houseNumber = ((TextView) ad.findViewById(R.id.apartmentNameText)).getText().toString();
         String floor = ((TextView) ad.findViewById(R.id.floorTxt)).getText().toString();
@@ -416,7 +421,7 @@ public class LandlordAccommodationManagementFragment extends Fragment {
             Map<String, Object> transformedData = new HashMap<>();
             transformedData.put("active", false);
             ad.dismiss();
-            accommObj.compactView.setVisibility(View.INVISIBLE);
+            accommObj.compactView.setVisibility(View.GONE);
 
             AsyncWrapper.wrap(() -> {
                 try {
