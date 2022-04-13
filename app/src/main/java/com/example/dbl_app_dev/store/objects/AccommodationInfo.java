@@ -71,6 +71,31 @@ public class AccommodationInfo {
         smokers = (Boolean) ds.get("smokers");
     }
 
+    public AccommodationInfo(String ownerUsername, String address, String city, String description
+            , String availableUntil, String availableFrom, String floor, Boolean furnished
+            , Boolean pets, Boolean smokers, String houseNumber, String minimumPeriod
+            , String postcode, Long price, Long area_m2, Bitmap panorama, ArrayList<Bitmap> photos) {
+        //documentSnapshot = ds;
+        //accommodationId = ds.getId(); // indicates that it doesn't exist in db
+        this.address = address;
+        this.active = true;
+        this.city = city;
+        this.currency = "EUR";
+        this.description = description;
+        this.availableUntil = availableUntil;
+        this.availableFrom = availableFrom;
+        this.floor = floor;
+        this.furnished = furnished;
+        this.houseNumber = houseNumber;
+        this.minimumPeriod = minimumPeriod;
+        this.ownerUsername = ownerUsername;
+        this.pets = pets;
+        this.postcode = postcode;
+        this.price = price;
+        this.area_m2 = area_m2;
+        this.smokers = smokers;
+    }
+
     /**
      * @return
      */
@@ -128,7 +153,7 @@ public class AccommodationInfo {
         if (address == null) return "";
         if (address.length() == 0) return "";
         String s = address + ",";
-        return s.substring( 0, s.indexOf(","));
+        return s.substring(0, s.indexOf(","));
     }
 
     public String getAccommodationId() {
@@ -180,25 +205,42 @@ public class AccommodationInfo {
         return price;
     }
 
-    public boolean getActive() { return active; }
+    public boolean getActive() {
+        return active;
+    }
 
-    public String getPostcode() { return postcode; }
+    public String getPostcode() {
+        return postcode;
+    }
 
-    public String getAreaString() { return area_m2.toString(); }
+    public String getAreaString() {
+        return area_m2.toString();
+    }
 
-    public Long getArea() { return area_m2; }
+    public Long getArea() {
+        return area_m2;
+    }
 
-    public String getMinimumPeriod() { return minimumPeriod; }
+    public String getMinimumPeriod() {
+        return minimumPeriod;
+    }
 
-    public String getAvailableFrom() { return availableFrom; }
+    public String getAvailableFrom() {
+        return availableFrom;
+    }
 
-    public String getAvailableUntil() { return availableUntil; }
+    public String getAvailableUntil() {
+        return availableUntil;
+    }
 
-    public int getPhotosSize() { return photos.size(); }
+    public int getPhotosSize() {
+        return photos.size();
+    }
 
     // Positive = 1; Neutral = 0; Negative = -1;
     // public int getRating() { return 0;}
 
+    @Deprecated
     public void rateAccommodation(String username, boolean rate) throws Exception {
         Database.createRatingAccommodation(accommodationId, username, ownerUsername, rate);
     }
