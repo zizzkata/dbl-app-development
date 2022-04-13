@@ -16,7 +16,7 @@ import java.util.List;
  */
 public final class Store {
 
-    private static final int MAX_ACCOMMODATIONS_PER_PULL = 5;
+    private static final int MAX_ACCOMMODATIONS_PER_PULL = 3;
 
     /**
      * States and variables that need to be saved locally
