@@ -8,6 +8,7 @@ import com.example.dbl_app_dev.store.objects.AccommodationInfo;
 import com.example.dbl_app_dev.store.objects.Rating;
 import com.example.dbl_app_dev.store.objects.User;
 import com.example.dbl_app_dev.util.AsyncWrapper;
+import com.example.dbl_app_dev.util.Tools;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentReference;
@@ -15,6 +16,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.StorageReference;
+
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +57,14 @@ public abstract class Database {
                 FirebaseQueries.pushData(documentReference, data)));
     }
 
+
+
+    /**
+     *  IMAGE MANIPULATION
+     */
+
+
+
     public static Bitmap getUserImage(String username) throws Exception {
         byte[] byteArray = AsyncWrapper.wrap(FirebaseQueries.getUserImage(username));
         return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
@@ -62,6 +73,12 @@ public abstract class Database {
     public static Bitmap getPanoramicImage(String accommId) throws Exception {
         byte[] byteArray = AsyncWrapper.wrap(FirebaseQueries.getPanoramicImage(accommId));
         return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+    }
+
+    public static void uploadProfilePic(String username, Bitmap image) throws Exception {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 60, stream);
+        Tasks.await(FirebaseQueries.uploadUserProfile(username, stream.toByteArray()));
     }
 
     public static ArrayList<byte[]> getStaticImages(String accommId) throws Exception {
@@ -84,6 +101,13 @@ public abstract class Database {
         }
         return byteImages;
     }
+
+
+
+    /**
+     * ACCOMMODATION
+     */
+
 
     public static List<DocumentSnapshot> getAccommodations() throws Exception {
         return Tasks.await(FirebaseQueries.getAccommodations(0)).getDocuments();

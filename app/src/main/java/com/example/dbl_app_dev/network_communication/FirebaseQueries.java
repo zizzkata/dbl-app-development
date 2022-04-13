@@ -1,5 +1,6 @@
 package com.example.dbl_app_dev.network_communication;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -197,6 +198,10 @@ public abstract class FirebaseQueries {
      */
     public static Task<byte[]> getUserImage(String username) {
         return usersImages.child(username + ".jpg").getBytes(ONE_MEGABYTE);
+    }
+
+    public static UploadTask uploadUserProfile(String username, byte[] image) {
+        return usersImages.child(username + ".jpg").putBytes(image);
     }
 
     /**

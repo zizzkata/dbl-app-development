@@ -337,6 +337,7 @@ public class AccommodationInfo {
      * @throws Exception
      */
     public void pushAccommodation() throws Exception {
+        // TODO check for anonymous owners.
         Map<String, Object> data = transformToHash();
         if (accommodationId == null || accommodationId == "") { // create new file
             // TODO

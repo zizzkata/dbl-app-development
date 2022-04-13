@@ -40,13 +40,13 @@ public class Rating {
         this.ratingTenant = (long) 0;
     }
 
-    public Rating(AccommodationInfo accommodation, User tenant, int tenantRating) {
+    public Rating(AccommodationInfo accommodation, User tenant, Long tenantRating) {
         //this.id = snapshot.getId(); // not initialized, can be pushed
         this.accommodationId = accommodation.getAccommodationId();
         this.ownerUsername = accommodation.getOwnerUsername();
         this.tenantUsername = tenant.getUsername();
         this.ratingLandlord = (long) 0;
-        this.ratingTenant = (long) tenantRating;
+        this.ratingTenant = tenantRating;
         // bind objects so that we don't have to download them again
         this.tenant = tenant;
         this.accommodation = accommodation;
