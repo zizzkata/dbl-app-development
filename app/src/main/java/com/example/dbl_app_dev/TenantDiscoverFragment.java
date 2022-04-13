@@ -177,7 +177,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
                 });
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e("ERR", e.getMessage());
+                Log.e("ERR_DISPLAY_CARD", e.getMessage());
                 currentAccommodationInfo = null;
             }
         });
