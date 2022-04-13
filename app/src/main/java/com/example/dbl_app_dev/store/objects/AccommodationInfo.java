@@ -245,6 +245,8 @@ public class AccommodationInfo {
         //Database.createRatingAccommodation(accommodationId, username, ownerUsername, rate);
     }
 
+    public void setActive(boolean b) { this.active = b; }
+
     public void setAddress(String s) {
         this.address = s;
     }

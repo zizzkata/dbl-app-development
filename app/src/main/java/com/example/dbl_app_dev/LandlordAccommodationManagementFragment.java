@@ -245,6 +245,7 @@ public class LandlordAccommodationManagementFragment extends Fragment {
                         .editAccommodationDialog(a.compactView);
                 setCurrentDialog(d);
                 addImageListeners(d);
+                removeListingFunctionality(d, a);
                 getActivity().runOnUiThread(() -> setDialogInfo(d, a));
             });
         }
@@ -396,6 +397,25 @@ public class LandlordAccommodationManagementFragment extends Fragment {
 
     private void setCurrentDialog(AlertDialog ad) {
         this.currDialog = ad;
+    }
+
+    private void removeListingFunctionality(AlertDialog ad, TenantAccommodationObject accommObj) {
+        ad.findViewById(R.id.removeListingButton).setOnClickListener(view1 -> {
+            AccommodationInfo listing = accommObj.accommodationInfo;
+            listing.setActive(false);
+            Map<String, Object> transformedData = new HashMap<>();
+            transformedData.put("active", false);
+            ad.dismiss();
+            accommObj.compactView.setVisibility(View.INVISIBLE);
+
+            AsyncWrapper.wrap(() -> {
+                try {
+                    Database.updateAccommodation(listing.getAccommodationId(), transformedData);
+                } catch (Exception e) {
+                    Log.e("ERROR", e.getMessage());
+                }
+            });
+        });
     }
 
     @Override

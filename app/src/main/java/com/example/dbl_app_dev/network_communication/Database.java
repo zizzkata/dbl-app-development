@@ -239,7 +239,11 @@ public abstract class Database {
         QuerySnapshot snapshotRatings = Tasks.await(
                 FirebaseQueries.getRatedAccommodations(username));
         for (DocumentSnapshot ds : snapshotRatings.getDocuments()) {
-            ratings.add(new Rating(ds));
+            // Only add active accommodations
+            Rating r = new Rating(ds);
+            if (r.getAccommodation().getActive()) {
+            ratings.add(r);
+            }
         }
 
         return ratings;
