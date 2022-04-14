@@ -84,10 +84,11 @@ public class Rating {
     //TODO finish
     public void pushRating() throws Exception {
         if (this.id == null) {
-            Database.createRatingAccommodation(this.accommodationId, this.tenantUsername
-                    , this.ownerUsername, ratingTenant);
+            this.id = Database.createRatingAccommodation(this.accommodationId, this.tenantUsername
+                    , this.ownerUsername, ratingTenant).getId();
         } else {
-            // UPDATE EXISTING ONE
+            Database.updateRatingAccommodation(this.id, this.accommodationId, this.tenantUsername
+                    , this.ownerUsername, this.ratingTenant, this.ratingLandlord);
         }
     }
 }

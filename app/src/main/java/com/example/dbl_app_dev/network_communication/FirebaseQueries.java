@@ -346,7 +346,7 @@ public abstract class FirebaseQueries {
      * @param rate
      * @return
      */
-    public static Task<Void> createRatingOnAccommodation(String accommodationId
+    public static Task<DocumentReference> createRatingOnAccommodation(String accommodationId
             , String tenantId, String ownerId, Long rate) {
         Map<String, Object> rating = new HashMap<>();
         rating.put("accommodation_id", accommodationId);
@@ -354,7 +354,19 @@ public abstract class FirebaseQueries {
         rating.put("owner_username", ownerId);
         rating.put("rating_landlord", 0);
         rating.put("rating_tenant", rate);
-        return ratedAccommodations.document().set(rating);
+        return ratedAccommodations.add(rating);
+    }
+
+    public static Task<Void> updateRatingOnAccommodation(String ratingId
+            , String accommodationId, String tenantId, String ownerId, Long tenantRating
+            , Long landlordRating) {
+        Map<String, Object> rating = new HashMap<>();
+        rating.put("accommodation_id", accommodationId);
+        rating.put("tenant_username", tenantId);
+        rating.put("owner_username", ownerId);
+        rating.put("rating_landlord", landlordRating);
+        rating.put("rating_tenant", tenantRating);
+        return ratedAccommodations.document(ratingId).update(rating);
     }
 
     /**

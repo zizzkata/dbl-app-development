@@ -216,10 +216,16 @@ public abstract class Database {
         return accommodations;
     }
 
-    public static void createRatingAccommodation(String accommodationId, String username
+    public static DocumentReference createRatingAccommodation(String accommodationId, String username
             , String ownerUsername, Long rating) throws Exception {
-        Tasks.await(FirebaseQueries.createRatingOnAccommodation(accommodationId
+        return Tasks.await(FirebaseQueries.createRatingOnAccommodation(accommodationId
                 , username, ownerUsername, rating));
+    }
+
+    public static void updateRatingAccommodation(String ratingId, String accommodationId, String username
+            , String ownerUsername, Long tenantRating, Long landlordRating) throws Exception {
+        Tasks.await(FirebaseQueries.updateRatingOnAccommodation(ratingId, accommodationId
+                , username, ownerUsername, tenantRating, landlordRating));
     }
 
     public static void deleteRatingAccommodation(String accommodationId, String tenantUsername)
