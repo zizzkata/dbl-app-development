@@ -16,6 +16,7 @@ public class TenantInfo {
     private final String smoker;
     private final String petOwner;
     private final String description;
+    private final String gender;
 
     public TenantInfo(ArrayList<String> s, Bitmap photo) {
         this.name = s.get(0);
@@ -24,6 +25,7 @@ public class TenantInfo {
         this.smoker = s.get(3);
         this.petOwner = s.get(4);
         this.description = s.get(5);
+        this.gender = s.get(6);
 
         this.photo = photo;
     }
@@ -37,6 +39,7 @@ public class TenantInfo {
         result.add(smoker);
         result.add(petOwner);
         result.add(description);
+        result.add(gender);
 
         return result;
     }

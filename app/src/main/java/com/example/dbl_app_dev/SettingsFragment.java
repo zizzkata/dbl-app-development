@@ -67,6 +67,7 @@ public class SettingsFragment extends Fragment {
     private CheckBox smokes;
     private CheckBox hasPets;
     private ImageView profilePic;
+    private EditText gender;
 
     // all used validators
     private ViewValidator emailValidator;
@@ -82,17 +83,19 @@ public class SettingsFragment extends Fragment {
     private void init() {
         // get views by id
         email = getView().findViewById(R.id.editTextTextEmailAddress);
-        //email.setEnabled(false);
-//        emailWarning = getView().findViewById(R.id.invalidEmail);
+        // email.setEnabled(false);
+        // emailWarning = getView().findViewById(R.id.invalidEmail);
         username = getView().findViewById(R.id.usernameBox);
-        //username.setEnabled(false);
-//        usernameWarning = getView().findViewById(R.id.invalidUsername);
+        // username.setEnabled(false);
+        // usernameWarning = getView().findViewById(R.id.invalidUsername);
         currentPassword = getView().findViewById(R.id.currentPasswordBox);
         currentPasswordWarning = getView().findViewById(R.id.invalidCurrentPassword);
         password = getView().findViewById(R.id.newPasswordBox);
         passwordWarning = getView().findViewById(R.id.invalidPassword);
         repeatPassword = getView().findViewById(R.id.ConfirmNewPasswordBox);
         repeatPasswordWarning = getView().findViewById(R.id.invalidRepeatPassword);
+
+        gender = getView().findViewById(R.id.genderBox);
 
         firstName = getView().findViewById(R.id.firstNameBox);
         lastName = getView().findViewById(R.id.lastNameBox);
@@ -103,8 +106,8 @@ public class SettingsFragment extends Fragment {
         hasPets = getView().findViewById(R.id.havePetsCheckBox);
 
         // instantiate validators
-//        emailValidator = new EmailValidator(email, emailWarning);
-//        userValidator = new UsernameValidator(username, usernameWarning);
+        // emailValidator = new EmailValidator(email, emailWarning);
+        // userValidator = new UsernameValidator(username, usernameWarning);
         currPassValidator = new currPasswordValidator(currentPassword, currentPasswordWarning);
         passValidator = new PasswordValidator(password, passwordWarning);
         repPassValidator = new RepeatPasswordValidator(repeatPassword, password, repeatPasswordWarning);
@@ -136,8 +139,8 @@ public class SettingsFragment extends Fragment {
     }
 
     private void makeWarningsInvisible() {
-//        emailWarning.setVisibility(View.GONE);
-//        usernameWarning.setVisibility(View.GONE);
+        // emailWarning.setVisibility(View.GONE);
+        // usernameWarning.setVisibility(View.GONE);
         currentPasswordWarning.setVisibility(View.GONE);
         passwordWarning.setVisibility(View.GONE);
         repeatPasswordWarning.setVisibility(View.GONE);
@@ -149,9 +152,9 @@ public class SettingsFragment extends Fragment {
 
         // add all validators to list
         // SAME FOR EMAIL
-        //validators.add(emailValidator);
+        // validators.add(emailValidator);
         // IMPORTANT CANNOT CHANGE USERNAME
-        //validators.add(new UsernameUniquenessValidator(username, usernameWarning));
+        // validators.add(new UsernameUniquenessValidator(username, usernameWarning));
 
         validators.add(currPassValidator);
         validators.add(passValidator);
@@ -184,7 +187,7 @@ public class SettingsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_settings, container, false);
         ((MainNavigationActivity) getActivity()).modeSwitchLogic(root.findViewById(R.id.modeSwitch));
 
@@ -258,13 +261,11 @@ public class SettingsFragment extends Fragment {
                 AsyncWrapper.wrap(() -> {
                     try {
                         updateUserPassword();
-                        getActivity().runOnUiThread(() ->
-                                Toast.makeText(getContext(), "Password Updated!",
-                                        Toast.LENGTH_SHORT).show());
+                        getActivity().runOnUiThread(() -> Toast.makeText(getContext(), "Password Updated!",
+                                Toast.LENGTH_SHORT).show());
                     } catch (Exception ignored) {
-                        getActivity().runOnUiThread(() ->
-                                Toast.makeText(getContext(), "Error! Password Not Updated",
-                                        Toast.LENGTH_SHORT).show());
+                        getActivity().runOnUiThread(() -> Toast.makeText(getContext(), "Error! Password Not Updated",
+                                Toast.LENGTH_SHORT).show());
                     }
                 });
             }
@@ -278,16 +279,14 @@ public class SettingsFragment extends Fragment {
                 AsyncWrapper.wrap(() -> {
                     try {
                         setNewInformation();
-                        getActivity().runOnUiThread(() ->
-                                Toast.makeText(getContext(), "Account Details Saved!",
-                                        Toast.LENGTH_SHORT).show());
+                        getActivity().runOnUiThread(() -> Toast.makeText(getContext(), "Account Details Saved!",
+                                Toast.LENGTH_SHORT).show());
                     } catch (Exception e) {
                         // ERR show
                         Log.e("updateUserInformation", e.getMessage());
 
-                        getActivity().runOnUiThread(() ->
-                                Toast.makeText(getContext(), "Error!",
-                                        Toast.LENGTH_SHORT).show());
+                        getActivity().runOnUiThread(() -> Toast.makeText(getContext(), "Error!",
+                                Toast.LENGTH_SHORT).show());
                     }
                 });
 
@@ -304,6 +303,7 @@ public class SettingsFragment extends Fragment {
         description.setText(user.getDescription());
         smokes.setChecked(user.smokes());
         hasPets.setChecked(user.hasPets());
+        gender.setText(user.getGender());
         // TODO save tenant mode
     }
 
@@ -317,6 +317,7 @@ public class SettingsFragment extends Fragment {
         currentUser.setLastName(lastName.getText().toString());
         currentUser.setPhoneNumber(phoneNumber.getText().toString());
         currentUser.setDescription(description.getText().toString());
+        currentUser.setGender(gender.getText().toString());
         currentUser.setSmokes(smokes.isChecked());
         currentUser.setHasPets(hasPets.isChecked());
         currentUser.updateUser();

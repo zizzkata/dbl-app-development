@@ -93,6 +93,8 @@ public class User {
     }
 
     public String getGender() {
+        if (gender.equals(null)) return "not specified";
+        if (gender.equals("")) return "not specified";
         return gender;
     }
 
