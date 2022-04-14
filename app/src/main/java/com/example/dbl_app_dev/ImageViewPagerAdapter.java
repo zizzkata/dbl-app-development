@@ -13,8 +13,8 @@ import androidx.viewpager.widget.PagerAdapter;
 import java.util.ArrayList;
 
 public class ImageViewPagerAdapter extends FragmentPagerAdapter {
-    private final ArrayList<Bitmap> imageBitmaps;
-    private final Bitmap panoramicBitmap;
+    private ArrayList<Bitmap> imageBitmaps;
+    private Bitmap panoramicBitmap;
     private long baseId = 0;
 
     public ImageViewPagerAdapter(FragmentManager fm, ArrayList<Bitmap> imageBitmaps, @NonNull Bitmap panoramicBitmap) {
@@ -60,6 +60,14 @@ public class ImageViewPagerAdapter extends FragmentPagerAdapter {
 
     public void notifyChangeInPosition(int n) {
         // shift the ID returned by getItemId outside the range of all previous fragments
-        baseId += getCount() + n;
+        baseId += getCount() + 53;
+    }
+
+    public void setImageBitmaps(ArrayList<Bitmap> bitmaps) {
+        imageBitmaps = bitmaps;
+    }
+
+    public void setPanoramicBitmap(Bitmap bitmap) {
+        panoramicBitmap = bitmap;
     }
 }
