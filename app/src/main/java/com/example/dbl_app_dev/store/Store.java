@@ -144,6 +144,16 @@ public final class Store {
         return null;
     }
 
+    // Works for price only
+    public static void resetFilters() {
+
+    }
+
+    // Works only for price
+    public static void setFilters(Long min, Long max) {
+        
+    }
+
     public static void killStore() {
         currentUser = null;
         discoveryAccommodations = new ArrayList<>();
