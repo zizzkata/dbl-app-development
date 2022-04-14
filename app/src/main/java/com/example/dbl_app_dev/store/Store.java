@@ -31,7 +31,10 @@ public final class Store {
     private static ArrayList<User> ratingsLandlord = new ArrayList<>();
     private static ArrayList<String> ratedAccommodationsIds = new ArrayList<>();
 
-    private static Query discoveryFilter;
+    private static Query discoveryFilter; // not used for current version
+    private static boolean filters = true;
+    private static Long min = 300L;
+    private static Long max = 600L;
 
     private Store() throws Exception {
         throw new Exception("Cannot initialize this class.");
@@ -55,13 +58,21 @@ public final class Store {
         if (discoveryAccommodations.size() == 0) {
             refreshAccommodations();
         }
+        Log.d("discoveryAccomm.size", String.valueOf(discoveryAccommodations.size()));
         return discoveryAccommodations.remove(0);
     }
 
-    //TODO add filtes
+    // Implemented OK
     public static void refreshAccommodations() throws Exception {
-        discoveryAccommodations = transformDocuments(
+        if (filters) {
+            discoveryAccommodations = transformDocuments(
+              Database.getFilteredPriceActiveAccommodations(getCurrentUser().getUsername()
+                ,MAX_ACCOMMODATIONS_PER_PULL, min, max)
+            );
+        } else {
+            discoveryAccommodations = transformDocuments(
                     Database.getActiveAccommodations(getCurrentUser().getUsername(), MAX_ACCOMMODATIONS_PER_PULL));
+        }
     }
 
     public static User getUserToBeRated()  throws Exception {
@@ -146,12 +157,16 @@ public final class Store {
 
     // Works for price only
     public static void resetFilters() {
-
+        discoveryFilter = null;
+        discoveryAccommodations.clear();
     }
 
     // Works only for price
-    public static void setFilters(Long min, Long max) {
-        
+    public static void setFilters(Long minValue, Long maxValue) {
+        filters = true;
+        min = minValue;
+        max = maxValue;
+        discoveryAccommodations.clear();
     }
 
     public static void killStore() {

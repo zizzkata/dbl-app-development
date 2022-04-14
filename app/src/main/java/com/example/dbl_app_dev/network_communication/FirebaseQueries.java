@@ -276,9 +276,28 @@ public abstract class FirebaseQueries {
                 .limit(amount);
     }
 
+    public static Query getActiveAccommodationsWithinPriceMargin(ArrayList<String> exclude
+            , String ownerUsername, int amount, Long min, Long max) {
+        return accommodations.whereEqualTo("active", true)
+                .whereGreaterThanOrEqualTo("price", min)
+                .whereLessThanOrEqualTo("price", max)
+                //.whereNotEqualTo("owner_username", ownerUsername) // cannot do multiple inequality queries
+                .whereNotIn("__name__", exclude)
+                .limit(amount);
+    }
+
     public static Query getActiveAccommodations(String ownerUsername, int amount) {
         return accommodations.whereEqualTo("active", true)
                 .whereNotEqualTo("owner_username", ownerUsername)
+                .limit(amount);
+    }
+
+    public static Query getActiveAccommodationsWithinPriceMargin(String ownerUsername
+            , int amount, Long min, Long max) {
+        return accommodations.whereEqualTo("active", true)
+                .whereNotEqualTo("owner_username", ownerUsername)
+                .whereGreaterThanOrEqualTo("price", min)
+                .whereLessThanOrEqualTo("price", max)
                 .limit(amount);
     }
 

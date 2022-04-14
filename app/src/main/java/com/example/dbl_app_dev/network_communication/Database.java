@@ -172,6 +172,28 @@ public abstract class Database {
         return activeAccommodations;
     }
 
+    public static List<DocumentSnapshot> getFilteredPriceActiveAccommodations(String username
+            , int amount, Long min, Long max)
+            throws Exception {
+        QuerySnapshot viewAccommodations = Tasks.await(
+                FirebaseQueries.getRatedAccommodations(username));
+        ArrayList<String> accommodationIds =
+                Tools.getListParameterFromCollection("accommodation_id"
+                        , viewAccommodations.getDocuments());
+        List<DocumentSnapshot> activeAccommodations = new ArrayList<>();
+        if (accommodationIds.size() > 0) {
+            activeAccommodations  = Tasks.await(FirebaseQueries.getActiveAccommodations(accommodationIds
+                    , username, amount).get()).getDocuments();
+        } else {
+            activeAccommodations = Tasks.await(FirebaseQueries.getActiveAccommodations(username, amount).get())
+                    .getDocuments();
+        }
+        activeAccommodations.removeIf(accomm -> (accomm.get("owner_username") == username
+                || (Long) accomm.get("price") < min
+                || (Long) accomm.get("price") > max));
+        return activeAccommodations;
+    }
+
 
 
     public static AccommodationInfo getAccommodation(String accommodationId) throws Exception {
