@@ -48,6 +48,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
     private TextView smokerTxt;
     private TextView descriptionTxt;
     private ImageView imageView;
+    private TextView genderTxt;
 
     public LandlordDiscoverFragment() {
         // Required empty public constructor
@@ -99,6 +100,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
 
         nameTxt = view.findViewById(R.id.nameTxt);
         emailTxt = view.findViewById(R.id.emailTxt);
+        genderTxt = view.findViewById(R.id.genderTxt);
         phoneNumberTxt = view.findViewById(R.id.phoneNumberTxt);
         petsTxt = view.findViewById(R.id.petsTxt);
         smokerTxt = view.findViewById(R.id.smokerTxt);
@@ -260,6 +262,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         petsTxt.setText("Pet owner: " + booleanToYesNo(data.hasPets()));
         smokerTxt.setText("Smoker: " + booleanToYesNo(data.smokes()));
         descriptionTxt.setText(data.getDescription());
+        genderTxt.setText("Gender: " + data.getGender());
         imageView.setImageBitmap(data.getProfilePic());
     }
 
