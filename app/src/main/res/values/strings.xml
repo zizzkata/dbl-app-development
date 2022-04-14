@@ -56,7 +56,7 @@
     <string name="house_number">House number</string>
     <string name="location">Location</string>
     <string name="properties">Additional properties</string>
-    <string name="monthly_rental_price">Monthly rental price</string>
+    <string name="monthly_rental_price">Monthly rental price (€)</string>
     <string name="surface_area">Surface area</string>
     <string name="add_listing_description">Add listing description...</string>
     <string name="availability">Availability</string>
@@ -147,4 +147,5 @@
     <string name="edit_settings_title">Set your details</string>
     <string name="edit_settings_message">You have to fill in a few more details about yourself before you can use the app as a tenant.</string>
     <string name="change_your_gender">Change your gender</string>
+    <string name="confirm_changes">Confirm Changes</string>
 </resources>

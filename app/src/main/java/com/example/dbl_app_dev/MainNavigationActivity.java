@@ -2,6 +2,7 @@ package com.example.dbl_app_dev;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,12 +17,14 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.dbl_app_dev.dialog_displayer.CreateAccommDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.EditAccommDialogDisplayer;
+import com.example.dbl_app_dev.dialog_displayer.FiltersDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.LikedTenantSettingsDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.EditSettingsDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.LogoutDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.RemoveAccommDialogDisplayer;
 import com.example.dbl_app_dev.dialog_displayer.ViewAccommDialogDisplayer;
 import com.example.dbl_app_dev.store.Store;
+import com.example.dbl_app_dev.util.Filters;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainNavigationActivity extends AppCompatActivity {
@@ -91,9 +94,9 @@ public class MainNavigationActivity extends AppCompatActivity {
     /**
      * Method used to create the popup that shows when adding a new accommodation.
      */
-    public void createNewAccommodationDialog() {
+    public AlertDialog createNewAccommodationDialog() {
         View myView = getLayoutInflater().inflate(R.layout.new_accommodation_pop_up, null);
-        (new CreateAccommDialogDisplayer(this,
+        return (new CreateAccommDialogDisplayer(this,
                 R.id.cancelButton, R.id.createButton, R.id.negativeButton, myView))
                 .displayPopupDialog();
     }
@@ -102,11 +105,11 @@ public class MainNavigationActivity extends AppCompatActivity {
      * Method used to create the popup that shows when editing an existing
      * accommodation.
      */
-    public void editAccommodationDialog(View accommObject) {
+    public AlertDialog editAccommodationDialog(View accommObject) {
         View myView = getLayoutInflater().inflate(R.layout.edit_accommodation_pop_up, null);
         // (new EditAccommDialogDisplayer(this, R.id.cancelButton, R.id.saveBtn,
         // myView))
-        (new EditAccommDialogDisplayer(this,
+        return (new EditAccommDialogDisplayer(this,
                 R.id.cancelButton, R.id.saveBtn, R.id.negativeButton, myView, accommObject))
                 .displayPopupDialog();
     }
@@ -134,9 +137,9 @@ public class MainNavigationActivity extends AppCompatActivity {
     /**
      * Method used to create the popup that shows when adding a new accommodation.
      */
-    public void openFilterDialog() {
+    public void openFilterDialog(Filters filters) {
         View myView = getLayoutInflater().inflate(R.layout.activity_filters, null);
-        (new CreateAccommDialogDisplayer(this, R.id.cancelButton, R.id.saveBtn, -1, myView))
+        (new FiltersDialogDisplayer(this, R.id.cancelButton, R.id.saveBtn, -1, myView, filters))
                 .displayPopupDialog();
     }
 
@@ -163,5 +166,17 @@ public class MainNavigationActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         Menu navBarMenu = bottomNavigationView.getMenu();
         navBarMenu.performIdentifierAction(R.id.settingsFragment, 0);
+    }
+
+
+    /**
+     * Overridden to prevent TransactionTooLargeException on starting a new intent
+     */
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.clear();
+        Bundle b = new Bundle();
+        super.onSaveInstanceState(b);
+        Log.d("extra", "Instance state of main navigation activity cleared");
     }
 }

@@ -40,9 +40,8 @@ public class User {
         getInformation();
     }
 
-
-
     public User(DocumentSnapshot res) {
+        this.username = res.getId();
         this.firstName = (String) res.get("first_name");
         this.lastName = (String) res.get("last_name");
         this.gender = (String) res.get("gender");
@@ -55,7 +54,8 @@ public class User {
     }
 
     /**
-     *  Pull user information from db
+     * Pull user information from db
+     * 
      * @throws Exception
      */
     private void getInformation() throws Exception {
@@ -76,31 +76,51 @@ public class User {
         return firstName;
     }
 
-    public String getLastName() { return lastName; }
+    public String getLastName() {
+        return lastName;
+    }
 
-    public String getUsername() { return username; }
+    public String getUsername() {
+        return username;
+    }
 
-    public String getEmail() { return email; }
+    public String getEmail() {
+        return email;
+    }
 
-    public String getAge() { return age; }
+    public String getAge() {
+        return age;
+    }
 
-    public String getGender() { return gender; }
+    public String getGender() {
+        return gender;
+    }
 
-    public String getPhoneNumber() { return phoneNumber; }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-    public String getDescription() { return description; }
+    public String getDescription() {
+        return description;
+    }
 
-    public boolean isTenantMode() { return tenantMode; }
+    public boolean isTenantMode() {
+        return tenantMode;
+    }
 
-    public boolean hasPets() { return hasPets; }
+    public boolean hasPets() {
+        return hasPets;
+    }
 
-    public boolean smokes() { return smokes; }
-
+    public boolean smokes() {
+        return smokes;
+    }
 
     /** setters */
     public void setEmail(String email) {
         this.email = email;
     }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -141,11 +161,11 @@ public class User {
      *
      * @return
      */
-    public Bitmap getProfilePic()  {
+    public Bitmap getProfilePic() {
         if (profilePic == null) {
             try {
                 profilePic = Database.getUserImage(username);
-            } catch(Exception e) {
+            } catch (Exception e) {
                 // Not found
                 Log.d("getProfilePic", e.getMessage());
             }
@@ -159,6 +179,19 @@ public class User {
      */
     public void updateUser() throws Exception {
         Database.updateUserInformation(this.username, transformUser());
+    }
+
+    /**
+     * Update user's image and upload he image at the same time.
+     * 
+     * @param image
+     * @throws Exception
+     */
+    public void updateUserImage(Bitmap image) throws Exception {
+        if (image == null)
+            throw new Exception("Invalid image. Bitmap is null.");
+        this.profilePic = image;
+        Database.uploadProfilePic(this.username, this.profilePic);
     }
 
     /**
@@ -176,6 +209,11 @@ public class User {
         this.hasPets = (Boolean) snapshot.get("pets");
     }
 
+    /**
+     * Transform the User object into hashmap
+     * 
+     * @return
+     */
     private Map<String, Object> transformUser() {
         Map<String, Object> transformedData = new HashMap<>();
         transformedData.put("first_name", this.firstName);

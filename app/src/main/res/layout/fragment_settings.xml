@@ -154,7 +154,7 @@
                 <LinearLayout
                     android:id="@+id/passwordLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="318dp"
                     android:orientation="vertical"
                     android:padding="10dp">
 
@@ -212,6 +212,21 @@
                         android:minHeight="48dp"
                         android:padding="10dp"
                         android:textColorHint="#757575" />
+
+                    <Button
+                        android:id="@+id/saveBtnPass"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/roundstyle"
+                        android:paddingVertical="@dimen/spacing_200"
+                        android:text="@string/confirm_changes"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_size_200"
+                        app:backgroundTint="@color/teal"
+                        tools:ignore="TextContrastCheck" />
 
                 </LinearLayout>
 

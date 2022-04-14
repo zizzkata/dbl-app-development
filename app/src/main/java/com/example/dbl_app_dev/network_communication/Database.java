@@ -2,13 +2,22 @@ package com.example.dbl_app_dev.network_communication;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
+
+import com.example.dbl_app_dev.store.objects.AccommodationInfo;
+import com.example.dbl_app_dev.store.objects.Rating;
+import com.example.dbl_app_dev.store.objects.User;
 import com.example.dbl_app_dev.util.AsyncWrapper;
+import com.example.dbl_app_dev.util.Tools;
+import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.StorageReference;
+
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +57,14 @@ public abstract class Database {
                 FirebaseQueries.pushData(documentReference, data)));
     }
 
+
+
+    /**
+     *  IMAGE MANIPULATION
+     */
+
+
+
     public static Bitmap getUserImage(String username) throws Exception {
         byte[] byteArray = AsyncWrapper.wrap(FirebaseQueries.getUserImage(username));
         return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
@@ -56,6 +73,12 @@ public abstract class Database {
     public static Bitmap getPanoramicImage(String accommId) throws Exception {
         byte[] byteArray = AsyncWrapper.wrap(FirebaseQueries.getPanoramicImage(accommId));
         return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+    }
+
+    public static void uploadProfilePic(String username, Bitmap image) throws Exception {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 60, stream);
+        Tasks.await(FirebaseQueries.uploadUserProfile(username, stream.toByteArray()));
     }
 
     public static ArrayList<byte[]> getStaticImages(String accommId) throws Exception {
@@ -79,12 +102,45 @@ public abstract class Database {
         return byteImages;
     }
 
+
+
+    /**
+     * ACCOMMODATION
+     */
+
+
     public static List<DocumentSnapshot> getAccommodations() throws Exception {
         return Tasks.await(FirebaseQueries.getAccommodations(0)).getDocuments();
     }
 
     public static List<DocumentSnapshot> getActiveAccommodations(int amount) throws Exception {
         return Tasks.await(FirebaseQueries.getActiveAccommodations(amount).get()).getDocuments();
+    }
+
+    public static List<DocumentSnapshot> getActiveAccommodations(String username, int amount)
+            throws Exception {
+        QuerySnapshot viewAccommodations = Tasks.await(
+                FirebaseQueries.getRatedAccommodations(username));
+        ArrayList<String> accommodationIds =
+                Tools.getListParameterFromCollection("accommodation_id"
+                        , viewAccommodations.getDocuments());
+        List<DocumentSnapshot> activeAccommodations = new ArrayList<>();
+        if (accommodationIds.size() > 0) {
+            activeAccommodations  = Tasks.await(FirebaseQueries.getActiveAccommodations(accommodationIds
+                    , username, amount).get()).getDocuments();
+        } else {
+            activeAccommodations = Tasks.await(FirebaseQueries.getActiveAccommodations(username, amount).get())
+                    .getDocuments();
+        }
+        activeAccommodations.removeIf(accomm -> accomm.get("owner_username") == username);
+        return activeAccommodations;
+    }
+
+
+
+    public static AccommodationInfo getAccommodation(String accommodationId) throws Exception {
+        return new AccommodationInfo(
+                Tasks.await(FirebaseQueries.getAccommodation(accommodationId)));
     }
 
     public static List<DocumentSnapshot> getActiveAccommodations(DocumentSnapshot lastDoc
@@ -111,9 +167,10 @@ public abstract class Database {
         Tasks.await(FirebaseQueries.updateUserInfo(username, data));
     }
 
+    @Deprecated
     public static ArrayList<DocumentSnapshot> getLikedAccommodations(String username) throws Exception {
         QuerySnapshot likedAccommodations = Tasks.await(
-                FirebaseQueries.getLikedAccommodationsIds(username));
+                FirebaseQueries.getLikedAccommodations(username));
         ArrayList<DocumentSnapshot> accommodations = new ArrayList<>();
         for(DocumentSnapshot rate : likedAccommodations.getDocuments()) {
             //TODO add try/catch
@@ -123,8 +180,72 @@ public abstract class Database {
         return accommodations;
     }
 
-    public static void rateAccommodation(String accommodationId, String username,
-                                         boolean rating) throws Exception {
-        Tasks.await(FirebaseQueries.rateAccommodation(accommodationId, username, rating));
+    public static void createRatingAccommodation(String accommodationId, String username
+            , String ownerUsername, Long rating) throws Exception {
+        Tasks.await(FirebaseQueries.createRatingOnAccommodation(accommodationId
+                , username, ownerUsername, rating));
+    }
+
+    public static void deleteRatingAccommodation(String accommodationId, String tenantUsername)
+            throws Exception {
+        DocumentSnapshot reference = Tasks.await(
+                FirebaseQueries.getOneRatingOnAccommodation(accommodationId, tenantUsername)
+                        .get()).getDocuments().get(0);
+        Tasks.await(FirebaseQueries.deleteRatingOnAccommodation(reference.getId()));
+    }
+
+    public static void createAccommodation(Map<String, Object> data) throws Exception {
+        Tasks.await(FirebaseQueries.createAccommodationListing(data));
+    }
+
+    public static void updateAccommodation(String accommodationId, Map<String, Object> newData) throws Exception {
+        Tasks.await(FirebaseQueries.updateAccommodationListing(accommodationId, newData));
+    }
+
+    public static ArrayList<User> getRatedTenants(String ownerUsername) throws Exception {
+        QuerySnapshot active = Tasks.await(
+                FirebaseQueries.getActiveAccommodationsOwner(ownerUsername));
+        ArrayList<User> users = new ArrayList<>();
+        for (DocumentSnapshot activeAcc : active.getDocuments()) {
+            try {
+                QuerySnapshot accommodations = Tasks.await(
+                        FirebaseQueries.getRatingsByAccommodationId(activeAcc.getId()));
+                for (DocumentSnapshot listing : accommodations.getDocuments()) {
+                    DocumentSnapshot user = Tasks.await(FirebaseQueries.getUserInformation(
+                            (String) listing.get("tenantUsername")));
+                    users.add(new User(user));
+                }
+            } catch (Exception e) {
+                Log.e("getRatedTenants: invalid listing",e.getMessage());
+                // IGNORE
+            }
+        }
+        return users;
+    }
+
+    public static ArrayList<AccommodationInfo> getActiveAccommodationsByOwner(String ownerUsername)
+            throws Exception {
+        QuerySnapshot active = Tasks.await(
+                FirebaseQueries.getActiveAccommodationsOwner(ownerUsername));
+        ArrayList<AccommodationInfo> activeAccommodations = new ArrayList<>();
+        for (DocumentSnapshot ds : active.getDocuments()) {
+            activeAccommodations.add(new AccommodationInfo(ds));
+        }
+        return activeAccommodations;
+    }
+
+    public static ArrayList<Rating> getRatedAccommodations(String username) throws Exception {
+        ArrayList<Rating> ratings = new ArrayList<>();
+        QuerySnapshot snapshotRatings = Tasks.await(
+                FirebaseQueries.getRatedAccommodations(username));
+        for (DocumentSnapshot ds : snapshotRatings.getDocuments()) {
+            // Only add active accommodations
+            Rating r = new Rating(ds);
+            if (r.getAccommodation().getActive()) {
+            ratings.add(r);
+            }
+        }
+
+        return ratings;
     }
 }

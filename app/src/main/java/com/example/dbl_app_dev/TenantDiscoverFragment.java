@@ -16,10 +16,12 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.dbl_app_dev.network_communication.Database;
 import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.store.objects.AccommodationInfo;
 import com.example.dbl_app_dev.store.objects.User;
 import com.example.dbl_app_dev.util.AsyncWrapper;
+import com.example.dbl_app_dev.util.Filters;
 
 import java.util.ArrayList;
 
@@ -31,11 +33,13 @@ import java.util.ArrayList;
  */
 public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     private GestureDetector horizontalSwipeDetector;
-    private AccommodationInfo currentAccommodationInfo = null; // currently viewed accommodation
+    private AccommodationInfo currentAccommodationInfo; // currently viewed accommodation
     VerticalViewPager imageGalleryViewPager;
     ConstraintLayout noSwipesContainer;
     ConstraintLayout contentContainer;
     ImageViewPagerAdapter verticalViewPagerAdapter;
+
+    private Filters filters;
 
     private TextView addressTxt;
     private TextView floorTxt;
@@ -69,6 +73,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        filters = new Filters();
         // Get information of accommodation cards
     }
 
@@ -110,7 +115,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         this.horizontalSwipeDetector = new GestureDetector(getContext(), new CardSwipeListener(this, true, false));
         topCard.setOnTouchListener((v, event) -> {
             if (horizontalSwipeDetector.onTouchEvent(event)) {
-                nextCard();
+                displayCard(true);
                 return false;
             }
             return true;
@@ -122,11 +127,11 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
 
         likeBtn.setOnClickListener(v -> {
             swipedRight();
-            nextCard();
+            displayCard(true);
         });
         dislikeBtn.setOnClickListener(v -> {
             swipedLeft();
-            nextCard();
+            displayCard(true);
         });
         arBtn.setOnClickListener(v -> {
             imageGalleryViewPager.setAdapter(verticalViewPagerAdapter);
@@ -136,12 +141,10 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         });
 
         Button filtersBtn = view.findViewById(R.id.filtersButton);
-        filtersBtn.setOnClickListener(v -> ((MainNavigationActivity) requireActivity()).openFilterDialog());
+        filtersBtn.setOnClickListener(v -> ((MainNavigationActivity) requireActivity()).openFilterDialog(filters));
 
         // makes sure that the a card is not discarded if it is not rated
-        if (currentAccommodationInfo == null) {
-            nextCard();
-        }
+        displayCard(currentAccommodationInfo == null);
 
         // open pop-up
         AsyncWrapper.wrap(() -> {
@@ -159,10 +162,12 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     /**
      * Updates the information on currentAccommodationInfo and displays it
      */
-    private void nextCard() {
+    private void displayCard(boolean nextCard) {
         AsyncWrapper.wrap(() -> {
             try {
-                currentAccommodationInfo = Store.getNextAccommodation();
+                if (nextCard) {
+                    currentAccommodationInfo = Store.getNextAccommodation();
+                }
                 getActivity().runOnUiThread(() -> {
                     bindData(currentAccommodationInfo);
                 });
@@ -171,13 +176,15 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
                 getActivity().runOnUiThread(() -> {
                     verticalViewPagerAdapter = new ImageViewPagerAdapter(getChildFragmentManager(), n, pan);
                     imageGalleryViewPager.setAdapter(verticalViewPagerAdapter);
+                    ((ImageViewPagerAdapter) imageGalleryViewPager.getAdapter()).notifyChangeInPosition(n.size() + 1);
+                    imageGalleryViewPager.getAdapter().notifyDataSetChanged();
                 });
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e("ERR", e.getMessage());
+                Log.e("ERR_DISPLAY_CARD", e.getMessage());
+                currentAccommodationInfo = null;
             }
         });
-
     }
 
     /**
@@ -185,9 +192,14 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
      */
     @Override
     public void swipedRight() {
-        // if (dataModels.size() > 0) {
-        // Log.d("extra_debug", "Positive Rating");
-        // }
+        AsyncWrapper.wrap(() -> {
+            try {
+                Store.rateAccommodation(currentAccommodationInfo, (long) 1);
+            } catch (Exception e) {
+                // TODO: toaster
+                Log.e("swipeRight", e.getMessage());
+            }
+        });
     }
 
     /**
@@ -195,14 +207,44 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
      */
     @Override
     public void swipedLeft() {
-        // if (dataModels.size() > 0) {
-        // Log.d("extra_debug", "Negative Rating");
-        // }
+        AsyncWrapper.wrap(() -> {
+            try {
+                Store.rateAccommodation(currentAccommodationInfo, (long) -1);
+            } catch (Exception e) {
+                // TODO: toaster
+                Log.e("swipeLeft", e.getMessage());
+            }
+        });
     }
 
     private void bindData(AccommodationInfo data) {
         addressTxt.setText(data.getAddress());
-        postcodeTxt.setText(data.getDescription());
-        floorTxt.setText(data.getFloor());
+        postcodeTxt.setText("Postcode: " + data.getPostcode());
+        floorTxt.setText("Floor: " + data.getFloor());
+        priceTxt.setText("Rental price:  €" + data.getPrice().toString() + "p/m");
+//      TODO: accommTypeTxt.setText();
+//      TODO: utilitiesTxt.setText();
+        areaTxt.setText("Surface area: " + data.getAreaString());
+        furnishedTxt.setText("Is furnished: " + booleanToYesNo(data.getFurnished()));
+        smokersTxt.setText("Accepts smokers: " + booleanToYesNo(data.getSmokers()));
+        petsTxt.setText("Accepts pet owners: " + booleanToYesNo(data.getPets()));
+        minimumPeriodTxt.setText("Minimum rental period: " + data.getMinimumPeriod());
+        availableTxt.setText("Available from: " + data.getAvailableFrom());
+        untilTxt.setText("Available until: " + data.getAvailableUntil());
+        descriptionTxt.setText(data.getDescription());
+    }
+
+    private String booleanToYesNo(boolean x) {
+       return x ? "Yes" : "No";
+    }
+
+    /**
+     * Overridden to prevent TransactionTooLargeException on starting a new intent
+     */
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.clear();
+        super.onSaveInstanceState(outState);
+        Log.d("extra", "Instance state of discovery fragment cleared");
     }
 }

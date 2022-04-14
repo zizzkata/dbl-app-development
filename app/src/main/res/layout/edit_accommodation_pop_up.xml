@@ -101,7 +101,6 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/panoramaText"
-                app:srcCompat="@drawable/default_accommodation_picture"
                 tools:ignore="RedundantDescriptionCheck" />
 
             <TextView
@@ -140,7 +139,6 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/panoramaImage"
                 app:layout_constraintTop_toTopOf="@id/panoramaImage"
-                app:srcCompat="@drawable/default_accommodation_picture"
                 tools:ignore="RedundantDescriptionCheck" />
 
             <TextView
@@ -163,11 +161,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="16dp"
                 android:text="@string/location"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/panoramaImage" />
+                app:layout_constraintTop_toBottomOf="@+id/panoramaWarning" />
 
             <View
                 android:id="@+id/locationSeparator"
@@ -635,6 +632,42 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/petsCheckBox"
                 tools:ignore="TextContrastCheck" />
+
+            <Button
+                android:id="@+id/addNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add image"
+                app:layout_constraintEnd_toEndOf="@+id/normalImage"
+                app:layout_constraintStart_toStartOf="@+id/normalImage"
+                app:layout_constraintTop_toBottomOf="@+id/normalImage" />
+
+            <Button
+                android:id="@+id/addPanorama"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add panorama"
+                app:layout_constraintEnd_toEndOf="@+id/panoramaImage"
+                app:layout_constraintStart_toStartOf="@+id/panoramaImage"
+                app:layout_constraintTop_toBottomOf="@+id/panoramaImage" />
+
+            <TextView
+                android:id="@+id/panoramaWarning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textColor="@color/light_pink"
+                app:layout_constraintStart_toStartOf="@+id/addPanorama"
+                app:layout_constraintTop_toBottomOf="@+id/addPanorama" />
+
+            <TextView
+                android:id="@+id/imageWarning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textColor="@color/light_pink"
+                app:layout_constraintStart_toStartOf="@+id/addNormal"
+                app:layout_constraintTop_toBottomOf="@+id/addNormal" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
