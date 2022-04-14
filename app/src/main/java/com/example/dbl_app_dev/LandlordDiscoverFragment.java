@@ -48,6 +48,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
     private TextView smokerTxt;
     private TextView descriptionTxt;
     private ImageView imageView;
+    private TextView genderTxt;
 
     public LandlordDiscoverFragment() {
         // Required empty public constructor
@@ -67,13 +68,13 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Will probably remove this
-        //tenantInfo = new LinkedList<>();
-        //pullCardsInfo(10);
+        // tenantInfo = new LinkedList<>();
+        // pullCardsInfo(10);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_landlord_discover, container, false);
     }
@@ -85,16 +86,21 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
 
         ConstraintLayout topCard = view.findViewById(R.id.topCard);
 
-        /*ArrayList<TextView> cardTextViews = new ArrayList<>();
-        cardTextViews.add(view.findViewById(R.id.nameTxt));
-        cardTextViews.add(view.findViewById(R.id.emailTxt));
-        cardTextViews.add(view.findViewById(R.id.phoneNumberTxt));
-        cardTextViews.add(view.findViewById(R.id.petsTxt));
-        cardTextViews.add(view.findViewById(R.id.smokerTxt));
-        cardTextViews.add(view.findViewById(R.id.descriptionTxt));*/
+        /*
+         * ArrayList<TextView> cardTextViews = new ArrayList<>();
+         * cardTextViews.add(view.findViewById(R.id.nameTxt));
+         * cardTextViews.add(view.findViewById(R.id.emailTxt));
+         * cardTextViews.add(view.findViewById(R.id.phoneNumberTxt));
+         * cardTextViews.add(view.findViewById(R.id.petsTxt));
+         * cardTextViews.add(view.findViewById(R.id.smokerTxt));
+         * cardTextViews.add(view.findViewById(R.id.descriptionTxt));
+         * cardTextViews.add(view.findViewById(R.id.genderTxt));
+         * cardTextViews.add(view.findViewById(R.id.descriptionTxt));
+         */
 
         nameTxt = view.findViewById(R.id.nameTxt);
         emailTxt = view.findViewById(R.id.emailTxt);
+        genderTxt = view.findViewById(R.id.genderTxt);
         phoneNumberTxt = view.findViewById(R.id.phoneNumberTxt);
         petsTxt = view.findViewById(R.id.petsTxt);
         smokerTxt = view.findViewById(R.id.smokerTxt);
@@ -107,11 +113,11 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         contentContainer.setVisibility(View.VISIBLE);
 
         // makes sure that the a card is not discarded if it is not rated
-        //if (currentTenantInfo == null) {
-        //    nextCard(cardTextViews, imageView);
-        //} else {
-        //    displayCard(cardTextViews, imageView);
-        //}
+        // if (currentTenantInfo == null) {
+        // nextCard(cardTextViews, imageView);
+        // } else {
+        // displayCard(cardTextViews, imageView);
+        // }
 
         this.swipeListener = new GestureDetector(getContext(), new CardSwipeListener(this, true, true));
         topCard.setOnTouchListener((v, event) -> {
@@ -148,17 +154,20 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
      * Displays the information stored in currentAccommodationInfo
      */
     private void displayCard(boolean nextCard) {
-        /*ArrayList<String> cardStrings = currentTenantInfo.getFormattedText();
-
-        assert (cardStrings.size() == cardTextViews.size()) : "Incorrect size of tenant info strings";
-        for (int i = 0; i < cardStrings.size(); i++) {
-            cardTextViews.get(i).setText(cardStrings.get(i));
-        }
-        cardImage.setImageBitmap(currentTenantInfo.getPhoto());*/
+        /*
+         * ArrayList<String> cardStrings = currentTenantInfo.getFormattedText();
+         * 
+         * assert (cardStrings.size() == cardTextViews.size()) :
+         * "Incorrect size of tenant info strings";
+         * for (int i = 0; i < cardStrings.size(); i++) {
+         * cardTextViews.get(i).setText(cardStrings.get(i));
+         * }
+         * cardImage.setImageBitmap(currentTenantInfo.getPhoto());
+         */
         AsyncWrapper.wrap(() -> {
             try {
                 if (nextCard) {
-                    currentTenantInfo = Store.getCurrentUser();
+                    currentTenantInfo = Store.getUserToBeRated();
                 }
                 getActivity().runOnUiThread(() -> {
                     noSwipesContainer.setVisibility(View.INVISIBLE);
@@ -177,53 +186,59 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         });
     }
 
-    /*private void nextCard(ArrayList<TextView> cardTitle, ImageView cardImage) {
-        if (tenantInfo.size() > 0) {
-            currentTenantInfo = this.tenantInfo.remove();
-            displayCard(cardTitle, cardImage);
-        } else {
-            // no more swipes left
-            currentTenantInfo = null;
-            noSwipesContainer.setVisibility(View.VISIBLE);
-            contentContainer.setVisibility(View.INVISIBLE);
-        }
-    }*/
+    /*
+     * private void nextCard(ArrayList<TextView> cardTitle, ImageView cardImage) {
+     * if (tenantInfo.size() > 0) {
+     * currentTenantInfo = this.tenantInfo.remove();
+     * displayCard(cardTitle, cardImage);
+     * } else {
+     * // no more swipes left
+     * currentTenantInfo = null;
+     * noSwipesContainer.setVisibility(View.VISIBLE);
+     * contentContainer.setVisibility(View.INVISIBLE);
+     * }
+     * }
+     */
 
     /**
      * Pulls tenant data from server, adds it to tenantInfo
      *
      * @param batchSize number of cards to add to the tenantInfo queue
      */
-    /*private void pullCardsInfo(int batchSize) {
-        AsyncWrapper.wrap(() -> {
-            try {
-                User currentUser = Store.getCurrentUser();
-                ArrayList<User> ratedTenants = Database.getRatedTenants(currentUser.getUsername());
-                for (User tenant : ratedTenants) {
-                    Bitmap currentImage = tenant.getProfilePic();
-                    String[] tenantData = new String[6];
-                    tenantData[0] = tenant.getFirstName() + " " + tenant.getLastName();
-                    tenantData[1] = tenant.getAge();
-                    tenantData[2] = "woagawkgwoagwogkaw";
-                    tenantData[3] = "woagawkgwoagwogkaw";
-                    tenantData[4] = "woagawkgwoagwogkaw";
-                    tenantData[5] = "woagawkgwoagwogkaw";
-                    tenantInfo.add(new TenantInfo(new ArrayList<>(Arrays.asList(tenantData)), currentImage));
-                }
-            } catch (Exception e) {
-                Log.i("Port user to discovery component", e.getMessage());
-            }
-        });
-    }*/
+    /*
+     * private void pullCardsInfo(int batchSize) {
+     * AsyncWrapper.wrap(() -> {
+     * try {
+     * User currentUser = Store.getCurrentUser();
+     * ArrayList<User> ratedTenants =
+     * Database.getRatedTenants(currentUser.getUsername());
+     * for (User tenant : ratedTenants) {
+     * Bitmap currentImage = tenant.getProfilePic();
+     * String[] tenantData = new String[6];
+     * tenantData[0] = tenant.getFirstName() + " " + tenant.getLastName();
+     * tenantData[1] = tenant.getAge();
+     * tenantData[2] = "woagawkgwoagwogkaw";
+     * tenantData[3] = "woagawkgwoagwogkaw";
+     * tenantData[4] = "woagawkgwoagwogkaw";
+     * tenantData[5] = "woagawkgwoagwogkaw";
+     * tenantInfo.add(new TenantInfo(new ArrayList<>(Arrays.asList(tenantData)),
+     * currentImage));
+     * }
+     * } catch (Exception e) {
+     * Log.i("Port user to discovery component", e.getMessage());
+     * }
+     * });
+     * }
+     */
 
     /**
      * POST's the positive rating given to the viewed tenant to the backend
      */
     @Override
     public void swipedRight() {
-        //if (tenantInfo.size() > 0) {
-            Log.i("extra_debug", "Positive Rating");
-        //}
+        // if (tenantInfo.size() > 0) {
+        Log.i("extra_debug", "Positive Rating");
+        // }
     }
 
     /**
@@ -231,9 +246,9 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
      */
     @Override
     public void swipedLeft() {
-        //if (tenantInfo.size() > 0) {
-            Log.i("extra_debug", "Negative Rating");
-        //}
+        // if (tenantInfo.size() > 0) {
+        Log.i("extra_debug", "Negative Rating");
+        // }
     }
 
     /**
@@ -241,9 +256,9 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
      */
     @Override
     public void swipedDown() {
-        //if (tenantInfo.size() > 0) {
-            Log.i("extra_debug", "Neutral Rating");
-        //}
+        // if (tenantInfo.size() > 0) {
+        Log.i("extra_debug", "Neutral Rating");
+        // }
     }
 
     public void bindData(User data) {
@@ -253,6 +268,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         petsTxt.setText("Pet owner: " + booleanToYesNo(data.hasPets()));
         smokerTxt.setText("Smoker: " + booleanToYesNo(data.smokes()));
         descriptionTxt.setText(data.getDescription());
+        genderTxt.setText("Gender: " + data.getGender());
         imageView.setImageBitmap(data.getProfilePic());
     }
 
