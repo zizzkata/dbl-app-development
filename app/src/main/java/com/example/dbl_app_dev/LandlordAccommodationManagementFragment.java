@@ -375,7 +375,7 @@ public class LandlordAccommodationManagementFragment extends Fragment {
             updateAccommodationDetails(ad, listing);
             AsyncWrapper.wrap(() -> {
                 try {
-                    Database.updateAccommodation(listing.getAccommodationId(), transformAccommodation(listing));
+                    listing.pushAccommodation();
                     Toast.makeText(getContext(), "Accommodation updated!", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     Log.e("ERR", e.getMessage());
@@ -414,6 +414,14 @@ public class LandlordAccommodationManagementFragment extends Fragment {
 
         listing.setSmokers(((CheckBox) ad.findViewById(R.id.smokerCheckBox)).isChecked());
 
+        ImageView panorama = ad.findViewById(R.id.panoramaImage);
+        ImageView normal = ad.findViewById(R.id.normalImage);
+        Bitmap panoramaBitmap = ((BitmapDrawable) panorama.getDrawable()).getBitmap();
+        ArrayList<Bitmap> photos = new ArrayList<>();
+        photos.add(((BitmapDrawable) normal.getDrawable()).getBitmap());
+
+        listing.setPhotoPanoramic(panoramaBitmap);
+        listing.setStaticPhotos(photos);
     }
 
     private Map<String, Object> transformAccommodation(AccommodationInfo listing) {

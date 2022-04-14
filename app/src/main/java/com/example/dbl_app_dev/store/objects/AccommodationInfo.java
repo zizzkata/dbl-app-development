@@ -256,6 +256,14 @@ public class AccommodationInfo {
         this.address = s;
     }
 
+    public void setPhotoPanoramic(Bitmap image) {
+        this.photoPanoramic = image;
+    }
+
+    public void setStaticPhotos(ArrayList<Bitmap> images) {
+        this.photos = images;
+    }
+
     public void setCity(String s) {
         this.city = s;
     }
@@ -353,11 +361,10 @@ public class AccommodationInfo {
         if (accommodationId == null || accommodationId.equals("")) { // create new file
             DocumentReference dr = Database.createAccommodation(data);
             this.accommodationId = dr.getId();
-            Database.uploadStaticImages(accommodationId, this.photos);
-            Database.uploadPanoramicImage(accommodationId, this.photoPanoramic);
-            //TODO also push images and link accommodation to user
         } else { //update accommodation
-            //TODO
+            Database.updateAccommodation(this.accommodationId, transformToHash());
         }
+        Database.uploadStaticImages(accommodationId, this.photos);
+        Database.uploadPanoramicImage(accommodationId, this.photoPanoramic);
     }
 }
