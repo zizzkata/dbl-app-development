@@ -32,7 +32,7 @@ public final class Store {
     private static ArrayList<String> ratedAccommodationsIds = new ArrayList<>();
 
     private static Query discoveryFilter; // not used for current version
-    private static boolean filters = true;
+    private static boolean filters = false;
     private static Long min = 300L;
     private static Long max = 600L;
 
@@ -171,6 +171,7 @@ public final class Store {
 
     public static void killStore() {
         currentUser = null;
+        filters = false;
         discoveryAccommodations = new ArrayList<>();
         ratingsTenant = new ArrayList<>();
     }

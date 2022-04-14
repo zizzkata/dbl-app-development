@@ -21,12 +21,14 @@ import com.example.dbl_app_dev.util.Filters;
  */
 public class FiltersDialogDisplayer extends DialogDisplayer {
     final Filters filters;
+    final Runnable reset;
 
     @SuppressLint("SetTextI18n")
     public FiltersDialogDisplayer(Context context,
-                                  int cancelId, int positiveId, int negativeId, View myView, Filters filters) {
+                                  int cancelId, int positiveId, int negativeId, View myView, Filters filters, Runnable reset) {
         super(context, cancelId, positiveId, negativeId, myView);
         this.filters = filters;
+        this.reset = reset;
         assert myView != null;
         ((CheckBox) myView.findViewById(R.id.furnishedCheckBox)).setChecked(filters.isFurnished());
         ((EditText) myView.findViewById(R.id.minPriceTxt)).setText(filters.getPriceLower().toString());
@@ -71,12 +73,13 @@ public class FiltersDialogDisplayer extends DialogDisplayer {
             Toast.makeText(context, "Filters not saved.", Toast.LENGTH_LONG).show();
             Log.d("extra_debug", "Filters not saved");
             Store.resetFilters();
+            reset.run();
         }
         else {
             Store.setFilters(this.filters.getPriceLower(), this.filters.getPriceUpper());
             Toast.makeText(context, "Filters Saved!", Toast.LENGTH_SHORT).show();
             Log.d("extra_debug", filters.toString());
-
+            reset.run();
             dialog.dismiss();
         }
     }

@@ -137,9 +137,9 @@ public class MainNavigationActivity extends AppCompatActivity {
     /**
      * Method used to create the popup that shows when adding a new accommodation.
      */
-    public void openFilterDialog(Filters filters) {
+    public void openFilterDialog(Filters filters, Runnable reset) {
         View myView = getLayoutInflater().inflate(R.layout.activity_filters, null);
-        (new FiltersDialogDisplayer(this, R.id.cancelButton, R.id.saveBtn, -1, myView, filters))
+        (new FiltersDialogDisplayer(this, R.id.cancelButton, R.id.saveBtn, -1, myView, filters, reset))
                 .displayPopupDialog();
     }
 
