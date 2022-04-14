@@ -9,7 +9,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import com.example.dbl_app_dev.R;
+import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.util.Filters;
 
 /**
@@ -35,32 +38,47 @@ public class FiltersDialogDisplayer extends DialogDisplayer {
 
     @Override
     protected void positiveFunctionality() {
+        boolean valid = true;
         this.filters.setCity(((EditText) myView.findViewById(R.id.cityTxt)).getText().toString());
         this.filters.setFurnished(((CheckBox) myView.findViewById(R.id.furnishedCheckBox)).isChecked());
         try {
             this.filters.setPriceLower(Long.parseLong(((EditText) myView.findViewById(R.id.minPriceTxt)).getText().toString()));
         } catch (NumberFormatException e) {
             this.filters.setPriceLower(0L);
+            valid = false;
         }
         try {
             this.filters.setPriceUpper(Long.parseLong(((EditText) myView.findViewById(R.id.maxPriceTxt)).getText().toString()));
         } catch (NumberFormatException e) {
             this.filters.setPriceUpper(0L);
+            valid = false;
         }
+        Log.i(this.filters.getPriceLower().toString(), "PriceTest");
         try {
             this.filters.setAreaLower(Long.parseLong(((EditText) myView.findViewById(R.id.minMetersTxt)).getText().toString()));
         } catch (NumberFormatException e) {
             this.filters.setPriceLower(0L);
+            valid = false;
         }
         try {
             this.filters.setAreaUpper(Long.parseLong(((EditText) myView.findViewById(R.id.maxMetersTxt)).getText().toString()));
         } catch (NumberFormatException e) {
             this.filters.setPriceUpper(0L);
+            valid = false;
         }
+        if (((EditText) myView.findViewById(R.id.minPriceTxt)).getText().toString().equals("")
+    || ((EditText) myView.findViewById(R.id.maxPriceTxt)).getText().toString().equals("")) {
+            Toast.makeText(context, "Filters not saved.", Toast.LENGTH_LONG).show();
+            Log.d("extra_debug", "Filters not saved");
+            Store.resetFilters();
+        }
+        else {
+            Store.setFilters(this.filters.getPriceLower(), this.filters.getPriceUpper());
+            Toast.makeText(context, "Filters Saved!", Toast.LENGTH_SHORT).show();
+            Log.d("extra_debug", filters.toString());
 
-        Toast.makeText(context, "Filters Saved!", Toast.LENGTH_SHORT).show();
-        Log.d("extra_debug", filters.toString());
-        dialog.dismiss();
+            dialog.dismiss();
+        }
     }
 
     @Override
