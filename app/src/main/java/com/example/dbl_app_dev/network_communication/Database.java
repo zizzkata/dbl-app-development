@@ -212,7 +212,7 @@ public abstract class Database {
                         FirebaseQueries.getRatingsByAccommodationId(activeAcc.getId()));
                 for (DocumentSnapshot listing : accommodations.getDocuments()) {
                     DocumentSnapshot user = Tasks.await(FirebaseQueries.getUserInformation(
-                            (String) listing.get("tenantUsername")));
+                            (String) listing.get("tenant_username")));
                     users.add(new User(user));
                 }
             } catch (Exception e) {
