@@ -161,11 +161,17 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
                     currentTenantInfo = Store.getCurrentUser();
                 }
                 getActivity().runOnUiThread(() -> {
+                    noSwipesContainer.setVisibility(View.INVISIBLE);
+                    contentContainer.setVisibility(View.VISIBLE);
                     bindData(currentTenantInfo);
                 });
 
             } catch (Exception e) {
                 e.printStackTrace();
+                getActivity().runOnUiThread(() -> {
+                    noSwipesContainer.setVisibility(View.VISIBLE);
+                    contentContainer.setVisibility(View.INVISIBLE);
+                });
                 Log.i("I shit myself", e.getMessage());
             }
         });

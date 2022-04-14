@@ -79,7 +79,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tenant_discover, container, false);
     }
@@ -169,6 +169,8 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
                     currentAccommodationInfo = Store.getNextAccommodation();
                 }
                 getActivity().runOnUiThread(() -> {
+                    noSwipesContainer.setVisibility(View.INVISIBLE);
+                    contentContainer.setVisibility(View.VISIBLE);
                     bindData(currentAccommodationInfo);
                 });
                 Bitmap pan = currentAccommodationInfo.getPhotoPanoramic();
@@ -181,6 +183,10 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
                 });
             } catch (Exception e) {
                 e.printStackTrace();
+                getActivity().runOnUiThread(() -> {
+                    noSwipesContainer.setVisibility(View.VISIBLE);
+                    contentContainer.setVisibility(View.INVISIBLE);
+                });
                 Log.e("ERR_DISPLAY_CARD", e.getMessage());
                 currentAccommodationInfo = null;
             }
@@ -235,7 +241,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     }
 
     private String booleanToYesNo(boolean x) {
-       return x ? "Yes" : "No";
+        return x ? "Yes" : "No";
     }
 
     /**
