@@ -158,7 +158,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         AsyncWrapper.wrap(() -> {
             try {
                 if (nextCard) {
-                    currentTenantInfo = Store.getCurrentUser();
+                    currentTenantInfo = Store.getUserToBeRated();
                 }
                 getActivity().runOnUiThread(() -> {
                     noSwipesContainer.setVisibility(View.INVISIBLE);

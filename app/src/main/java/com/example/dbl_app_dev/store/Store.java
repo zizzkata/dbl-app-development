@@ -1,5 +1,8 @@
 package com.example.dbl_app_dev.store;
 
+import android.provider.ContactsContract;
+import android.util.Log;
+
 import com.example.dbl_app_dev.network_communication.Authentication;
 import com.example.dbl_app_dev.network_communication.Database;
 import com.example.dbl_app_dev.store.objects.AccommodationInfo;
@@ -25,7 +28,7 @@ public final class Store {
     private static ArrayList<AccommodationInfo> discoveryAccommodations = new ArrayList<>();
     private static ArrayList<AccommodationInfo> listedProperties = new ArrayList<>();
     private static ArrayList<Rating> ratingsTenant = new ArrayList<>();
-    private static ArrayList<Rating> ratingsLandlord = new ArrayList<>();
+    private static ArrayList<User> ratingsLandlord = new ArrayList<>();
     private static ArrayList<String> ratedAccommodationsIds = new ArrayList<>();
 
     private static Query discoveryFilter;
@@ -63,9 +66,13 @@ public final class Store {
 
     public static User getUserToBeRated()  throws Exception {
         if (ratingsLandlord.size() == 0) {
-            //ratingsLandlord = Database.getRatedTenants(currentUser.getUsername());
+            refreshRatedUsers();
         }
-        return null;
+        return ratingsLandlord.remove(0);
+    }
+
+    public static void refreshRatedUsers() throws Exception {
+        ratingsLandlord = Database.getRatedTenants(getCurrentUser().getUsername());
     }
 
     @Deprecated
