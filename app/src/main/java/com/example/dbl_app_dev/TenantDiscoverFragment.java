@@ -160,7 +160,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     }
 
     /**
-     * Updates the information on currentAccommodationInfo and displays it
+     * Updates the information in currentAccommodationInfo and displays it
      */
     private void displayCard(boolean nextCard) {
         AsyncWrapper.wrap(() -> {
@@ -176,9 +176,14 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
                 Bitmap pan = currentAccommodationInfo.getPhotoPanoramic();
                 ArrayList<Bitmap> n = currentAccommodationInfo.getPhotos();
                 getActivity().runOnUiThread(() -> {
-                    verticalViewPagerAdapter = new ImageViewPagerAdapter(getChildFragmentManager(), n, pan);
-                    imageGalleryViewPager.setAdapter(verticalViewPagerAdapter);
-                    ((ImageViewPagerAdapter) imageGalleryViewPager.getAdapter()).notifyChangeInPosition(n.size() + 1);
+                    verticalViewPagerAdapter = ((ImageViewPagerAdapter) imageGalleryViewPager.getAdapter());
+                    if (verticalViewPagerAdapter == null) {
+                        verticalViewPagerAdapter = new ImageViewPagerAdapter(getChildFragmentManager(), n, pan);
+                        imageGalleryViewPager.setAdapter(verticalViewPagerAdapter);
+                    }
+                    verticalViewPagerAdapter.setImageBitmaps(n);
+                    verticalViewPagerAdapter.setPanoramicBitmap(pan);
+                    verticalViewPagerAdapter.notifyChangeInPosition(n.size());
                     imageGalleryViewPager.getAdapter().notifyDataSetChanged();
                 });
             } catch (Exception e) {
