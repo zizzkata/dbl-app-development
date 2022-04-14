@@ -395,8 +395,8 @@ public abstract class FirebaseQueries {
      * @param newData
      * @return
      */
-    public static Task<Void> createAccommodationListing(Map<String, Object> newData) {
-        return accommodations.document().set(newData);
+    public static Task<DocumentReference> createAccommodationListing(Map<String, Object> newData) {
+        return accommodations.add(newData);
     }
 
     /**
@@ -426,5 +426,20 @@ public abstract class FirebaseQueries {
      */
     public static Task<QuerySnapshot> getRatingsByAccommodationId(String accommodationId) {
         return ratedAccommodations.whereEqualTo("accommodation_id", accommodationId).get();
+    }
+
+    public static ArrayList<UploadTask> uploadStaticImagesAccommodation(String accommodationId
+            , ArrayList<byte[]> images) {
+        ArrayList<UploadTask> task = new ArrayList<>();
+        int i = 1;
+        for (byte[] image : images) {
+            task.add(staticImages.child(accommodationId + "/" + i + ".jpg").putBytes(image));
+            i++;
+        }
+        return task;
+    }
+
+    public static UploadTask uploadPanoramicImageAccommodation(String accommodationId, byte[] image) {
+        return panoramicImages.child(accommodationId + ".jpg").putBytes(image);
     }
 }

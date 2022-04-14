@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.provider.ContactsContract;
 
 import com.example.dbl_app_dev.network_communication.Database;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
@@ -97,10 +98,7 @@ public class AccommodationInfo {
         this.smokers = smokers;
         this.photoPanoramic = panorama;
 
-        this.photos = new ArrayList<>();
-        for (Bitmap photo : photos) {
-            this.photos.add(photo);
-        }
+        this.photos = photos;
     }
 
     /**
@@ -348,9 +346,15 @@ public class AccommodationInfo {
      */
     public void pushAccommodation() throws Exception {
         // TODO check for anonymous owners.
+
+        if (photoPanoramic == null || photos == null)
+            throw new Exception("Images are null");
         Map<String, Object> data = transformToHash();
         if (accommodationId == null || accommodationId.equals("")) { // create new file
-            Database.createAccommodation(data);
+            DocumentReference dr = Database.createAccommodation(data);
+            this.accommodationId = dr.getId();
+            Database.uploadStaticImages(accommodationId, this.photos);
+            Database.uploadPanoramicImage(accommodationId, this.photoPanoramic);
             //TODO also push images and link accommodation to user
         } else { //update accommodation
             //TODO

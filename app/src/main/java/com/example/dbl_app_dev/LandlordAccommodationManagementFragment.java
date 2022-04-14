@@ -105,7 +105,7 @@ public class LandlordAccommodationManagementFragment extends Fragment {
                 AccommodationInfo listing = getCurrentListing(d);
                 AsyncWrapper.wrap(() -> {
                     try {
-                        Database.createAccommodation(transformAccommodation(listing));
+                        listing.pushAccommodation();
 
                         getActivity().runOnUiThread(() ->
                                 Toast.makeText(getContext(), "New Accommodation Created",

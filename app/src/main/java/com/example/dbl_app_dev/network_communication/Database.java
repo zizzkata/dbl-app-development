@@ -16,8 +16,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -102,6 +104,40 @@ public abstract class Database {
         return byteImages;
     }
 
+    /**
+     *
+     * @param accommodationId
+     * @param images
+     * @throws Exception
+     * @throws InvalidParameterException
+     */
+    public static void uploadStaticImages(String accommodationId
+            , ArrayList<Bitmap> images) throws Exception, InvalidParameterException {
+        if (images == null || images.size() == 0)
+            throw new InvalidParameterException("No empty images allowed");
+
+        ArrayList<byte[]> byteImages = new ArrayList<>();
+        for (Bitmap imgBitmap : images) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            imgBitmap.compress(Bitmap.CompressFormat.JPEG, 60, stream);
+            byteImages.add(stream.toByteArray());
+        }
+        ArrayList<UploadTask> tasks = FirebaseQueries
+                .uploadStaticImagesAccommodation(accommodationId, byteImages);
+        for(UploadTask task : tasks) {
+            Tasks.await(task);
+        }
+    }
+
+    public static void uploadPanoramicImage(String accommodationId, Bitmap image) throws Exception
+        ,InvalidParameterException {
+        if (image == null)
+            throw new InvalidParameterException("Image is null");
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 60, stream);
+        Tasks.await(FirebaseQueries.uploadPanoramicImageAccommodation(accommodationId
+                , stream.toByteArray()));
+    }
 
 
     /**
@@ -175,7 +211,7 @@ public abstract class Database {
         for(DocumentSnapshot rate : likedAccommodations.getDocuments()) {
             //TODO add try/catch
             accommodations.add(Tasks.await(FirebaseQueries.getAccommodation(
-                    (String) rate.get("accommodationId"))));
+                    (String) rate.get("accommodation_id"))));
         }
         return accommodations;
     }
@@ -194,8 +230,8 @@ public abstract class Database {
         Tasks.await(FirebaseQueries.deleteRatingOnAccommodation(reference.getId()));
     }
 
-    public static void createAccommodation(Map<String, Object> data) throws Exception {
-        Tasks.await(FirebaseQueries.createAccommodationListing(data));
+    public static DocumentReference createAccommodation(Map<String, Object> data) throws Exception {
+        return Tasks.await(FirebaseQueries.createAccommodationListing(data));
     }
 
     public static void updateAccommodation(String accommodationId, Map<String, Object> newData) throws Exception {
