@@ -12,6 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+/**
+ * Fragment holding an image
+ */
 public class ImageGalleryFragment extends Fragment {
 
     public ImageGalleryFragment() {
@@ -19,9 +22,11 @@ public class ImageGalleryFragment extends Fragment {
     }
 
     public static ImageGalleryFragment newInstance(Bitmap image) {
+        // Create the fragment and bundle
         ImageGalleryFragment fragment = new ImageGalleryFragment();
         Bundle args = new Bundle();
 
+        // Save the image in the parcelable
         // NOTE: parcelable has 1MB file limit
         args.putParcelable("image", image);
         fragment.setArguments(args);
@@ -38,10 +43,14 @@ public class ImageGalleryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Get the fragment that should hold the image
         ImageView accommodationImageView = requireView().findViewById(R.id.accommodationImageView);
         Log.d("extra_debug", "Image View Fragment Created");
 
+        // Get the image from the parcelable arguments
         Bitmap image = getArguments().getParcelable("image");
+
+        // Set the image
         accommodationImageView.setImageBitmap(image);
     }
 }
