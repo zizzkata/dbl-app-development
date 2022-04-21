@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.dbl_app_dev.network_communication.Authentication;
 import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.util.AsyncWrapper;
@@ -70,27 +71,30 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
 
+            // Login with the credentials
             AsyncWrapper.wrap(() -> login(emailString, passwordString));
         });
     }
 
     private void login(String email, String password) {
         try {
+            // Check if the credentials are correct
             AuthResult res = Tasks.await(Authentication.firebaseLogin(email, password));
+            // If the credentials are correct then redirect to the main activity
             runOnUiThread(() -> {
-                startActivity(new Intent(LoginActivity.this, MainNavigationActivity.class));
+                startActivity(new Intent(LoginActivity.this,
+                        MainNavigationActivity.class));
                 overridePendingTransition(0, 0);
                 loginBtn.setEnabled(true);
+                // Complete the current activity
                 finish();
             });
             Store.getCurrentUser(); // don't get the parameter
-        } catch (
-
-        Exception e) {
+        } catch (Exception e) {
+            // Credentials are incorrect
             Log.e("ERR", e.getMessage());
-            // String warning =
-            // Exceptions.getWarning(Store.getLastException().getMessage());
             runOnUiThread(() -> {
+                // Set the warning messages
                 setCredentialsWarning(Exceptions.getWarning(e.getMessage()), true);
                 loginBtn.setEnabled(true);
             });
@@ -98,13 +102,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * Controls for the warning message field
+     * Controls for the warning message field and visibility
      */
     private void setCredentialsWarning(String message, boolean visible) {
         credentialsWarning.setText(message);
         credentialsWarning.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
+    /**
+     * Controls for the warning field visibility
+     */
     private void setCredentialsWarning(boolean visible) {
         credentialsWarning.setVisibility(visible ? View.VISIBLE : View.GONE);
     }

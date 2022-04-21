@@ -27,12 +27,14 @@ import com.example.dbl_app_dev.util.AsyncWrapper;
 import java.util.ArrayList;
 
 public class TenantLikedFragment extends Fragment {
+    // Rating ENUM
     enum rating {
         POSITIVE,
         NEUTRAL,
         NEGATIVE
     }
 
+    // Container views for the different ratings
     ConstraintLayout positiveListingsParent;
     ConstraintLayout neutralListingsParent;
     ConstraintLayout negativeListingsParent;
@@ -88,7 +90,8 @@ public class TenantLikedFragment extends Fragment {
                     }
                 }
                 getActivity().runOnUiThread(() -> {
-                            if (ratings != null) { // check that again, wwe may return one with size 0 if it fails
+                            // check that again, we may return one with size 0 if it fails
+                            if (ratings != null) {
                                 addLikedListings();
                                 addAllInfoButtonsFunctionality();
                             }
@@ -204,15 +207,21 @@ public class TenantLikedFragment extends Fragment {
         return R.layout.negative_accommodation_object;
     }
 
+    /**
+     * Sets the functionality of the info button on each compact accommodation.
+     * Each info button is responsible for viewing that accommodation.
+     */
     private void addAllInfoButtonsFunctionality() {
         for (TenantLikedAccommodationObject a : likedObjects) {
             if (a.rating == rating.POSITIVE || a.rating == rating.NEUTRAL) {
                 a.compactView.findViewById(R.id.actionIcon).setOnClickListener(view1 -> {
+                    // View the accommodation on click of the info button
                     AlertDialog d = ((MainNavigationActivity) getActivity())
                             .viewAccommodationDialog(a.compactView);
                     AsyncWrapper.wrap(() -> {
                         try {
                             AccommodationInfo acc = a.ratingObj.getAccommodation();
+                            // Set the details of the accommodation in the dialog
                             getActivity().runOnUiThread(() -> setDialogInfo(d, acc));
                         } catch (Exception e) {
                             // IGNORE
@@ -222,6 +231,8 @@ public class TenantLikedFragment extends Fragment {
             } else if (a.rating == rating.NEGATIVE) {
                 // TODO remove liking from DB
                 a.compactView.findViewById(R.id.actionIcon).setOnClickListener(view1 -> {
+                    // Remove the accommodation if it has a negative rating
+                    // when clicking on the X button
                     ((MainNavigationActivity) getActivity())
                             .removeAccommodationDialog(a.compactView);
                 });
@@ -229,6 +240,12 @@ public class TenantLikedFragment extends Fragment {
         }
     }
 
+    /**
+     * Update the dialog's information based on the accommodation details
+     *
+     * @param listing
+     * @param ad
+     */
     private void setDialogInfo(AlertDialog ad, AccommodationInfo listing) {
         AsyncWrapper.wrap(() -> {
             try {
@@ -310,6 +327,13 @@ public class TenantLikedFragment extends Fragment {
         ((CheckBox) ad.findViewById(R.id.petsCheckBox)).setChecked(listing.getPets());
     }
 
+    /**
+     * Sets the status of the checkboxes responsible for the rating container visibility
+     *
+     * @param dialog
+     *
+     * @modifies showPositiveListingsSwitch, showNeutralListingsSwitch, showNegativeListingsSwitch12
+     */
     private void setDialogCheckBoxes(AlertDialog dialog) {
         ((androidx.appcompat.widget.SwitchCompat) dialog
                 .findViewById(R.id.showPositiveListingsSwitch))
@@ -322,6 +346,10 @@ public class TenantLikedFragment extends Fragment {
                 .setChecked(negativeListingsParent.getVisibility() == View.VISIBLE);
     }
 
+    /**
+     * Subclass used to hold a compact accommodation object, the rating associated with the user
+     * and a rating object.
+     */
     class TenantLikedAccommodationObject {
         View compactView;
         Rating ratingObj;

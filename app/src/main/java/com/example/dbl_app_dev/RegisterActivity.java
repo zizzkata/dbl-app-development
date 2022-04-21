@@ -71,6 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        // Add username text field validator
         username.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -78,6 +79,8 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+
+        // Add password text field validator
         password.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -85,6 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        // Add another password text field validator
         password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
@@ -94,6 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        // Add repeat password text field validator
         repeatPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
@@ -113,14 +118,16 @@ public class RegisterActivity extends AppCompatActivity {
         makeWarningsInvisible();
 
         // Log in button leading to LoginActivity
-
+        // (Signup button functionality)
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // If the text fields are invalid then do not sign-up
                 if (!isSignUpValid()) {
                     return;
                 }
 
+                // Get credentials
                 String emailString = email.getText().toString();
                 String usernameString = username.getText().toString();
                 String passwordString = password.getText().toString();
@@ -156,6 +163,7 @@ public class RegisterActivity extends AppCompatActivity {
                 makeWarningsInvisible();
                 startActivity(new Intent(RegisterActivity.this,
                         LoginActivity.class));
+                // Complete the activity
                 finish();
             }
         });

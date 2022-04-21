@@ -107,7 +107,8 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         // displayCard(cardTextViews, imageView);
         // }
 
-        this.swipeListener = new GestureDetector(getContext(), new CardSwipeListener(this, true, true));
+        this.swipeListener = new GestureDetector(getContext(),
+                new CardSwipeListener(this, true, true));
         topCard.setOnTouchListener((v, event) -> {
             if (swipeListener.onTouchEvent(event)) {
                 displayCard(true);

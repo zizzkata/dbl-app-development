@@ -53,7 +53,8 @@ public class LandlordAccommodationManagementFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            Intent intent =
+                    new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(intent, request);
         }
     }
@@ -72,7 +73,8 @@ public class LandlordAccommodationManagementFragment extends Fragment {
      * this fragment using the provided parameters.
      */
     public static LandlordAccommodationManagementFragment newInstance() {
-        LandlordAccommodationManagementFragment fragment = new LandlordAccommodationManagementFragment();
+        LandlordAccommodationManagementFragment fragment =
+                new LandlordAccommodationManagementFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -82,7 +84,8 @@ public class LandlordAccommodationManagementFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_landlord_accommodation_management, container, false);
+        return inflater.inflate(R.layout.fragment_landlord_accommodation_management,
+                container, false);
     }
 
     @Override
@@ -123,7 +126,8 @@ public class LandlordAccommodationManagementFragment extends Fragment {
                         // TODO properly push current listing to store or whatever
                         //myListings.add(listing); // this is a work around
                         myListings = Database
-                                .getActiveAccommodationsByOwner(Store.getCurrentUser().getUsername());
+                                .getActiveAccommodationsByOwner(Store
+                                        .getCurrentUser().getUsername());
                         getActivity().runOnUiThread(() -> {
                                     if (myListings != null) {
                                         addMyListings();
@@ -196,7 +200,8 @@ public class LandlordAccommodationManagementFragment extends Fragment {
             // TODO
         }
         String address = ((TextView) ad.findViewById(R.id.addressTxt)).getText().toString();
-        String houseNumber = ((TextView) ad.findViewById(R.id.apartmentNameText)).getText().toString();
+        String houseNumber = ((TextView) ad
+                .findViewById(R.id.apartmentNameText)).getText().toString();
         String floor = ((TextView) ad.findViewById(R.id.floorTxt)).getText().toString();
         String city = ((TextView) ad.findViewById(R.id.cityTxt)).getText().toString();
         String postcode = ((TextView) ad.findViewById(R.id.postcodeTxt)).getText().toString();
@@ -378,10 +383,12 @@ public class LandlordAccommodationManagementFragment extends Fragment {
             AsyncWrapper.wrap(() -> {
                 try {
                     listing.pushAccommodation();
-                    Toast.makeText(getContext(), "Accommodation updated!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Accommodation updated!",
+                            Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     Log.e("ERR", e.getMessage());
-                    Toast.makeText(getContext(), "Accommodation not updated!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Accommodation not updated!",
+                            Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -398,13 +405,18 @@ public class LandlordAccommodationManagementFragment extends Fragment {
         listing.setAddress(((TextView) ad.findViewById(R.id.addressTxt)).getText().toString());
 
         listing.setCity(((TextView) ad.findViewById(R.id.cityTxt)).getText().toString());
-        listing.setDescription1(((TextView) ad.findViewById(R.id.descriptionTxt)).getText().toString());
-        listing.setAvailableUntil(((TextView) ad.findViewById(R.id.endDateEditTxt)).getText().toString());
-        listing.setAvailableFrom(((TextView) ad.findViewById(R.id.startDateEditTxt)).getText().toString());
+        listing.setDescription1(((TextView) ad
+                .findViewById(R.id.descriptionTxt)).getText().toString());
+        listing.setAvailableUntil(((TextView) ad
+                .findViewById(R.id.endDateEditTxt)).getText().toString());
+        listing.setAvailableFrom(((TextView) ad
+                .findViewById(R.id.startDateEditTxt)).getText().toString());
         listing.setFloor(((TextView) ad.findViewById(R.id.floorTxt)).getText().toString());
         listing.setFurnished(((CheckBox) ad.findViewById(R.id.furnishedCheckBox)).isChecked());
-        listing.setHouseNumber(((TextView) ad.findViewById(R.id.apartmentNameText)).getText().toString());
-        listing.setMinimumPeriod(((TextView) ad.findViewById(R.id.minimumRentTxt)).getText().toString());
+        listing.setHouseNumber(((TextView) ad
+                .findViewById(R.id.apartmentNameText)).getText().toString());
+        listing.setMinimumPeriod(((TextView) ad
+                .findViewById(R.id.minimumRentTxt)).getText().toString());
         listing.setPets1(((CheckBox) ad.findViewById(R.id.petsCheckBox)).isChecked());
         listing.setPostcode(((TextView) ad.findViewById(R.id.postcodeTxt)).getText().toString());
 
@@ -530,7 +542,8 @@ public class LandlordAccommodationManagementFragment extends Fragment {
 
         Uri selectedImage = data.getData();
         ImageView imageView = (requestCode == 0)
-                ? currDialog.findViewById(R.id.panoramaImage) : currDialog.findViewById(R.id.normalImage);
+                ? currDialog.findViewById(R.id.panoramaImage)
+                : currDialog.findViewById(R.id.normalImage);
         imageView.setImageURI(selectedImage);
     }
 }

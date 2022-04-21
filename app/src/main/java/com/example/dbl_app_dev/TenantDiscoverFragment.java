@@ -39,8 +39,10 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     ConstraintLayout contentContainer;
     ImageViewPagerAdapter verticalViewPagerAdapter;
 
+    // Filters object
     private Filters filters;
 
+    // Accommodation views
     private TextView addressTxt;
     private TextView floorTxt;
     private TextView postcodeTxt;
@@ -77,6 +79,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Get the needed views
         ConstraintLayout topCard = view.findViewById(R.id.topCard);
         addressTxt = view.findViewById(R.id.addressTxt);
         floorTxt = view.findViewById(R.id.floorTxt);
@@ -91,14 +94,19 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         untilTxt = view.findViewById(R.id.untilTxt);
         descriptionTxt = view.findViewById(R.id.descriptionTxt);
 
+        // Get the image gallery view pager
         imageGalleryViewPager = view.findViewById(R.id.accommodationImageScroller);
 
+        // Get container views and set their visibility
+        // Initially the "no swipes" container is set to invisible
         noSwipesContainer = view.findViewById(R.id.noSwipesContainer);
         contentContainer = view.findViewById(R.id.contentContainer);
         noSwipesContainer.setVisibility(View.INVISIBLE);
         contentContainer.setVisibility(View.VISIBLE);
 
-        this.horizontalSwipeDetector = new GestureDetector(getContext(), new CardSwipeListener(this, true, false));
+        // Add swipe gesture detection
+        this.horizontalSwipeDetector = new GestureDetector(getContext(),
+                new CardSwipeListener(this, true, false));
         topCard.setOnTouchListener((v, event) -> {
             if (horizontalSwipeDetector.onTouchEvent(event)) {
                 displayCard(true);
@@ -107,6 +115,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
             return true;
         });
 
+        // Get buttons
         Button likeBtn = view.findViewById(R.id.positiveButton);
         Button dislikeBtn = view.findViewById(R.id.negativeButton);
         Button arBtn = view.findViewById(R.id.arButton);
@@ -127,8 +136,10 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
             imageGalleryViewPager.setAdapter(verticalViewPagerAdapter);
         });
 
+        // filters button functionality
         Button filtersBtn = view.findViewById(R.id.filtersButton);
-        filtersBtn.setOnClickListener(v -> ((MainNavigationActivity) requireActivity()).openFilterDialog(filters, new Runnable(){
+        filtersBtn.setOnClickListener(v -> ((MainNavigationActivity)
+                requireActivity()).openFilterDialog(filters, new Runnable(){
 
             @Override
             public void run() {
@@ -146,7 +157,8 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
                 User user = Store.getCurrentUser();
                 if (user.getFirstName().length() == 0 || user.getLastName().length() == 0
                         || user.getDescription().length() == 0)
-                    getActivity().runOnUiThread(() -> ((MainNavigationActivity) getActivity()).openSettingsDialog());
+                    getActivity().runOnUiThread(() -> ((MainNavigationActivity)
+                            getActivity()).openSettingsDialog());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -173,9 +185,11 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
                 Bitmap pan = currentAccommodationInfo.getPhotoPanoramic();
                 ArrayList<Bitmap> n = currentAccommodationInfo.getPhotos();
                 getActivity().runOnUiThread(() -> {
-                    verticalViewPagerAdapter = ((ImageViewPagerAdapter) imageGalleryViewPager.getAdapter());
+                    verticalViewPagerAdapter = ((ImageViewPagerAdapter)
+                            imageGalleryViewPager.getAdapter());
                     if (verticalViewPagerAdapter == null) {
-                        verticalViewPagerAdapter = new ImageViewPagerAdapter(getChildFragmentManager(), n, pan);
+                        verticalViewPagerAdapter =
+                                new ImageViewPagerAdapter(getChildFragmentManager(), n, pan);
                         imageGalleryViewPager.setAdapter(verticalViewPagerAdapter);
                     }
                     verticalViewPagerAdapter.setImageBitmaps(n);

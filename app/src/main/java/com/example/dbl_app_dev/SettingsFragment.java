@@ -45,13 +45,17 @@ import java.util.ArrayList;
  */
 public class SettingsFragment extends Fragment {
 
-    // Views that hold dynamic information based on the current user
+    // Credentials views
     private EditText email;
     private EditText username;
-    private TextView currentPasswordWarning;
     private EditText password;
+
+    // Warnings views
+    private TextView currentPasswordWarning;
     private TextView passwordWarning;
     private TextView repeatPasswordWarning;
+
+    // User details views
     private EditText firstName;
     private EditText lastName;
     private EditText phoneNumber;
@@ -75,6 +79,7 @@ public class SettingsFragment extends Fragment {
         EditText currentPassword = getView().findViewById(R.id.currentPasswordBox);
         EditText repeatPassword = getView().findViewById(R.id.ConfirmNewPasswordBox);
 
+        // Get the corresponding views
         email = getView().findViewById(R.id.editTextTextEmailAddress);
         username = getView().findViewById(R.id.usernameBox);
         currentPasswordWarning = getView().findViewById(R.id.invalidCurrentPassword);
@@ -104,12 +109,14 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        // add password validator
         password.setOnFocusChangeListener((view, hasFocus) -> {
             if (!hasFocus) {
                 repPassValidator.validate();
             }
         });
 
+        // add repeat password validator
         repeatPassword.setOnFocusChangeListener((view, hasFocus) -> {
             if (!hasFocus) {
                 repPassValidator.validate();
@@ -203,6 +210,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        // Add image button functionality
         TextView addImage = getView().findViewById(R.id.addImageBtn);
         addImage.setOnClickListener(view14 -> {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -257,6 +265,11 @@ public class SettingsFragment extends Fragment {
         }));
     }
 
+    /**
+     * Set the views' text based on the user's data
+     *
+     * @param user
+     */
     private void bindUserData(User user) {
         email.setText(user.getEmail());
         username.setText(user.getUsername());
@@ -269,10 +282,20 @@ public class SettingsFragment extends Fragment {
         gender.setText(user.getGender());
     }
 
+    /**
+     * Set the profile pic of the user in the UI
+     *
+     * @param image
+     */
     private void bindUserImage(Bitmap image) {
         profilePic.setImageBitmap(Tools.getResizedBitmap(image, 250));
     }
 
+    /**
+     * Updates the current user's information
+     *
+     * @modifies User
+     */
     private void setNewInformation() throws Exception {
         User currentUser = Store.getCurrentUser();
         currentUser.setFirstName(firstName.getText().toString());
@@ -301,6 +324,12 @@ public class SettingsFragment extends Fragment {
         });
     }
 
+    /**
+     * Update the user's profile photo from their gallery
+     * @param requestCode
+     * @param data
+     * @param resultCode
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

@@ -62,7 +62,8 @@ public class MainNavigationActivity extends AppCompatActivity {
 
         // Getting the needed menu items
         MenuItem tenantLikedItem = navBarMenu.findItem(R.id.tenantLikedFragment);
-        MenuItem landlordListingsItem = navBarMenu.findItem(R.id.landlordAccommodationManagementFragment);
+        MenuItem landlordListingsItem =
+                navBarMenu.findItem(R.id.landlordAccommodationManagementFragment);
         MenuItem tenantDiscoverItem = navBarMenu.findItem(R.id.tenantDiscoverFragment);
         MenuItem landlordDiscoverItem = navBarMenu.findItem(R.id.landlordDiscoverFragment);
 
@@ -139,8 +140,8 @@ public class MainNavigationActivity extends AppCompatActivity {
      */
     public void openFilterDialog(Filters filters, Runnable reset) {
         View myView = getLayoutInflater().inflate(R.layout.activity_filters, null);
-        (new FiltersDialogDisplayer(this, R.id.cancelButton, R.id.saveBtn, -1, myView, filters, reset))
-                .displayPopupDialog();
+        (new FiltersDialogDisplayer(this, R.id.cancelButton, R.id.saveBtn, -1,
+                myView, filters, reset)).displayPopupDialog();
     }
 
     /**
