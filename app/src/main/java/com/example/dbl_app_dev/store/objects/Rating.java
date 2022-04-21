@@ -9,15 +9,19 @@ import com.google.firebase.firestore.DocumentSnapshot;
  */
 public class Rating {
 
+    // Rating details
     private String id;
     private String accommodationId;
-    private String ownerUsername;
-    private String tenantUsername;
-    private Long ratingLandlord;
-    private Long ratingTenant;
     private DocumentSnapshot snapshot;
 
+    // Tenant details
+    private String tenantUsername;
+    private Long ratingTenant;
     private User tenant;
+
+    // Owner details
+    private String ownerUsername;
+    private Long ratingLandlord;
     private User owner;
     private AccommodationInfo accommodation;
 
@@ -28,20 +32,11 @@ public class Rating {
         this.tenantUsername = (String) snapshot.get("tenant_username");
         this.ratingLandlord = (Long) snapshot.get("rating_landlord");
         this.ratingTenant = (Long) snapshot.get("rating_tenant");
-        this.snapshot = snapshot; // save snapshot just in case
-    }
-
-    public Rating(AccommodationInfo accommodation, User tenant) {
-        //this.id = snapshot.getId();
-        this.accommodationId = accommodation.getAccommodationId();
-        this.ownerUsername = accommodation.getOwnerUsername();
-        this.tenantUsername = tenant.getUsername();
-        this.ratingLandlord = (long) 0;
-        this.ratingTenant = (long) 0;
+        // save snapshot just in case
+        this.snapshot = snapshot;
     }
 
     public Rating(AccommodationInfo accommodation, User tenant, Long tenantRating) {
-        //this.id = snapshot.getId(); // not initialized, can be pushed
         this.accommodationId = accommodation.getAccommodationId();
         this.ownerUsername = accommodation.getOwnerUsername();
         this.tenantUsername = tenant.getUsername();
@@ -67,13 +62,6 @@ public class Rating {
         return tenant;
     }
 
-    public User getOwner() throws Exception {
-        if (owner == null) {
-            owner = new User(Database.getUserInformation(this.tenantUsername));
-        }
-        return owner;
-    }
-
     public AccommodationInfo getAccommodation() throws Exception {
         if (accommodation == null) {
             accommodation = Database.getAccommodation(this.accommodationId);
@@ -81,7 +69,11 @@ public class Rating {
         return accommodation;
     }
 
-    // TODO finish
+    /**
+     * Push the rating to the database
+     *
+     * @throws Exception
+     */
     public void pushRating() throws Exception {
         if (this.id == null) {
             this.id = Database.createRatingAccommodation(this.accommodationId, this.tenantUsername

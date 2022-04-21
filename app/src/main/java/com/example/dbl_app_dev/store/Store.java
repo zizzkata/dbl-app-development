@@ -31,6 +31,7 @@ public final class Store {
     private static ArrayList<User> ratingsLandlord = new ArrayList<>();
     private static ArrayList<String> ratedAccommodationsIds = new ArrayList<>();
 
+    // Filters
     private static Query discoveryFilter; // not used for current version
     private static boolean filters = false;
     private static Long min = 300L;
@@ -42,6 +43,8 @@ public final class Store {
 
     /**
      * Get the current user's information or Download it if there is none.
+     *
+     * @throws Exception
      */
     public static User getCurrentUser() throws Exception {
         if (currentUser == null) {
@@ -51,6 +54,8 @@ public final class Store {
     }
 
     /**
+     * Get the next AccommodationInfo object in the Store
+     *
      * @return the next AccommodationInfo object in the Store
      */
     public static AccommodationInfo getNextAccommodation() throws Exception {
@@ -66,8 +71,8 @@ public final class Store {
     public static void refreshAccommodations() throws Exception {
         if (filters) {
             discoveryAccommodations = transformDocuments(
-              Database.getFilteredPriceActiveAccommodations(getCurrentUser().getUsername()
-                ,MAX_ACCOMMODATIONS_PER_PULL, min, max)
+                    Database.getFilteredPriceActiveAccommodations(getCurrentUser().getUsername()
+                            , MAX_ACCOMMODATIONS_PER_PULL, min, max)
             );
         } else {
             discoveryAccommodations = transformDocuments(
@@ -75,7 +80,7 @@ public final class Store {
         }
     }
 
-    public static User getUserToBeRated()  throws Exception {
+    public static User getUserToBeRated() throws Exception {
         if (ratingsLandlord.size() == 0) {
             refreshRatedUsers();
         }
@@ -101,8 +106,8 @@ public final class Store {
     @Deprecated
     public static void pullMoreAccommodations() throws Exception {
         discoveryAccommodations = transformDocuments(
-                    Database.getActiveAccommodations(currentUser.getUsername()
-                            , MAX_ACCOMMODATIONS_PER_PULL));
+                Database.getActiveAccommodations(currentUser.getUsername()
+                        , MAX_ACCOMMODATIONS_PER_PULL));
     }
 
     @Deprecated
@@ -116,7 +121,6 @@ public final class Store {
     }
 
     /**
-     *
      * @param accommodation
      * @param impression
      * @throws Exception

@@ -16,40 +16,43 @@ import java.util.Map;
  */
 public class AccommodationInfo {
 
+    // Accommodation id and status
     private String accommodationId;
     private boolean active;
+
+    // Accommodation owner details
     private String ownerUsername;
     private User owner;
+
+    // Accommodation images
     private ArrayList<Bitmap> photos;
     private Bitmap photoPanoramic;
     private DocumentSnapshot documentSnapshot;
 
+    // Accommodation location details
     private String address;
     private String city;
     private String floor;
     private String houseNumber;
     private String postcode;
+
+    // Accommodation rent details
     private Long price;
     private String currency;
-    private String accommType;
-    private String utilities;
-    private Long area_m2;
     private String minimumPeriod;
     private String availableFrom;
     private String availableUntil;
+
+    // Other accommodation details
+    private String accommType;
+    private String utilities;
+    private Long area_m2;
     private String description;
 
+    // Accommodation preferences for tenants
     private Boolean furnished = false;
     private Boolean pets = false;
     private Boolean smokers = false;
-
-    public AccommodationInfo(ArrayList<String> s, ArrayList<Bitmap> photos, Bitmap photoPanoramic) {
-        this.accommodationId = "XAFxPJEMgTIRA4HUam4x";
-
-
-        //this.photos = new ArrayList<>(photos);
-        //this.photoPanoramic = photoPanoramic;
-    }
 
     public AccommodationInfo(DocumentSnapshot ds) {
         documentSnapshot = ds;
@@ -77,8 +80,6 @@ public class AccommodationInfo {
             , String availableUntil, String availableFrom, String floor, Boolean furnished
             , Boolean pets, Boolean smokers, String houseNumber, String minimumPeriod
             , String postcode, Long price, Long area_m2, Bitmap panorama, ArrayList<Bitmap> photos) {
-        //documentSnapshot = ds;
-        //accommodationId = ds.getId(); // indicates that it doesn't exist in db
         this.address = address;
         this.active = true;
         this.city = city;
@@ -97,19 +98,26 @@ public class AccommodationInfo {
         this.area_m2 = area_m2;
         this.smokers = smokers;
         this.photoPanoramic = panorama;
-
         this.photos = photos;
     }
 
+
     /**
-     * @return
+     *  GETTERS
+     */
+
+
+    /**
+     * Get the static photos of the accommodation as bitmaps
+     *
+     * @return static photos as bitmaps
      */
     public ArrayList<Bitmap> getPhotos() {
         if (photos == null) {
             try {
                 this.photos = Database.getStaticImagesBitmaps(this.accommodationId);
             } catch (Exception e) {
-                // Doesnt exist
+                // Doesn't exist
                 e.printStackTrace();
             }
         }
@@ -117,7 +125,9 @@ public class AccommodationInfo {
     }
 
     /**
-     * @return
+     * Get the panoramic image of the accommodation
+     *
+     * @return panoramic image
      */
     public Bitmap getPhotoPanoramic() {
         if (photoPanoramic == null) {
@@ -132,7 +142,9 @@ public class AccommodationInfo {
     }
 
     /**
-     * @return
+     * Get the owner of the accommodation
+     *
+     * @return the owner's username
      */
     public User getOwner() {
         if (owner == null) {
@@ -146,14 +158,16 @@ public class AccommodationInfo {
         return owner;
     }
 
-    public DocumentSnapshot getSnapshot() {
-        return documentSnapshot;
-    }
-
     public String getAddress() {
         return address;
     }
 
+    /**
+     * Get a short form of the address of the accommodation
+     * that is cut to the first comma (",") if it exists
+     *
+     * @return the address of the accommodation cut to the first comma
+     */
     public String getAddressShort() {
         if (address == null) return "";
         if (address.length() == 0) return "";
@@ -182,6 +196,7 @@ public class AccommodationInfo {
     }
 
     public String getCurrency() {
+        // Return the euro symbol if the currency is EUR
         if (currency.equals("EUR")) return "€";
 
         return currency;
@@ -192,16 +207,19 @@ public class AccommodationInfo {
     }
 
     public Boolean getFurnished() {
+        // Return false as a default (safety)
         if (furnished == null) return false;
         return furnished;
     }
 
     public Boolean getPets() {
+        // Return false as a default (safety)
         if (pets == null) return false;
         return pets;
     }
 
     public Boolean getSmokers() {
+        // Return false as a default (safety)
         if (smokers == null) return false;
         return smokers;
     }
@@ -238,19 +256,15 @@ public class AccommodationInfo {
         return availableUntil;
     }
 
-    public int getPhotosSize() {
-        return photos.size();
+
+    /**
+     * SETTERS
+     */
+
+
+    public void setActive(boolean b) {
+        this.active = b;
     }
-
-    // Positive = 1; Neutral = 0; Negative = -1;
-    // public int getRating() { return 0;}
-
-    @Deprecated
-    public void rateAccommodation(String username, boolean rate) throws Exception {
-        //Database.createRatingAccommodation(accommodationId, username, ownerUsername, rate);
-    }
-
-    public void setActive(boolean b) { this.active = b; }
 
     public void setAddress(String s) {
         this.address = s;
@@ -266,10 +280,6 @@ public class AccommodationInfo {
 
     public void setCity(String s) {
         this.city = s;
-    }
-
-    public void setCurrency(String s) {
-        this.currency = s;
     }
 
     public void setDescription1(String s) {
@@ -300,10 +310,6 @@ public class AccommodationInfo {
         this.minimumPeriod = s;
     }
 
-    public void setOwnerUsername(String s) {
-        this.ownerUsername = s;
-    }
-
     public void setPets1(boolean b) {
         this.pets = b;
     }
@@ -324,6 +330,11 @@ public class AccommodationInfo {
         this.smokers = b;
     }
 
+    /**
+     * Transform all accommodation data to a HashMap
+     *
+     * @return HashMap with all accommodation data
+     */
     private Map<String, Object> transformToHash() {
         Map<String, Object> data = new HashMap<>();
         data.put("address", this.address);
@@ -358,10 +369,12 @@ public class AccommodationInfo {
         if (photoPanoramic == null || photos == null)
             throw new Exception("Images are null");
         Map<String, Object> data = transformToHash();
-        if (accommodationId == null || accommodationId.equals("")) { // create new file
+        if (accommodationId == null || accommodationId.equals("")) {
+            // create new file
             DocumentReference dr = Database.createAccommodation(data);
             this.accommodationId = dr.getId();
-        } else { //update accommodation
+        } else {
+            //update accommodation
             Database.updateAccommodation(this.accommodationId, transformToHash());
         }
         Database.uploadStaticImages(accommodationId, this.photos);

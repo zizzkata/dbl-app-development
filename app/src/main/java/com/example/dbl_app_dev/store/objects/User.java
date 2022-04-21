@@ -1,20 +1,12 @@
 package com.example.dbl_app_dev.store.objects;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.provider.ContactsContract;
 import android.util.Log;
 
-import androidx.test.core.app.ApplicationProvider;
-import androidx.test.platform.app.InstrumentationRegistry;
-
 import com.example.dbl_app_dev.network_communication.Database;
-import com.google.common.collect.BiMap;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,9 +45,15 @@ public class User {
         this.hasPets = (Boolean) res.get("pets");
     }
 
+
+    /**
+     * GETTERS
+     */
+
+
     /**
      * Pull user information from db
-     * 
+     *
      * @throws Exception
      */
     private void getInformation() throws Exception {
@@ -118,7 +116,12 @@ public class User {
         return smokes;
     }
 
-    /** setters */
+
+    /**
+     * SETTERS
+     */
+
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -160,8 +163,9 @@ public class User {
     }
 
     /**
+     * Get the profile picture of the user
      *
-     * @return
+     * @return profile picture of the user
      */
     public Bitmap getProfilePic() {
         if (profilePic == null) {
@@ -176,6 +180,7 @@ public class User {
     }
 
     /**
+     * Update the user's information
      *
      * @throws Exception
      */
@@ -184,8 +189,8 @@ public class User {
     }
 
     /**
-     * Update user's image and upload he image at the same time.
-     * 
+     * Update user's image and upload the image at the same time.
+     *
      * @param image
      * @throws Exception
      */
@@ -213,8 +218,8 @@ public class User {
 
     /**
      * Transform the User object into hashmap
-     * 
-     * @return
+     *
+     * @return HashMap with the transformed data
      */
     private Map<String, Object> transformUser() {
         Map<String, Object> transformedData = new HashMap<>();

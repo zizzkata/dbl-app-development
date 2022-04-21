@@ -30,6 +30,11 @@ public class TenantInfo {
         this.photo = photo;
     }
 
+    /**
+     * Get an array of the tenant details
+     *
+     * @return ArrayList with the tenant details
+     */
     public ArrayList<String> getFormattedText() {
         ArrayList<String> result = new ArrayList<>();
 
@@ -45,7 +50,9 @@ public class TenantInfo {
     }
 
     /**
-     * @return profile picture of this tenant
+     * Get the profile picture of the tenant as a bitmap
+     *
+     * @return profile picture of the tenant
      */
     public Bitmap getPhoto() {
         return photo;
