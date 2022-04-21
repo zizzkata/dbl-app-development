@@ -28,9 +28,6 @@ public class EditSettingsDialogDisplayer extends DialogDisplayer {
         dialog.setTitle(title);
         dialog.setMessage(message);
 
-        // TODO: remove the option to cancel
-        dialog.setButton(dialog.BUTTON_NEUTRAL, "Cancel",
-                (dialog, which) -> dialog.dismiss());
         dialog.setButton(dialog.BUTTON_POSITIVE, "Edit Settings",
                 (dialog, which) -> {
                     mainNavigationActivity.openSettingsFragment();

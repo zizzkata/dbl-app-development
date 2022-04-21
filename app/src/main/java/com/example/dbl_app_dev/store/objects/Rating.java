@@ -81,7 +81,7 @@ public class Rating {
         return accommodation;
     }
 
-    //TODO finish
+    // TODO finish
     public void pushRating() throws Exception {
         if (this.id == null) {
             this.id = Database.createRatingAccommodation(this.accommodationId, this.tenantUsername

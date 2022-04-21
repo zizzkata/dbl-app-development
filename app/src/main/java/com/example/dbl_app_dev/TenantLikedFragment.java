@@ -230,7 +230,6 @@ public class TenantLikedFragment extends Fragment {
     }
 
     private void setDialogInfo(AlertDialog ad, AccommodationInfo listing) {
-        // TODO
         AsyncWrapper.wrap(() -> {
             try {
                 User owner = listing.getOwner();

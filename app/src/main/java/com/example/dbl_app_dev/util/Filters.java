@@ -9,8 +9,6 @@ import com.example.dbl_app_dev.store.objects.AccommodationInfo;
 
 /**
  * Class that stores the filters of the Tenant Discovery page.
- *
- * TODO: Starting date & Ending date are not taken into account
  */
 public class Filters {
     private boolean isFurnished;
