@@ -20,6 +20,7 @@ import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.store.objects.TenantInfo;
 import com.example.dbl_app_dev.store.objects.User;
 import com.example.dbl_app_dev.util.AsyncWrapper;
+import com.example.dbl_app_dev.util.CardSwipeListener;
 import com.example.dbl_app_dev.util.SwipeHandler;
 
 import java.util.LinkedList;
@@ -49,16 +50,6 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
 
     public LandlordDiscoverFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment landlordDiscoverFragment.
-     */
-    public static LandlordDiscoverFragment newInstance() {
-        return new LandlordDiscoverFragment();
     }
 
     @Override
@@ -120,7 +111,6 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         topCard.setOnTouchListener((v, event) -> {
             if (swipeListener.onTouchEvent(event)) {
                 displayCard(true);
-                Log.i("wafaw", "wgagaw");
                 return false;
             }
             return true;
@@ -178,7 +168,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
                     noSwipesContainer.setVisibility(View.VISIBLE);
                     contentContainer.setVisibility(View.INVISIBLE);
                 });
-                Log.i("I shit myself", e.getMessage());
+                Log.i("Error", e.getMessage());
             }
         });
     }

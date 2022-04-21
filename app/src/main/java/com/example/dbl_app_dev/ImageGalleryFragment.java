@@ -25,7 +25,6 @@ public class ImageGalleryFragment extends Fragment {
         // NOTE: parcelable has 1MB file limit
         args.putParcelable("image", image);
         fragment.setArguments(args);
-        Log.d("debug_extra", "Arguments set");
         return fragment;
     }
 

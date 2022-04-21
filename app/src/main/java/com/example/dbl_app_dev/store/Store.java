@@ -51,7 +51,7 @@ public final class Store {
     }
 
     /**
-     * @return
+     * @return the next AccommodationInfo object in the Store
      */
     public static AccommodationInfo getNextAccommodation() throws Exception {
         // Refresh

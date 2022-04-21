@@ -78,7 +78,6 @@ public class FiltersDialogDisplayer extends DialogDisplayer {
         else {
             Store.setFilters(this.filters.getPriceLower(), this.filters.getPriceUpper());
             Toast.makeText(context, "Filters Saved!", Toast.LENGTH_SHORT).show();
-            Log.d("extra_debug", filters.toString());
             reset.run();
             dialog.dismiss();
         }

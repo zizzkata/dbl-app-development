@@ -40,8 +40,6 @@ public class ARGalleryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Log.d("extra_debug", "AR View Fragment Created");
-
         assert getArguments() != null;
         Bitmap image = getArguments().getParcelable("image");
         VrPanoramaView mVRPanoramaView = (VrPanoramaView) requireView().findViewById(R.id.vrPanoramaView);

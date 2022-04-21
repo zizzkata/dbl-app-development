@@ -20,6 +20,7 @@ import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.store.objects.AccommodationInfo;
 import com.example.dbl_app_dev.store.objects.User;
 import com.example.dbl_app_dev.util.AsyncWrapper;
+import com.example.dbl_app_dev.util.CardSwipeListener;
 import com.example.dbl_app_dev.util.Filters;
 import com.example.dbl_app_dev.util.SwipeHandler;
 import com.example.dbl_app_dev.util.adapters.ImageViewPagerAdapter;

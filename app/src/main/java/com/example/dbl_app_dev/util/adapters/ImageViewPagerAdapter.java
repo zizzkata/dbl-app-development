@@ -25,7 +25,6 @@ public class ImageViewPagerAdapter extends FragmentPagerAdapter {
         this.panoramicBitmap = panoramicBitmap;
         this.imageBitmaps = imageBitmaps;
         Log.d("extra_debug", "ImageViewPagerAdapter Created");
-        Log.d("test", ((Integer) imageBitmaps.size()).toString());
     }
 
     @Override
@@ -39,7 +38,6 @@ public class ImageViewPagerAdapter extends FragmentPagerAdapter {
         if (position == 0) {
             return ARGalleryFragment.newInstance(panoramicBitmap);
         } else {
-            Log.d("test", "creating new image fragment");
             return ImageGalleryFragment.newInstance(imageBitmaps.get(position - 1));
         }
     }
