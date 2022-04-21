@@ -29,9 +29,6 @@ import java.util.ArrayList;
 
 /**
  * Discovery page fragment, if the user is in "Tenant" mode
- * <p>
- * Use the {@link TenantDiscoverFragment #newInstance} factory method to
- * create an instance of this fragment.
  */
 public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     private GestureDetector horizontalSwipeDetector;
