@@ -153,7 +153,7 @@ public class MainNavigationActivity extends AppCompatActivity {
 
     public void logout() {
         Store.killStore();
-        startActivity(new Intent(this, LoginPage.class));
+        startActivity(new Intent(this, LoginActivity.class));
         finish();
     }
 

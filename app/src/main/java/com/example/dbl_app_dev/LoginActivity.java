@@ -9,14 +9,13 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.dbl_app_dev.network_communication.Authentication;
-import com.example.dbl_app_dev.network_communication.Database;
 import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.util.AsyncWrapper;
 import com.example.dbl_app_dev.util.view_validation.constants.Exceptions;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 
-public class LoginPage extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     // text boxes
     private EditText email;
@@ -50,10 +49,10 @@ public class LoginPage extends AppCompatActivity {
 
         init();
 
-        // Sign Up button leading to RegisterPage
+        // Sign Up button leading to RegisterActivity
         signUpTxt.setOnClickListener(view -> {
             setCredentialsWarning(false);
-            startActivity(new Intent(LoginPage.this, RegisterPage.class));
+            startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             overridePendingTransition(0, 0);
             finish();
         });
@@ -79,7 +78,7 @@ public class LoginPage extends AppCompatActivity {
         try {
             AuthResult res = Tasks.await(Authentication.firebaseLogin(email, password));
             runOnUiThread(() -> {
-                startActivity(new Intent(LoginPage.this, MainNavigationActivity.class));
+                startActivity(new Intent(LoginActivity.this, MainNavigationActivity.class));
                 overridePendingTransition(0, 0);
                 loginBtn.setEnabled(true);
                 finish();

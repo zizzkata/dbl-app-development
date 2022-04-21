@@ -237,7 +237,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        // Sign Up button leading to RegisterPage
+        // Sign Up button leading to RegisterActivity
         TextView logOutBtn = getView().findViewById(R.id.logoutBtn);
         logOutBtn.setOnClickListener(view1 -> {
             ((MainNavigationActivity) getActivity()).logoutDialog();

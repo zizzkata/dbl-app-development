@@ -4,6 +4,8 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
+import com.example.dbl_app_dev.util.SwipeHandler;
+
 class CardSwipeListener extends GestureDetector.SimpleOnGestureListener {
     static final int SWIPE_MIN_DISTANCE = 80;
     static final int SWIPE_THRESHOLD_VELOCITY = 100;

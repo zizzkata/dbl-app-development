@@ -15,10 +15,10 @@
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".RegisterPage"
+            android:name=".RegisterActivity"
             android:exported="true" />
         <activity
-            android:name=".LoginPage"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -16,12 +16,14 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
-import com.example.dbl_app_dev.network_communication.Database;
 import com.example.dbl_app_dev.store.Store;
 import com.example.dbl_app_dev.store.objects.AccommodationInfo;
 import com.example.dbl_app_dev.store.objects.User;
 import com.example.dbl_app_dev.util.AsyncWrapper;
 import com.example.dbl_app_dev.util.Filters;
+import com.example.dbl_app_dev.util.SwipeHandler;
+import com.example.dbl_app_dev.util.adapters.ImageViewPagerAdapter;
+import com.example.dbl_app_dev.util.VerticalViewPager;
 
 import java.util.ArrayList;
 

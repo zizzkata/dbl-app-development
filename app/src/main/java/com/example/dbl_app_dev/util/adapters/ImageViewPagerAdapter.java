@@ -1,4 +1,4 @@
-package com.example.dbl_app_dev;
+package com.example.dbl_app_dev.util.adapters;
 
 import android.graphics.Bitmap;
 import android.os.Parcelable;
@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
+
+import com.example.dbl_app_dev.ARGalleryFragment;
+import com.example.dbl_app_dev.ImageGalleryFragment;
 
 import java.util.ArrayList;
 

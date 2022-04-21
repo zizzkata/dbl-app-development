@@ -1,4 +1,4 @@
-package com.example.dbl_app_dev;
+package com.example.dbl_app_dev.store.objects;
 
 import android.graphics.Bitmap;
 

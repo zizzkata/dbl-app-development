@@ -1,4 +1,4 @@
-package com.example.dbl_app_dev;
+package com.example.dbl_app_dev.util;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

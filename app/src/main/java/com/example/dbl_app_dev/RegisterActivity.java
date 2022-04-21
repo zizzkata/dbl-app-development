@@ -20,7 +20,7 @@ import com.example.dbl_app_dev.util.view_validation.validators.*;
 
 import java.util.ArrayList;
 
-public class RegisterPage extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
     // text boxes
     private EditText email;
     private TextView emailWarning;
@@ -112,7 +112,7 @@ public class RegisterPage extends AppCompatActivity {
         init();
         makeWarningsInvisible();
 
-        // Log in button leading to LoginPage
+        // Log in button leading to LoginActivity
 
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,8 +130,8 @@ public class RegisterPage extends AppCompatActivity {
                         Log.d("isUsernameUnique", "unique");
                         Authentication.firebaseSignup(emailString, passwordString, usernameString);
                         runOnUiThread(() -> {
-                            startActivity(new Intent(RegisterPage.this,
-                                    LoginPage.class));
+                            startActivity(new Intent(RegisterActivity.this,
+                                    LoginActivity.class));
                             finish();
                         });
                     } catch (Exception e) {
@@ -154,8 +154,8 @@ public class RegisterPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 makeWarningsInvisible();
-                startActivity(new Intent(RegisterPage.this,
-                        LoginPage.class));
+                startActivity(new Intent(RegisterActivity.this,
+                        LoginActivity.class));
                 finish();
             }
         });
