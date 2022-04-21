@@ -47,8 +47,6 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     private TextView floorTxt;
     private TextView postcodeTxt;
     private TextView priceTxt;
-    private TextView accommTypeTxt;
-    private TextView utilitiesTxt;
     private TextView areaTxt;
     private TextView furnishedTxt;
     private TextView petsTxt;
@@ -60,16 +58,6 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
 
     public TenantDiscoverFragment() {
         /* Required empty public constructor */
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment tenantDiscoverFragment.
-     */
-    public static TenantDiscoverFragment newInstance() {
-        return new TenantDiscoverFragment();
     }
 
     @Override
@@ -96,8 +84,6 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         floorTxt = view.findViewById(R.id.floorTxt);
         postcodeTxt = view.findViewById(R.id.postcodeTxt);
         priceTxt = view.findViewById(R.id.priceTxt);
-        accommTypeTxt = view.findViewById(R.id.accommTypeTxt);
-        utilitiesTxt = view.findViewById(R.id.utilitiesTxt);
         areaTxt = view.findViewById(R.id.areaTxt);
         furnishedTxt = view.findViewById(R.id.furnishedTxt);
         petsTxt = view.findViewById(R.id.petsTxt);
@@ -127,18 +113,19 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         Button dislikeBtn = view.findViewById(R.id.negativeButton);
         Button arBtn = view.findViewById(R.id.arButton);
 
+        // like button has the same functionality as swiping right
         likeBtn.setOnClickListener(v -> {
             swipedRight();
             displayCard(true);
         });
+        // dislike button has the same functionality as swiping left
         dislikeBtn.setOnClickListener(v -> {
             swipedLeft();
             displayCard(true);
         });
         arBtn.setOnClickListener(v -> {
-            imageGalleryViewPager.setAdapter(verticalViewPagerAdapter);
-        });
-        arBtn.setOnClickListener(v -> {
+            // re-setting the adapter forces the ViewPager to show the first view again
+            // ( the first view is the AR view )
             imageGalleryViewPager.setAdapter(verticalViewPagerAdapter);
         });
 
@@ -169,7 +156,10 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     }
 
     /**
-     * Updates the information in currentAccommodationInfo and displays it
+     * @param nextCard given boolean value, dictates if currentAccommodationInfo will be updated,
+     *                 getting the next card from the Store object
+     * After updating (or not) the currentAccommodationInfo object, displays the information
+     *                 stored in that object on screen
      */
     private void displayCard(boolean nextCard) {
         AsyncWrapper.wrap(() -> {
@@ -192,11 +182,14 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
                     }
                     verticalViewPagerAdapter.setImageBitmaps(n);
                     verticalViewPagerAdapter.setPanoramicBitmap(pan);
+                    // force the viewPager to update its' views
                     verticalViewPagerAdapter.notifyChangeInPosition(n.size());
                     imageGalleryViewPager.getAdapter().notifyDataSetChanged();
                 });
             } catch (Exception e) {
                 e.printStackTrace();
+
+                // if an exception occurs, present the "no swipes left" card to the user
                 getActivity().runOnUiThread(() -> {
                     noSwipesContainer.setVisibility(View.VISIBLE);
                     contentContainer.setVisibility(View.INVISIBLE);
@@ -216,7 +209,6 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
             try {
                 Store.rateAccommodation(currentAccommodationInfo, (long) 1);
             } catch (Exception e) {
-                // TODO: toaster
                 Log.e("swipeRight", e.getMessage());
             }
         });
@@ -231,19 +223,21 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
             try {
                 Store.rateAccommodation(currentAccommodationInfo, (long) -1);
             } catch (Exception e) {
-                // TODO: toaster
                 Log.e("swipeLeft", e.getMessage());
             }
         });
     }
 
+    /**
+     * @param data given AccommodationInfo object to display on screen
+     * Modifies the TextView objects that represent the accommodation information
+     */
+    @SuppressLint("SetTextI18n")
     private void bindData(AccommodationInfo data) {
         addressTxt.setText(data.getAddress());
         postcodeTxt.setText("Postcode: " + data.getPostcode());
         floorTxt.setText("Floor: " + data.getFloor());
         priceTxt.setText("Rental price:  €" + data.getPrice().toString() + "p/m");
-//      TODO: accommTypeTxt.setText();
-//      TODO: utilitiesTxt.setText();
         areaTxt.setText("Surface area: " + data.getAreaString());
         furnishedTxt.setText("Is furnished: " + booleanToYesNo(data.getFurnished()));
         smokersTxt.setText("Accepts smokers: " + booleanToYesNo(data.getSmokers()));
@@ -254,6 +248,10 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         descriptionTxt.setText(data.getDescription());
     }
 
+    /**
+     * @param x given boolean value
+     * @return String "Yes" if boolean is true, "No" otherwise
+     */
     private String booleanToYesNo(boolean x) {
         return x ? "Yes" : "No";
     }
