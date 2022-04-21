@@ -40,7 +40,7 @@ public abstract class Database {
      * Get user's information
      *
      * @param username
-     * @return
+     * @return the user information corresponding to the input username
      */
     public static DocumentSnapshot getUserInformation(String username) throws Exception {
         return Tasks.await(FirebaseQueries.getUserInformation(username));
@@ -50,7 +50,7 @@ public abstract class Database {
      * Push data to a file.
      *
      * @param documentReference document to update
-     * @param data сdata to push
+     * @param data              сdata to push
      * @throws Exception
      */
     public static void pushData(DocumentReference documentReference, Map<String, Object> data)
@@ -60,32 +60,56 @@ public abstract class Database {
     }
 
 
-
     /**
-     *  IMAGE MANIPULATION
+     * IMAGE MANIPULATION
      */
 
 
-
+    /**
+     * Get a user's profile picture
+     *
+     * @param username
+     * @throws Exception
+     */
     public static Bitmap getUserImage(String username) throws Exception {
         byte[] byteArray = AsyncWrapper.wrap(FirebaseQueries.getUserImage(username));
         return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
     }
 
+    /**
+     * Get an accommodation's panoramic photo
+     *
+     * @param accommId
+     * @throws Exception
+     */
     public static Bitmap getPanoramicImage(String accommId) throws Exception {
         byte[] byteArray = AsyncWrapper.wrap(FirebaseQueries.getPanoramicImage(accommId));
         return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
     }
 
+    /**
+     * Change a user's profile photo
+     *
+     * @param username
+     * @param image
+     * @throws Exception
+     */
     public static void uploadProfilePic(String username, Bitmap image) throws Exception {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 60, stream);
         Tasks.await(FirebaseQueries.uploadUserProfile(username, stream.toByteArray()));
     }
 
+    /**
+     * Get all static images of an accommodation as byte arrays
+     *
+     * @param accommId
+     * @throws Exception
+     */
     public static ArrayList<byte[]> getStaticImages(String accommId) throws Exception {
-        List<StorageReference> listResult = AsyncWrapper.wrap(FirebaseQueries.getListStaticImages(accommId))
-                .getItems();
+        List<StorageReference> listResult =
+                AsyncWrapper.wrap(FirebaseQueries.getListStaticImages(accommId))
+                        .getItems();
         ArrayList<byte[]> byteImages = new ArrayList<>();
         for (StorageReference sr : listResult) {
             byteImages.add(AsyncWrapper.wrap(FirebaseQueries.getReference(sr)));
@@ -93,9 +117,16 @@ public abstract class Database {
         return byteImages;
     }
 
+    /**
+     * Get all static images of an accommodation as bitmaps
+     *
+     * @param accommId
+     * @throws Exception
+     */
     public static ArrayList<Bitmap> getStaticImagesBitmaps(String accommId) throws Exception {
-        List<StorageReference> listResult = AsyncWrapper.wrap(FirebaseQueries.getListStaticImages(accommId))
-                .getItems();
+        List<StorageReference> listResult =
+                AsyncWrapper.wrap(FirebaseQueries.getListStaticImages(accommId))
+                        .getItems();
         ArrayList<Bitmap> byteImages = new ArrayList<>();
         for (StorageReference sr : listResult) {
             byte[] arr = AsyncWrapper.wrap(FirebaseQueries.getReference(sr));
@@ -105,6 +136,7 @@ public abstract class Database {
     }
 
     /**
+     * Upload static images for an accommodation
      *
      * @param accommodationId
      * @param images
@@ -124,13 +156,21 @@ public abstract class Database {
         }
         ArrayList<UploadTask> tasks = FirebaseQueries
                 .uploadStaticImagesAccommodation(accommodationId, byteImages);
-        for(UploadTask task : tasks) {
+        for (UploadTask task : tasks) {
             Tasks.await(task);
         }
     }
 
+    /**
+     * Upload panoramic image of an accommodation
+     *
+     * @param accommodationId
+     * @param image
+     * @throws Exception
+     * @throws InvalidParameterException
+     */
     public static void uploadPanoramicImage(String accommodationId, Bitmap image) throws Exception
-        ,InvalidParameterException {
+            , InvalidParameterException {
         if (image == null)
             throw new InvalidParameterException("Image is null");
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -162,12 +202,15 @@ public abstract class Database {
                         , viewAccommodations.getDocuments());
         List<DocumentSnapshot> activeAccommodations = new ArrayList<>();
         if (accommodationIds.size() > 0) {
-            activeAccommodations  = Tasks.await(FirebaseQueries.getActiveAccommodations(accommodationIds
-                    , username, amount).get()).getDocuments();
+            activeAccommodations = Tasks.await(FirebaseQueries
+                    .getActiveAccommodations(accommodationIds
+                            , username, amount).get()).getDocuments();
         } else {
-            activeAccommodations = Tasks.await(FirebaseQueries.getActiveAccommodations(username, amount).get())
+            activeAccommodations = Tasks.await(FirebaseQueries
+                    .getActiveAccommodations(username, amount).get())
                     .getDocuments();
         }
+        // Remove accommodations that are not of the needed user
         activeAccommodations.removeIf(accomm -> accomm.get("owner_username") == username);
         return activeAccommodations;
     }
@@ -182,18 +225,20 @@ public abstract class Database {
                         , viewAccommodations.getDocuments());
         List<DocumentSnapshot> activeAccommodations = new ArrayList<>();
         if (accommodationIds.size() > 0) {
-            activeAccommodations  = Tasks.await(FirebaseQueries.getActiveAccommodations(accommodationIds
-                    , username, amount).get()).getDocuments();
+            activeAccommodations =
+                    Tasks.await(FirebaseQueries.getActiveAccommodations(accommodationIds,
+                            username, amount).get()).getDocuments();
         } else {
-            activeAccommodations = Tasks.await(FirebaseQueries.getActiveAccommodations(username, amount).get())
-                    .getDocuments();
+            activeAccommodations =
+                    Tasks.await(FirebaseQueries.getActiveAccommodations(username, amount).get())
+                            .getDocuments();
         }
+        // Remove each accommodation that does not adhere to the filters
         activeAccommodations.removeIf(accomm -> (accomm.get("owner_username") == username
                 || (Long) accomm.get("price") < min
                 || (Long) accomm.get("price") > max));
         return activeAccommodations;
     }
-
 
 
     public static AccommodationInfo getAccommodation(String accommodationId) throws Exception {
@@ -203,7 +248,8 @@ public abstract class Database {
 
     public static List<DocumentSnapshot> getActiveAccommodations(DocumentSnapshot lastDoc
             , int amount) throws Exception {
-        return Tasks.await(FirebaseQueries.getActiveAccommodations(lastDoc, amount).get()).getDocuments();
+        return Tasks.await(FirebaseQueries
+                .getActiveAccommodations(lastDoc, amount).get()).getDocuments();
     }
 
     public static List<DocumentSnapshot> getActiveAccommodations(Query filter, int amount)
@@ -221,31 +267,33 @@ public abstract class Database {
     }
 
     public static void updateUserInformation(String username, Map<String, Object> data)
-        throws Exception {
+            throws Exception {
         Tasks.await(FirebaseQueries.updateUserInfo(username, data));
     }
 
     @Deprecated
-    public static ArrayList<DocumentSnapshot> getLikedAccommodations(String username) throws Exception {
+    public static ArrayList<DocumentSnapshot> getLikedAccommodations(String username)
+            throws Exception {
         QuerySnapshot likedAccommodations = Tasks.await(
                 FirebaseQueries.getLikedAccommodations(username));
         ArrayList<DocumentSnapshot> accommodations = new ArrayList<>();
-        for(DocumentSnapshot rate : likedAccommodations.getDocuments()) {
-            //TODO add try/catch
+        for (DocumentSnapshot rate : likedAccommodations.getDocuments()) {
             accommodations.add(Tasks.await(FirebaseQueries.getAccommodation(
                     (String) rate.get("accommodation_id"))));
         }
         return accommodations;
     }
 
-    public static DocumentReference createRatingAccommodation(String accommodationId, String username
-            , String ownerUsername, Long rating) throws Exception {
+    public static DocumentReference createRatingAccommodation
+            (String accommodationId, String username, String ownerUsername, Long rating)
+            throws Exception {
         return Tasks.await(FirebaseQueries.createRatingOnAccommodation(accommodationId
                 , username, ownerUsername, rating));
     }
 
-    public static void updateRatingAccommodation(String ratingId, String accommodationId, String username
-            , String ownerUsername, Long tenantRating, Long landlordRating) throws Exception {
+    public static void updateRatingAccommodation(String ratingId, String accommodationId
+            , String username, String ownerUsername, Long tenantRating, Long landlordRating)
+            throws Exception {
         Tasks.await(FirebaseQueries.updateRatingOnAccommodation(ratingId, accommodationId
                 , username, ownerUsername, tenantRating, landlordRating));
     }
@@ -262,7 +310,8 @@ public abstract class Database {
         return Tasks.await(FirebaseQueries.createAccommodationListing(data));
     }
 
-    public static void updateAccommodation(String accommodationId, Map<String, Object> newData) throws Exception {
+    public static void updateAccommodation(String accommodationId, Map<String, Object> newData)
+            throws Exception {
         Tasks.await(FirebaseQueries.updateAccommodationListing(accommodationId, newData));
     }
 
@@ -280,8 +329,8 @@ public abstract class Database {
                     users.add(new User(user));
                 }
             } catch (Exception e) {
-                Log.e("getRatedTenants: invalid listing",e.getMessage());
-                // IGNORE
+                // Exception case (IGNORE)
+                Log.e("getRatedTenants: invalid listing", e.getMessage());
             }
         }
         return users;
@@ -306,10 +355,9 @@ public abstract class Database {
             // Only add active accommodations
             Rating r = new Rating(ds);
             if (r.getAccommodation().getActive()) {
-            ratings.add(r);
+                ratings.add(r);
             }
         }
-
         return ratings;
     }
 }
