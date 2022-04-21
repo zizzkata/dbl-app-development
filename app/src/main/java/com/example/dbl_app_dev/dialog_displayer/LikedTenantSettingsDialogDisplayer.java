@@ -21,6 +21,8 @@ public class LikedTenantSettingsDialogDisplayer extends DialogDisplayer {
 
     @Override
     protected void positiveFunctionality() {
+        // If the positive rating switch is "checked"
+        // then enable the positive rating container otherwise disable it
         if (((androidx.appcompat.widget.SwitchCompat)
                 myView.findViewById(R.id.showPositiveListingsSwitch)).isChecked()) {
             parentView.findViewById(R.id.positiveListingsContainer).setVisibility(View.VISIBLE);
@@ -28,6 +30,8 @@ public class LikedTenantSettingsDialogDisplayer extends DialogDisplayer {
             parentView.findViewById(R.id.positiveListingsContainer).setVisibility(View.GONE);
         }
 
+        // If the neutral rating switch is "checked"
+        // then enable the neutral rating container otherwise disable it
         if (((androidx.appcompat.widget.SwitchCompat)
                 myView.findViewById(R.id.showNeutralListingsSwitch)).isChecked()) {
             parentView.findViewById(R.id.neutralListingsContainer).setVisibility(View.VISIBLE);
@@ -35,6 +39,8 @@ public class LikedTenantSettingsDialogDisplayer extends DialogDisplayer {
             parentView.findViewById(R.id.neutralListingsContainer).setVisibility(View.GONE);
         }
 
+        // If the negative rating switch is "checked"
+        // then enable the negative rating container otherwise disable it
         if (((androidx.appcompat.widget.SwitchCompat)
                 myView.findViewById(R.id.showNegativeListingsSwitch12)).isChecked()) {
             parentView.findViewById(R.id.negativeListingsContainer).setVisibility(View.VISIBLE);

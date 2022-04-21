@@ -8,6 +8,7 @@ import android.view.View;
  * used to open popup dialog to view an existing accommodation.
  */
 public class ViewAccommDialogDisplayer extends DialogDisplayer {
+    // Accommodation object that is passed to the remove accommodation dialog
     View accommObject;
 
     public ViewAccommDialogDisplayer(Context context, int cancelId, int positiveId,
@@ -24,7 +25,8 @@ public class ViewAccommDialogDisplayer extends DialogDisplayer {
 
     @Override
     protected void positiveFunctionality() {
-        // If the remove listing button is pressed then close both dialogs and remove the listing
+        // If the remove listing button is pressed then open a remove accommodation dialog
+        // with this dialog and the accommodation object as parameters
         (new RemoveAccommDialogDisplayer(context, accommObject, dialog))
                 .displayPopupDialog();
     }

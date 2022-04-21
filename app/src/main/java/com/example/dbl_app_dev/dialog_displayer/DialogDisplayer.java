@@ -14,12 +14,19 @@ import com.example.dbl_app_dev.R;
  * to have a configurable way to create a dialog pop-up.
  */
 abstract class DialogDisplayer {
+    // The AlertDialog view and the context of the dialog
     public AlertDialog dialog;
     public Context context;
-    private final int cancelId; // set to -1 if it is not needed
-    private final int positiveId; // set to -1 if it is not needed
-    private final int negativeId; // set to -1 if it is not needed
-    public final View myView; // set to null if it is not needed
+
+    // Id's of all buttons in the dialog
+    // Each of them can be set to -1 if it is not needed or does not exist.
+    private final int cancelId;
+    private final int positiveId;
+    private final int negativeId;
+
+    // The pop-up view created by the dialog displayer
+    // Can be set to null if it is not needed
+    public final View myView;
 
     DialogDisplayer(Context context, int cancelId, int positiveId, int negativeId, View myView) {
         this.context = context;
@@ -31,7 +38,7 @@ abstract class DialogDisplayer {
 
     // Template method
     public AlertDialog displayPopupDialog() {
-        // Set-up dialog
+        // Set-up the dialog
         createDialog();
         setCancelable();
         setDialogProperties();
@@ -57,6 +64,7 @@ abstract class DialogDisplayer {
 
         additionalFunctionality();
 
+        // Return the dialog in case it is needed to modify specific functionalities
         return dialog;
     }
 
@@ -76,6 +84,8 @@ abstract class DialogDisplayer {
     }
 
     protected void setDialogProperties() {
+        // The dialog background is set to transparent
+        // and the animations to slide-in-left and -right by default
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.PopupDialogAnimation;
     }

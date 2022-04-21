@@ -12,8 +12,13 @@ import com.example.dbl_app_dev.R;
  * used to open popup dialog for removing a liked accommodation.
  */
 public class RemoveAccommDialogDisplayer extends DialogDisplayer {
+    // View to be removed if the Yes button is pressed
     View removedView;
+
+    // Other dialog to be dismissed if the Yes button is pressed
     AlertDialog otherDialog;
+
+    // Variables for the title and the body message of the dialog
     String title;
     String message;
 
@@ -25,6 +30,7 @@ public class RemoveAccommDialogDisplayer extends DialogDisplayer {
         this.otherDialog = null;
     }
 
+    // Constructor used when this dialog has been opened from another dialog
     public RemoveAccommDialogDisplayer(Context context, View removedView, AlertDialog otherDialog) {
         super(context, -1, -1, -1, null);
         this.removedView = removedView;
@@ -43,6 +49,9 @@ public class RemoveAccommDialogDisplayer extends DialogDisplayer {
                 (dialog, which) -> dialog.dismiss());
         dialog.setButton(dialog.BUTTON_NEGATIVE, "No",
                 (dialog, which) -> dialog.dismiss());
+
+        // Positive functionality to close all needed dialogs
+        // and set the visibility of the removed view to GONE
         dialog.setButton(dialog.BUTTON_POSITIVE, "Yes",
                 (dialog, which) -> {
                     Toast.makeText(context, "Listing Removed", Toast.LENGTH_SHORT).show();

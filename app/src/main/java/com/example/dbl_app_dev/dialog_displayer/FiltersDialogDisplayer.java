@@ -20,62 +20,87 @@ import com.example.dbl_app_dev.util.Filters;
  * used to open a filter pop-up for the Tenant discovery page
  */
 public class FiltersDialogDisplayer extends DialogDisplayer {
+    // Filters object to remember all current filters
     final Filters filters;
+
+    // Runnable reset object
     final Runnable reset;
 
     @SuppressLint("SetTextI18n")
     public FiltersDialogDisplayer(Context context,
-                                  int cancelId, int positiveId, int negativeId, View myView, Filters filters, Runnable reset) {
+                                  int cancelId, int positiveId, int negativeId,
+                                  View myView, Filters filters, Runnable reset) {
         super(context, cancelId, positiveId, negativeId, myView);
         this.filters = filters;
         this.reset = reset;
-        assert myView != null;
+
+        // Set default values for checkboxes and text fields.
         ((CheckBox) myView.findViewById(R.id.furnishedCheckBox)).setChecked(filters.isFurnished());
-        ((EditText) myView.findViewById(R.id.minPriceTxt)).setText(filters.getPriceLower().toString());
-        ((EditText) myView.findViewById(R.id.maxPriceTxt)).setText(filters.getPriceUpper().toString());
-        ((EditText) myView.findViewById(R.id.minMetersTxt)).setText(filters.getAreaLower().toString());
-        ((EditText) myView.findViewById(R.id.maxMetersTxt)).setText(filters.getAreaUpper().toString());
+        ((EditText) myView.findViewById(R.id.minPriceTxt))
+                .setText(filters.getPriceLower().toString());
+        ((EditText) myView.findViewById(R.id.maxPriceTxt))
+                .setText(filters.getPriceUpper().toString());
+        ((EditText) myView.findViewById(R.id.minMetersTxt))
+                .setText(filters.getAreaLower().toString());
+        ((EditText) myView.findViewById(R.id.maxMetersTxt))
+                .setText(filters.getAreaUpper().toString());
         ((EditText) myView.findViewById(R.id.cityTxt)).setText(filters.getCity());
     }
 
     @Override
     protected void positiveFunctionality() {
-        boolean valid = true;
+        // Set the city to be filtered
         this.filters.setCity(((EditText) myView.findViewById(R.id.cityTxt)).getText().toString());
-        this.filters.setFurnished(((CheckBox) myView.findViewById(R.id.furnishedCheckBox)).isChecked());
+
+        // Set furnished status to be filtered
+        this.filters.setFurnished(((CheckBox) myView
+                .findViewById(R.id.furnishedCheckBox)).isChecked());
+
+        // Set minimum price to be filtered
+        // if not specified set it to 0
         try {
-            this.filters.setPriceLower(Long.parseLong(((EditText) myView.findViewById(R.id.minPriceTxt)).getText().toString()));
+            this.filters.setPriceLower(Long.parseLong(((EditText) myView
+                    .findViewById(R.id.minPriceTxt)).getText().toString()));
         } catch (NumberFormatException e) {
             this.filters.setPriceLower(0L);
-            valid = false;
         }
+
+        // Set maximum price to be filtered
+        // if not specified set it to 0
         try {
-            this.filters.setPriceUpper(Long.parseLong(((EditText) myView.findViewById(R.id.maxPriceTxt)).getText().toString()));
+            this.filters.setPriceUpper(Long.parseLong(((EditText) myView
+                    .findViewById(R.id.maxPriceTxt)).getText().toString()));
         } catch (NumberFormatException e) {
             this.filters.setPriceUpper(0L);
-            valid = false;
         }
-        Log.i(this.filters.getPriceLower().toString(), "PriceTest");
+
+        // Set minimum area to be filtered
+        // if not specified set it to 0
         try {
-            this.filters.setAreaLower(Long.parseLong(((EditText) myView.findViewById(R.id.minMetersTxt)).getText().toString()));
+            this.filters.setAreaLower(Long.parseLong(((EditText) myView
+                    .findViewById(R.id.minMetersTxt)).getText().toString()));
         } catch (NumberFormatException e) {
             this.filters.setPriceLower(0L);
-            valid = false;
         }
+
+        // Set maximum area to be filtered
+        // if not specified set it to 0
         try {
-            this.filters.setAreaUpper(Long.parseLong(((EditText) myView.findViewById(R.id.maxMetersTxt)).getText().toString()));
+            this.filters.setAreaUpper(Long.parseLong(((EditText) myView
+                    .findViewById(R.id.maxMetersTxt)).getText().toString()));
         } catch (NumberFormatException e) {
             this.filters.setPriceUpper(0L);
-            valid = false;
         }
+
+        // If the minimum and maximum price have not been set then do not save the filters
+        // otherwise save the filters and dismiss the dialog
         if (((EditText) myView.findViewById(R.id.minPriceTxt)).getText().toString().equals("")
-    || ((EditText) myView.findViewById(R.id.maxPriceTxt)).getText().toString().equals("")) {
+                || ((EditText) myView.findViewById(R.id.maxPriceTxt))
+                .getText().toString().equals("")) {
             Toast.makeText(context, "Filters not saved.", Toast.LENGTH_LONG).show();
-            Log.d("extra_debug", "Filters not saved");
             Store.resetFilters();
             reset.run();
-        }
-        else {
+        } else {
             Store.setFilters(this.filters.getPriceLower(), this.filters.getPriceUpper());
             Toast.makeText(context, "Filters Saved!", Toast.LENGTH_SHORT).show();
             reset.run();

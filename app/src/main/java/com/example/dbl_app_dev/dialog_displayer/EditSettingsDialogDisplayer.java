@@ -10,8 +10,11 @@ import com.example.dbl_app_dev.R;
  * used to open popup dialog for logging out
  */
 public class EditSettingsDialogDisplayer extends DialogDisplayer {
+    // Variables for the title and the body message of the dialog
     String title;
     String message;
+
+    // MainActivity fragment object
     MainNavigationActivity mainNavigationActivity;
 
     public EditSettingsDialogDisplayer(Context context) {
@@ -28,6 +31,7 @@ public class EditSettingsDialogDisplayer extends DialogDisplayer {
         dialog.setTitle(title);
         dialog.setMessage(message);
 
+        // Open the settings when clicking the positive button of the dialog
         dialog.setButton(dialog.BUTTON_POSITIVE, "Edit Settings",
                 (dialog, which) -> {
                     mainNavigationActivity.openSettingsFragment();

@@ -11,8 +11,11 @@ import com.example.dbl_app_dev.R;
  * used to open popup dialog for logging out
  */
 public class LogoutDialogDisplayer extends DialogDisplayer {
+    // Variables for the title and the body message of the dialog
     String title;
     String message;
+
+    // MainActivity fragment object
     MainNavigationActivity mainNavigationActivity;
 
     public LogoutDialogDisplayer(Context context) {
@@ -30,6 +33,7 @@ public class LogoutDialogDisplayer extends DialogDisplayer {
         dialog.setMessage(message);
         dialog.setButton(dialog.BUTTON_NEUTRAL, "Cancel",
                 (dialog, which) -> dialog.dismiss());
+        // Set positive button functionality to log out of account
         dialog.setButton(dialog.BUTTON_POSITIVE, "Log out",
                 (dialog, which) -> {
                     Toast.makeText(context, "Logged Out", Toast.LENGTH_SHORT).show();
