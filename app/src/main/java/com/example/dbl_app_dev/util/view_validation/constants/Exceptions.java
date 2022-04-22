@@ -2,7 +2,11 @@ package com.example.dbl_app_dev.util.view_validation.constants;
 
 import java.util.HashMap;
 
+/**
+ * Class that holds String constants for common exceptions relating to the Firebase database
+ */
 public class Exceptions {
+    // Definition of all commonly thrown exceptions
     private final static String INVALID_USER = "com.google.firebase.auth.FirebaseAuthInvalidUserException: There is no user record corresponding to this identifier. The user may have been deleted.";
     private final static String INVALID_USER_MESSAGE = "* No such user exists. Please first sign-up";
     private final static String INVALID_PASSWORD = "com.google.firebase.auth.FirebaseAuthInvalidCredentialsException: The password is invalid or the user does not have a password.";
@@ -16,6 +20,10 @@ public class Exceptions {
     private final static String PERMISSION_DENIED = "com.google.firebase.firestore.FirebaseFirestoreException: PERMISSION_DENIED: Missing or insufficient permissions.";
     private final static String PERMISSION_DENIED_MESSAGE = "* Fatal error. Please contact the administrator.";
 
+    /**
+     * @param exception String representing the exception that was thrown
+     * @return String containing a more readable warning
+     */
     public static String getWarning(String exception) {
         HashMap<String, String> exceptionToWarning = new HashMap<>();
         exceptionToWarning.put(INVALID_USER, INVALID_USER_MESSAGE);
@@ -25,6 +33,8 @@ public class Exceptions {
         exceptionToWarning.put(NETWORK_ERROR, NETWORK_ERROR_MESSAGE);
         exceptionToWarning.put(PERMISSION_DENIED, PERMISSION_DENIED_MESSAGE);
 
+        // if exception is not part of the commonly thrown exceptions, do not covert it to a warning
+        // instead, return it as-is
         return exceptionToWarning.containsKey(exception) ? exceptionToWarning.get(exception) : exception;
     }
 }
