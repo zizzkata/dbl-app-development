@@ -8,6 +8,10 @@ import com.example.dbl_app_dev.util.view_validation.scenarios.TextPatternScenari
 
 import java.util.regex.Pattern;
 
+/**
+ * Class that checks validity of a username. Specifically, the username should be in-between 4 and 12
+ * (inclusive) characters long to be valid.
+ */
 public class UsernameValidator extends TextPatternValidator {
     public UsernameValidator(View toValidate, TextView warning) {
         super(toValidate, warning);

@@ -5,6 +5,9 @@ import android.widget.TextView;
 
 import java.util.regex.Pattern;
 
+/**
+ * Generic validator for TextViews. Inherit from this class when creating a new TextView validator.
+ */
 public abstract class TextPatternValidator extends ViewValidator {
 
     protected TextPatternValidator(View toValidate, TextView warning) {

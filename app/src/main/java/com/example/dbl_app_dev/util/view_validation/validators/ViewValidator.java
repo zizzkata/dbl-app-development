@@ -8,8 +8,17 @@ import com.example.dbl_app_dev.util.view_validation.scenarios.WarningScenario;
 import java.util.ArrayList;
 
 /**
- * class that is the superclass of all validators
- * inherit from this class if you want to create a new validator
+ * A ViewValidator is a class used to check whether a View is valid and the information it contains
+ * can be sent to the database. It is a class that contains an ArrayList of Scenarios.
+ * To check the validity of a view, a view validator shall be attached to said view, then the validate method
+ * shall be run, and finally validity of said view is updated. The validity of the view can be
+ * accessed via the isValid method. A view is valid if and only if all of the scenarios in the
+ * ArrayList return valid.
+ *
+ * For example, a password text box is valid if and only if the text inside contains at least
+ * one uppercase character, at least one digit, etc.
+ *
+ * This is the superclass of all validators. Inherit from this class if you want to create a new validator
  */
 public abstract class ViewValidator {
 

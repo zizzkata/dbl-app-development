@@ -7,8 +7,11 @@ import android.widget.TextView;
 import com.example.dbl_app_dev.network_communication.Authentication;
 
 /**
- * Class that explicitly handles the uniquess of the username, and returns a warning if the
- * server was not able to reply to the query
+ * Class that explicitly handles the uniquess of the username, and shows a textual warning if
+ * the username is not unique (already taken) in the database
+ *
+ * In case communication with firebase cannot be established, it shows a warning that the
+ * server could not be contacted (i.e. the phone is not connected to the internet)
  */
 public final class UsernameUniquenessScenario extends TextViewScenario {
 

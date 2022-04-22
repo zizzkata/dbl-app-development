@@ -5,6 +5,9 @@ import android.widget.TextView;
 
 import com.example.dbl_app_dev.util.view_validation.scenarios.UsernameUniquenessScenario;
 
+/**
+ * Class that checks if a username is unique in th database.
+ */
 public final class UsernameUniquenessValidator extends UsernameValidator {
     public UsernameUniquenessValidator(View toValidate, TextView warning){
         super(toValidate, warning);

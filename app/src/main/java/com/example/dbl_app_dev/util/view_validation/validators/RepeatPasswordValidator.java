@@ -5,7 +5,9 @@ import android.widget.TextView;
 
 import com.example.dbl_app_dev.util.view_validation.scenarios.TextMatchingScenario;
 
-
+/**
+ * Class that checks whether 2 passwords match (are the same).
+ */
 public final class RepeatPasswordValidator extends ViewValidator {
     public RepeatPasswordValidator(View repeatedPassword, View originalPassword, TextView warning) {
         super(repeatedPassword, warning);

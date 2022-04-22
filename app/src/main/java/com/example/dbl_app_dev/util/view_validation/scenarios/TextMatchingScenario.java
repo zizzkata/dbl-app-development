@@ -3,6 +3,10 @@ package com.example.dbl_app_dev.util.view_validation.scenarios;
 import android.view.View;
 import android.widget.TextView;
 
+/**
+ * Class that contains a text matching scenario, making sure that two given strings are the same,
+ * and setting the appropriate warning text if not
+ */
 public final class TextMatchingScenario extends TextViewScenario {
     private TextView textView;
 

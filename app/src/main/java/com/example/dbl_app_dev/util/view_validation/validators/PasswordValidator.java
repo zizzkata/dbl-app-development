@@ -7,6 +7,11 @@ import com.example.dbl_app_dev.util.view_validation.scenarios.TextPatternScenari
 
 import java.util.regex.Pattern;
 
+/**
+ * Class that checks validity of a password. Specifically, the password shall be at least 8 characters long,
+ * it shall contain at least a lowercase and at least an uppercase character, it shall contain at
+ * least one digit, and it shall contain at least one special character to be valid.
+ */
 public class PasswordValidator extends TextPatternValidator {
     public PasswordValidator(View toValidate, TextView warning) {
         super(toValidate, warning);

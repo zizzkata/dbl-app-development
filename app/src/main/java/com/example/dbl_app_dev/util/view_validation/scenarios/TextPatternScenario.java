@@ -5,6 +5,12 @@ import android.widget.TextView;
 
 import java.util.regex.Pattern;
 
+/**
+ * Class that contains a text pattern scenario, making sure that a string matches a certain pattern,
+ * and setting the appropriate warning text if not
+ *
+ * For example, this scenario can be used to check if a string contains at least 1 uppercase character
+ */
 public final class TextPatternScenario extends TextViewScenario {
     private Pattern pattern;
 
