@@ -58,15 +58,6 @@ public abstract class FirebaseQueries {
             .getReference("accommodations_static");
 
     /**
-     * Get batch job from Firestore
-     *
-     * @return Batch
-     */
-    public static WriteBatch getBatch() {
-        return fireStore.batch();
-    }
-
-    /**
      * Returns a transaction encapsulation
      *
      * @param function
@@ -98,19 +89,6 @@ public abstract class FirebaseQueries {
     public static Task<DocumentSnapshot> getUserInformation(String username) {
         Log.d("getUserByUsername", "Username: " + username);
         return users.document(username).get();
-    }
-
-    /**
-     * Update personal information
-     *
-     * @param username
-     * @param data
-     * @return Task<Void>
-     * @pre user needs to be authenticated
-     */
-    public static Task updateUserInformation(String username, @NonNull Map data) {
-        Log.d("updateUserInformation", "Username: " + username);
-        return users.document(username).update(data);
     }
 
     /**
@@ -222,15 +200,6 @@ public abstract class FirebaseQueries {
     }
 
     /**
-     * @param accommodationId
-     * @param imageBytes
-     * @return
-     */
-    public static UploadTask uploadPanoramicImage(String accommodationId, byte[] imageBytes) {
-        return panoramicImages.child(accommodationId + ".jpg").putBytes(imageBytes);
-    }
-
-    /**
      * @param lastDocument
      * @param amount
      * @return
@@ -238,25 +207,6 @@ public abstract class FirebaseQueries {
     public static Query getActiveAccommodations(DocumentSnapshot lastDocument, int amount) {
         return accommodations.startAfter(lastDocument).whereEqualTo("active", true)
                 .limit(amount);
-    }
-
-    /**
-     *
-     * @param lastDocument
-     * @return
-     */
-    public static Query getActiveAccommodations(DocumentSnapshot lastDocument) {
-        return accommodations.startAfter(lastDocument).whereEqualTo("active", true);
-    }
-
-    ///public static Query
-
-    /**
-     *
-     * @return
-     */
-    public static Query getActiveAccommodations() {
-        return accommodations.whereEqualTo("active", true);
     }
 
     /**
@@ -276,54 +226,10 @@ public abstract class FirebaseQueries {
                 .limit(amount);
     }
 
-    public static Query getActiveAccommodationsWithinPriceMargin(ArrayList<String> exclude
-            , String ownerUsername, int amount, Long min, Long max) {
-        return accommodations.whereEqualTo("active", true)
-                .whereGreaterThanOrEqualTo("price", min)
-                .whereLessThanOrEqualTo("price", max)
-                //.whereNotEqualTo("owner_username", ownerUsername) // cannot do multiple inequality queries
-                .whereNotIn("__name__", exclude)
-                .limit(amount);
-    }
-
     public static Query getActiveAccommodations(String ownerUsername, int amount) {
         return accommodations.whereEqualTo("active", true)
                 .whereNotEqualTo("owner_username", ownerUsername)
                 .limit(amount);
-    }
-
-    public static Query getActiveAccommodationsWithinPriceMargin(String ownerUsername
-            , int amount, Long min, Long max) {
-        return accommodations.whereEqualTo("active", true)
-                .whereNotEqualTo("owner_username", ownerUsername)
-                .whereGreaterThanOrEqualTo("price", min)
-                .whereLessThanOrEqualTo("price", max)
-                .limit(amount);
-    }
-
-    /**
-     *
-     * @param min
-     * @param max
-     * @return
-     */
-    public static Query filterByPrice(int min, int max) {
-        return getActiveAccommodations()
-                .whereGreaterThanOrEqualTo("price", min)
-                .whereLessThanOrEqualTo("price", max);
-    }
-
-    /**
-     *
-     * @param lastDoc
-     * @param min
-     * @param max
-     * @return
-     */
-    public static Query filterByPrice(DocumentSnapshot lastDoc, int min, int max) {
-        return getActiveAccommodations(lastDoc)
-                .whereGreaterThanOrEqualTo("price", min)
-                .whereLessThanOrEqualTo("price", max);
     }
 
     /**
@@ -428,15 +334,6 @@ public abstract class FirebaseQueries {
      */
     public static Task<DocumentReference> createAccommodationListing(Map<String, Object> newData) {
         return accommodations.add(newData);
-    }
-
-    /**
-     *
-     * @param ownerUsername
-     * @return
-     */
-    public static Task<QuerySnapshot> getTenants(String ownerUsername) {
-        return ratedAccommodations.whereEqualTo("owner_username", ownerUsername).get();
     }
 
     /**
