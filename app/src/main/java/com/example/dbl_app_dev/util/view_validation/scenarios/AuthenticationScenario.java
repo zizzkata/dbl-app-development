@@ -11,6 +11,10 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * Class that contains an authentication scenario, making sure that the provided
+ * credentials are correct, and setting the appropriate warning text if not
+ */
 public final class AuthenticationScenario extends TextViewScenario {
     private TextView password;
 

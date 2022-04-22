@@ -6,10 +6,11 @@ import android.widget.TextView;
 
 import com.example.dbl_app_dev.network_communication.Authentication;
 
+/**
+ * Class that explicitly handles the uniquess of the username, and returns a warning if the
+ * server was not able to reply to the query
+ */
 public final class UsernameUniquenessScenario extends TextViewScenario {
-
-    // To be used if server cannot be queried for username uniqueness
-    private final String NETWORK_ERROR = "* Error contacting the server";
 
     public UsernameUniquenessScenario(String warning) {
         super(warning);
@@ -21,7 +22,8 @@ public final class UsernameUniquenessScenario extends TextViewScenario {
             return Authentication.isUsernameUnique(textViewToString((TextView)
                     view));
         } catch (Exception e) {
-            super.warningText = NETWORK_ERROR;
+            // To be used if server cannot be queried for username uniqueness
+            super.warningText = "* Error contacting the server";
             Log.e("isUsernameUnique", e.getMessage());
         }
         return false;
