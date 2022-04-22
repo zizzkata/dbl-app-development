@@ -19,12 +19,14 @@
         android:id="@+id/tenantDiscoverFragment"
         android:name="com.example.dbl_app_dev.TenantDiscoverFragment"
         android:label="fragment_second"
-        tools:layout="@layout/fragment_tenant_discover" />
+        tools:layout="@layout/fragment_tenant_discover"
+        android:configChanges="orientation|screenSize|keyboardHidden" />
     <fragment
         android:id="@+id/landlordDiscoverFragment"
         android:name="com.example.dbl_app_dev.LandlordDiscoverFragment"
         android:label="fragment_landlord_discover"
-        tools:layout="@layout/fragment_landlord_discover" />
+        tools:layout="@layout/fragment_landlord_discover"
+        android:configChanges="orientation|screenSize|keyboardHidden" />
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.dbl_app_dev.SettingsFragment"

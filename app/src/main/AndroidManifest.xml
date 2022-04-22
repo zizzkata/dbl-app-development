@@ -13,7 +13,8 @@
         <activity
             android:name=".MainNavigationActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity
             android:name=".RegisterActivity"
             android:exported="true" />
