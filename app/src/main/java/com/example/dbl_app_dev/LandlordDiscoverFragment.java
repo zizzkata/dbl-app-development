@@ -17,23 +17,16 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.dbl_app_dev.store.Store;
-import com.example.dbl_app_dev.store.objects.TenantInfo;
 import com.example.dbl_app_dev.store.objects.User;
 import com.example.dbl_app_dev.util.AsyncWrapper;
 import com.example.dbl_app_dev.util.CardSwipeListener;
 import com.example.dbl_app_dev.util.SwipeHandler;
 
-import java.util.LinkedList;
-
 /**
  * Discovery page fragment, if the user is in "Landlord" mode
- * <p>
- * Use the {@link LandlordDiscoverFragment #newInstance} factory method to
- * create an instance of this fragment.
  */
 public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
 
-    private LinkedList<TenantInfo> tenantInfo;
     private GestureDetector swipeListener;
     private User currentTenantInfo; // currently viewed tenant
     ConstraintLayout noSwipesContainer;
@@ -55,9 +48,6 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Will probably remove this
-        // tenantInfo = new LinkedList<>();
-        // pullCardsInfo(10);
     }
 
     @Override
@@ -74,18 +64,6 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
 
         ConstraintLayout topCard = view.findViewById(R.id.topCard);
 
-        /*
-         * ArrayList<TextView> cardTextViews = new ArrayList<>();
-         * cardTextViews.add(view.findViewById(R.id.nameTxt));
-         * cardTextViews.add(view.findViewById(R.id.emailTxt));
-         * cardTextViews.add(view.findViewById(R.id.phoneNumberTxt));
-         * cardTextViews.add(view.findViewById(R.id.petsTxt));
-         * cardTextViews.add(view.findViewById(R.id.smokerTxt));
-         * cardTextViews.add(view.findViewById(R.id.descriptionTxt));
-         * cardTextViews.add(view.findViewById(R.id.genderTxt));
-         * cardTextViews.add(view.findViewById(R.id.descriptionTxt));
-         */
-
         nameTxt = view.findViewById(R.id.nameTxt);
         emailTxt = view.findViewById(R.id.emailTxt);
         genderTxt = view.findViewById(R.id.genderTxt);
@@ -99,13 +77,6 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         contentContainer = view.findViewById(R.id.contentContainer);
         noSwipesContainer.setVisibility(View.INVISIBLE);
         contentContainer.setVisibility(View.VISIBLE);
-
-        // makes sure that the a card is not discarded if it is not rated
-        // if (currentTenantInfo == null) {
-        // nextCard(cardTextViews, imageView);
-        // } else {
-        // displayCard(cardTextViews, imageView);
-        // }
 
         this.swipeListener = new GestureDetector(getContext(),
                 new CardSwipeListener(this, true, true));
@@ -142,16 +113,6 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
      * Displays the information stored in currentAccommodationInfo
      */
     private void displayCard(boolean nextCard) {
-        /*
-         * ArrayList<String> cardStrings = currentTenantInfo.getFormattedText();
-         * 
-         * assert (cardStrings.size() == cardTextViews.size()) :
-         * "Incorrect size of tenant info strings";
-         * for (int i = 0; i < cardStrings.size(); i++) {
-         * cardTextViews.get(i).setText(cardStrings.get(i));
-         * }
-         * cardImage.setImageBitmap(currentTenantInfo.getPhoto());
-         */
         AsyncWrapper.wrap(() -> {
             try {
                 if (nextCard) {
@@ -174,59 +135,12 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         });
     }
 
-    /*
-     * private void nextCard(ArrayList<TextView> cardTitle, ImageView cardImage) {
-     * if (tenantInfo.size() > 0) {
-     * currentTenantInfo = this.tenantInfo.remove();
-     * displayCard(cardTitle, cardImage);
-     * } else {
-     * // no more swipes left
-     * currentTenantInfo = null;
-     * noSwipesContainer.setVisibility(View.VISIBLE);
-     * contentContainer.setVisibility(View.INVISIBLE);
-     * }
-     * }
-     */
-
-    /**
-     * Pulls tenant data from server, adds it to tenantInfo
-     *
-     * @param batchSize number of cards to add to the tenantInfo queue
-     */
-    /*
-     * private void pullCardsInfo(int batchSize) {
-     * AsyncWrapper.wrap(() -> {
-     * try {
-     * User currentUser = Store.getCurrentUser();
-     * ArrayList<User> ratedTenants =
-     * Database.getRatedTenants(currentUser.getUsername());
-     * for (User tenant : ratedTenants) {
-     * Bitmap currentImage = tenant.getProfilePic();
-     * String[] tenantData = new String[6];
-     * tenantData[0] = tenant.getFirstName() + " " + tenant.getLastName();
-     * tenantData[1] = tenant.getAge();
-     * tenantData[2] = "woagawkgwoagwogkaw";
-     * tenantData[3] = "woagawkgwoagwogkaw";
-     * tenantData[4] = "woagawkgwoagwogkaw";
-     * tenantData[5] = "woagawkgwoagwogkaw";
-     * tenantInfo.add(new TenantInfo(new ArrayList<>(Arrays.asList(tenantData)),
-     * currentImage));
-     * }
-     * } catch (Exception e) {
-     * Log.i("Port user to discovery component", e.getMessage());
-     * }
-     * });
-     * }
-     */
-
     /**
      * POST's the positive rating given to the viewed tenant to the backend
      */
     @Override
     public void swipedRight() {
-        // if (tenantInfo.size() > 0) {
         Log.i("extra_debug", "Positive Rating");
-        // }
     }
 
     /**
@@ -234,9 +148,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
      */
     @Override
     public void swipedLeft() {
-        // if (tenantInfo.size() > 0) {
         Log.i("extra_debug", "Negative Rating");
-        // }
     }
 
     /**
@@ -244,9 +156,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
      */
     @Override
     public void swipedDown() {
-        // if (tenantInfo.size() > 0) {
         Log.i("extra_debug", "Neutral Rating");
-        // }
     }
 
     public void bindData(User data) {
