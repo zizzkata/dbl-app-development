@@ -48,5 +48,8 @@ All merges to main go through your Scrum master - @zizzkata.
 ### Release
 Versioning should comply with these rules: https://semver.org/spec/v2.0.0.html
 
+### 3rd party sources:
+Firebase
+google.vr panowidget
 
 ## Collaborators - Group 03
