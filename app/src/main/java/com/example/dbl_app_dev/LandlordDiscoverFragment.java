@@ -26,12 +26,17 @@ import com.example.dbl_app_dev.util.SwipeHandler;
  * Discovery page fragment, if the user is in "Landlord" mode
  */
 public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
-
     private GestureDetector swipeListener;
-    private User currentTenantInfo; // currently viewed tenant
-    ConstraintLayout noSwipesContainer;
-    ConstraintLayout contentContainer;
 
+    // Currently viewed tenant
+    private User currentTenantInfo;
+
+    // Container views holding the tenant's information
+    // and the "np more swipes" fragment
+    ConstraintLayout contentContainer;
+    ConstraintLayout noSwipesContainer;
+
+    // Tenant details views
     private TextView nameTxt;
     private TextView emailTxt;
     private TextView phoneNumberTxt;
@@ -62,8 +67,8 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Get the needed views
         ConstraintLayout topCard = view.findViewById(R.id.topCard);
-
         nameTxt = view.findViewById(R.id.nameTxt);
         emailTxt = view.findViewById(R.id.emailTxt);
         genderTxt = view.findViewById(R.id.genderTxt);
@@ -73,11 +78,14 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         descriptionTxt = view.findViewById(R.id.descriptionTxt);
         imageView = view.findViewById(R.id.tenantPicture);
 
+        // Get the container views and set their visibility
+        // Initially the "no swipes" container is set to invisible
         noSwipesContainer = view.findViewById(R.id.noSwipesContainer);
         contentContainer = view.findViewById(R.id.contentContainer);
         noSwipesContainer.setVisibility(View.INVISIBLE);
         contentContainer.setVisibility(View.VISIBLE);
 
+        // Add swipe gesture detection
         this.swipeListener = new GestureDetector(getContext(),
                 new CardSwipeListener(this, true, true));
         topCard.setOnTouchListener((v, event) -> {
@@ -88,25 +96,29 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
             return true;
         });
 
+        // Get buttons
         Button likeBtn = view.findViewById(R.id.positiveButton);
         Button dislikeBtn = view.findViewById(R.id.negativeButton);
         Button neutralBtn = view.findViewById(R.id.neutralButton);
 
+        // like button has the same functionality as swiping right
         likeBtn.setOnClickListener(v -> {
             swipedRight();
             displayCard(true);
         });
+        // dislike button has the same functionality as swiping left
         dislikeBtn.setOnClickListener(v -> {
             swipedLeft();
             displayCard(true);
         });
+        // neutral button has the same functionality as swiping down
         neutralBtn.setOnClickListener(v -> {
             swipedDown();
             displayCard(true);
         });
 
+        // makes sure that the a card is not discarded if it is not rated
         displayCard(currentTenantInfo == null);
-
     }
 
     /**
@@ -116,9 +128,11 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         AsyncWrapper.wrap(() -> {
             try {
                 if (nextCard) {
+                    // get the next available tenant
                     currentTenantInfo = Store.getUserToBeRated();
                 }
                 getActivity().runOnUiThread(() -> {
+                    // display the data making sure the correct containers are visible
                     noSwipesContainer.setVisibility(View.INVISIBLE);
                     contentContainer.setVisibility(View.VISIBLE);
                     bindData(currentTenantInfo);
@@ -126,6 +140,7 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
 
             } catch (Exception e) {
                 e.printStackTrace();
+                // if an exception occurs, present the "no swipes left" card to the user
                 getActivity().runOnUiThread(() -> {
                     noSwipesContainer.setVisibility(View.VISIBLE);
                     contentContainer.setVisibility(View.INVISIBLE);
@@ -159,6 +174,12 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         Log.i("extra_debug", "Neutral Rating");
     }
 
+    /**
+     * Displays the tenant data on the screen
+     *
+     * @param data given User object to display on screen
+     * @modifies the TextView objects that represent the tenant information
+     */
     public void bindData(User data) {
         nameTxt.setText(data.getFirstName() + " " + data.getLastName());
         emailTxt.setText("Username: " + data.getUsername());
@@ -170,6 +191,12 @@ public class LandlordDiscoverFragment extends Fragment implements SwipeHandler {
         imageView.setImageBitmap(data.getProfilePic());
     }
 
+    /**
+     * Converts a boolean to a "Yes" or "No" String
+     *
+     * @param x given boolean value
+     * @return String "Yes" if boolean is true, "No" otherwise
+     */
     private String booleanToYesNo(boolean x) {
         if (x) {
             return "Yes";

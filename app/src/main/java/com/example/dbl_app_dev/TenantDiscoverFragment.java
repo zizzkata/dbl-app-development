@@ -33,11 +33,16 @@ import java.util.ArrayList;
  */
 public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     private GestureDetector horizontalSwipeDetector;
-    private AccommodationInfo currentAccommodationInfo; // currently viewed accommodation
     VerticalViewPager imageGalleryViewPager;
-    ConstraintLayout noSwipesContainer;
-    ConstraintLayout contentContainer;
     ImageViewPagerAdapter verticalViewPagerAdapter;
+
+    // Currently viewed accommodation
+    private AccommodationInfo currentAccommodationInfo;
+
+    // Container views holding the tenant's information
+    // and the "np more swipes" fragment
+    ConstraintLayout contentContainer;
+    ConstraintLayout noSwipesContainer;
 
     // Filters object
     private Filters filters;
@@ -97,7 +102,7 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         // Get the image gallery view pager
         imageGalleryViewPager = view.findViewById(R.id.accommodationImageScroller);
 
-        // Get container views and set their visibility
+        // Get the container views and set their visibility
         // Initially the "no swipes" container is set to invisible
         noSwipesContainer = view.findViewById(R.id.noSwipesContainer);
         contentContainer = view.findViewById(R.id.contentContainer);
@@ -175,13 +180,16 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
         AsyncWrapper.wrap(() -> {
             try {
                 if (nextCard) {
+                    // get the next available accommodation
                     currentAccommodationInfo = Store.getNextAccommodation();
                 }
                 getActivity().runOnUiThread(() -> {
+                    // display the data making sure the correct containers are visible
                     noSwipesContainer.setVisibility(View.INVISIBLE);
                     contentContainer.setVisibility(View.VISIBLE);
                     bindData(currentAccommodationInfo);
                 });
+                // get the images of the accommodation
                 Bitmap pan = currentAccommodationInfo.getPhotoPanoramic();
                 ArrayList<Bitmap> n = currentAccommodationInfo.getPhotos();
                 getActivity().runOnUiThread(() -> {
@@ -241,8 +249,10 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     }
 
     /**
+     * Displays the accommodation data on the screen
+     *
      * @param data given AccommodationInfo object to display on screen
-     * Modifies the TextView objects that represent the accommodation information
+     * @modifies the TextView objects that represent the accommodation information
      */
     @SuppressLint("SetTextI18n")
     private void bindData(AccommodationInfo data) {
@@ -261,6 +271,8 @@ public class TenantDiscoverFragment extends Fragment implements SwipeHandler {
     }
 
     /**
+     * Converts a boolean to a "Yes" or "No" String
+     *
      * @param x given boolean value
      * @return String "Yes" if boolean is true, "No" otherwise
      */
