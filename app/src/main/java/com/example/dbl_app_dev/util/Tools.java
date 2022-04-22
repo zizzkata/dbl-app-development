@@ -7,7 +7,15 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Defines a number of useful, general-purpose static methods
+ */
 public class Tools {
+    /**
+     * @param image a given bitmap to be resized
+     * @param maxSize the maximum size (in pixels) that the largest 'edge' of the bitmap can have
+     * @return the same bitmap, resized to have its' longest side == maxSize
+     */
     public static Bitmap getResizedBitmap(Bitmap image, int maxSize) {
         int width = image.getWidth();
         int height = image.getHeight();
@@ -23,17 +31,11 @@ public class Tools {
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
-    public static ArrayList<Object> getListParameterFromCollection(String param
-            , ArrayList<DocumentSnapshot> documentSnapshots) {
-        ArrayList<Object> arrayList = new ArrayList<>();
-        for (DocumentSnapshot ds : documentSnapshots) {
-            if (ds.contains(param)) {
-                arrayList.add(ds.get(param));
-            }
-        }
-        return arrayList;
-    }
-
+    /**
+     * @param param a given parameter
+     * @param documentSnapshots a list of DocumentSnapshot objects
+     * @return an arraylist
+     */
     public static <U> ArrayList<U> getListParameterFromCollection(String param
             , List<DocumentSnapshot> documentSnapshots) {
         ArrayList<U> arrayList = new ArrayList<>();

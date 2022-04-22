@@ -37,10 +37,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link LandlordAccommodationManagementFragment#newInstance} factory
- * method to
- * create an instance of this fragment.
+ * Class that handles the logic for the 'Accommodation Management' fragment, which is accessible
+ * when the user is in 'Landlord' mode
  */
 public class LandlordAccommodationManagementFragment extends Fragment {
 
@@ -66,18 +64,6 @@ public class LandlordAccommodationManagementFragment extends Fragment {
 
     public LandlordAccommodationManagementFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     */
-    public static LandlordAccommodationManagementFragment newInstance() {
-        LandlordAccommodationManagementFragment fragment =
-                new LandlordAccommodationManagementFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -297,6 +283,11 @@ public class LandlordAccommodationManagementFragment extends Fragment {
         }
     }
 
+    /**
+     * Due to the dynamic nature of this page, the number of buttons (and therefore of listeners)
+     * is variable, therefore this function dynamically assigns the functionality of all 'Edit'
+     * buttons
+     */
     private void addAllEditButtonsFunctionality() {
         for (TenantAccommodationObject a : myListingsObjects) {
             a.compactView.findViewById(R.id.settingsIcon).setOnClickListener(view1 -> {
@@ -311,6 +302,14 @@ public class LandlordAccommodationManagementFragment extends Fragment {
         }
     }
 
+    /**
+     * Updates the information in the given dialog, changing it from the default values.
+     * The new information displayed in the AlertDialog is taken from a given object that holds
+     * the necessary information
+     *
+     * @param ad given AlertDialog
+     * @param a given TennatAccommodationObject
+     */
     private void setDialogInfo(AlertDialog ad, TenantAccommodationObject a) {
         AccommodationInfo listing = a.accommodationInfo;
         AsyncWrapper.wrap(() -> {
@@ -373,7 +372,6 @@ public class LandlordAccommodationManagementFragment extends Fragment {
         ((CheckBox) ad.findViewById(R.id.smokerCheckBox)).setChecked(listing.getSmokers());
         ((CheckBox) ad.findViewById(R.id.petsCheckBox)).setChecked(listing.getPets());
 
-        // TODO also update images
         ad.findViewById(R.id.saveBtn).setOnClickListener(view1 -> {
             if (!isAccommodationValid(ad)) {
                 return;
@@ -401,9 +399,15 @@ public class LandlordAccommodationManagementFragment extends Fragment {
         });
     }
 
+    /**
+     * Updates the accommodation details in the AcommodationInfo object to match those in
+     * the AlertDialog. Therefore this function is the inverse of the (#setDialogInfo) function
+     *
+     * @param ad a given AlertDialog
+     * @param listing information on an accommodation
+     */
     private void updateAccommodationDetails(AlertDialog ad, AccommodationInfo listing) {
         listing.setAddress(((TextView) ad.findViewById(R.id.addressTxt)).getText().toString());
-
         listing.setCity(((TextView) ad.findViewById(R.id.cityTxt)).getText().toString());
         listing.setDescription1(((TextView) ad
                 .findViewById(R.id.descriptionTxt)).getText().toString());
@@ -438,28 +442,6 @@ public class LandlordAccommodationManagementFragment extends Fragment {
         listing.setStaticPhotos(photos);
     }
 
-    private Map<String, Object> transformAccommodation(AccommodationInfo listing) {
-        Map<String, Object> transformedData = new HashMap<>();
-        transformedData.put("address", listing.getAddress());
-        transformedData.put("active", listing.getActive());
-        transformedData.put("city", listing.getCity());
-        transformedData.put("currency", listing.getCurrency());
-        transformedData.put("description", listing.getDescription());
-        transformedData.put("end_date", listing.getAvailableUntil());
-        transformedData.put("floor", listing.getFloor());
-        transformedData.put("furnished", listing.getFurnished());
-        transformedData.put("house_number", listing.getHouseNumber());
-        transformedData.put("minimum_rent_period", listing.getMinimumPeriod());
-        transformedData.put("owner_username", listing.getOwnerUsername());
-        transformedData.put("pets", listing.getPets());
-        transformedData.put("post_code", listing.getPostcode());
-        transformedData.put("price", listing.getPrice());
-        transformedData.put("size_m2", listing.getArea());
-        transformedData.put("smokers", listing.getSmokers());
-        transformedData.put("start_date", listing.getAvailableFrom());
-        return transformedData;
-    }
-
     class TenantAccommodationObject {
         View compactView;
         AccommodationInfo accommodationInfo;
@@ -474,6 +456,11 @@ public class LandlordAccommodationManagementFragment extends Fragment {
         }
     }
 
+    /**
+     * Sets the current dialog to a given AlertDialog
+     *
+     * @param ad a given AlertDialog
+     */
     private void setCurrentDialog(AlertDialog ad) {
         this.currDialog = ad;
     }
@@ -503,6 +490,10 @@ public class LandlordAccommodationManagementFragment extends Fragment {
         });
     }
 
+    /**
+     * @param ad the AlertDialog object that contains the information of the created accommodation
+     * @return whether the created accommodation is valid
+     */
     private boolean isAccommodationValid(AlertDialog ad) {
         // list of all validator objects
         ArrayList<ViewValidator> validators = new ArrayList<>();
@@ -512,6 +503,7 @@ public class LandlordAccommodationManagementFragment extends Fragment {
         TextView panoramaWarning = ad.findViewById(R.id.panoramaWarning);
         TextView imageWarning = ad.findViewById(R.id.imageWarning);
 
+        // add concrete validator objects to the list of validators
         validators.add(new ImageValidator(panorama, panoramaWarning));
         validators.add(new ImageValidator(image, imageWarning));
 
@@ -529,7 +521,7 @@ public class LandlordAccommodationManagementFragment extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (data == null) {

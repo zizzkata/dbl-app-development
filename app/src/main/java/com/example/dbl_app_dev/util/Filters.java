@@ -12,12 +12,19 @@ import com.example.dbl_app_dev.store.objects.AccommodationInfo;
  */
 public class Filters {
     private boolean isFurnished;
+    // represents the upper bound of the price filter
     private Long priceUpper;
+    // represents the lower bound of the price filter
     private Long priceLower;
+    // the upper bound of the area filter
     private Long areaUpper;
+    // the lower bound of the area filter
     private Long areaLower;
     private String city;
 
+    /**
+     * Default constructor for this class, initializes all variables to sensible values
+     */
     public Filters() {
         this.isFurnished = false;
         this.priceUpper = 9999L;
@@ -40,23 +47,25 @@ public class Filters {
         if (accommodation.getFurnished() && !isFurnished) return false;
         if (!(priceLower < price && price < priceUpper)) return false;
         if (!(areaLower < area && area < areaUpper)) return false;
-        if (!(city.equalsIgnoreCase(accommodation.getCity()))) return false;
-
-        return true;
+        return city.equalsIgnoreCase(accommodation.getCity());
     }
 
+    // getter for isFurnished
     public boolean isFurnished() {
         return isFurnished;
     }
 
+    // setter for isFurnished
     public void setFurnished(boolean furnished) {
         isFurnished = furnished;
     }
 
+    // setter for PriceUpper
     public void setPriceUpper(Long priceUpper) {
         this.priceUpper = priceUpper;
     }
 
+    // setter for PriceLower
     public void setPriceLower(Long priceLower) {
         this.priceLower = priceLower;
     }
@@ -74,34 +83,42 @@ public class Filters {
                 '}';
     }
 
+    // setter for city
     public void setCity(String city) {
         this.city = city;
     }
 
+    // getter for city
     public String getCity() {
         return city;
     }
 
+    // setter for areaLower
     public void setAreaLower(Long areaLower) {
         this.areaLower = areaLower;
     }
 
+    // setter for areaUpper
     public void setAreaUpper(Long areaUpper) {
         this.areaUpper = areaUpper;
     }
 
+    // getter for areaUpper
     public Long getAreaUpper() {
         return areaUpper;
     }
 
+    // getter for areaLower
     public Long getAreaLower() {
         return areaLower;
     }
 
+    // getter for priceUpper
     public Long getPriceUpper() {
         return priceUpper;
     }
 
+    // getter for priceLower
     public Long getPriceLower() {
         return priceLower;
     }
